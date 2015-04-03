@@ -26,20 +26,34 @@ public class UsuarioService {
     }
     
     public void removerUsuario(Long aUsuarioId){
-        usuarioRepo.delete(aUsuarioId);
+        try {
+            usuarioRepo.delete(aUsuarioId);
+        } catch (Exception e) {
+            throw new RuntimeException("Usuario não encontrado");
+        }
     }
     
-    public List<Usuario> getUsuarios(){
-//    public List<Map<String, Object>> getUsuarios(){
-//        List<Map<String, Object>> usuarios = jdbcTemplate.query("select id, nome, login, email, senha", new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(usuarioRepo.findAll());
+    public List<Map<String, Object>> getUsuarios(){
+        List<Map<String, Object>> usuarios = jdbcTemplate.query("select id, nome, login, email, senha, status from usuario"
+                , new MapSqlParameterSource(), new MapRowMapper());
+        return Collections.unmodifiableList(usuarios);
     }
     
-    public Usuario getUsuarioById(Long aUsuarioId){
-        return usuarioRepo.findOne(aUsuarioId);
+    public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aUsuarioId", aUsuarioId);
+        List<Map<String, Object>> usuario = jdbcTemplate.query("select id, nome, login, email, senha, status from usuario "+
+                 "where id = :aUsuarioId", params, new MapRowMapper());
+        return usuario;
     }
     
     public boolean verificarLogin(String aLogin){
-        return false;
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aLogin", aLogin);
+        List<Map<String, Object>> usuario = jdbcTemplate.query("select login from usuario where login = :aLogin", params, new MapRowMapper());
+        if(usuario.size()>0)
+            return false;
+        else
+            return true;
     }
 }
