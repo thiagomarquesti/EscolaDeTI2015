@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="usuarioApp">
     <head>
         <title>TIME 05</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="angular.min.js"></script>
-        
+        <script src="angular-route.min.js"></script>
+        <script src="/jsAppUsuario/appUsuario.js"></script>
+        <script src="/jsAppUsuario/UsuarioController.js"></script>
+        <script src="jsAppUsuario/rotas.js"></script>
     </head>
-    <body>
-        <div ng-view="view">         
+    <body ng-controller="UsuarioController">
+        <div id="menu">
+            <ul>
+                <li>
+                    <a href="#/Usuario/novo">Cadastrar novo usuário</a>
+                </li>
+            </ul>
+        </div>
+        <div ng-view>
+            
         </div>
     </body>
 </html>
