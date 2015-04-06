@@ -4,13 +4,16 @@ module.config(function($routeProvider, $locationProvider) {
     .when('/', {
         template: '<h1>Página inicial</h1>',
         controller: 'UsuarioController'
-    }).when('/Usuario/list', {
-        templateUrl: 'views/UsuarioList.html',
+    }).when('/Usuario/listar', {
+        templateUrl: 'views/listarUsuarios.html',
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
         templateUrl: 'views/cadUsuario.html',
         controller: 'UsuarioController'
-    }).when('/Usuario/edit/:id', {
+    }).when('/Usuario/editar/:id', {
+        templateUrl: 'views/cadUsuario.html',
+        controller: 'UsuarioController'
+    }).when('/Usuario/editar', {
         templateUrl: 'views/cadUsuario.html',
         controller: 'UsuarioController'
     });

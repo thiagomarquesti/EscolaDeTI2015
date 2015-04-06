@@ -10,16 +10,20 @@
         <script src="/jsAppUsuario/UsuarioController.js"></script>
         <script src="jsAppUsuario/rotas.js"></script>
     </head>
-    <body ng-controller="UsuarioController">
+    <body>
         <div id="menu">
             <ul>
                 <li>
-                    <a href="#/Usuario/novo">Cadastrar novo usuário</a>
+                    <a href="">Gerenciar Usuários</a>
+                    <ul>
+                        <li><a href="#/Usuario/novo">Cadastrar novo usuário</a></li>
+                        <li><a href="#/Usuario/listar">Listar usuários</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
-        <div ng-view>
-            
-        </div>
+        
+        <div ng-view></div>
+    
     </body>
 </html>

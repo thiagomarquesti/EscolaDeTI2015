@@ -1,6 +1,5 @@
 
-
-module.controller("UsuarioController", ["$scope", "$http", function($scope, $http){
+module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location){
          
          function novoUsuario(){
              $scope.usuario = {
@@ -13,7 +12,7 @@ module.controller("UsuarioController", ["$scope", "$http", function($scope, $htt
              $scope.isNovo = true;
          }
             
-         novoUsuario();
+         //novoUsuario();
          
          $scope.salvar = function(){
              if($scope.isNovo){
@@ -26,7 +25,7 @@ module.controller("UsuarioController", ["$scope", "$http", function($scope, $htt
                     .error(deuErro);
              }
              else {
-                 $http.put("/usuario/" + $scope.usuario.id, $scope.usuario)
+                 $http.put("/usuario/", $scope.usuario)
                     .success(function(){
                         alert("Usuário atualizado com sucesso!");
                         $scope.atualizar();
@@ -44,24 +43,27 @@ module.controller("UsuarioController", ["$scope", "$http", function($scope, $htt
                 })
                 .error(deuErro);
          };
-         $scope.atualizar();
          
          $scope.excluir = function(usuario){
              $http.delete("/usuario/" + usuario.id)
                 .success(function(){
                     alert("Usuário excluído.");
-                    $scope.atualizar();
                 })
                 .error(deuErro);
          };
-         
-         $scope.alterar = function(usuario) {
-             $scope.usuario = angular.copy(usuario);
-             $scope.isNovo = false;
-         };
-         
+                  
          function deuErro(){
             alert("Algo deu errado. Tente novamente.");
          }
          
-    }]);
+    function alterar(usuario) {
+        $location.path("/Usuario/editar" + usuario);
+        //$scope.usuario = angular.copy(usuario);
+        $scope.isNovo = false;
+        
+    };
+       
+    function deuErro(){
+            alert("Algo deu errado. Tente novamente.");
+         }
+}]);

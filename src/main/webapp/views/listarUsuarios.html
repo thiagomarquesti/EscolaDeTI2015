@@ -1,0 +1,21 @@
+<div>
+    <h1>Usuários cadastrados</h1>
+    Buscar: <input type="text" ng-model="busca.nome" placeholder="Digite o nome...">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th><th>Nome</th><th>Login</th><th>E-mail</th><th>Acesso</th>
+            </tr>
+        </thead>
+        <tbody ng-init="atualizar()">
+            <tr ng-repeat="u in usuarios | filter:busca">
+                <td><a ng-click="alterar(u)">{{u.id}}</a></td>
+                <td>{{u.nome}}</td>
+                <td>{{u.login}}</td>
+                <td>{{u.email}}</td>
+                <td>Bloquear Acesso | Atribuir perfis</td>
+            </tr>
+        </tbody>
+    </table>
+        
+</div>

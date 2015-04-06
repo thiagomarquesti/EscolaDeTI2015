@@ -1,7 +1,8 @@
 <div>
     <h1>Cadastro de usuário</h1>
-    <label for="id">ID: </label><br>
-    <input type="text" id="id" ng-model="usuario.id" disabled="disabled"><br><br>
+    <span ng-show="!isNovo"><label for="id">ID: </label><br>
+        <input type="text" id="id" ng-model="usuario.id" disabled="disabled"><br><br>
+    </span>
     <label for="nome">Nome completo: </label><br>
     <input type="text" ng-model="usuario.nome" id="nome"><br><br>
     <label for="login">Login: </label><br>
@@ -10,16 +11,8 @@
     <input type="text" ng-model="usuario.email" id="email"><br><br>
     <label for="senha">Senha: </label><br>
     <input type="password" ng-model="usuario.senha" id="senha"><br><br>
-    <!-- <label for="rsenha">Repetir senha: </label><br>
-    <input type="password" ng-model="usuario.rsenha" id="rsenha"><br><br> -->
+    <label for="rsenha">Repetir senha: </label><br>
+    <input type="password" ng-model="usuario.rsenha" id="rsenha"><br><br>
     
     <button ng-click="salvar()">Cadastrar</button>
-</div>
-
-<div>
-    <h1>Usuários cadastrados (apenas conferência)</h1>
-    <ul>
-        <li ng-repeat="u in usuarios">{{u.id}} | {{u.nome}} | {{u.login}} | {{u.email}} | {{u.senha}} | {{u.status}} | <a ng-click="alterar(u)">Alterar</a> <a ng-click="desativar(u)">Desativar</a> <a ng-click="excluir(u)">Excluir</a></li>
-    </ul>
-    
 </div>
