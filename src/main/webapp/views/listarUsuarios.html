@@ -9,7 +9,7 @@
         </thead>
         <tbody ng-init="atualizar()">
             <tr ng-repeat="u in usuarios | filter:busca">
-                <td><a ng-click="alterar(u)">{{u.id}}</a></td>
+                <td><a ng-click="editar(u)">{{u.id}}</a></td>
                 <td>{{u.nome}}</td>
                 <td>{{u.login}}</td>
                 <td>{{u.email}}</td>
