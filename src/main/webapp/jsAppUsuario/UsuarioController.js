@@ -45,22 +45,22 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
     $scope.editar = function(usuario) {
         $location.path("/Usuario/editar/" + usuario.id);
-        //$scope.isNovo = false;
     };
 
     $scope.carregar = function(){
-        if($location.path() == "/Usuario/novo"){
+        if($location.path() === "/Usuario/novo"){
             novoUsuario();
         }
         else {
             $http.get("/usuario/" + $routeParams.id)
                     .success(function(data){
-                        $scope.usuario = data;
-                        console.log(data);
+                        $scope.usuario = data[0];
+                        $scope.usuario.rsenha = $scope.usuario.senha;
+                        console.log(data[0]);
                         $scope.isNovo = false;
                     })
                     .error(deuErro);
-            }
+        }
     };
 
     $scope.reset = function(form) {
@@ -72,14 +72,4 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 }]);
 
-module.directive('validPasswordC', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, elm, attrs, ctrl) {
-            ctrl.$parsers.unshift(function (viewValue, $scope) {
-                var noMatch = viewValue != scope.formCad.senha.$viewValue;
-                ctrl.$setValidity('noMatch', !noMatch);
-            });
-        }
-    };
-});
+

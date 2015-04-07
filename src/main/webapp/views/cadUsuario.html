@@ -6,28 +6,30 @@
         </span>
         <label for="nome">Nome completo: </label><br>
         <input type="text" ng-model="usuario.nome" id="nome" name="nome" required="">
-            <div ng-show="formCad.$submitted || formCad.nome.$touched">
+            <div ng-show="formCad.nome.$dirty">
                 <span ng-show="formCad.nome.$error.required">Preencha seu nome completo.</span>
             </div>
         <br><br>
         <label for="login">Login: </label><br>
-        <input type="text" ng-model="usuario.login" id="login" name="login" required="" ng-blur="verificaExistente(login)">
-            <div ng-show="formCad.$submitted || formCad.login.$touched">
+        <input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique>
+            <div ng-show="formCad.login.$dirty">
                 <span ng-show="formCad.login.$error.required">Preencha seu login.</span>
+                <span ng-show="formCad.login.$error.unique">Login já cadastrado.</span>
             </div>
         <br><br>
         
         <label for="email">E-mail: </label><br>
-        <input type="email" ng-model="usuario.email" id="email" name="email" required="">
-            <div ng-show="formCad.$submitted || formCad.email.$touched">
+        <input type="email" ng-model="usuario.email" id="email" name="email" required="" email-unique>
+            <div ng-show="formCad.email.$dirty">
                 <span ng-show="formCad.email.$error.required">Preencha seu e-mail.</span>
                 <span ng-show="formCad.email.$error.email">Coloque um e-mail válido.</span>
+                <span ng-show="formCad.email.$error.unique">E-mail já existe no cadastro.</span>
             </div>
         <br><br>
         
         <label for="senha">Senha (6 a 20 caracteres): </label><br>
         <input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=20>
-            <div ng-show="formCad.$submitted || formCad.senha.$touched">
+            <div ng-show="formCad.senha.$dirty">
                 <span ng-show="formCad.senha.$error.required">Preencha sua senha.</span>
                 <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres.</span>
                 <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 20 caracteres.</span>
@@ -35,15 +37,15 @@
         
         <br><br>
         <label for="rsenha">Repetir senha: </label><br>
-        <input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required>
-            <div ng-show="formCad.$submitted || formCad.senha.$touched">
+        <input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha">
+            <div ng-show="formCad.rsenha.$dirty">
                 <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
-                <span ng-show="formCad.rsenha.$error.noMatch">Senhas não conferem.</span>
+                <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
             </div>
         <br><br>
         
         <button ng-show="isNovo" ng-click="reset(formCad)">Limpar</button>
         <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid">Cadastrar</button>
-        <button ng-hide="isNovo" ng-click="salvar()">Alterar</button>
+        <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid">Alterar</button>
     </form>
 </div>
