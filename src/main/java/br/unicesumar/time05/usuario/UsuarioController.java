@@ -40,9 +40,14 @@ public class UsuarioController {
     public void editarUsuario(@RequestBody Usuario aUsuario){
         usuarioService.salvarUsuario(aUsuario);
     }
-    
+
     @RequestMapping(value = "/verificarLogin/{aLogin}" ,method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin){
         return usuarioService.verificarLogin(aLogin);
+    }
+
+    @RequestMapping(value = "/verificarEmail/{aEmail}" ,method = RequestMethod.GET)
+    public boolean verifcarEmail(@PathVariable String aEmail){
+        return usuarioService.verificarEmail(aEmail+".com");
     }
 }
