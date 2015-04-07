@@ -6,17 +6,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Usuario  implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
+    
+    @NotEmpty(message = "Campo nome não pode estar vazio")
     private String nome;
+    
+    @NotEmpty(message = "Campo login não pode estar vazio")
     private String login;
+    
+    @NotEmpty(message = "Campo email não pode estar vazio")
     private String email;
+    
+    @NotEmpty(message = "Campo senha não pode estar vazio")
     private String senha;
-    private Status status;
+    
+    private Status status = Status.INATIVO;
     
     public Usuario() {
     }
@@ -26,7 +36,6 @@ public class Usuario  implements Serializable{
         this.login = login;
         this.email = email;
         this.senha = senha;
-        this.status = status;
     }
 
     public String getNome() {

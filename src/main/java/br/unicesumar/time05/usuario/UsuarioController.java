@@ -22,13 +22,12 @@ public class UsuarioController {
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<Usuario> getUsuarios(){
-    //public List<Map<String, Object>> getUsuarios(){
+    public List<Map<String, Object>> getUsuarios(){
         return usuarioService.getUsuarios();
     }
     
     @RequestMapping(value = "/{aUsuarioId}", method = RequestMethod.GET)
-    public Usuario getUsuario(@PathVariable Long aUsuarioId){
+    public List<Map<String, Object>> getUsuario(@PathVariable Long aUsuarioId){
         return usuarioService.getUsuarioById(aUsuarioId);
     }
     
@@ -41,9 +40,14 @@ public class UsuarioController {
     public void editarUsuario(@RequestBody Usuario aUsuario){
         usuarioService.salvarUsuario(aUsuario);
     }
-    
-/*    @RequestMapping(value = "/verificarLogin/{aLogin}" ,method = RequestMethod.GET)
+
+    @RequestMapping(value = "/verificarLogin/{aLogin}" ,method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin){
         return usuarioService.verificarLogin(aLogin);
-    }*/
+    }
+
+    @RequestMapping(value = "/verificarEmail/{aEmail}" ,method = RequestMethod.GET)
+    public boolean verifcarEmail(@PathVariable String aEmail){
+        return usuarioService.verificarEmail(aEmail+".com");
+    }
 }
