@@ -14,7 +14,7 @@
         <input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique>
             <div ng-show="formCad.login.$dirty">
                 <span ng-show="formCad.login.$error.required">Preencha seu login.</span>
-                <span ng-show="formCad.login.$error.unique">Login já cadastrado.</span>
+                <span ng-show="formCad.login.$error.unlogin">Login já cadastrado.</span>
             </div>
         <br><br>
         
@@ -23,7 +23,7 @@
             <div ng-show="formCad.email.$dirty">
                 <span ng-show="formCad.email.$error.required">Preencha seu e-mail.</span>
                 <span ng-show="formCad.email.$error.email">Coloque um e-mail válido.</span>
-                <span ng-show="formCad.email.$error.unique">E-mail já existe no cadastro.</span>
+                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
             </div>
         <br><br>
         

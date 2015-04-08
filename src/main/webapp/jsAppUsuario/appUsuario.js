@@ -7,7 +7,7 @@ valida.directive('passwordMatch', [function () {
         restrict: 'A',
         scope:true,
         require: 'ngModel',
-        link: function (scope, elem , attrs,control) {
+        link: function (scope, elem, attrs, control) {
             var checker = function () {
                 //get the value of the first password
                 var e1 = scope.$eval(attrs.ngModel); 
@@ -24,34 +24,38 @@ valida.directive('passwordMatch', [function () {
     };
 }]);
 
-valida.directive('emailUnique', ['$http', function ($http){
-    return {
-        require: 'ngModel',
-        link: function (scope, elem, attrs, ctrl) {
-            elem.on('blur', function (evt){
-                scope.$apply(function () {
-                    $http.get('/verificarEmail/' + scope.usuario.email)
-                        .success(function(data, status, headers, config) {
-                        ctrl.$setValidity('unique', data.status);
-                        });
-                })
-            })
-        }
-    };
-}]);
-
 valida.directive('loginUnique', ['$http', function ($http){
     return {
         require: 'ngModel',
         link: function (scope, elem, attrs, ctrl) {
-            elem.on('blur', function (evt){
-                scope.$apply(function () {
-                    $http.get('/verificarLogin/' + scope.usuario.login)
-                        .success(function(data, status, headers, config) {
-                        ctrl.$setValidity('unique', data.status);
+            elem.on('blur', function(){
+                scope.$apply(function() {
+                    if(scope.usuario.login){
+                        $http.get('/usuario/verificarLogin/' + scope.usuario.login)
+                        .success(function(data) {
+                        ctrl.$setValidity('unlogin', data);
                         });
-                })
-            })
+                    }
+                });
+            });
+        }
+    };
+}]);
+
+valida.directive('emailUnique', ['$http', function ($http){
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            elem.on('blur', function(){
+                scope.$apply(function() {
+                    if(scope.usuario.email){
+                        $http.get('/usuario/verificarEmail/' + scope.usuario.email)
+                        .success(function(data) {
+                        ctrl.$setValidity('unemail', data);
+                        });
+                    }
+                });
+            });
         }
     };
 }]);
