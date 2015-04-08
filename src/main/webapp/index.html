@@ -17,28 +17,30 @@
         
     </head>
     <body>
-        <div id="topo" class="col-md-12" class="navbar-inverse">
+        <nav id="topo" class="col-md-12 navbar navbar-inverse"">
             <div class="container"><a class="navbar-brand" href="#">TIME 05</a></div>
-        </div>
+        </nav>
+        
+                
         <div id="menu" class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="false">Gerenciar Usuários <span class="caret"></span></a>
-                    <ul role="menu">
+                    <ul role="menu" class="dropdown-menu">
                         <li><a href="#/Usuario/novo">Cadastrar novo usuário</a></li>
                         <li><a href="#/Usuario/listar">Listar usuários</a></li>
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-expanded="false">Gerenciar perfis <span class="caret"></span></a>
-                    <ul role="menu">
+                    <ul role="menu" class="dropdown-menu">
                         <li><a href="#/Perfil/novo">Cadastrar novo perfil</a></li>
                         <li><a href="#/Perfil/listar">Listar perfis</a></li>
                     </ul>
                 </li>
             </ul>
             
-        </div>
+        </div> 
         
         <div ng-view class="col-md-10"></div>
     
