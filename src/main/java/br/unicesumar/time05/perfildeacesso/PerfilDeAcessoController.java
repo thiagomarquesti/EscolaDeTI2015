@@ -1,6 +1,7 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +17,18 @@ public class PerfilDeAcessoController {
     private PerfilDeAcessoService service;
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<PerfilDeAcesso> getPerfisDeAcesso(){
+    public List<Map<String, Object>> getPerfisDeAcesso(){
         return service.getPerfisDeAcesso();
     }
     
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public PerfilDeAcesso getPerfilDeAcesso(@PathVariable Long aId){
+    public List<Map<String, Object>> getPerfilDeAcesso(@PathVariable Long aId){
         return service.getPerfilDeAcesso(aId);
+    }
+    
+    @RequestMapping(value = "/itensdeacesso/{aId}", method = RequestMethod.GET)
+    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(@PathVariable Long aId){
+        return service.getItensDeAcessoPorPerfilDeAcessoID(aId);
     }
     
     @RequestMapping(method = RequestMethod.POST)

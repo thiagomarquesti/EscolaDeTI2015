@@ -1,18 +1,19 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import br.unicesumar.time05.itemacesso.ItemAcesso;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-@Entity
+@Entity(name = "perfildeacesso")
 public class PerfilDeAcesso {
     
     @Id
@@ -20,6 +21,10 @@ public class PerfilDeAcesso {
     private Long id;
     private String nome;
     @ManyToMany
+    @Cascade(CascadeType.ALL)
+    @JoinTable(name = "perfildeacesso_itemacesso", 
+            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "id")})
     private Set<ItemAcesso> itens;
 
     public PerfilDeAcesso() {

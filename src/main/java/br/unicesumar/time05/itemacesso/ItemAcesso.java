@@ -1,22 +1,23 @@
 package br.unicesumar.time05.itemacesso;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Entity
+@Entity(name = "itemacesso")
 public class ItemAcesso {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private String nome;
     private String rota;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "superior_id")
     private ItemAcesso superior;
 
     public ItemAcesso() {
