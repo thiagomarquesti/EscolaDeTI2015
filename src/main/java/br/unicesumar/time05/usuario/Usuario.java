@@ -2,10 +2,12 @@ package br.unicesumar.time05.usuario;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -14,16 +16,16 @@ public class Usuario  implements Serializable{
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     
-    @NotEmpty(message = "Campo nome não pode estar vazio")
+    @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
     
-    @NotEmpty(message = "Campo login não pode estar vazio")
+    @NotBlank(message = "Campo login não pode estar vazio")
     private String login;
     
-    @NotEmpty(message = "Campo email não pode estar vazio")
+    @NotBlank(message = "Campo email não pode estar vazio")
     private String email;
     
-    @NotEmpty(message = "Campo senha não pode estar vazio")
+    @NotBlank(message = "Campo senha não pode estar vazio")
     private String senha;
     
     private Status status = Status.INATIVO;

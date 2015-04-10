@@ -26,7 +26,8 @@ public class UsuarioService {
         //certifica que o email esteja com letras minusculas e retira espaços no começo e fim da string
         aUsuario.setEmail(aUsuario.getEmail().toLowerCase().trim());
         //valida o email e a o login
-        if((this.verificarEmail(aUsuario.getEmail()) && this.verificarLogin(aUsuario.getLogin()))||aUsuario.getId()!=null)
+        if((this.verificarEmail(aUsuario.getEmail()) && this.verificarLogin(aUsuario.getLogin()) && this.verificarSenha(aUsuario.getSenha()))
+                ||aUsuario.getId()!=null)
             usuarioRepo.save(aUsuario);
         else
             throw new RuntimeException("Login e/ou Email já estão em uso");
@@ -90,4 +91,44 @@ public class UsuarioService {
             throw new RuntimeException("Campo email vazio!");
     }
     
+    public boolean verificarSenha(String aSenha){
+        boolean valido[] = {false,false,false,false,false};
+        String senha = aSenha;
+        
+        Pattern pattern = Pattern.compile("[A-Z]");
+        Matcher matcher = pattern.matcher(senha);
+        valido[0] = matcher.find();
+        
+        pattern = Pattern.compile("[a-z]");
+        matcher = pattern.matcher(senha);
+        valido[1] = matcher.find();
+        
+        pattern = Pattern.compile("[0-9]");
+        matcher = pattern.matcher(senha);
+        valido[2] = matcher.find();
+        
+        pattern = Pattern.compile("[:-@.]");
+        matcher = pattern.matcher(senha);
+        valido[3] = matcher.find();
+
+        
+        valido[4] = senha.length()<11&&senha.length()>5;
+        
+      
+        
+        return valido[0]&&valido[1]&&valido[2]&&valido[3]&&valido[4];
+    }
+    
+    public void trocarStatusUsuario(Long aUsuarioId){
+        try {
+            Usuario usuario =  usuarioRepo.getOne(aUsuarioId);
+            if(usuario.getStatus()==Status.ATIVO)
+                usuario.setStatus(Status.INATIVO);
+            else
+                usuario.setStatus(Status.ATIVO);
+            usuarioRepo.save(usuario);
+        } catch (Exception e) {
+            throw new RuntimeException("Usuario não encontrado");
+        }
+    }
 }
