@@ -23,14 +23,14 @@ public class PerfilDeAcessoService {
     private PerfilDeAcessoRepository repo;
     
     public List<Map<String, Object>> getPerfisDeAcesso(){
-        List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("select id, nome from perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
+        List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("SELECT id, nome FROM perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(perfisDeAcesso);
     }
     
     public List<Map<String, Object>> getPerfilDeAcesso(Long aId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aId", aId);
-        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("select id, nome from perfildeacesso where id = :aId", params, new MapRowMapper());
+        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT id, nome FROM perfildeacesso WHERE id = :aId", params, new MapRowMapper());
         return perfilDeAcesso;
     }
 
