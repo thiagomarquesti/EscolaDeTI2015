@@ -1,65 +1,68 @@
-<div ng-init="carregar()" class="col-md-6">
-    <h1>Cadastro de usuário</h1>
-    <form name="formCad" novalidate class="form-horizontal">
+<div ng-init="carregar()" class="panel panel-default">
 
-        <div ng-show="!isNovo" class="form-group">
-            <label for="id" class="col-md-2 control-label">ID: </label>
-            <div class="col-md-2"><input type="text" id="id" ng-model="usuario.id" disabled="disabled" class="form-control"></div>
-        </div>
+    <div class="panel-heading"><h1 class="panel-title">Cadastro de usuário</h1></div>
+    <div class="panel-body">
+        <form name="formCad" novalidate class="form-horizontal">
 
-        <div class="form-group">    
-            <label for="nome" class="col-md-2 control-label">Nome:</label>
-            <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
-        </div>
-        <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
-            <span ng-show="formCad.nome.$error.required">Preencha seu nome completo.</span>
-            <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres.</span>
-            <span ng-show="formCad.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres.</span>
-        </div>
-
-        <div class="form-group"> 
-            <label for="login" class="col-md-2 control-label">Login:</label>
-            <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
-        </div>
-        <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-            <span ng-show="formCad.login.$error.required">Preencha seu login.</span>
-            <span ng-show="formCad.login.$error.unlogin">Login já cadastrado.</span>
-            <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres.</span>
-            <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres.</span>
-        </div>
-
-        <div class="form-group">
-            <label for="email" class="col-md-2 control-label">E-mail: </label>
-            <div class="col-md-10"><input type="email" ng-model="usuario.email" id="email" name="email" required="" email-unique class="form-control"></div>
-        </div>
-        <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
-            <span ng-show="formCad.email.$error.required">Preencha seu e-mail.</span>
-            <span ng-show="formCad.email.$error.email">Coloque um e-mail válido.</span>
-            <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
-        </div>
-        <div class="form-group">
-            <label for="senha" class="col-md-2 control-label">Senha: </label>
-            <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=20 class="form-control"></div>
-        </div>      
-        <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-            <span ng-show="formCad.senha.$error.required">Preencha sua senha.</span>
-            <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres.</span>
-            <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 20 caracteres.</span>
-        </div>
-        <div class="form-group">
-            <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
-            <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
-        </div>    
-        <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-            <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
-            <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
-                <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar</button>
-                <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Alterar</button>
+            <div ng-show="!isNovo" class="form-group">
+                <label for="id" class="col-md-2 control-label">ID: </label>
+                <div class="col-md-2"><input type="text" id="id" ng-model="usuario.id" disabled="disabled" class="form-control"></div>
             </div>
-    </form>
+
+            <div class="form-group">    
+                <label for="nome" class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+            </div>
+            <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
+                <span ng-show="formCad.nome.$error.required">Preencha seu nome completo.</span>
+                <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres.</span>
+                <span ng-show="formCad.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres.</span>
+            </div>
+
+            <div class="form-group"> 
+                <label for="login" class="col-md-2 control-label">Login:</label>
+                <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
+            </div>
+            <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                <span ng-show="formCad.login.$error.required">Preencha seu login.</span>
+                <span ng-show="formCad.login.$error.unlogin">Login já cadastrado.</span>
+                <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres.</span>
+                <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">E-mail: </label>
+                <div class="col-md-10"><input type="email" ng-model="usuario.email" id="email" name="email" required="" email-unique class="form-control"></div>
+            </div>
+            <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.email.$error.required">Preencha seu e-mail.</span>
+                <span ng-show="formCad.email.$error.email">Coloque um e-mail válido.</span>
+                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
+            </div>
+            <div class="form-group">
+                <label for="senha" class="col-md-2 control-label">Senha: </label>
+                <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=20 class="form-control"></div>
+            </div>      
+            <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                <span ng-show="formCad.senha.$error.required">Preencha sua senha.</span>
+                <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres.</span>
+                <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 20 caracteres.</span>
+            </div>
+            <div class="form-group">
+                <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
+                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
+            </div>    
+            <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
+                <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Alterar</button>
+                    <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+                </div>
+        </form>
+    </div>
 </div>

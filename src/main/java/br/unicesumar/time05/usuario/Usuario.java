@@ -2,10 +2,13 @@ package br.unicesumar.time05.usuario;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -14,16 +17,20 @@ public class Usuario  implements Serializable{
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     
-    @NotEmpty(message = "Campo nome não pode estar vazio")
+    @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
     
-    @NotEmpty(message = "Campo login não pode estar vazio")
+    @NotBlank(message = "Campo login não pode estar vazio")
+    @Column(unique = true, nullable = false)
     private String login;
     
-    @NotEmpty(message = "Campo email não pode estar vazio")
+    @NotBlank(message = "Campo email não pode estar vazio")
+    @Column(unique = true, nullable = false)
+    @Pattern(regexp = "\\b(^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b")
     private String email;
     
-    @NotEmpty(message = "Campo senha não pode estar vazio")
+    @NotBlank(message = "Campo senha não pode estar vazio")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
     private Status status = Status.INATIVO;

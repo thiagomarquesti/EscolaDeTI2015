@@ -46,6 +46,14 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.editar = function(usuario) {
         $location.path("/Usuario/editar/" + usuario.id);
     };
+    
+    $scope.alteraStatus = function(id) {
+        $http.put("/usuario/" + id)
+               .success(function(){
+                   $scope.atualizar();
+               })
+               .error(deuErro);
+    };
 
     $scope.carregar = function(){
         if($location.path() === "/Usuario/novo"){

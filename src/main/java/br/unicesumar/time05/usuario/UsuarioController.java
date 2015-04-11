@@ -18,7 +18,12 @@ public class UsuarioController {
     
     @RequestMapping(method = RequestMethod.POST)
     public void salvarUsuario(@RequestBody Usuario aUsuario){
-        usuarioService.salvarUsuario(aUsuario);
+        try {
+            usuarioService.salvarUsuario(aUsuario);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar o usuário, verifique os dados fornecidos!");
+        }
+    
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -41,13 +46,33 @@ public class UsuarioController {
         usuarioService.salvarUsuario(aUsuario);
     }
 
-    @RequestMapping(value = "/verificarLogin/{aLogin}" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/{aUsuarioId}", method = RequestMethod.PUT)
+    public void alterarStatus(@PathVariable Long aUsuarioId){
+        usuarioService.trocarStatusUsuario(aUsuarioId);
+    }
+
+    @RequestMapping(value = "/verificarLogin/{aLogin:.+}" ,method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin){
         return usuarioService.verificarLogin(aLogin);
     }
 
-    @RequestMapping(value = "/verificarEmail/{aEmail}" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/verificarEmail/{aEmail:.+}" ,method = RequestMethod.GET)
     public boolean verifcarEmail(@PathVariable String aEmail){
-        return usuarioService.verificarEmail(aEmail+".com");
+        return usuarioService.verificarEmail(aEmail);
+    }
+
+    @RequestMapping(value = "/verificarSenha/{aSenha:.+}" ,method = RequestMethod.GET)
+    public boolean verifcarSenha(@PathVariable String aSenha){
+        return usuarioService.verificarSenha(aSenha);
+    }
+
+    @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}" ,method = RequestMethod.GET)
+    public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId){
+        return usuarioService.verificarEmail(aEmail, aUsuarioId);
+    }
+    
+    @RequestMapping(value = "/verificarLogin/{aLogin:.+}/{aUsuarioId}" ,method = RequestMethod.GET)
+    public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId){
+        return usuarioService.verificarLogin(aLogin, aUsuarioId);
     }
 }

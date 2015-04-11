@@ -31,7 +31,13 @@ valida.directive('loginUnique', ['$http', function ($http){
             elem.on('blur', function(){
                 scope.$apply(function() {
                     if(scope.usuario.login){
-                        $http.get('/usuario/verificarLogin/' + scope.usuario.login)
+                        if(scope.usuario.id){
+                            var dados = scope.usuario.login + "/" + scope.usuario.id;
+                        }
+                        else {
+                            var dados = scope.usuario.login;
+                        }
+                        $http.get('/usuario/verificarLogin/' + dados)
                         .success(function(data) {
                         ctrl.$setValidity('unlogin', data);
                         });
@@ -49,7 +55,13 @@ valida.directive('emailUnique', ['$http', function ($http){
             elem.on('blur', function(){
                 scope.$apply(function() {
                     if(scope.usuario.email){
-                        $http.get('/usuario/verificarEmail/' + scope.usuario.email)
+                        if(scope.usuario.id){
+                            var dados = scope.usuario.email + "/" + scope.usuario.id;
+                        }
+                        else {
+                            var dados = scope.usuario.email;
+                        }
+                        $http.get('/usuario/verificarEmail/' + dados)
                         .success(function(data) {
                         ctrl.$setValidity('unemail', data);
                         });
