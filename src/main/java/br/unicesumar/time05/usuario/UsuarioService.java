@@ -23,14 +23,7 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepo;
     
     public void salvarUsuario(Usuario aUsuario){
-        //certifica que o email esteja com letras minusculas e retira espaços no começo e fim da string
-        aUsuario.setEmail(aUsuario.getEmail().toLowerCase().trim());
-        //valida o email e a o login
-        if((this.verificarEmail(aUsuario.getEmail()) && this.verificarLogin(aUsuario.getLogin()) && this.verificarSenha(aUsuario.getSenha()))
-                ||aUsuario.getId()!=null)
             usuarioRepo.save(aUsuario);
-        else
-            throw new RuntimeException("Login e/ou Email já estão em uso");
     }
     
     
@@ -52,15 +45,15 @@ public class UsuarioService {
     public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("select id, nome, login, email, senha, status from usuario "+
-                 "where id = :aUsuarioId", params, new MapRowMapper());
-        return usuario;
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, nome, login, email, senha, status FROM usuario "+
+                 "WHERE id = :aUsuarioId", params, new MapRowMapper());
+        return Collections.unmodifiableList(usuario);
     }
     
     public boolean verificarLogin(String aLogin){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("select login from usuario where login = :aLogin", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT login FROM usuario WHERE login = :aLogin", params, new MapRowMapper());
         //se o array usuario estiver vazio retorna true, indicando que o login está disponível
         return usuario.isEmpty();
     }
@@ -73,50 +66,35 @@ public class UsuarioService {
             Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(email);
             if(!matcher.matches()){
-                throw new RuntimeException("Email invalido!");
+                return false;
             }
         
             //verifica se o email já existe no banco
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("select email from usuario where email = :aEmail", params, new MapRowMapper());
-            
+            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT email FROM usuario WHERE email = :aEmail", params, new MapRowMapper());
+            if(!usuario.isEmpty()){
+                return false;
+            }
             //se o usuario array de usuario for vazio e o email for valido retorna true, indicando que o
             //endereço de email esta disponivel
             //Caso o array tenha algum valor, significa que o email já está cadastrado então retorna false, indicando email em uso
             //caso o email seja invalido retorna false
-            return usuario.isEmpty() && matcher.matches();
+            return true;
         }
         else
             throw new RuntimeException("Campo email vazio!");
     }
     
     public boolean verificarSenha(String aSenha){
-        boolean valido[] = {false,false,false,false,false};
+        boolean valido = false;
         String senha = aSenha;
         
-        Pattern pattern = Pattern.compile("[A-Z]");
+        Pattern pattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})");
         Matcher matcher = pattern.matcher(senha);
-        valido[0] = matcher.find();
-        
-        pattern = Pattern.compile("[a-z]");
-        matcher = pattern.matcher(senha);
-        valido[1] = matcher.find();
-        
-        pattern = Pattern.compile("[0-9]");
-        matcher = pattern.matcher(senha);
-        valido[2] = matcher.find();
-        
-        pattern = Pattern.compile("[:-@.]");
-        matcher = pattern.matcher(senha);
-        valido[3] = matcher.find();
-
-        
-        valido[4] = senha.length()<11&&senha.length()>5;
-        
-      
-        
-        return valido[0]&&valido[1]&&valido[2]&&valido[3]&&valido[4];
+        valido = matcher.matches();
+  
+        return valido;
     }
     
     public void trocarStatusUsuario(Long aUsuarioId){
@@ -130,5 +108,24 @@ public class UsuarioService {
         } catch (Exception e) {
             throw new RuntimeException("Usuario não encontrado");
         }
+    }
+
+    boolean verificarEmail(String aEmail, Long aUsuarioId) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail);
+            params.addValue("aId", aUsuarioId);
+            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, email FROM usuario WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+            if(!usuario.isEmpty()){
+                throw new RuntimeException("Email já cadastrado!");
+            }
+            return true;
+    }
+
+    boolean verificarLogin(String aLogin, Long aUsuarioId) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aLogin", aLogin);
+        params.addValue("aId", aUsuarioId);
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, login FROM usuario WHERE login = :aLogin AND id <> :aId", params, new MapRowMapper());
+        return usuario.isEmpty();
     }
 }

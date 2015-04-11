@@ -18,7 +18,12 @@ public class UsuarioController {
     
     @RequestMapping(method = RequestMethod.POST)
     public void salvarUsuario(@RequestBody Usuario aUsuario){
-        usuarioService.salvarUsuario(aUsuario);
+        try {
+            usuarioService.salvarUsuario(aUsuario);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar o usuário, verifique os dados fornecidos!");
+        }
+    
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -61,4 +66,13 @@ public class UsuarioController {
         return usuarioService.verificarSenha(aSenha);
     }
 
+    @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}" ,method = RequestMethod.GET)
+    public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId){
+        return usuarioService.verificarEmail(aEmail, aUsuarioId);
+    }
+    
+    @RequestMapping(value = "/verificarLogin/{aLogin:.+}/{aUsuarioId}}" ,method = RequestMethod.GET)
+    public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId){
+        return usuarioService.verificarLogin(aLogin, aUsuarioId);
+    }
 }
