@@ -71,7 +71,7 @@ public class UsuarioController {
         return usuarioService.verificarEmail(aEmail, aUsuarioId);
     }
     
-    @RequestMapping(value = "/verificarLogin/{aLogin:.+}/{aUsuarioId}}" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/verificarLogin/{aLogin:.+}/{aUsuarioId}" ,method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId){
         return usuarioService.verificarLogin(aLogin, aUsuarioId);
     }

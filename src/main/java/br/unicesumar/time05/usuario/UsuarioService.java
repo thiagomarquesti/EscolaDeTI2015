@@ -116,7 +116,7 @@ public class UsuarioService {
             params.addValue("aId", aUsuarioId);
             List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, email FROM usuario WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
             if(!usuario.isEmpty()){
-                throw new RuntimeException("Email já cadastrado!");
+                return false;
             }
             return true;
     }
