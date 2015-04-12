@@ -1,0 +1,37 @@
+<div class="panel panel-default">
+    <div class="panel-heading"><h1 class="panel-title">Usuários cadastrados</h1></div>
+    <div class="panel-body">
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" ng-model="busca.nome" placeholder="Buscar usuário (digite o nome)" class="form-control" aria-describedby="basic-addon1">
+    </div>
+    
+    <br>
+    <div class="panel panel-default">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th><th>Nome</th><th>Login</th><th>E-mail</th><th>Ações</th>
+            </tr>
+        </thead>
+        <tbody ng-init="atualizar()">
+            <tr ng-repeat='u in filtered = (usuarios | filter:busca)' >
+                <td>{{u.id}}</td>
+                <td>{{u.nome}}</td>
+                <td>{{u.login}}</td>
+                <td>{{u.email}}</td>
+                <td>
+                    <button class="btn btn-warning" ng-click="editar(u)">Editar</button>
+                    <button ng-show="u.status == 0" class="btn btn-danger" data="{{u.id}}" ng-click="alteraStatus(u.id)">Bloquear</button>
+                    <button ng-show="u.status == 1" class="btn btn-success" data="{{u.id}}" ng-click="alteraStatus(u.id)">Desbloquear</button>
+                    <button class="btn btn-info">Perfis</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="panel-footer">Encontrado {{filtered.length}} usuários na busca.</div>
+    </div>
+    <a ng-href="#/Usuario/novo" class="btn btn-success">Cadastrar novo</a>
+</div>
+    
+</div>
