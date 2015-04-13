@@ -5,8 +5,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="angular.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
-        <div>Form de login</div>
+    <body class="text-center vertical-center">
+        <div class="container col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h2 class="panel-title">TIME 05</h2></div>
+                <div class="panel-body ">
+                    <form name="formLogin" novalidate="" class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="icon-login"><span class="glyphicon glyphicon-user"></span></span> 
+                            <input type="text" ng-model="login" class="form-control" aria-describedby="icon-login" placeholder="Digite seu login...">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="icon-senha"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input type="password" ng-model="senha" class="form-control" aria-describedby="icon-senha" placeholder="Digite sua senha...">
+                        </div>
+                        <br>
+                        
+                            <a ng-click="" class="col-md-12 btn btn-success cemporcento">Entrar <span class="glyphicon glyphicon-hand-right"></span></a>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
