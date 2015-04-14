@@ -16,7 +16,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/cadUsuario.html',
         controller: 'UsuarioController'
-    });
+    }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
 });

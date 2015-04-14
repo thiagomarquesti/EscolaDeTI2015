@@ -1,0 +1,28 @@
+<div class="container col-md-3">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="panel-title">TIME 05</h2></div>
+        <div class="panel-body ">
+            <form name="formLogin" novalidate class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon" id="icon-login"><span class="glyphicon glyphicon-user"></span></span> 
+                    <input type="text" ng-model="login.login" name="login" id="login" class="form-control" aria-describedby="icon-login" placeholder="Digite seu login..." required="">
+                </div>
+                <div ng-show="formLogin.login.$dirty && formLogin.login.$invalid" class="alert alert-danger" role="alert">
+                    <span ng-show="formLogin.login.$error.required">Preencha sua senha. </span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" id="icon-senha"><span class="glyphicon glyphicon-lock"></span></span>
+                    <input type="password" ng-model="login.senha" name="senha" id="senha" class="form-control" aria-describedby="icon-senha" placeholder="Digite sua senha..." required="">
+                </div>
+                <div ng-show="formLogin.senha.$dirty && formLogin.senha.$invalid" class="alert alert-danger" role="alert">
+                    <span ng-show="formLogin.senha.$error.required">Preencha sua senha. </span>
+                </div>
+                <br>
+
+                <a ng-disabled="!formLogin.$valid" ng-click="logar()" class="col-md-12 btn btn-success cemporcento">Entrar <span class="glyphicon glyphicon-hand-right"></span></a>
+
+            </form>
+        </div>
+    </div>
+</div>
