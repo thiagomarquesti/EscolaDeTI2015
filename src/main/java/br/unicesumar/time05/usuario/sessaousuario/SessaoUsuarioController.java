@@ -21,8 +21,8 @@ public class SessaoUsuarioController {
     }
     
     @RequestMapping(value = "/efetuarlogout", method = RequestMethod.POST)
-    public void efetuarLogout(@RequestBody DadosLogin aDadosLogin, HttpSession session){
-        service.efetuarLogout(aDadosLogin, session);
+    public boolean efetuarLogout(@RequestBody DadosLogin aDadosLogin, HttpSession session){
+        return service.efetuarLogout(aDadosLogin, session);
     }
     
     @RequestMapping(value = "/usuariologado", method = RequestMethod.GET)

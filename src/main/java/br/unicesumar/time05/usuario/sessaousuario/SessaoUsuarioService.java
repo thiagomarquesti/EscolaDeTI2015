@@ -44,13 +44,16 @@ public class SessaoUsuarioService {
         return null;
     }
 
-    void efetuarLogout(DadosLogin aDadosLogin, HttpSession session) {
-        if (sessaoUsuario != null){
+    public boolean efetuarLogout(DadosLogin aDadosLogin, HttpSession session) {
+        if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null){
             if (sessaoUsuario.getUsuario().getLogin().equals(aDadosLogin.getLogin()) && 
                 sessaoUsuario.getUsuario().getSenha().equals(aDadosLogin.getSenha())){
                 session.invalidate();
                 sessaoUsuario.setUsuario(null);
+                return true;
             }
+            return false;
         }
+        return false;
     }
 }
