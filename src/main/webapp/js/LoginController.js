@@ -11,8 +11,27 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     $scope.verificaTelaLogin = function(){
          $http.get("/login/usuariologado")
            .success(function(data){
-               if(0==0){
+               if(data.id){
+                   //alert($location.protocol() + "://" + $location.host() + ":" + $location.port());
+                   console.log(data.id);
+                   window.location.href="/";
+               }
+               else{
                    
+               }
+           })
+           .error(deuErro);
+    };
+    
+    $scope.verificaUsers = function(){
+       $http.get("/usuario")
+           .success(function(data){
+               console.log(data);
+               if(data[0]){
+                   $scope.yesUser = true;
+               }
+               else{
+                   $scope.yesUser = false;
                }
            })
            .error(deuErro);
@@ -20,9 +39,15 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.logar = function(){
         $http.post("/login/efetuarlogin", $scope.login)
-        .success(
-            $location.url("/")
+        .success(function(){
+            window.location.href="/#/Usuario/listar";
+            }       
         )
            .error(erroLogin);
     };
+    
+    $scope.logout = function(){
+        
+    };
+    
 }]);

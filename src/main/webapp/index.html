@@ -14,15 +14,20 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/usuario.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body ng-init="verificaLogado()">
+    <body ng-controller="UsuarioController" ng-init="verificaLogado()">
         <div>
             <div class='col-md-2'>
                 <div ng-include="'views/menu.html'"></div>
             </div>
 
             <div class='col-md-10'>
-                <nav id="topo" class="nav navbar navbar-inverse"">
-
+                <nav id="topo" class="nav navbar navbar-inverse">
+                    <div class="nav navbar navbar-right">
+                    <a id="dropMenuUsuario" data-toggle="dropdown" aria-expanded="false">Nome do usuário<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropMenuUsuario">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Efetuar Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+                    </ul>
+                    </div>
                 </nav>  
                 <div ng-view></div>
             </div>

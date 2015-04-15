@@ -16,8 +16,8 @@
         <script src="js/UsuarioController.js" type="text/javascript"></script>
 
     </head>
-    <body class="text-center vertical-center">
-        <div class="container col-md-3" ng-show="yesUser" ng-controller="LoginController" ng-init="verificaTelaLogin()">
+    <body class="text-center vertical-center" ng-controller="LoginController" ng-init="verificaUsers(); verificaTelaLogin();">
+        <div class="container col-md-3" ng-show="yesUser" ng-controller="LoginController">
             <div class="panel panel-default">
                 <div class="panel-heading"><h2 class="panel-title">TIME 05</h2></div>
                 <div class="panel-body ">
@@ -47,7 +47,8 @@
         </div>
 
         <div class="container col-md-6" ng-show="!yesUser" ng-controller="UsuarioController">
-            <div class="panel panel-default">
+            <div class="alert alert-warning">Não existe nenhum usuário cadastrado, cadastre um administrador para iniciar a aplicação.</div>
+            <div class="panel panel-default" ng-init="novoAdmin()">
                 <div class="panel-heading"><h1 class="panel-title">Cadastro de administrador</h1></div>
                 <div class="panel-body">
 

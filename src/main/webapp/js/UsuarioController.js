@@ -10,13 +10,32 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
         $scope.isNovo = true;
     }
-
+    
+    $scope.novoAdmin = function(){
+        novoUsuario();
+    };
+    
+    $scope.verificaLogado = function(){
+         $http.get("/login/usuariologado")
+           .success(function(data){
+               if(!data.id){
+                   window.location.href="/login.html";
+               }
+           })
+           .error(deuErro);
+    };
+    
     $scope.salvar = function(){
         if($scope.isNovo){
             $http.post("/usuario", $scope.usuario)
                .success(function(){
                    alert("Usuário cadastrado com sucesso!");
-                   $location.path("/Usuario/listar");
+                   if($location.path() === "/Usuario/novo"){ 
+                       $location.path("/Usuario/listar"); 
+                   }
+                   else{
+                       window.location.href="/#/Usuario/listar";
+                   }
                })
                .error(deuErro);
         }
