@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionSystemException;
 
 @Component
 @Transactional
@@ -23,7 +25,11 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepo;
     
     public void salvarUsuario(Usuario aUsuario){
+        try {
             usuarioRepo.save(aUsuario);
+        } catch (Exception e) {
+            throw new RuntimeException("ola");
+        }
     }
     
     
