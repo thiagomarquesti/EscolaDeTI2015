@@ -1,6 +1,5 @@
 module.controller("LoginController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location){
-         
-    
+
     function deuErro(){
         alert("Algo deu errado. Tente novamente.");
     }
@@ -26,7 +25,7 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     $scope.verificaUsers = function(){
        $http.get("/usuario")
            .success(function(data){
-               console.log(data);
+               //console.log(data);
                if(data[0]){
                    $scope.yesUser = true;
                }
@@ -38,21 +37,26 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     };
     
     $scope.logar = function(){
-        
-        $http.get("/login/statusLogin"/ + $scope.login.login)
-                    .success(function(data){
-                        var status = data[0].status;
-                        console.log(status);
-                        if(status === 0){
-                            $http.post("/login/efetuarlogin", $scope.login)
-                            .success(function(data){
-                                window.location.href="/";
-                                }       
-                            )
-                               .error(erroLogin);
+        $http.get("/login/statusLogin/" + $scope.login.login)
+                    .success(function(data, status){
+                        //console.log(data.length);
+                        if(data.length > 0) {
+                            var statusUsuario = data[0].status;
+                            if(statusUsuario == 0){
+                                $http.post("/login/efetuarlogin", $scope.login)
+                                .success(function(data){
+                                    window.location.href="/";
+                                    }       
+                                )
+                                .error(erroLogin);
+                            }
+                            else {
+                                $scope.uBloqueado = true;
+                               
+                            }
                         }
                         else {
-                            $scope.uBloqueado = true;
+                            console.log("dfsfdsfsdf");
                         }
                     })
                     .error(deuErro);
