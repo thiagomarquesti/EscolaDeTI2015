@@ -38,16 +38,20 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     };
     
     $scope.logar = function(){
+        
+        $http.get("/login/verificaLogin"/ + $scope.login.login)
+                    .success(function(data){
+                        var status = data[0].status;
+                        alert(status);
+                    })
+                    .error(deuErro);
+        
         $http.post("/login/efetuarlogin", $scope.login)
-        .success(function(){
-            window.location.href="/#/Usuario/listar";
+        .success(function(data){
+            window.location.href="/";
             }       
         )
            .error(erroLogin);
-    };
-    
-    $scope.logout = function(){
-        
     };
     
 }]);

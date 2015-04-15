@@ -97,6 +97,21 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         }
         novoUsuario();
     };
+    
+    $scope.logout = function(){
+        $http.get("/login/usuariologado")
+           .success(function(data){
+               console.log(data.login);
+               var dadosLogin = {"login": data.login, "senha" : data.senha };
+               $http.post("/login/efetuarlogout", dadosLogin)
+                .success(function() {
+                    window.location.href="/login.html";
+                }
+                )
+                .error(deuErro);
+           })
+           .error(deuErro);
+    };
 }]);
 
 
