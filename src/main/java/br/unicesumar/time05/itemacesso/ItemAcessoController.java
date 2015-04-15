@@ -20,7 +20,7 @@ public class ItemAcessoController {
     }
     
     @RequestMapping(value = "/{aSuperiorId}",method = RequestMethod.GET)
-    public List<Map<String, Object>> getItensAcessoPorSuperior(@PathVariable Long aSuperior ){
-        return service.getItensAcessoPorSuperior(aSuperior);
+    public List<Map<String, Object>> getItensAcessoPorSuperior(@PathVariable Long aSuperiorId ){
+        return service.getItensAcessoPorSuperior(aSuperiorId);
     }
 }
