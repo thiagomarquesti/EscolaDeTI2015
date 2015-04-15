@@ -39,19 +39,25 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.logar = function(){
         
-        $http.get("/login/verificaLogin"/ + $scope.login.login)
+        $http.get("/login/statusLogin"/ + $scope.login.login)
                     .success(function(data){
                         var status = data[0].status;
-                        alert(status);
+                        console.log(status);
+                        if(status === 0){
+                            $http.post("/login/efetuarlogin", $scope.login)
+                            .success(function(data){
+                                window.location.href="/";
+                                }       
+                            )
+                               .error(erroLogin);
+                        }
+                        else {
+                            $scope.uBloqueado = true;
+                        }
                     })
                     .error(deuErro);
         
-        $http.post("/login/efetuarlogin", $scope.login)
-        .success(function(data){
-            window.location.href="/";
-            }       
-        )
-           .error(erroLogin);
+        
     };
     
 }]);
