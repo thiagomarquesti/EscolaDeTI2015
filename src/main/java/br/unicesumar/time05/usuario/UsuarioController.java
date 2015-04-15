@@ -20,12 +20,7 @@ public class UsuarioController {
     
     @RequestMapping(method = RequestMethod.POST)
     public void salvarUsuario(@RequestBody Usuario aUsuario){
-        //try {
             usuarioService.salvarUsuario(aUsuario);
-        //} catch (Exception e) {
-        //    throw new RuntimeException("Erro ao salvar o usuário, verifique os dados fornecidos!");
-        //}
-    
     }
     
     @RequestMapping(method = RequestMethod.GET)

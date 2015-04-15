@@ -27,8 +27,9 @@ public class UsuarioService {
     public void salvarUsuario(Usuario aUsuario){
         try {
             usuarioRepo.save(aUsuario);
+            usuarioRepo.flush();
         } catch (Exception e) {
-            throw new RuntimeException("ola");
+            throw new RuntimeException(e);
         }
     }
     
