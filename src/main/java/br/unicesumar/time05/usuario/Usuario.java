@@ -1,7 +1,11 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.itemacesso.ItemAcesso;
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +35,34 @@ public class Usuario  implements Serializable{
     @NotBlank(message = "Campo senha não pode estar vazio")
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\p{Punct}).{6,10})")
     private String senha;
+    
+    private Set<PerfilDeAcesso> perfis = new HashSet<>();
+    
+    private Set<ItemAcesso> ItensAvulsos = new HashSet<>();
+
+    public Set<PerfilDeAcesso> getPerfis() {
+        return perfis;
+    }
+
+    public void addPerfis(PerfilDeAcesso perfil) {
+        this.perfis.add(perfil);
+    }
+
+    public Set<ItemAcesso> getItensAvulsos() {
+        return ItensAvulsos;
+    }
+
+    public void addItensAvulsos(ItemAcesso ItenAvulso) {
+        boolean jaExiste = false;
+        for (PerfilDeAcesso perfil : perfis) {
+            if(perfil.getItens().contains(ItenAvulso)){
+                jaExiste = true;
+            }
+        }
+        if(!jaExiste){
+            this.ItensAvulsos.add(ItenAvulso);
+        }
+    }
     
     private Status status = Status.INATIVO;
     
