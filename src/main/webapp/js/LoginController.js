@@ -11,12 +11,8 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
          $http.get("/login/usuariologado")
            .success(function(data){
                if(data.id){
-                   //alert($location.protocol() + "://" + $location.host() + ":" + $location.port());
                    console.log(data.id);
                    window.location.href="/";
-               }
-               else{
-                   
                }
            })
            .error(deuErro);
@@ -38,7 +34,7 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.logar = function(){
         $http.get("/login/statusLogin/" + $scope.login.login)
-                    .success(function(data, status){
+                    .success(function(data){
                         //console.log(data.length);
                         if(data.length > 0) {
                             var statusUsuario = data[0].status;
@@ -56,12 +52,14 @@ module.controller("LoginController", ["$scope", "$http", "$routeParams", "$locat
                             }
                         }
                         else {
-                            console.log("dfsfdsfsdf");
+                            erroLogin();
                         }
                     })
-                    .error(deuErro);
+                    .error(alert("Não foi possível retornar um valor válido!"));
         
         
     };
+    
+
     
 }]);
