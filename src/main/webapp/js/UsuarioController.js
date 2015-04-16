@@ -23,7 +23,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                    window.location.href="/login.html";
                }
            })
-           .error(alert("Erro do capeta"));
+           .error(deuErro);
     };
     
     $scope.salvar = function(){
@@ -38,7 +38,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                        window.location.href="/login.html";
                    }
                })
-               .error(alert("Erro ao salvar usuário!"));
+               .error(deuErro);
         }
         else {
             $http.put("/usuario/", $scope.usuario)
@@ -46,7 +46,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                    alert("Usuário atualizado com sucesso!");
                    $location.path("/Usuario/listar");
                })
-               .error(alert("Erro ao editar o usuário!"));
+               .error(deuErro);
         }
 
     };
@@ -56,12 +56,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            .success(function(data){
                $scope.usuarios = data;
            })
-           .error(alert("Erro ao atualizar a lista de usuários."));
+           .error(deuErro);
     };
-
-    function deuErro(){
-        alert("Algo deu errado. Tente novamente.");
-     }
 
     $scope.editar = function(usuario) {
         $location.path("/Usuario/editar/" + usuario.id);
@@ -113,6 +109,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            })
            .error(deuErro);
     };
+    
+    function deuErro(){
+        alert("Algo deu errado. Tente novamente.");
+    }
 }]);
 
 
