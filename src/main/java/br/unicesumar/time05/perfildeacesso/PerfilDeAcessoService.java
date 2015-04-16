@@ -1,12 +1,10 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;

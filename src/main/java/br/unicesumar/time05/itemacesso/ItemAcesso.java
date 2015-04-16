@@ -3,11 +3,14 @@ package br.unicesumar.time05.itemacesso;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso {
@@ -16,11 +19,16 @@ public class ItemAcesso {
     private Long id;
     private String nome;
     private String rota;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "superior_id")
     private ItemAcesso superior;
 
     public ItemAcesso() {
+    }
+
+    public ItemAcesso(String nome, String rota) {
+        this.nome = nome;
+        this.rota = rota;
     }
 
     public ItemAcesso(String nome, String rota, ItemAcesso superior) {
