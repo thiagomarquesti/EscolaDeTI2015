@@ -19,7 +19,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
          $http.get("/login/usuariologado")
            .success(function(data){
                if(!data.id){
-                   alert(data.id);
                    window.location.href="/login.html";
                }
            })
