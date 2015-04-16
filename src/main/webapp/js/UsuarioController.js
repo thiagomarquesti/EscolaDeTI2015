@@ -21,6 +21,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                if(!data.id){
                    window.location.href="/login.html";
                }
+               else {
+                   $scope.nomeUsuario = data.nome;
+               }
            })
            .error(deuErro);
     };
@@ -79,7 +82,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .success(function(data){
                         $scope.usuario = data[0];
                         $scope.usuario.rsenha = $scope.usuario.senha;
-                        console.log(data[0]);
+                        //console.log(data[0]);
                         $scope.isNovo = false;
                     })
                     .error(deuErro);
