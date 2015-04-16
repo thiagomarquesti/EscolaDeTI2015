@@ -6,6 +6,10 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
     function erroLogin() {
         alert("Login ou senha incorretos. Tente novamente.");
     }
+    
+    function erroBloqueio() {
+        alert("Esse usuário está com o acesso bloqueado Procure um administrador.");
+    }
 
     $scope.verificaTelaLogin = function () {
         $http.get("/login/usuariologado")
@@ -47,7 +51,7 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
                                     .error(erroLogin);
                         }
                         else {
-                            $scope.uBloqueado = true;
+                            erroBloqueio();
                         }
                     }
                     else {
