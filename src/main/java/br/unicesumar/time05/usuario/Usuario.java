@@ -29,7 +29,7 @@ public class Usuario  implements Serializable{
     private String email;
     
     @NotBlank(message = "Campo senha não pode estar vazio")
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!.]).{6,10})")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\p{Punct}).{6,10})")
     private String senha;
     
     private Status status = Status.INATIVO;
