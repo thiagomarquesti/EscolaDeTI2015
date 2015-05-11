@@ -1,9 +1,9 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Usuario  implements Serializable{
@@ -33,43 +35,18 @@ public class Usuario  implements Serializable{
     private String email;
     
     @NotBlank(message = "Campo senha não pode estar vazio")
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\p{Punct}).{6,10})")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
-    private Set<PerfilDeAcesso> perfis = new HashSet<>();
-    
-    private Set<ItemAcesso> ItensAvulsos = new HashSet<>();
-
-    public Set<PerfilDeAcesso> getPerfis() {
-        return perfis;
-    }
-
-    public void addPerfis(PerfilDeAcesso perfil) {
-        this.perfis.add(perfil);
-    }
-
-    public Set<ItemAcesso> getItensAvulsos() {
-        return ItensAvulsos;
-    }
-
-    public void addItensAvulsos(ItemAcesso ItenAvulso) {
-        boolean jaExiste = false;
-        for (PerfilDeAcesso perfil : perfis) {
-            if(perfil.getItens().contains(ItenAvulso)){
-                jaExiste = true;
-            }
-        }
-        if(!jaExiste){
-            this.ItensAvulsos.add(ItenAvulso);
-        }
-    }
-    
     private Status status = Status.INATIVO;
+    
+    @ManyToMany
+    private Set<PerfilDeAcesso> perfis;
     
     public Usuario() {
     }
 
-    public Usuario(String nome, String login, String email, String senha, Status status) {
+    public Usuario(String nome, String login, String email, String senha) {
         this.nome = nome;
         this.login = login;
         this.email = email;
@@ -119,6 +96,15 @@ public class Usuario  implements Serializable{
     public void setStatus(Status status) {
         this.status = status;
     }
+    
+    public void setPerfil(List<PerfilDeAcesso> perfis){
+        this.perfis.addAll(perfis);
+    }
+    
+    public Set<PerfilDeAcesso> getPerfis(){
+        return Collections.unmodifiableSet(this.perfis);
+    }
+    
     
     @Override
     public int hashCode() {

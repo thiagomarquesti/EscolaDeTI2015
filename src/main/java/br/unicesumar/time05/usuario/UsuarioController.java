@@ -1,7 +1,9 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +74,15 @@ public class UsuarioController {
     public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId){
         return usuarioService.verificarLogin(aLogin, aUsuarioId);
     }
+  
+    @RequestMapping(value = "/perfil/{aUsuarioId}", method = RequestMethod.GET)
+    public Set<PerfilDeAcesso> getPerfis(@PathVariable Long aUsuarioId){
+        return usuarioService.getPerfis(aUsuarioId);
+    }
+    
+    @RequestMapping(value = "/perfil/{aUsuarioId}", method = RequestMethod.POST)
+    public void addPerfilDeAcesso(@PathVariable Long aUsuarioId, @RequestBody Long[] aPerfilId){
+        usuarioService.addPerfil(aUsuarioId, aPerfilId);
+    }
+    
 }
