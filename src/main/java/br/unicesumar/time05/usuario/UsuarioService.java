@@ -25,19 +25,17 @@ public class UsuarioService {
     public void salvarUsuario(Usuario aUsuario){
             usuarioRepo.save(aUsuario);
     }
-    
-    
-    
+      
     public void removerUsuario(Long aUsuarioId){
         try {
             usuarioRepo.delete(aUsuarioId);
         } catch (Exception e) {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new RuntimeException("Usuario não encontrado!");
         }
     }
     
     public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = jdbcTemplate.query("select id, nome, login, email, senha, status from usuario"
+        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT id, nome, login, email, senha, status FROM usuario"
                 , new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(usuarios);
     }
@@ -106,7 +104,7 @@ public class UsuarioService {
                 usuario.setStatus(Status.ATIVO);
             usuarioRepo.save(usuario);
         } catch (Exception e) {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new RuntimeException("Usuario não encontrado!");
         }
     }
 

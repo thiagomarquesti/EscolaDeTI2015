@@ -33,7 +33,7 @@ public class Usuario  implements Serializable{
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
-    private Status status = Status.INATIVO;
+    private Status status = Status.ATIVO;
     
     public Usuario() {
     }

@@ -12,7 +12,7 @@
             <div class="form-group">    
                 <label for="nome" class="col-md-2 control-label">Nome:</label>
                 <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
-            </div>
+            </div>            
             <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
                 <span ng-show="formCad.nome.$error.required">Preencha seu nome completo. </span>
                 <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
@@ -37,8 +37,9 @@
             <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
                 <span ng-show="formCad.email.$error.required">Preencha seu e-mail. </span>
                 <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
-                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.   </span>
+                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
             </div>
+            
             <div class="form-group">
                 <label for="senha" class="col-md-2 control-label">Senha: </label>
                 <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
@@ -49,6 +50,7 @@
                 <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
                 <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
             </div>
+            
             <div class="form-group">
                 <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
                 <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
@@ -60,8 +62,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Alterar</button>
+                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>Alterar</button>
                     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
                 </div>
         </form>
