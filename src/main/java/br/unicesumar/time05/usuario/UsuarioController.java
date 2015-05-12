@@ -76,7 +76,7 @@ public class UsuarioController {
     }
   
     @RequestMapping(value = "/perfil/{aUsuarioId}", method = RequestMethod.GET)
-    public Set<PerfilDeAcesso> getPerfis(@PathVariable Long aUsuarioId){
+    public List<Map<String, Object>> getPerfis(@PathVariable Long aUsuarioId){
         return usuarioService.getPerfis(aUsuarioId);
     }
     

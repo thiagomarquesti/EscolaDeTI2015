@@ -1,12 +1,10 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import br.unicesumar.time05.itemacesso.ItemAcesso;
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +16,7 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity(name = "perfildeacesso")
-public class PerfilDeAcesso implements Serializable {
+public class PerfilDeAcesso {
     
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -26,7 +24,7 @@ public class PerfilDeAcesso implements Serializable {
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
     private String nome;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cascade(CascadeType.ALL)
     @JoinTable(name = "perfildeacesso_itemacesso",
             joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "id")},
@@ -38,7 +36,7 @@ public class PerfilDeAcesso implements Serializable {
 
     public PerfilDeAcesso(String nome, Set<ItemAcesso> itens) {
         this.nome = nome;
-        this.itens.addAll(itens);
+        this.itens = itens;
     }
 
     public Long getId() {

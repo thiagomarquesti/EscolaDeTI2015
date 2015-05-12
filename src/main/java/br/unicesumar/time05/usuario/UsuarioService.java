@@ -152,8 +152,18 @@ public class UsuarioService {
         this.salvarUsuario(usuario);
     }
 
-    public Set<PerfilDeAcesso> getPerfis(Long aUsuarioId){
-        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
-        return usuario.getPerfis();
+    public List<Map<String, Object>> getPerfis(Long aUsuarioId){
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aId", aUsuarioId);
+        
+        String sql = 
+                  "SELECT p.id, "
+                + "       p.nome "
+                + "  FROM usuario_perfis up "
+                + "  JOIN perfildeacesso p ON (up.perfis_id = p.id) "
+                + " WHERE up.perfis_id = :aId";
+        
+        List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
+        return itensPerfilDeAcesso;
     }
 }
