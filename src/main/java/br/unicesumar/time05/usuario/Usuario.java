@@ -38,7 +38,7 @@ public class Usuario  implements Serializable{
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
-    private Status status = Status.INATIVO;
+    private Status status = Status.ATIVO;
     
     @ManyToMany
     private Set<PerfilDeAcesso> perfis;
@@ -99,6 +99,10 @@ public class Usuario  implements Serializable{
     
     public void setPerfil(List<PerfilDeAcesso> perfis){
         this.perfis.addAll(perfis);
+    }
+
+    public void removerPerfil(PerfilDeAcesso perfil){
+        this.perfis.remove(perfil);
     }
     
     public Set<PerfilDeAcesso> getPerfis(){

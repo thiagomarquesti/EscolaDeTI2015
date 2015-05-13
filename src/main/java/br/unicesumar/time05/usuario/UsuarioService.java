@@ -161,9 +161,16 @@ public class UsuarioService {
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
                 + "  JOIN perfildeacesso p ON (up.perfis_id = p.id) "
-                + " WHERE up.perfis_id = :aId";
+                + " WHERE up.usuario_id = :aId";
         
         List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
         return itensPerfilDeAcesso;
+    }
+
+    public void deletePerfis(Long aUsuarioId, Long[] perfis){
+        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+        for (Long perfil : perfis) {
+            usuario.removerPerfil(perfilRepo.findOne(perfil));
+        }
     }
 }

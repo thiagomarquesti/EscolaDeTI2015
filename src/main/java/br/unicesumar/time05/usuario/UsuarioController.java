@@ -84,5 +84,10 @@ public class UsuarioController {
     public void addPerfilDeAcesso(@PathVariable Long aUsuarioId, @RequestBody Long[] aPerfilId){
         usuarioService.addPerfil(aUsuarioId, aPerfilId);
     }
+
+    @RequestMapping(value = "/perfil/{aUsuarioId}", method = RequestMethod.DELETE)
+    public void deletarPerfilDeAcesso(@PathVariable Long aUsuarioId, @RequestBody Long[] aPerfilId){
+        usuarioService.deletePerfis(aUsuarioId, aPerfilId);
+    }
     
 }
