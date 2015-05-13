@@ -2,6 +2,8 @@ package br.unicesumar.time05.usuario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +20,7 @@ public class UsuarioController {
     
     @RequestMapping(method = RequestMethod.POST)
     public void salvarUsuario(@RequestBody Usuario aUsuario){
-        try {
             usuarioService.salvarUsuario(aUsuario);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar o usuário, verifique os dados fornecidos!");
-        }
-    
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -43,7 +40,7 @@ public class UsuarioController {
     
     @RequestMapping(method = RequestMethod.PUT)
     public void editarUsuario(@RequestBody Usuario aUsuario){
-        usuarioService.salvarUsuario(aUsuario);
+            usuarioService.salvarUsuario(aUsuario);
     }
 
     @RequestMapping(value = "/{aUsuarioId}", method = RequestMethod.PUT)
