@@ -56,14 +56,7 @@ public class PerfilDeAcessoService {
     }
     
     public void salvarPerfilDeAcesso(PerfilDeAcesso aPerfilDeAcesso){
-        //Para pegar a referência do intem que está no banco, o perfil precisa ser reconstruido antes de ser persistido
-        PerfilDeAcesso novo = new PerfilDeAcesso(aPerfilDeAcesso.getNome(), null);
-        Set<ItemAcesso> itens = new HashSet<>();
-        for (ItemAcesso item : aPerfilDeAcesso.getItens()) {
-            itens.add(ItemRepo.findOne(item.getId()));
-        }
-        novo.setItens(itens);
-        repo.save(novo);
+        repo.save(aPerfilDeAcesso);
     }
     
     public void removerPerfilDeAcesso(Long aId){
