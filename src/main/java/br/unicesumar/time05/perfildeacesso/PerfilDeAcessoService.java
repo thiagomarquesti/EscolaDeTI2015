@@ -1,9 +1,13 @@
 package br.unicesumar.time05.perfildeacesso;
 
+import br.unicesumar.time05.itemacesso.ItemAcesso;
+import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
 import br.unicesumar.time05.rowMapper.MapRowMapper;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -19,6 +23,8 @@ public class PerfilDeAcessoService {
     
     @Autowired
     private PerfilDeAcessoRepository repo;
+    @Autowired
+    private ItemAcessoRepository ItemRepo;
     
     public List<Map<String, Object>> getPerfisDeAcesso(){
         List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("SELECT id, nome FROM perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
@@ -50,7 +56,14 @@ public class PerfilDeAcessoService {
     }
     
     public void salvarPerfilDeAcesso(PerfilDeAcesso aPerfilDeAcesso){
-        repo.save(aPerfilDeAcesso);
+        //Para pegar a referência do intem que está no banco, o perfil precisa ser reconstruido antes de ser persistido
+        PerfilDeAcesso novo = new PerfilDeAcesso(aPerfilDeAcesso.getNome(), null);
+        Set<ItemAcesso> itens = new HashSet<>();
+        for (ItemAcesso item : aPerfilDeAcesso.getItens()) {
+            itens.add(ItemRepo.findOne(item.getId()));
+        }
+        novo.setItens(itens);
+        repo.save(novo);
     }
     
     public void removerPerfilDeAcesso(Long aId){

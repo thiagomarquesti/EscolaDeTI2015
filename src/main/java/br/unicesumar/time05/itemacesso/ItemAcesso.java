@@ -1,5 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name = "itemacesso")
-public class ItemAcesso {
+public class ItemAcesso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;

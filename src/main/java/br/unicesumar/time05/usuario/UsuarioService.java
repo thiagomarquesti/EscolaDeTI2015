@@ -1,9 +1,13 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.rowMapper.MapRowMapper;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
@@ -23,6 +27,8 @@ public class UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepo;
+    @Autowired
+    private PerfilDeAcessoRepository perfilRepo;
     
     public void salvarUsuario(Usuario aUsuario){
         try {
@@ -44,7 +50,7 @@ public class UsuarioService {
     }
     
     public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = jdbcTemplate.query("select id, nome, login, email, senha, status from usuario"
+        List<Map<String, Object>> usuarios = jdbcTemplate.query("select id, nome, login, email, status from usuario"
                 , new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(usuarios);
     }
@@ -52,7 +58,7 @@ public class UsuarioService {
     public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, nome, login, email, senha, status FROM usuario "+
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, nome, login, email, status FROM usuario "+
                  "WHERE id = :aUsuarioId", params, new MapRowMapper());
         return Collections.unmodifiableList(usuario);
     }
@@ -134,5 +140,37 @@ public class UsuarioService {
         params.addValue("aId", aUsuarioId);
         List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, login FROM usuario WHERE login = :aLogin AND id <> :aId", params, new MapRowMapper());
         return usuario.isEmpty();
+    }
+    
+    public void addPerfil(Long aUsuarioId, Long[] aPerfilId){
+        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+        List<PerfilDeAcesso> perfis = new ArrayList<>();
+        for (Long aPerfil : aPerfilId) {
+            perfis.add(perfilRepo.findOne(aPerfil));
+        }
+        usuario.setPerfil(perfis);
+        this.salvarUsuario(usuario);
+    }
+
+    public List<Map<String, Object>> getPerfis(Long aUsuarioId){
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aId", aUsuarioId);
+        
+        String sql = 
+                  "SELECT p.id, "
+                + "       p.nome "
+                + "  FROM usuario_perfis up "
+                + "  JOIN perfildeacesso p ON (up.perfis_id = p.id) "
+                + " WHERE up.usuario_id = :aId";
+        
+        List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
+        return itensPerfilDeAcesso;
+    }
+
+    public void deletePerfis(Long aUsuarioId, Long[] perfis){
+        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+        for (Long perfil : perfis) {
+            usuario.removerPerfil(perfilRepo.findOne(perfil));
+        }
     }
 }
