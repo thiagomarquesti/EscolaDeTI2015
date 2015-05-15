@@ -12,30 +12,36 @@ import org.springframework.stereotype.Component;
 @Component
 @Transactional
 public class InicializadorItemAcesso {
+
     @Autowired
     private ItemAcessoRepository repo;
-    
+
     @PostConstruct
-    public void inicializar(){
-    List<ItemAcesso> itensAcesso = new ArrayList();
+    public void inicializar() {
+        Long linhas = repo.count();
+        List<ItemAcesso> itensAcesso = new ArrayList();
+        ItemAcesso menu = new ItemAcesso("Menu", "/");
+        if(linhas == 0){
+            repo.save(menu);
+            menu.setSuperior(menu);
+            itensAcesso.add(menu);
+        }
+
+        ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario", "", menu);
+        itensAcesso.add(menuUsuario);
+        itensAcesso.add(new ItemAcesso("Listar", "#/usuario/list", menuUsuario));
+        itensAcesso.add(new ItemAcesso("Novo", "#/usuario/novo", menuUsuario));
+
+        ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil", "", menu);
+        itensAcesso.add(menuPerfil);
+        itensAcesso.add(new ItemAcesso("Listar", "#/perfil/list", menuPerfil));
+        itensAcesso.add(new ItemAcesso("Novo", "#/perfil/novo", menuPerfil));
         
-       
-       ItemAcesso menu = new ItemAcesso("Menu", "/");
-       repo.save(menu);
-       menu.setSuperior(menu);
-       itensAcesso.add(menu); 
-       
-       ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario","", menu);
-       itensAcesso.add(menuUsuario);
-       itensAcesso.add(new ItemAcesso("Listar", "#/usuario/list", menuUsuario));
-       itensAcesso.add(new ItemAcesso("Novo", "#/usuario/novo", menuUsuario));
-       
-       ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil","", menu); 
-       itensAcesso.add(menuPerfil);
-       itensAcesso.add(new ItemAcesso("Listar", "#/perfil/list", menuPerfil));
-       itensAcesso.add(new ItemAcesso("Novo", "#/perfil/novo", menuPerfil));
-       for(ItemAcesso ia: itensAcesso){
-           repo.save(ia);
-        } 
+        if(linhas.intValue() < itensAcesso.size()){
+            List<ItemAcesso> itens = itensAcesso.subList(linhas.intValue(), itensAcesso.size());
+            for (ItemAcesso ia : itens) {
+                repo.save(ia);
+            }
+        }
     }
 }
