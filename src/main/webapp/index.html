@@ -21,53 +21,37 @@
 
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/usuario.css" rel="stylesheet" type="text/css"/>
-
         <link rel="stylesheet" href="bootstrap/css/font-icons/entypo/css/entypo.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
         <link rel="stylesheet" href="neon/css/neon-core.css"><!-- Importante -->
         <link rel="stylesheet" href="neon/css/custom.css">
 
         <script>$.noConflict();</script>
-
-
     </head>
     <body ng-controller="UsuarioController" ng-init="verificaLogado()" class="page-body  page-fade">
-
-
-
         <div class="page-container class="col-md-2"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-
              <div class="sidebar-menu">
-
                 <div class="sidebar-menu-inner">
-
                     <header class="logo-env">
-
                         <!-- logo -->
                         <div class="logo">
                             <a href="index.html">
                                 <h2 class="h2x">Time 05</h2>
                             </a>
                         </div>
-
                         <!-- Iconezinho que esconde e abre os menu -->
                         <div class="sidebar-collapse">
                             <a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
                                 <i class="entypo-menu"></i>
                             </a>
                         </div>
-
-
                         <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
                         <div class="sidebar-mobile-menu visible-xs">
                             <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
                                 <i class="entypo-menu"></i>
                             </a>
                         </div>
-
                     </header>
-
 
                     <ul id="main-menu" class="main-menu">
                         <!-- add class "multiple-expanded" to allow multiple submenus to open -->
