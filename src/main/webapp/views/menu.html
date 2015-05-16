@@ -1,0 +1,68 @@
+<body class="page-body  page-fade">
+
+    <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+        <div class="sidebar-menu">
+
+            <div class="sidebar-menu-inner">
+
+                <header class="logo-env">
+
+                    <!-- logo -->
+                    <div class="logo">
+                        <a href="index.html">
+                            <h2 class="h2x">Time 05</h2>
+                        </a>
+                    </div>
+
+                    <!-- Iconezinho que esconde e abre os menu -->
+                    <div class="sidebar-collapse">
+                        <a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+
+
+                    <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                    <div class="sidebar-mobile-menu visible-xs">
+                        <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+
+                </header>
+
+
+                <ul id="main-menu" class="main-menu">
+                    <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                    <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                    <li class="active  active">
+                        <a href="index.html">
+                            <i class="fa fa-user"></i>
+                            <span class="title">Gerenciar Usuário</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="#/Usuario/listar"">
+                                    <span class="title">Listar Usuário</span>
+                                </a>
+                            </li>
+                        </ul>	
+                    </li>
+
+                    <li class="active  active">
+                        <a href="#">
+                            <i class="fa fa-pencil"></i>
+                            <span class="title">Gerenciar Perfil</span>
+                        </a>
+                        <ul>
+                            <li class="active">
+                                <a href="#/Perfil/listar">
+                                    <span class="title">Listar Perfil</span>
+                                </a>
+                            </li>
+                        </ul>	
+                    </li>
+               </ul>
+            </div>
+        </div>
