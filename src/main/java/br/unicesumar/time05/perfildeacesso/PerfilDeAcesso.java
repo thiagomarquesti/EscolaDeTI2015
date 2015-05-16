@@ -25,7 +25,6 @@ public class PerfilDeAcesso {
     @NotBlank(message = "o nome não pode ser vazio!")
     private String nome;
     @ManyToMany
-    @Cascade(CascadeType.ALL)
     @JoinTable(name = "perfildeacesso_itemacesso",
             joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "id")})
