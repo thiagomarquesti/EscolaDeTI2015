@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+//    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private String nome;
     private String rota;
@@ -29,12 +29,14 @@ public class ItemAcesso implements Serializable {
     public ItemAcesso() {
     }
 
-    public ItemAcesso(String nome, String rota) {
+    public ItemAcesso(Long id, String nome, String rota) {
+        this.id = id;
         this.nome = nome;
         this.rota = rota;
     }
 
-    public ItemAcesso(String nome, String rota, ItemAcesso superior) {
+    public ItemAcesso(Long id, String nome, String rota, ItemAcesso superior) {
+        this.id = id;
         this.nome = nome;
         this.rota = rota;
         this.superior = superior;

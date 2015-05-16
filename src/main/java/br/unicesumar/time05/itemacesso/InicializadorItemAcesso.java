@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,33 +16,33 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private ItemAcessoRepository repo;
-
+    
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+    
     @PostConstruct
     public void inicializar() {
+        
+        repo.deleteAll();
+        
         Long linhas = repo.count();
         List<ItemAcesso> itensAcesso = new ArrayList();
-        ItemAcesso menu = new ItemAcesso("Menu", "/");
-        if(linhas == 0){
-            repo.save(menu);
-            menu.setSuperior(menu);
-            itensAcesso.add(menu);
-        }
+        ItemAcesso menu = new ItemAcesso(1l, "Menu", "/");
+        repo.save(menu);
+        menu.setSuperior(menu);
+        itensAcesso.add(menu);
 
-        ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario", "", menu);
+        ItemAcesso menuUsuario = new ItemAcesso(2l, "Cadastro de Usuario", "", menu);
         itensAcesso.add(menuUsuario);
-        itensAcesso.add(new ItemAcesso("Listar", "#/usuario/list", menuUsuario));
-        itensAcesso.add(new ItemAcesso("Novo", "#/usuario/novo", menuUsuario));
+        itensAcesso.add(new ItemAcesso(3l, "Listar", "#/usuario/list", menuUsuario));
+        itensAcesso.add(new ItemAcesso(4l, "Novo", "#/usuario/novo", menuUsuario));
 
-        ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil", "", menu);
+        ItemAcesso menuPerfil = new ItemAcesso(5l, "Cadastro de Perfil", "", menu);
         itensAcesso.add(menuPerfil);
-        itensAcesso.add(new ItemAcesso("Listar", "#/perfil/list", menuPerfil));
-        itensAcesso.add(new ItemAcesso("Novo", "#/perfil/novo", menuPerfil));
-        
-        if(linhas.intValue() < itensAcesso.size()){
-            List<ItemAcesso> itens = itensAcesso.subList(linhas.intValue(), itensAcesso.size());
-            for (ItemAcesso ia : itens) {
-                repo.save(ia);
-            }
+        itensAcesso.add(new ItemAcesso(6l, "Listar", "#/perfil/list", menuPerfil));
+        itensAcesso.add(new ItemAcesso(7l, "Novo", "#/perfil/novo", menuPerfil));
+        for (ItemAcesso ia : itensAcesso) {
+            repo.save(ia);
         }
     }
 }
