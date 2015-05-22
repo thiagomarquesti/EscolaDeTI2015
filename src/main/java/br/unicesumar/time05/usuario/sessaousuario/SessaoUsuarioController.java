@@ -24,18 +24,17 @@ public class SessaoUsuarioController {
     }
     
     @RequestMapping(value = "/efetuarlogout", method = RequestMethod.POST)
-    public boolean efetuarLogout(@RequestBody DadosLogin aDadosLogin, HttpSession session){
-        return service.efetuarLogout(aDadosLogin, session);
+    public void efetuarLogout(HttpSession session){
+        service.efetuarLogout(session);
     }
     
     @RequestMapping(value = "/usuariologado", method = RequestMethod.GET)
-    public Usuario getUsuarioLogado(){
+    public Map<String, Object> getUsuarioLogado(){
         return service.getUsuarioLogado();
     }
     
     @RequestMapping(value = "/statusLogin/{aLogin:.+}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){
-        System.out.println(aLogin);
+    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){        
         return service.getStatusPorLogin(aLogin);
     }
 }
