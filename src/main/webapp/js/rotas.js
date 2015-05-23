@@ -16,6 +16,19 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/cadUsuario.html',
         controller: 'UsuarioController'
+
+    }).when('/Perfil/listar', {
+        templateUrl: 'views/listarPerfis.html',
+        controller: 'PerfilController'
+    }).when('/Perfil/novo', {
+        templateUrl: 'views/cadPerfil.html',
+        controller: 'PerfilController'
+    }).when('/Perfil/editar/:id', {
+        templateUrl: 'views/cadPerfil.html',
+        controller: 'PerfilController'
+    }).when('/Perfil/editar', {
+        templateUrl: 'views/cadPerfil.html',
+        controller: 'PerfilController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
