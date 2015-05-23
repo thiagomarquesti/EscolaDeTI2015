@@ -34,11 +34,11 @@ public class ItemAcessoService {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aSuperiorId", aSuperiorId);
         
-        String sql = " SELECT id, nome, rota, superior_id " +
+        String vSql = " SELECT id, nome, rota, superior_id " +
                      "   FROM itemacesso " +
                      "  WHERE superior_id = :aSuperiorId ";
         
-        List<Map<String, Object>> itensDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
+        List<Map<String, Object>> itensDeAcesso = jdbcTemplate.query(vSql, params, new MapRowMapper());
         return Collections.unmodifiableList(itensDeAcesso);
     }
     
