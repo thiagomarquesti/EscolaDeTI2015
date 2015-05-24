@@ -1,5 +1,3 @@
-module = angular.module("usuarioApp", ['ngRoute', 'UserValidation']);
-
 valida = angular.module('UserValidation', []);
 
 valida.directive('passwordMatch', [function () {

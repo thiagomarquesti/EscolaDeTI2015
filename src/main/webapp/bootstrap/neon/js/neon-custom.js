@@ -1619,13 +1619,13 @@ function setup_horizontal_menu()
 	var $					  = jQuery,
 		$nav_bar_menu		  = public_vars.$horizontalMenu.find('.navbar-nav'),
 		$items_with_submenu	  = $nav_bar_menu.find('li:has(ul)'),
-		$search				  = public_vars.$horizontalMenu.find('li#search'),
+		$search                   = public_vars.$horizontalMenu.find('li#search'),
 		$search_input		  = $search.find('.search-input'),
 		$search_submit		  = $search.find('form'),
 		root_level_class 	  = 'root-level'
 		is_multiopen 		  = $nav_bar_menu.hasClass('multiple-expanded'),
 		submenu_options		  = {
-			submenu_open_delay: 0.5,
+			submenu_open_delay: 0.3,
 			submenu_open_easing: Sine.easeInOut,
 			submenu_opened_class: 'opened'
 		};

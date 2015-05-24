@@ -23,9 +23,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                }
                else {
                    $scope.nomeUsuario = data.nome;
+                   
                }
            })
-           .error(deuErro);
+           .error(function(){
+               window.location.href="/login.html"
+           });
     };
     
     $scope.salvar = function(){
@@ -116,5 +119,3 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         alert("Algo deu errado. Tente novamente.");
     }
 }]);
-
-

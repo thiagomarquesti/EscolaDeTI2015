@@ -5,16 +5,16 @@ module.config(function($routeProvider, $locationProvider) {
         template: '<h1>Página inicial</h1>',
         controller: 'UsuarioController'
     }).when('/Usuario/listar', {
-        templateUrl: 'views/listarUsuarios.html',
+        templateUrl: 'views/usuariosListar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
-        templateUrl: 'views/cadUsuario.html',
+        templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/editar/:id', {
-        templateUrl: 'views/cadUsuario.html',
+        templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/editar', {
-        templateUrl: 'views/cadUsuario.html',
+        templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
     }).otherwise ({ redirectTo: '/' });
 
