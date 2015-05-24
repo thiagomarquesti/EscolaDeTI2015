@@ -39,11 +39,9 @@
 
             <div class="form-group" ng-init="itensAcesso()">
                 <label for="nome" class="col-md-2 control-label">Adicionar Itens</label>
-                <select class="itemAcesso" multiple="multiple" ng-model="perfil.itens" style="width: 75%">
-                    <option value="ListarUsuarios">Ads</option>
-                    <option value="ASdf">Adm</option>
-                    <option value="asdf">CIv</option>
-                </select>
+                <select id="itensselecionados" class="itemAcesso" ng-model="itens" multiple="multiple" style="width: 75%">
+                    <option ng-repeat="item in itens" value="item.id" >{{item.nome}}</option>
+                </select>               
             </div>
 
             <div class="form-group">

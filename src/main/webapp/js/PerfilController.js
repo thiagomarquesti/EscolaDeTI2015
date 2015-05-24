@@ -52,6 +52,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         $scope.itensAcesso = function () {
             $http.get("/itemacesso")
                     .success(function (data) {
+                        //console.log(data) 
                         $scope.itens = data;
                     })
                     .error(deuErro);
