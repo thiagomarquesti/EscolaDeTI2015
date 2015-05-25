@@ -49,13 +49,23 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                     .error(deuErro);
         };
 
-        $scope.itensAcesso = function () {
-            $http.get("/itemacesso")
-                    .success(function (data) {
-                        //console.log(data) 
-                        $scope.itens = data;
-                    })
-                    .error(deuErro);
+        $scope.itensAcesso = function (perfil) {
+            if ($scope.isNovo) {
+                $http.get("/itemacesso")
+                        .success(function (data) {
+                            //console.log(data) 
+                            $scope.itens = data;
+                        })
+                        .error(deuErro);
+            } else {
+                $http.get("/perfildeacesso/itensdeacesso/"+perfil.id)
+                        .success(function (data) {
+                            //console.log(data) 
+                            $scope.itens = data;
+                        })
+                        .error(deuErro);
+            }
+
         };
 
         function deuErro() {
