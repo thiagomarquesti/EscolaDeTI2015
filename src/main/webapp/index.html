@@ -34,7 +34,7 @@
         
         <!-- <script>$.noConflict();</script> -->
     </head>
-    <body ng-controller="UsuarioController"  class="page-body page-fade" ><!-- ng-init="verificaLogado()" > -->
+    <body ng-controller="UsuarioController"  class="page-body page-fade-only" ><!-- ng-init="verificaLogado()" > -->
         <div class="page-container">
              <div class="sidebar-menu">
                 <div class="sidebar-menu-inner">
@@ -100,7 +100,19 @@
                 
                     <div id="topo" class="navbar navbar-default navbar-static-top">
                         <ul class="list-inline links-list pull-right">
-                            <li>{{nomeUsuario}}</li>
+                            <li>
+                                <div class="btn-group">
+                                    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        Eduardo Betioli <i class="entypo-down-open-big right"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a>Alterar meus dados</a></li>
+                                        <li><a>Alterar minha senha</a></li>
+                                    </ul>
+                                </div>
+                                
+                                {{nomeUsuario}}
+                            </li>
                             <li class="sep"></li>
                             <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                         </ul>

@@ -32,8 +32,8 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li><a ng-click="editar(u)">Editar</a></li>
-                            <li ng-show="u.status == 0"><a data="{{u.id}}" ng-click="alteraStatus(u.id)">Bloquear</a></li>
-                            <li ng-show="u.status == 1"><a data="{{u.id}}" ng-click="alteraStatus(u.id)">Desbloquear</a></li>
+                            <li ng-show="u.status == 0"><a data="{{u.id}}" ng-click="alteraStatus(u.id)">Bloquear acesso</a></li>
+                            <li ng-show="u.status == 1"><a data="{{u.id}}" ng-click="alteraStatus(u.id)">Desbloquear acesso</a></li>
                         </ul>
                     </div>
                     <!-- <button class="btn btn-warning" ng-click="editar(u)">Editar</button>
