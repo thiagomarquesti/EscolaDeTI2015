@@ -1,6 +1,10 @@
-<div ng-init="carregar()" class="panel panel-default">
+<div ng-init="carregar()" class="panel panel-gradient">
 
-    <div class="panel-heading"><h1 class="panel-title">Cadastro de usuário</h1></div>
+    <div class="panel-heading panel-title">Cadastro de usuário
+        <div class="panel-options">
+           <a href="" data-rel="collapse"><i class="entypo-down-open"></i></a>
+        </div>
+    </div>
     <div class="panel-body">
         <form name="formCad" novalidate class="form-horizontal">
 
@@ -67,8 +71,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span>Alterar</button>
+                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Alterar</button>
                     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
                 </div>
             </div>

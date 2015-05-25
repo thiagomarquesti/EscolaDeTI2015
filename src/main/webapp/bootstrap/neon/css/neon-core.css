@@ -197,7 +197,7 @@ h6,
   font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
-  color: white;
+  color: #373e4a;
 }
 h1 small,
 h2 small,
@@ -9241,9 +9241,4 @@ body.page-fade-only-init > .page-container {
     left: auto;
     right: 0;
   }
-}
-
-.h2x {
-
-  margin-top: 0px;
 }

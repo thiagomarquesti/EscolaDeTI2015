@@ -75,7 +75,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                })
                .error(deuErro);
     };
-
+    
+    $scope.statusArray =  {"0":"Acesso Liberado", "1":"Acesso Bloqueado", "":"Sem acesso"};
+    $scope.corStatus =  {"0":"success", "1":"danger", "":"info"};
+    
     $scope.carregar = function(){
         if($location.path() === "/Usuario/novo"){
             novoUsuario();
