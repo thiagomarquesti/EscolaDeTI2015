@@ -27,10 +27,10 @@ public class SessaoUsuarioService {
 
     public boolean efetuarLogin(DadosLogin aDadosLogin, HttpSession session) {
 
-        String SQL = "SELECT u.id"
-                + "  FROM usuario u"
-                + " WHERE u.login = :login"
-                + "   AND u.senha = :senha";
+        String SQL = "SELECT u.id "
+                + "  FROM usuario u "
+                + " WHERE u.login = :login "
+                + "   AND u.senha = :senha ";
 
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("login", aDadosLogin.getLogin());
@@ -49,7 +49,7 @@ public class SessaoUsuarioService {
     }
 
     public Map<String, Object> getUsuarioLogado() {
-        if (sessaoUsuario != null) {
+        if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
             String SQL = "SELECT u.id, u.nome"
                     + "     FROM usuario u"
                     + "    WHERE u.id = :id";
@@ -80,8 +80,8 @@ public class SessaoUsuarioService {
 
     public List<Map<String, Object>> getStatusPorLogin(String aLogin) {
 
-        String SQL =
-                "SELECT u.status "
+        String SQL
+                = "SELECT u.status "
                 + "  FROM usuario u "
                 + " WHERE u.login = :aLogin";
 
@@ -90,5 +90,33 @@ public class SessaoUsuarioService {
 
         List<Map<String, Object>> statusUsuario = jdbcTemplate.query(SQL, params, new MapRowMapper());
         return statusUsuario;
+    }
+
+    List<Map<String, Object>> getItensDeAcessoUsuarioLogado() {
+
+        if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
+            String SQL
+                    = "  SELECT ia.id, "
+                    + "         ia.nome, "
+                    + "         ia.rota, "
+                    + "         ia.superior_id "
+                    + "    FROM usuario_perfis up "
+                    + "    JOIN perfildeacesso pa ON (up.perfis_id = pa.id) "
+                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.id = pai.itemacesso_id) "
+                    + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.id) "
+                    + "   WHERE up.usuario_id = 1 "
+                    + "GROUP BY ia.id, "
+                    + "         ia.nome, "
+                    + "         ia.rota, "
+                    + "         ia.superior_id "
+                    + "ORDER BY ia.id ";
+
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("idUsuario", sessaoUsuario.getUsuario().getId());
+
+            List<Map<String, Object>> statusUsuario = jdbcTemplate.query(SQL, params, new MapRowMapper());
+            return statusUsuario;
+        }
+        return null;
     }
 }
