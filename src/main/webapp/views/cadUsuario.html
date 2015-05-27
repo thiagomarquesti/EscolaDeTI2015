@@ -57,7 +57,7 @@
 
             <div ng-show="isNovo" class="form-group">
                 <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
-                <div class="col-md-10"><input type="pazssword" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
+                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
             </div>
             
             <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">

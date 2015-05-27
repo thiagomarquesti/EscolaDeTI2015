@@ -1,14 +1,14 @@
 module.controller("LoginController", ["$scope", "$http", function ($scope, $http) {
 
     function deuErro() {
-        alert("Algo deu errado. Tente novamente.");
+        toastr.error("Algo deu errado. Tente novamente.");
     }
     function erroLogin() {
-        alert("Login ou senha incorretos. Tente novamente.");
+        toastr.warning("Login ou senha incorretos. Tente novamente.");
     }
     
     function erroBloqueio() {
-        alert("Esse usuário está com o acesso bloqueado Procure um administrador.");
+        toastr.warning("Esse usuário está com o acesso bloqueado Procure um administrador.");
     }
 
     $scope.verificaTelaLogin = function () {

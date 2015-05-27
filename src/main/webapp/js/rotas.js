@@ -1,5 +1,5 @@
 module.config(function($routeProvider, $locationProvider) {
-
+//------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
         template: '<h1>Página inicial</h1>',
@@ -16,7 +16,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/cadUsuario.html',
         controller: 'UsuarioController'
-
+//------- Rotas do Perfil --------
     }).when('/Perfil/listar', {
         templateUrl: 'views/listarPerfis.html',
         controller: 'PerfilController'
