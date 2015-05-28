@@ -23,11 +23,9 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
         $scope.salvar = function () {
             if ($scope.isNovo) {
-            $scope.perfil.itens = $(".itemAcesso").select2("val");
-                $http.post("/perfildeacesso", $scope.perfil)
+                $http.post("/perfildeacesso", createJsonPerfil())
                         .success(function () {
                             toastr.success("Perfil cadastrado com sucesso!");
-                            toastr.success($scope.perfil.itens);
                             $location.path("/Perfil/listar");
                         })
                         .error(deuErro);
@@ -87,9 +85,12 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             });
         };
 
+        function createJsonPerfil() {
+            var txt = "" + $(".itemAcesso").val();
+            txt = '{"nome": "'+$scope.perfil.nome+'" , "itens": ['+txt+']};';
+            return txt;
+        }
+
     }]);
-$(document).ready(function () {
-    $(".itemAcesso").select2();
-});
 
 
