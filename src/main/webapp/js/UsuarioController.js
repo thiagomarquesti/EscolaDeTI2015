@@ -23,9 +23,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                }
                else {
                    $scope.nomeUsuario = data.nome;
+                   
                }
            })
-           .error(deuErro);
+           .error(function(){
+               window.location.href="/login.html"
+           });
     };
     
     $scope.salvar = function(){
@@ -72,7 +75,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                })
                .error(deuErro);
     };
-
+    
+    $scope.statusArray =  {"0":"Acesso Liberado", "1":"Acesso Bloqueado", "":"Sem acesso"};
+    $scope.corStatus =  {"0":"success", "1":"danger", "":"info"};
+    
     $scope.carregar = function(){
         if($location.path() === "/Usuario/novo"){
             novoUsuario();
@@ -116,5 +122,3 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         alert("Algo deu errado. Tente novamente.");
     }
 }]);
-
-
