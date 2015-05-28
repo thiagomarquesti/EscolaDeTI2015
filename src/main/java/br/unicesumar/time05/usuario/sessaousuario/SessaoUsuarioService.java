@@ -102,7 +102,7 @@ public class SessaoUsuarioService {
                     + "         ia.superior_id "
                     + "    FROM usuario_perfis up "
                     + "    JOIN perfildeacesso pa ON (up.perfis_id = pa.id) "
-                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.id = pai.itemacesso_id) "
+                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.id = pai.perfildeacesso_id) "
                     + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.id) "
                     + "   WHERE up.usuario_id = 1 "
                     + "GROUP BY ia.id, "
