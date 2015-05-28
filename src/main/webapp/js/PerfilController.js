@@ -23,9 +23,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
         $scope.salvar = function () {
             if ($scope.isNovo) {
+            $scope.perfil.itens = $(".itemAcesso").select2("val");
                 $http.post("/perfildeacesso", $scope.perfil)
                         .success(function () {
                             toastr.success("Perfil cadastrado com sucesso!");
+                            toastr.success($scope.perfil.itens);
                             $location.path("/Perfil/listar");
                         })
                         .error(deuErro);
@@ -58,7 +60,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         })
                         .error(deuErro);
             } else {
-                $http.get("/perfildeacesso/itensdeacesso/"+perfil.id)
+                $http.get("/perfildeacesso/itensdeacesso/" + perfil.id)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itens = data;
@@ -86,5 +88,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
 
     }]);
+$(document).ready(function () {
+    $(".itemAcesso").select2();
+});
 
 

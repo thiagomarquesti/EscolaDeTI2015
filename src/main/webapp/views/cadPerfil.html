@@ -7,12 +7,6 @@
     <script src="../js/PerfilController.js"></script>
 
 
-    <script>
-            $(document).ready(function () {
-                $(".itemAcesso").select2();
-            })
-    </script>
-
 
 
 
@@ -38,10 +32,11 @@
             <div class="form-group" ng-init="itensAcesso()">
                 <label for="nome" class="control-label" style="margin-left: 40px; margin-right: 25px">Adicionar Itens:</label>
                 <select id="itensselecionados" class="itemAcesso" multiple="multiple" style="width: 80%">
-                    <option ng-repeat="item in itens" value="{{item.id}}"  >{{item.nome}}</option>
-                </select>               
+                    <option ng-repeat="item in itens" value="{{item}}">{{item.nome}}</option>
+                </select>    
+                <!--<button class="itemget">A</button>-->
             </div>
-
+            <!--{{perfil.itens}}-->
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formPerfil.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar Perfil</button>
