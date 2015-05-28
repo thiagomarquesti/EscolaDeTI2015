@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionSystemException;
 
 @Component
 @Transactional
@@ -27,6 +24,7 @@ public class UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepo;
+    
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
     
