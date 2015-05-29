@@ -23,7 +23,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                $http.post("/perfildeacesso", createJsonPerfil())
+                $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil cadastrado com sucesso!");
                             $location.path("/Perfil/listar");
@@ -31,7 +31,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .error(deuErro);
             }
             else {
-                $http.put("/perfildeacesso/", $scope.perfil)
+                $http.put("/perfildeacesso/", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil atualizado com sucesso!");
                             $location.path("/Perfil/listar");
@@ -58,7 +58,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         })
                         .error(deuErro);
             } else {
-                $http.get("/perfildeacesso/itensdeacesso/" + perfil.id)
+                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itens = data;
@@ -85,10 +85,24 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             });
         };
 
-        function createJsonPerfil() {
-            var txt = "" + $(".itemAcesso").val();
-            txt = '{"nome": "'+$scope.perfil.nome+'" , "itens": ['+txt+']};';
-            return txt;
+        function select2() {
+            $(document).ready(function () {
+                $(".itemAcesso").select2();
+            });
+        }
+
+        function createJsonPerfil(novo) {
+
+            var perfil = "" + $(".itemAcesso").val();
+            if (perfil === "null") {
+                perfil = "";
+            }
+            if (novo) {
+                perfil = '{"nome": "' + $scope.perfil.nome + '" , "itens": [' + perfil + ']};';
+            } else {
+                perfil = '{"id":' + $scope.perfil.id + ', "nome": "' + $scope.perfil.nome + '", "itens": [' + perfil + ']};';
+            }
+            return perfil;
         }
 
     }]);

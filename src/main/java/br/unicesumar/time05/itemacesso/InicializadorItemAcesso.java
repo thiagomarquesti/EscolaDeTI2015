@@ -34,13 +34,13 @@ public class InicializadorItemAcesso {
 
         ItemAcesso menuUsuario = new ItemAcesso(2l, "Cadastro de Usuario", "", menu);
         itensAcesso.add(menuUsuario);
-        itensAcesso.add(new ItemAcesso(3l, "Listar", "#/usuario/list", menuUsuario));
-        itensAcesso.add(new ItemAcesso(4l, "Novo", "#/usuario/novo", menuUsuario));
+        itensAcesso.add(new ItemAcesso(3l, "Listar Usuário", "#/usuario/list", menuUsuario));
+        itensAcesso.add(new ItemAcesso(4l, "Novo Usuário", "#/usuario/novo", menuUsuario));
 
         ItemAcesso menuPerfil = new ItemAcesso(5l, "Cadastro de Perfil", "", menu);
         itensAcesso.add(menuPerfil);
-        itensAcesso.add(new ItemAcesso(6l, "Listar", "#/perfil/list", menuPerfil));
-        itensAcesso.add(new ItemAcesso(7l, "Novo", "#/perfil/novo", menuPerfil));
+        itensAcesso.add(new ItemAcesso(6l, "Listar Perfil", "#/perfil/list", menuPerfil));
+        itensAcesso.add(new ItemAcesso(7l, "Novo Perfil", "#/perfil/novo", menuPerfil));
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
