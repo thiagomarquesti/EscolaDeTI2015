@@ -49,23 +49,21 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                     .error(deuErro);
         };
 
-        $scope.itensAcesso = function (perfil) {
-            if ($scope.isNovo) {
-                $http.get("/itemacesso")
+        $scope.itensAcesso = function () {
+            $http.get("/itemacesso")
+                    .success(function (data) {
+                        //console.log(data) 
+                        $scope.itens = data;
+                    })
+                    .error(deuErro);
+            if (!$scope.isNovo) {
+                $http.get("/perfildeacesso/itensdeacesso/"+$routeParams.id)
                         .success(function (data) {
                             //console.log(data) 
-                            $scope.itens = data;
-                        })
-                        .error(deuErro);
-            } else {
-                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
-                        .success(function (data) {
-                            //console.log(data) 
-                            $scope.itens = data;
+                            $scope.itensDoPerfil = data;
                         })
                         .error(deuErro);
             }
-
         };
 
         function deuErro() {
@@ -90,6 +88,17 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 $(".itemAcesso").select2();
             });
         }
+
+        $scope.selected = function (itemId) {
+            var itens = $scope.itensDoPerfil;
+            retorno = false;
+            for(i = 0; i < itens.length; i++){
+                if(itens[i].id === itemId){
+                    retorno = true;
+                }
+            }
+            return retorno;
+        };
 
         function createJsonPerfil(novo) {
 
