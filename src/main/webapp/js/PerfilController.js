@@ -9,6 +9,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.carregar = function () {
+            $(document).ready(function () {
+                $(".itemAcesso").select2();
+            });
+            
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
                 $(".itemAcesso").select2('val','All');
