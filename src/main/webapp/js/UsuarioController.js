@@ -118,6 +118,22 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            .error(deuErro);
     };
     
+    &scope.listaItensAcessoDoMenu = function(){
+        &http.get("/usuariologado/itensdeacesso")
+        .success(function(data){
+            for(){
+                
+            }
+            $scope.itensAcesso = data;
+        })
+        .error(erroListarItensAcessoDoMenu);
+    }
+    
+    function erroListarItensAcessoDoMenu(){
+        alert("Atenção, erro ao subir os itens de acesso do usuário!");
+    }
+
+    
     function deuErro(){
         alert("Algo deu errado. Tente novamente.");
     }
