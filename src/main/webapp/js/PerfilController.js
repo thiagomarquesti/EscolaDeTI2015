@@ -65,8 +65,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
+                            //alert(data.val());
                         })
-                        .error(deuErro);
+                                .error(function(){toastr.error("TESTE");})
+                        //.error(deuErro);
             }
         };
 
