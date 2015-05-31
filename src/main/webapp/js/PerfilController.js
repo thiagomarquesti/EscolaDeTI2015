@@ -8,7 +8,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             $scope.isNovo = true;
         }
         
-        $(".itemAcesso").select2();
+        $("#itensselecionados").select2();
         
         $scope.carregar = function () {
             if ($location.path() === "/Perfil/novo") {
