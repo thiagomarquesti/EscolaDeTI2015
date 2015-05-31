@@ -11,6 +11,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         $scope.carregar = function () {
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
+                $(".itemAcesso").select2('val','All');
+                
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
@@ -57,7 +59,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                     })
                     .error(deuErro);
             if (!$scope.isNovo) {
-                $http.get("/perfildeacesso/itensdeacesso/"+$routeParams.id)
+                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
@@ -83,17 +85,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             });
         };
 
-        function select2() {
-            $(document).ready(function () {
-                $(".itemAcesso").select2();
-            });
-        }
-
         $scope.selected = function (itemId) {
             var itens = $scope.itensDoPerfil;
             retorno = false;
-            for(i = 0; i < itens.length; i++){
-                if(itens[i].id === itemId){
+            for (i = 0; i < itens.length; i++) {
+                if (itens[i].id === itemId) {
                     retorno = true;
                 }
             }
