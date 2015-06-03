@@ -32,7 +32,7 @@
         <script>$.noConflict();</script>
 
     </head>
-    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ><!-- ng-init="verificaLogado()" > -->
+    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ng-init="listaItensAcessoDoMenu()"><!-- ng-init="verificaLogado()" > -->
         <div class="page-container">
             <div class="sidebar-menu">
                 <div class="sidebar-menu-inner">
@@ -58,8 +58,8 @@
                     </header>
 
                 <div ui-tree>
-                    <ol ui-tree-nodes="" ng-model="list">
-                       <li ng-repeat="item in list" ui-tree-node>
+                    <ol ui-tree-nodes="" ng-model="itensAcesso">
+                       <li ng-repeat="item in itensAcesso" ui-tree-node>
                             <div ui-tree-handle>
                                 {{item.title}}
                             </div>
