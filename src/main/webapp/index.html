@@ -32,7 +32,7 @@
         <script>$.noConflict();</script>
 
     </head>
-    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ng-init="listaItensAcessoDoMenu()"><!-- ng-init="verificaLogado()" > -->
+    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only"><!-- ng-init="verificaLogado()" > -->
         <div class="page-container">
             <div class="sidebar-menu">
                 <div class="sidebar-menu-inner">
@@ -57,7 +57,7 @@
                         </div>
                     </header>
 
-                <div ui-tree>
+<!--                <div ui-tree> ng-init="listaItensAcessoDoMenu()">
                     <ol ui-tree-nodes="" ng-model="itensAcesso">
                        <li ng-repeat="item in itensAcesso" ui-tree-node>
                             <div ui-tree-handle>
@@ -72,9 +72,27 @@
                             </ol>
                         </li>
                     </ol>
-                </div>
-                    
-<!--                    <ul id="main-menu" class="main-menu auto-inherit-active-class" ng-init="listaItensAcessoDoMenu">
+                </div>-->
+
+                <ul ui-tree id="main-menu" class="main-menu auto-inherit-active-class"> <!--ng-init="listaItensAcessoDoMenu()">-->
+                    <li ui-tree-nodes="" class="root-level has-sub" ng-model="itensAcesso">
+                       <li ng-repeat="item in itensAcesso" ui-tree-node>
+                            <a ui-tree-handle>
+                                <i class="fa fa-user"></i>
+                                <span class="title">{{item.title}}</span>
+                            </a>
+                            <ul ui-tree-nodes="" ng-model="item.items">
+                                <li ng-repeat="subItem in item.items" ui-tree-node>
+                                    <a ui-tree-handle>
+                                        <span class="title">{{subItem.title}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </li>
+                </ul>
+
+<!--                <ul id="main-menu" class="main-menu auto-inherit-active-class" ng-init="listaItensAcessoDoMenu">
                         <li class="root-level has-sub">
                             <ul>
                                 <li ng-repeat="item in itensAcesso">
@@ -150,7 +168,6 @@
         <script src="bootstrap/neon/js/joinable.js"></script>
         <script src="bootstrap/neon/js/resizeable.js"></script>
         <script src="bootstrap/neon/js/neon-api.js"></script>
-
         <script src="bootstrap/neon/js/neon-custom.js"></script>
 
     </body>
