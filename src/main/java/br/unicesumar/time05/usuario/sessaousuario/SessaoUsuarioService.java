@@ -27,7 +27,7 @@ public class SessaoUsuarioService {
 
     public boolean efetuarLogin(DadosLogin aDadosLogin, HttpSession session) {
 
-        String SQL = "SELECT u.idUsuario "
+        String SQL = "SELECT u.idusuario "
                 + "  FROM usuario u "
                 + " WHERE u.login = :login "
                 + "   AND u.senha = :senha ";
@@ -37,7 +37,7 @@ public class SessaoUsuarioService {
         params.addValue("senha", aDadosLogin.getSenha());
 
         List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, new MapRowMapper());
-        Long idUsuario = (Long) result.get(0).get("idUsuario");
+        Long idUsuario = (Long) result.get(0).get("idusuario");
 
         Usuario usuario = usuarioRepo.findOne(idUsuario);
         if ((usuario != null) && usuario.getStatus() == Status.ATIVO) {
@@ -50,9 +50,9 @@ public class SessaoUsuarioService {
 
     public Map<String, Object> getUsuarioLogado() {
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL = "SELECT u.idUsuario, u.nome"
+            String SQL = "SELECT u.idusuario, u.nome"
                     + "     FROM usuario u"
-                    + "    WHERE u.idUsuario = :id";
+                    + "    WHERE u.idusuario = :id";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
@@ -96,20 +96,20 @@ public class SessaoUsuarioService {
 
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
             String SQL
-                    = "  SELECT ia.idItemAcesso, "
+                    = "  SELECT ia.iditemacesso, "
                     + "         ia.nome, "
                     + "         ia.rota, "
                     + "         ia.superior_id "
                     + "    FROM usuario_perfis up "
-                    + "    JOIN perfildeacesso pa ON (up.perfis_id = pa.idPerfilDeAcesso) "
-                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.idPerfilDeAcesso = pai.perfildeacesso_id) "
-                    + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.idItemAcesso) "
+                    + "    JOIN perfildeacesso pa ON (up.perfis_id = pa.idperfildeacesso) "
+                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.idperfildeacesso = pai.perfildeacesso_id) "
+                    + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.iditemacesso) "
                     + "   WHERE up.usuario_id = :idUsuario "
-                    + "GROUP BY ia.idItemAcesso, "
+                    + "GROUP BY ia.iditemacesso, "
                     + "         ia.nome, "
                     + "         ia.rota, "
                     + "         ia.superior_id "
-                    + "ORDER BY ia.idItemAcesso ";
+                    + "ORDER BY ia.iditemacesso ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdUsuario());

@@ -27,14 +27,14 @@ public class PerfilDeAcessoService {
     private ItemAcessoRepository ItemRepo;
     
     public List<Map<String, Object>> getPerfisDeAcesso(){
-        List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("SELECT idPerfilDeAcesso, nome FROM perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
+        List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("SELECT idperfildeacesso, nome FROM perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(perfisDeAcesso);
     }
     
     public List<Map<String, Object>> getPerfilDeAcesso(Long aId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aId", aId);
-        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT idPerfilDeAcesso, nome FROM perfildeacesso WHERE idPerfilDeAcesso = :aId", params, new MapRowMapper());
+        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT idperfildeacesso, nome FROM perfildeacesso WHERE idperfildeacesso = :aId", params, new MapRowMapper());
         return perfilDeAcesso;
     }
 
@@ -43,12 +43,12 @@ public class PerfilDeAcessoService {
         params.addValue("aId", aId);
         
         String sql = 
-                  "SELECT i.idItemAcesso, "
+                  "SELECT i.iditemacesso, "
                 + "       i.nome, "
                 + "       i.rota, "
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
-                + "  JOIN itemacesso i ON (pi.itemacesso_id = i.idItemAcesso) "
+                + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "
                 + " WHERE pi.perfildeacesso_id = :aId";
         
         List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
