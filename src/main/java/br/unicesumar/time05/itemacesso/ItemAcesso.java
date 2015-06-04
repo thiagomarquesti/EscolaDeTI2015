@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 public class ItemAcesso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long idItemAcesso;
     private String nome;
     private String rota;
     @ManyToOne
@@ -38,8 +38,8 @@ public class ItemAcesso implements Serializable {
         this.superior = superior;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdItemAcesso() {
+        return idItemAcesso;
     }
 
     public String getNome() {
@@ -69,7 +69,7 @@ public class ItemAcesso implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.idItemAcesso);
         return hash;
     }
 
@@ -82,7 +82,7 @@ public class ItemAcesso implements Serializable {
             return false;
         }
         final ItemAcesso other = (ItemAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.idItemAcesso, other.idItemAcesso)) {
             return false;
         }
         return true;
@@ -90,7 +90,7 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemAcesso{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
+        return "ItemAcesso{" + "id=" + idItemAcesso + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
     }
         
 }

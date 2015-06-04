@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Usuario  implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long idUsuario;
     
     @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
@@ -89,8 +89,8 @@ public class Usuario  implements Serializable{
         this.senha = senha;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
     public Status getStatus() {
@@ -117,7 +117,7 @@ public class Usuario  implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -130,7 +130,7 @@ public class Usuario  implements Serializable{
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.idUsuario, other.idUsuario)) {
             return false;
         }
         return true;
@@ -138,7 +138,7 @@ public class Usuario  implements Serializable{
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + '}';
+        return "Usuario{" + "id=" + idUsuario + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + '}';
     }
     
 }

@@ -24,14 +24,14 @@ public class PerfilDeAcesso implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long idPerfilDeAcesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
     private String nome;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfildeacesso_itemacesso",
-            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idPerfilDeAcesso")},
+            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "idItemAcesso")})
     private Set<ItemAcesso> itens;
 
     public PerfilDeAcesso() {
@@ -42,8 +42,8 @@ public class PerfilDeAcesso implements Serializable{
         this.itens = itens;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPerfilDeAcesso() {
+        return idPerfilDeAcesso;
     }
 
     public String getNome() {
@@ -65,7 +65,7 @@ public class PerfilDeAcesso implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.idPerfilDeAcesso);
         return hash;
     }
 
@@ -78,7 +78,7 @@ public class PerfilDeAcesso implements Serializable{
             return false;
         }
         final PerfilDeAcesso other = (PerfilDeAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.idPerfilDeAcesso, other.idPerfilDeAcesso)) {
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ public class PerfilDeAcesso implements Serializable{
 
     @Override
     public String toString() {
-        return "PerfilDeAcesso{" + "id=" + id + ", nome=" + nome + ", itens=" + itens + '}';
+        return "PerfilDeAcesso{" + "id=" + idPerfilDeAcesso + ", nome=" + nome + ", itens=" + itens + '}';
     }
     
     
