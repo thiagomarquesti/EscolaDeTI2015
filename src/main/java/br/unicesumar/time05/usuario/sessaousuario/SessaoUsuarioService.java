@@ -55,7 +55,7 @@ public class SessaoUsuarioService {
                     + "    WHERE u.idUsuario = :id";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("id", sessaoUsuario.getUsuario().getId());
+            params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
 
             return jdbcTemplate.query(SQL, params, new MapRowMapper()).get(0);
         }
@@ -112,7 +112,7 @@ public class SessaoUsuarioService {
                     + "ORDER BY ia.idItemAcesso ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("idUsuario", sessaoUsuario.getUsuario().getId());
+            params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdUsuario());
 
             List<Map<String, Object>> statusUsuario = jdbcTemplate.query(SQL, params, new MapRowMapper());
             return statusUsuario;

@@ -20,8 +20,7 @@
                     </tr>
                 </thead>
                 <tbody ng-init="atualizar()">
-                    <tr ng-repeat='u in filtered = (usuarios| filter:busca
-                            )' >
+                    <tr ng-repeat='u in filtered = (usuarios| filter:busca)' >
                         <td><span class="badge badge-{{corStatus[u.status]}} tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.id}}</span></td>
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>

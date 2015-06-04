@@ -18,7 +18,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.verificaLogado = function(){
          $http.get("/login/usuariologado")
            .success(function(data){
-               if(!data.id){
+               if(!data.idUsuario){
                    window.location.href="/login.html";
                }
                else {

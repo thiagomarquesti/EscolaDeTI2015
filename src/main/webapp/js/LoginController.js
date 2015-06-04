@@ -14,8 +14,8 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
     $scope.verificaTelaLogin = function () {
         $http.get("/login/usuariologado")
                 .success(function (data) {
-                    if (data.id) {
-                        console.log(data.id);
+                    if (data.idUsuario) {
+                        console.log(data.idUsuario);
                         window.location.href = "/";
                     }
                 })
