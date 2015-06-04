@@ -1,11 +1,13 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
+import com.sun.javafx.beans.IDProperty;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.jar.Attributes;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,13 +17,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Usuario  implements Serializable{
-    @Id
+    @Id    
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long idUsuario;
     

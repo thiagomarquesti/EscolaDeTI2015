@@ -29,8 +29,8 @@ valida.directive('loginUnique', ['$http', function ($http) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
                         if (scope.usuario.login) {
-                            if (scope.usuario.id) {
-                                var dados = scope.usuario.login + "/" + scope.usuario.id;
+                            if (scope.usuario.idUsuario) {
+                                var dados = scope.usuario.login + "/" + scope.usuario.idUsuario;
                             }
                             else {
                                 var dados = scope.usuario.login;
@@ -53,8 +53,8 @@ valida.directive('emailUnique', ['$http', function ($http) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
                         if (scope.usuario.email) {
-                            if (scope.usuario.id) {
-                                var dados = scope.usuario.email + "/" + scope.usuario.id;
+                            if (scope.usuario.idUsuario) {
+                                var dados = scope.usuario.email + "/" + scope.usuario.idUsuario;
                             }
                             else {
                                 var dados = scope.usuario.email;
