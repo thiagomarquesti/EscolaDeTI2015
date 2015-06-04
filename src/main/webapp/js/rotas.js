@@ -16,6 +16,9 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
+    }).when('/Etnias', {
+        templateUrl: 'views/etnias.html',
+        controller: 'EtniaController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
