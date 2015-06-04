@@ -93,19 +93,19 @@
                         </li>
                     </li>
                 </ul>-->
-
+<!--{{itensAcesso}}-->
         <!--<div ng-controller="UsuarioController">-->
             <div ui-tree>
               <ol  ui-tree-nodes ng-model="itensAcesso">
                 <li ng-repeat="row in itensAcesso" ui-tree-node>
                   <div ui-tree-handle>
-                    {{row.id}}{{row.title}}
+                    {{row.id}}{{row.nome}}{{row.rota}}
                   </div>
 
                   <ol ui-tree-nodes ng-model="row.items">
                     <li ng-repeat="column in row.items" ui-tree-node>
                       <div ui-tree-handle>
-                        {{column.id}}{{row.title}}
+                        {{column.id}}{{column.nome}}
                       </div>
                     </li>
                   </ol>

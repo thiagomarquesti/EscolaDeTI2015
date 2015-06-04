@@ -1,49 +1,46 @@
 module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location){
 
     $scope.itensAcesso = [
-                                  {
-                                    "id": 1,
-                                    "title": "1. dragon-breath",
-                                    "items": []
-                                  },
-                                  {
-                                    "id": 2,
-                                    "title": "2. moiré-vision",
-                                    "items": [
-                                      {
-                                        "id": 21,
-                                        "title": "2.1. tofu-animation",
-                                        "items": [
-                                          {
-                                            "id": 211,
-                                            "title": "2.1.1. spooky-giraffe",
-                                            "items": []
-                                          },
-                                          {
-                                            "id": 212,
-                                            "title": "2.1.2. bubble-burst",
-                                            "items": []
-                                          }
+                            {
+                                "id": 1,
+                                "nome": "Menu",
+                                "rota": "",
+                                "items": [
+                                        {"id": 2,
+                                        "nome": "Cadastro de Usuario",
+                                        "rota": "",
+                                        "items":[
+                                                {"id": 3,
+                                                "nome": "Listar Usuário",
+                                                "rota": "#/usuario/list",
+                                                "items":[]
+                                                },
+                                                {"id": 4,
+                                                "nome": "Novo Usuário",
+                                                "rota": "#/usuario/novo",
+                                                "items":[]
+                                                }
+                                                ]
+                                        },
+                                        {"id": 5,
+                                        "nome": "Cadastro de Perfil",
+                                        "rota": "",
+                                        "items":[
+                                                {"id": 6,
+                                                "nome": "Listar Perfil",
+                                                "rota": "#/perfil/list",
+                                                "items":[]
+                                                },
+                                                {"id": 7,
+                                                "nome": "Novo Perfil",
+                                                "rota": "#/perfil/novo",
+                                                "items":[]
+                                                }
+                                                ]
+                                        }
                                         ]
-                                      },
-                                      {
-                                        "id": 22,
-                                        "title": "2.2. barehand-atomsplitting",
-                                        "items": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "id": 3,
-                                    "title": "3. unicorn-zapper",
-                                    "items": []
-                                  },
-                                  {
-                                    "id": 4,
-                                    "title": "4. romantic-transclusion",
-                                    "items": []
-                                  }
-                                ];
+                            }
+                            ];
 
     function novoUsuario(){
         $scope.usuario = {
