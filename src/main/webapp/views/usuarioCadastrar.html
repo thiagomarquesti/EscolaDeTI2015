@@ -1,8 +1,9 @@
-<div ng-init="carregar()" class="panel panel-gradient">
+<div ng-init="carregar()" class="panel panel-info">
 
-    <div class="panel-heading panel-title">Cadastro de usuário
+    <div class="panel-heading"> 
+        <div class="panel-title">Cadastrar usuário</div>
         <div class="panel-options">
-           <a href="" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            <a href="" data-rel="collapse"><i class="entypo-down-open"></i></a>
         </div>
     </div>
     <div class="panel-body">
@@ -71,8 +72,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Alterar</button>
+                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
                     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
                 </div>
             </div>
