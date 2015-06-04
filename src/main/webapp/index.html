@@ -31,6 +31,8 @@
         <script src="bootstrap/neon/js/jquery-1.11.0.min.js"></script>
         <script>$.noConflict();</script>
 
+        <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+        <script type="text/javascript" src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
     </head>
     <body ng-controller="UsuarioController"  class="page-body gray page-fade-only"><!-- ng-init="verificaLogado()" > -->
         <div class="page-container">
@@ -74,7 +76,7 @@
                     </ol>
                 </div>-->
 
-                <ul ui-tree id="main-menu" class="main-menu auto-inherit-active-class"> <!--ng-init="listaItensAcessoDoMenu()">-->
+<!--                <ul ui-tree id="main-menu" class="main-menu auto-inherit-active-class"> ng-init="listaItensAcessoDoMenu()">
                     <li ui-tree-nodes="" class="root-level has-sub" ng-model="itensAcesso">
                        <li ng-repeat="item in itensAcesso" ui-tree-node>
                             <a ui-tree-handle>
@@ -90,7 +92,27 @@
                             </ul>
                         </li>
                     </li>
-                </ul>
+                </ul>-->
+
+        <!--<div ng-controller="UsuarioController">-->
+            <div ui-tree>
+              <ol  ui-tree-nodes ng-model="itensAcesso">
+                <li ng-repeat="row in itensAcesso" ui-tree-node>
+                  <div ui-tree-handle>
+                    {{row.id}}{{row.title}}
+                  </div>
+
+                  <ol ui-tree-nodes ng-model="row.items">
+                    <li ng-repeat="column in row.items" ui-tree-node>
+                      <div ui-tree-handle>
+                        {{column.id}}{{row.title}}
+                      </div>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
+        <!--</div>-->
 
 <!--                <ul id="main-menu" class="main-menu auto-inherit-active-class" ng-init="listaItensAcessoDoMenu">
                         <li class="root-level has-sub">
@@ -157,7 +179,7 @@
                         <li class="sep"></li>
                         <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                     </ul>
-                </div>  
+                </div> 
                 <div ng-view></div>
             </div>
         </div>
@@ -170,5 +192,6 @@
         <script src="bootstrap/neon/js/neon-api.js"></script>
         <script src="bootstrap/neon/js/neon-custom.js"></script>
 
+        
     </body>
 </html>
