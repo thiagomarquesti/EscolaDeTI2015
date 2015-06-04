@@ -107,6 +107,30 @@
                       <div ui-tree-handle>
                         {{column.id}}{{column.nome}}
                       </div>
+                        
+                        <ol ui-tree-nodes ng-model="column.items">
+                            <li ng-repeat="column in column.items" ui-tree-node>
+                              <div ui-tree-handle>
+                                {{column.id}}{{column.nome}}
+                              </div>
+                                
+                                <ol ui-tree-nodes ng-model="column.items">
+                                <li ng-repeat="column in column.items" ui-tree-node>
+                                  <div ui-tree-handle>
+                                    {{column.id}}{{column.nome}}
+                                  </div>
+                                    
+                                    <ol ui-tree-nodes ng-model="column.items">
+                                        <li ng-repeat="column in column.items" ui-tree-node>
+                                          <div ui-tree-handle>
+                                            {{column.id}}{{column.nome}}
+                                          </div>
+                                        </li>
+                                      </ol>
+                                </li>
+                              </ol>
+                            </li>
+                          </ol>
                     </li>
                   </ol>
                 </li>
