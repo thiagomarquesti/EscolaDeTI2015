@@ -23,7 +23,6 @@ public class InicializadorItemAcesso {
     @PostConstruct
     public void inicializar() {
         
-        repo.deleteAll();
         
         Long linhas = repo.count();
         List<ItemAcesso> itensAcesso = new ArrayList();
