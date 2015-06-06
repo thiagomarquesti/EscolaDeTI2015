@@ -21,7 +21,7 @@
                 </thead>
                 <tbody ng-init="atualizar()">
                     <tr ng-repeat='u in filtered = (usuarios| filter:busca)' >
-                        <td><span class="badge badge-{{corStatus[u.status]}} tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.idUsuario}}</span></td>
+                        <td><span class="badge badge-{{corStatus[u.status]}} tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.idusuario}}</span></td>
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>
                         <td class="hidden-sm hidden-xs">{{u.email}}</td>
@@ -33,8 +33,8 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editar(u)">Editar</a></li>
-                                    <li ng-show="u.status == 0"><a data="{{u.idUsuario}}" ng-click="alteraStatus(u.idUsuario)">Bloquear acesso</a></li>
-                                    <li ng-show="u.status == 1"><a data="{{u.idUsuario}}" ng-click="alteraStatus(u.idUsuario)">Liberar acesso</a></li>
+                                    <li ng-show="u.status == 0"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Bloquear acesso</a></li>
+                                    <li ng-show="u.status == 1"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Liberar acesso</a></li>
                                 </ul>
                             </div>
                         </td>

@@ -18,7 +18,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.verificaLogado = function(){
          $http.get("/login/usuariologado")
            .success(function(data){
-               if(!data.idUsuario){
+               if(!data.idusuario){
                    window.location.href="/login.html";
                }
                else {
@@ -64,7 +64,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     $scope.editar = function(usuario) {
-        $location.path("/Usuario/editar/" + usuario.idUsuario);
+        $location.path("/Usuario/editar/" + usuario.idusuario);
     };
     
     $scope.alteraStatus = function(id) {
