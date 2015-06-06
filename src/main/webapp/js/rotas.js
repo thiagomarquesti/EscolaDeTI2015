@@ -29,6 +29,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar', {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
+//------- Convênio -------        
     }).when('/Convenio', {
         templateUrl: 'views/convenio.html',
         controller: 'ConvenioController'
