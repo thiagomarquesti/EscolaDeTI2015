@@ -95,47 +95,133 @@
                 </ul>-->
 <!--{{itensAcesso}}-->
         <!--<div ng-controller="UsuarioController">-->
+            <ul id="main-menu" class="main-menu auto-inherit-active-class">
+                <li class="root-level">
+                    <a href="#/Etnias">
+                        <i class="fa fa-flag"></i>
+                        <span class="title">Etnias atendidas</span>
+                    </a>	
+                </li>
+
+                <li class="root-level has-sub">
+                    <a href="index.html">
+                        <i class="fa fa-user"></i>
+                        <span class="title">Gerenciar Usuário</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#/Usuario/novo">
+                                <span class="title">Cadastrar Usuário</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/Usuario/listar">
+                                <span class="title">Listar Usuário</span>
+                            </a>
+                        </li>
+                    </ul>	
+                </li>
+
+                <li class="root-level has-sub">
+                    <a href="#">
+                        <i class="fa fa-pencil"></i>
+                        <span class="title">Gerenciar Perfil</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#/Perfil/listar">
+                                <span class="title">Listar Perfil</span>
+                            </a>
+                        </li>
+                    </ul>	
+                </li>
+            </ul>
+                  
             <div ui-tree>
-              <ol  ui-tree-nodes ng-model="itensAcesso">
+              <ul id="main-menu" class="main-menu auto-inherit-active-class" ui-tree-nodes ng-model="itensAcesso">
+                <li class="root-level has-sub" ng-repeat="column in itensAcesso" ui-tree-node>
+                    <a href="{{column.rota}}">
+                        <i class="fa fa-pencil"></i>
+                        <span class="title">{{column.nome}}</span>
+                    </a>
+                    <ul ui-tree-handle ui-tree-nodes ng-model="column.items">
+                        <li ng-repeat="column in column.items" ui-tree-node>
+                            <a href="{{column.rota}}">
+                                <i class="fa fa-pencil"></i>
+                                <span class="title">{{column.nome}}</span>
+                            </a>
+                            <ul ui-tree-handle ui-tree-nodes ng-model="column.items">
+                                <li ng-repeat="column in column.items" ui-tree-node>
+                                    <a href="{{column.rota}}">
+                                        <i class="fa fa-pencil"></i>
+                                        <span class="title">{{column.nome}}</span>
+                                    </a>
+                                    <ul ui-tree-handle ui-tree-nodes ng-model="column.items">
+                                        <li ng-repeat="column in column.items" ui-tree-node>
+                                            <a href="{{column.rota}}">
+                                                <i class="fa fa-pencil"></i>
+                                                <span class="title">{{column.nome}}</span>
+                                            </a>
+                                            <ul ui-tree-handle ui-tree-nodes ng-model="column.items">
+                                                <li ng-repeat="column in column.items" ui-tree-node>
+                                                    <a href="{{column.rota}}">
+                                                        <i class="fa fa-pencil"></i>
+                                                        <span class="title">{{column.nome}}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+              </ul>
+            </div>
+        
+<!--            <div ui-tree>
+              <ul  ui-tree-nodes ng-model="itensAcesso">
                 <li ng-repeat="row in itensAcesso" ui-tree-node>
                   <div ui-tree-handle>
                     {{row.id}}{{row.nome}}{{row.rota}}
                   </div>
 
-                  <ol ui-tree-nodes ng-model="row.items">
+                  <ul ui-tree-nodes ng-model="row.items">
                     <li ng-repeat="column in row.items" ui-tree-node>
                       <div ui-tree-handle>
                         {{column.id}}{{column.nome}}
                       </div>
                         
-                        <ol ui-tree-nodes ng-model="column.items">
+                        <ul ui-tree-nodes ng-model="column.items">
                             <li ng-repeat="column in column.items" ui-tree-node>
                               <div ui-tree-handle>
                                 {{column.id}}{{column.nome}}
                               </div>
                                 
-                                <ol ui-tree-nodes ng-model="column.items">
+                                <ul ui-tree-nodes ng-model="column.items">
                                 <li ng-repeat="column in column.items" ui-tree-node>
                                   <div ui-tree-handle>
                                     {{column.id}}{{column.nome}}
                                   </div>
                                     
-                                    <ol ui-tree-nodes ng-model="column.items">
+                                    <ul ui-tree-nodes ng-model="column.items">
                                         <li ng-repeat="column in column.items" ui-tree-node>
                                           <div ui-tree-handle>
                                             {{column.id}}{{column.nome}}
                                           </div>
                                         </li>
-                                      </ol>
+                                      </ul>
                                 </li>
-                              </ol>
+                              </ul>
                             </li>
-                          </ol>
+                          </ul>
                     </li>
-                  </ol>
+                  </ul>
                 </li>
-              </ol>
-            </div>
+              </ul>
+            </div>-->
+
         <!--</div>-->
 
 <!--                <ul id="main-menu" class="main-menu auto-inherit-active-class" ng-init="listaItensAcessoDoMenu">
