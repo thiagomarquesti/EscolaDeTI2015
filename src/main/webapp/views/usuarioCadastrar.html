@@ -47,7 +47,7 @@
                 <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.   </span>
             </div>
 
-            <div class="form-group">
+            <div ng-show="isNovo" class="form-group">
                 <label for="senha" class="col-md-2 control-label">Senha: </label>
                 <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
             </div>      
@@ -59,7 +59,7 @@
                 <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
             </div>
 
-            <div class="form-group">
+            <div ng-show="isNovo" class="form-group">
                 <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
                 <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
             </div>
