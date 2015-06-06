@@ -16,33 +16,35 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private ItemAcessoRepository repo;
-    
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-    
+
     @PostConstruct
     public void inicializar() {
-        
-        repo.deleteAll();
-        
+
         Long linhas = repo.count();
-        List<ItemAcesso> itensAcesso = new ArrayList();
-        ItemAcesso menu = new ItemAcesso(1l, "Menu", "/");
-        repo.save(menu);
-        menu.setSuperior(menu);
-        itensAcesso.add(menu);
+        if (linhas == 0) {
+            repo.deleteAll();
 
-        ItemAcesso menuUsuario = new ItemAcesso(2l, "Cadastro de Usuario", "", menu);
-        itensAcesso.add(menuUsuario);
-        itensAcesso.add(new ItemAcesso(3l, "Listar Usuário", "#/usuario/list", menuUsuario));
-        itensAcesso.add(new ItemAcesso(4l, "Novo Usuário", "#/usuario/novo", menuUsuario));
+            List<ItemAcesso> itensAcesso = new ArrayList();
+            ItemAcesso menu = new ItemAcesso(1l, "Menu", "/");
+            repo.save(menu);
+            menu.setSuperior(menu);
+            itensAcesso.add(menu);
 
-        ItemAcesso menuPerfil = new ItemAcesso(5l, "Cadastro de Perfil", "", menu);
-        itensAcesso.add(menuPerfil);
-        itensAcesso.add(new ItemAcesso(6l, "Listar Perfil", "#/perfil/list", menuPerfil));
-        itensAcesso.add(new ItemAcesso(7l, "Novo Perfil", "#/perfil/novo", menuPerfil));
-        for (ItemAcesso ia : itensAcesso) {
-            repo.save(ia);
+            ItemAcesso menuUsuario = new ItemAcesso(2l, "Cadastro de Usuario", "", menu);
+            itensAcesso.add(menuUsuario);
+            itensAcesso.add(new ItemAcesso(3l, "Listar Usuário", "#/usuario/list", menuUsuario));
+            itensAcesso.add(new ItemAcesso(4l, "Novo Usuário", "#/usuario/novo", menuUsuario));
+
+            ItemAcesso menuPerfil = new ItemAcesso(5l, "Cadastro de Perfil", "", menu);
+            itensAcesso.add(menuPerfil);
+            itensAcesso.add(new ItemAcesso(6l, "Listar Perfil", "#/perfil/list", menuPerfil));
+            itensAcesso.add(new ItemAcesso(7l, "Novo Perfil", "#/perfil/novo", menuPerfil));
+            for (ItemAcesso ia : itensAcesso) {
+                repo.save(ia);
+            }
         }
     }
 }

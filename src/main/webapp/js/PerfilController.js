@@ -6,15 +6,15 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 itens: []
             };
             $scope.isNovo = true;
-        $("#itensselecionados").select2();
         }
-        
-        
+
+
         $scope.carregar = function () {
+            $("#itensselecionados").select2();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
-                $(".itemAcesso").select2('val','All');
-                
+                $(".itemAcesso").select2('val', 'All');
+
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
@@ -67,8 +67,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                             $scope.itensDoPerfil = data;
                             //alert(data.val());
                         })
-                                .error(function(){toastr.error("TESTE");})
-                        //.error(deuErro);
+                        .error(function () {
+                            toastr.error("TESTE");
+                        })
+                //.error(deuErro);
             }
         };
 
