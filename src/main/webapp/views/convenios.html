@@ -1,0 +1,73 @@
+<div ng-init="atualizarConvenios()" class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title">Cadastrar novo convênio</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formConvenio" novalidate class="form-horizontal">
+
+            <div class="form-group">    
+                <label for="nome" class="col-md-2 control-label">Nome:</label>
+                <div class="col-md-10"><input type="text" ng-model="convenio.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+            </div>
+
+            <div ng-show="formConvenio.nome.$dirty && formConvenio.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
+                <span ng-show="formConvenio.nome.$error.required">Preencha o nome do convênio. </span>
+                <span ng-show="formConvenio.nome.$error.minlength">Convênio deve ter mais de 3 caracteres. </span>
+                <span ng-show="formConvenio.nome.$error.maxlength">Convênio não pode ter mais de 50 caracteres. </span>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <button ng-click="salvarConvenio()" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-info">
+<div class="panel-heading"> 
+        <div class="panel-title">Convênios cadastrados</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="input-group">
+            <span class="input-group-addon btn-info" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <input type="text" ng-model="busca.nome" placeholder="Buscar etnia (digite o nome)" class="form-control" aria-describedby="basic-addon1">
+        </div>    
+        <br>
+        <div class="panel panel-default">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Convênios</th><th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarConvenios()">
+                    <tr ng-repeat='convenio in filtered = (convenios| filter:busca)' >
+                        <td>{{convenio.nome}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editar(convenio)">Editar</a></li>
+                                    <li><a ng-click="deletar(convenio)">Editar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
+        </div>
+    </div>
+</div>
