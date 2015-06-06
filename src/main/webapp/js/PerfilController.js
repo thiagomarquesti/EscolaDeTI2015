@@ -6,13 +6,15 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 itens: []
             };
             $scope.isNovo = true;
+        $("#itensselecionados").select2();
         }
         
         
         $scope.carregar = function () {
-            
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
+                $(".itemAcesso").select2('val','All');
+                
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
@@ -65,7 +67,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                             $scope.itensDoPerfil = data;
                             //alert(data.val());
                         })
-                        .error(deuErro);
+                                .error(function(){toastr.error("TESTE");})
+                        //.error(deuErro);
             }
         };
 
@@ -99,7 +102,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 
         function createJsonPerfil(novo) {
 
-//            var perfil = "" + $(".itemAcesso").val();
+            var perfil = "" + $(".itemAcesso").val();
             if (perfil === "null") {
                 perfil = "";
             }
@@ -110,63 +113,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             }
             return perfil;
         }
-        
-  $scope.disabled = undefined;
-  $scope.searchEnabled = undefined;
 
-  $scope.enable = function() {
-    $scope.disabled = false;
-  };
-
-  $scope.disable = function() {
-    $scope.disabled = true;
-  };
-
-  $scope.enableSearch = function() {
-    $scope.searchEnabled = true;
-  };
-
-  $scope.disableSearch = function() {
-    $scope.searchEnabled = false;
-  };
-
-  $scope.clear = function() {
-    $scope.person.selected = undefined;
-    $scope.address.selected = undefined;
-    $scope.country.selected = undefined;
-  };
-
-  $scope.someGroupFn = function (item){
-
-    if (item.name[0] >= 'A' && item.name[0] <= 'M')
-        return 'From A - M';
-
-    if (item.name[0] >= 'N' && item.name[0] <= 'Z')
-        return 'From N - Z';
-
-  };
-
-  $scope.counter = 0;
-  $scope.someFunction = function (item, model){
-    $scope.counter++;
-    $scope.eventResult = {item: item, model: model};
-  };
-
-  $scope.availableColors = $scope.itens;
-
-  $scope.multipleDemo = {};
-  $scope.multipleDemo.colors = $scope.itensDoPerfil;
-
-  $scope.address = {};
-  $scope.refreshAddresses = function(address) {
-    var params = {address: address, sensor: false};
-    return $http.get(
-      'http://maps.googleapis.com/maps/api/geocode/json',
-      {params: params}
-    ).then(function(response) {
-      $scope.addresses = response.data.results;
-    });
-  };
     }]);
 
 
