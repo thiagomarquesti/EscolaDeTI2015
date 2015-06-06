@@ -30,8 +30,8 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
 //------- Convênio -------        
-    }).when('/Convenio', {
-        templateUrl: 'views/convenio.html',
+    }).when('/Convenios', {
+        templateUrl: 'views/convenios.html',
         controller: 'ConvenioController'
     }).otherwise ({ redirectTo: '/' });
 
