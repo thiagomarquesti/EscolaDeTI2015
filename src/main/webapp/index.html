@@ -80,6 +80,14 @@
                     </header>
 
                     <ul id="main-menu" class="main-menu auto-inherit-active-class">
+                        
+                        <li class="root-level">
+                            <a href="#/Etnias">
+                                <i class="fa fa-flag"></i>
+                                <span class="title">Etnias atendidas</span>
+                            </a>	
+                        </li>
+                                                
                         <li class="root-level has-sub">
                             <a href="index.html">
                                 <i class="fa fa-user"></i>
@@ -118,23 +126,25 @@
 
             <div class="main-content">
                 
-                    <div id="topo" class="navbar navbar-default navbar-static-top">
+                    <div id="topo" class="navbar navbar-default navbar-static">
                         <ul class="list-inline links-list pull-right">
+                            <li>
+                                <img src="" alt="" class="img-circle" width="44"> <!-- AQUI VAI A FOTO DO USUÁRIO -->
+                            </li>
+                            <li class="sep"></li>
                             <li>
                                 <div class="btn-group">
                                     <a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        Eduardo Betioli <i class="entypo-down-open-big right"></i>
+                                        {{nomeUsuario}} <i class="entypo-down-open-big right"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-right">
+                                    <ul class="dropdown-menu pull-right" role="menu">
                                         <li><a>Alterar meus dados</a></li>
                                         <li><a>Alterar minha senha</a></li>
+                                        <li class="divider"></li>
+                                        <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                                     </ul>
                                 </div>
-                                
-                                {{nomeUsuario}}
                             </li>
-                            <li class="sep"></li>
-                            <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                         </ul>
                     </div>  
                     <div ng-view></div>

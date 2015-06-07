@@ -7880,6 +7880,7 @@ lesshat-selector {
 }
 .panel-info {
   border-color: #a6e8f3;
+  border-color: #ccc;
   -webkit-border-radius: 3px;
   -webkit-background-clip: padding-box;
   -moz-border-radius: 3px;
@@ -7889,11 +7890,13 @@ lesshat-selector {
 }
 .panel-info > .panel-heading {
   color: #2c7ea1;
+  color: #fff;
   background-color: #c5e8f7;
+  background-color: #21a9e1;
   border-color: #a6e8f3;
 }
 .panel-info > .panel-heading + .panel-collapse .panel-body {
-  border-top-color: #a6e8f3;
+  border-top-color: #21a9e1;
 }
 .panel-info > .panel-heading > .dropdown .caret {
   border-color: #2c7ea1 transparent;
@@ -7904,6 +7907,7 @@ lesshat-selector {
 .panel-info > .panel-heading > .panel-options > a {
   display: inline-block;
   color: rgba(44, 126, 161, 0.7);
+  color: #fff;
   text-align: center;
   line-height: 1;
   padding: 4px 2px;
