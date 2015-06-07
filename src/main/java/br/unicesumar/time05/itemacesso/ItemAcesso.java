@@ -2,16 +2,12 @@ package br.unicesumar.time05.itemacesso;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
@@ -68,8 +64,9 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.rota);
         return hash;
     }
 
@@ -82,15 +79,19 @@ public class ItemAcesso implements Serializable {
             return false;
         }
         final ItemAcesso other = (ItemAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.rota, other.rota)) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
         return "ItemAcesso{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
     }
-        
 }

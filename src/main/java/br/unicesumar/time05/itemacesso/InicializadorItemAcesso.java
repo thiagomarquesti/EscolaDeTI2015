@@ -1,7 +1,5 @@
 package br.unicesumar.time05.itemacesso;
 
-import br.unicesumar.time05.itemacesso.ItemAcesso;
-import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -12,30 +10,54 @@ import org.springframework.stereotype.Component;
 @Component
 @Transactional
 public class InicializadorItemAcesso {
+
     @Autowired
     private ItemAcessoRepository repo;
-    
+
     @PostConstruct
-    public void inicializar(){
-    List<ItemAcesso> itensAcesso = new ArrayList();
+    public void inicializar() {
+        List<ItemAcesso> itensAcesso = new ArrayList<>();
+
+        itensAcesso = repo.findAll();
+
+        ItemAcesso menu = new ItemAcesso("Menu", "/");
+        if (!itensAcesso.contains(menu)) {
+            repo.save(menu);
+            itensAcesso.add(menu);
+        }
+
+        ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario", "", menu);
+        if (!itensAcesso.contains(menuUsuario)) {
+            itensAcesso.add(menuUsuario);
+        }
+
+        ItemAcesso menuUsuarioListar = new ItemAcesso("Listar", "#/usuario/list", menuUsuario);
+        if (!itensAcesso.contains(menuUsuarioListar)) {
+            itensAcesso.add(menuUsuarioListar);
+        }
+
+        ItemAcesso menuUsuarioNovo = new ItemAcesso("Novo", "#/usuario/novo", menuUsuario);
+        if (!itensAcesso.contains(menuUsuarioNovo)) {
+            itensAcesso.add(menuUsuarioNovo);
+        }
+
+        ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil", "", menu);
+        if (!itensAcesso.contains(menuPerfil)) {
+            itensAcesso.add(menuPerfil);
+        }
         
-       
-       ItemAcesso menu = new ItemAcesso("Menu", "/");
-       repo.save(menu);
-       menu.setSuperior(menu);
-       itensAcesso.add(menu); 
-       
-       ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario","", menu);
-       itensAcesso.add(menuUsuario);
-       itensAcesso.add(new ItemAcesso("Listar", "#/usuario/list", menuUsuario));
-       itensAcesso.add(new ItemAcesso("Novo", "#/usuario/novo", menuUsuario));
-       
-       ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil","", menu); 
-       itensAcesso.add(menuPerfil);
-       itensAcesso.add(new ItemAcesso("Listar", "#/perfil/list", menuPerfil));
-       itensAcesso.add(new ItemAcesso("Novo", "#/perfil/novo", menuPerfil));
-       for(ItemAcesso ia: itensAcesso){
-           repo.save(ia);
-        } 
+        ItemAcesso menuPerfilListar = new ItemAcesso("Listar", "#/perfil/list", menuPerfil);
+        if (!itensAcesso.contains(menuPerfilListar)){
+            itensAcesso.add(menuPerfilListar);
+        }
+        
+        ItemAcesso menuPerfilNovo = new ItemAcesso("Novo", "#/perfil/novo", menuPerfil);
+        if (!itensAcesso.contains(menuPerfilNovo)){
+            itensAcesso.add(menuPerfilNovo);
+        }
+        
+        for (ItemAcesso ia : itensAcesso) {
+            repo.save(ia);
+        }
     }
 }
