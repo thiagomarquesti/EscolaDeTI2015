@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Pessoa {
+public abstract class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

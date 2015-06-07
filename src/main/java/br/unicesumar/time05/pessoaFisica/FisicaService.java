@@ -1,12 +1,11 @@
-package br.unicesumar.time05.pessoa;
+package br.unicesumar.time05.pessoaFisica;
 
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.rowMapper.MapRowMapper;
+import br.unicesumar.time05.pessoa.TipoPessoa;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,38 +14,38 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Transactional
-public class PessoaService {
+public class FisicaService {
 
     @Autowired
-    private PessoaRepository pessoaRepo;
+    private FisicaRepository fisicaRepo;
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public void salvarPessoa(Pessoa aPessoa) {
+    public void salvarFisica(PessoaFisica aPessoa) {
         try {
-            pessoaRepo.save(aPessoa);
-            pessoaRepo.flush();
+            fisicaRepo.save(aPessoa);
+            fisicaRepo.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void removerPessoa(Long aPessoaId) {
+    public void removerFisica(Long aPessoaId) {
         try {
-            pessoaRepo.delete(aPessoaId);
+            fisicaRepo.delete(aPessoaId);
         } catch (Exception e) {
             throw new RuntimeException("Pessoa não encontrada");
         }
     }
 
-    public List<Map<String, Object>> getPessoas() {
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
+    public List<Map<String, Object>> getFisica() {
+        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT id, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
                 new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(pessoa);
+        return Collections.unmodifiableList(fisica);
     }
 
-    public Map<String, Object> getPessoaById(Long aPessoaId) {
+    public Map<String, Object> getFisicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
         List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, login, email, status FROM pessoa "
@@ -69,7 +68,7 @@ public class PessoaService {
     }
 
     public void trocarTipoPessoa(Long aPessoaId, String tipo) {
-        Pessoa pessoa = pessoaRepo.getOne(aPessoaId);
+        PessoaFisica pessoa = fisicaRepo.getOne(aPessoaId);
         switch (tipo) {
             case "USUÁRIO":
                 pessoa.setTipo(TipoPessoa.USUÁRIO);
@@ -81,15 +80,15 @@ public class PessoaService {
                 pessoa.setTipo(TipoPessoa.ÍNDIO);
                 break;
         }
-        pessoaRepo.save(pessoa);
+        fisicaRepo.save(pessoa);
     }
 
     boolean verificarEmail(String aEmail, Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aEmail", aEmail);
         params.addValue("aId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
-        if (!pessoa.isEmpty()) {
+        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+        if (!fisica.isEmpty()) {
             return false;
         }
         return true;

@@ -1,0 +1,97 @@
+package br.unicesumar.time05.pessoaJuridica;
+
+import br.unicesumar.time05.email.Email;
+import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.rowMapper.MapRowMapper;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+@Transactional
+public class JuridicaService {
+
+    @Autowired
+    private JuridicaRepository juridicaRepo;
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public void salvarJuridica(PessoaJuridica aPessoa) {
+        try {
+            juridicaRepo.save(aPessoa);
+            juridicaRepo.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removerJuridica(Long aPessoaId) {
+        try {
+            juridicaRepo.delete(aPessoaId);
+        } catch (Exception e) {
+            throw new RuntimeException("Pessoa não encontrada");
+        }
+    }
+
+    public List<Map<String, Object>> getJuridica() {
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
+                new MapSqlParameterSource(), new MapRowMapper());
+        return Collections.unmodifiableList(pessoa);
+    }
+
+    public Map<String, Object> getJuridicaById(Long aPessoaId) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aPessoaId", aPessoaId);
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, login, email, status FROM pessoa "
+                + "WHERE id = :aPessoaId", params, new MapRowMapper());
+        return pessoa.get(0);
+    }
+
+    public boolean verificarEmail(Email aEmail) {
+        if (aEmail != null && aEmail.verificarValido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail);
+            List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT email FROM pessoa WHERE email = :aEmail", params, new MapRowMapper());
+            if (!pessoa.isEmpty()) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new RuntimeException("Campo email vazio!");
+        }
+    }
+
+    public void trocarTipoJuridica(Long aPessoaId, String tipo) {
+        PessoaJuridica pessoa = juridicaRepo.getOne(aPessoaId);
+        switch (tipo) {
+            case "USUÁRIO":
+                pessoa.setTipo(TipoPessoa.USUÁRIO);
+                break;
+            case "VISITANTE":
+                pessoa.setTipo(TipoPessoa.VISITANTE);
+                break;
+            case "ÍNDIO":
+                pessoa.setTipo(TipoPessoa.ÍNDIO);
+                break;
+        }
+        juridicaRepo.save(pessoa);
+    }
+
+    boolean verificarEmail(String aEmail, Long aPessoaId) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aEmail", aEmail);
+        params.addValue("aId", aPessoaId);
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+        if (!pessoa.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+}

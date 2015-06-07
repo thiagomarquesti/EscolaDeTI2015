@@ -1,4 +1,4 @@
-package br.unicesumar.time05.pessoa;
+package br.unicesumar.time05.pessoaJuridica;
 
 import java.util.List;
 import java.util.Map;
@@ -9,34 +9,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/pessoa")
-public class PessoaController {
+public class JuridicaController {
 
     @Autowired
-    private PessoaService service;
+    private JuridicaService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void salvarPessoa(Pessoa aPessoa) {
-        service.salvarPessoa(aPessoa);
+    public void salvarPessoa(PessoaJuridica aPessoa) {
+        service.salvarJuridica(aPessoa);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public void deletarPessoa(Long aPessoaId) {
-        service.removerPessoa(aPessoaId);
+        service.removerJuridica(aPessoaId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void alterarPessoa(Pessoa aPessoa) {
-        service.salvarPessoa(aPessoa);
+    public void alterarPessoa(PessoaJuridica aPessoa) {
+        service.salvarJuridica(aPessoa);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Map<String, Object>> getPessoas() {
-        return service.getPessoas();
+        return service.getJuridica();
     }
 
     @RequestMapping(value = "/{aPessoaId}", method = RequestMethod.GET)
     public Map<String, Object> getPessoaPorId(Long aPessoasId) {
-        return service.getPessoaById(aPessoasId);
+        return service.getJuridicaById(aPessoasId);
     }
     
 }
