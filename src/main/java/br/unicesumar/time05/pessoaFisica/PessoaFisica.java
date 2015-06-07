@@ -7,14 +7,30 @@ import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class PessoaFisica extends Pessoa{
+public class PessoaFisica extends Pessoa implements Serializable{
+
+    @OneToOne
+    @JoinTable(name = "pessoa_cpf",
+            joinColumns = {
+                @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "cpf_id", referencedColumnName = "cpf")})
     private CPF cpf;
+    
+    @Enumerated
     private Genero genero;
 
     public PessoaFisica() {
@@ -69,5 +85,5 @@ public class PessoaFisica extends Pessoa{
         }
         return true;
     }
-    
+
 }

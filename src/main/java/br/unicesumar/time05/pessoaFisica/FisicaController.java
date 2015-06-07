@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/pessoa")
+@RequestMapping(value = "/pessoa/fisica")
 public class FisicaController {
 
     @Autowired

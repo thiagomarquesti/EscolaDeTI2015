@@ -6,13 +6,21 @@ import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class PessoaJuridica extends Pessoa{
+public class PessoaJuridica extends Pessoa implements Serializable{
+
+    @OneToOne
     private Cnpj cnpj;
 
     public PessoaJuridica() {
@@ -27,7 +35,7 @@ public class PessoaJuridica extends Pessoa{
         super(nome, telefones, email);
         this.cnpj = cnpj;
     }
-    
+
     public Cnpj getCnpj() {
         return cnpj;
     }
@@ -57,5 +65,5 @@ public class PessoaJuridica extends Pessoa{
         }
         return true;
     }
-    
+
 }

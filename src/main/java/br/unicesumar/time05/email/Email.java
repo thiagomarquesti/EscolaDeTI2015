@@ -1,11 +1,15 @@
 package br.unicesumar.time05.email;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Email {
-
+@Entity
+public class Email implements Serializable{
+    @Id
     private String email;
 
     public Email() {
@@ -56,6 +60,11 @@ public class Email {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Email{" + "email=" + email + '}';
     }
 
 }

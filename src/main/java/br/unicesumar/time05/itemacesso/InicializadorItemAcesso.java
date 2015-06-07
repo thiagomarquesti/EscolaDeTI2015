@@ -1,7 +1,5 @@
 package br.unicesumar.time05.itemacesso;
 
-import br.unicesumar.time05.itemacesso.ItemAcesso;
-import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

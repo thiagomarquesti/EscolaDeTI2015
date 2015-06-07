@@ -1,8 +1,12 @@
 package br.unicesumar.time05.uf;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class UF {
+    @Id
     private String sigla;
 
     public UF() {

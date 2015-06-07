@@ -40,7 +40,7 @@ public class JuridicaService {
     }
 
     public List<Map<String, Object>> getJuridica() {
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT idjuridica, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
                 new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(pessoa);
     }
@@ -48,7 +48,7 @@ public class JuridicaService {
     public Map<String, Object> getJuridicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, login, email, status FROM pessoa "
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT idjuridica, nome, telefones, email, enderecos, tipoPessoa FROM pessoa "
                 + "WHERE id = :aPessoaId", params, new MapRowMapper());
         return pessoa.get(0);
     }

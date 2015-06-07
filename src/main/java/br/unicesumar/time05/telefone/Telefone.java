@@ -1,8 +1,13 @@
 package br.unicesumar.time05.telefone;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-public class Telefone {
+@Entity
+public class Telefone implements Serializable{
+    @Id
     private String telefone;
 
     public Telefone() {
@@ -41,5 +46,10 @@ public class Telefone {
         }
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Telefone{" + "telefone=" + telefone + '}';
+    }
+
 }

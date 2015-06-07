@@ -1,6 +1,11 @@
 package br.unicesumar.time05.cidade;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Cidade {
+    @Id
     private int codigoIBGE;
     private String nome;
 

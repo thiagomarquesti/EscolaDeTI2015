@@ -1,9 +1,14 @@
 package br.unicesumar.time05.cnpj;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-public class Cnpj {
+@Entity
+public class Cnpj implements Serializable{
+    @Id
     @CNPJ
     private String cnpj;
 

@@ -2,15 +2,42 @@ package br.unicesumar.time05.endereco;
 
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-public class Endereco {
+@Entity
+public class Endereco implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long idendereco;
     private String logradouro;
     private String numero;
     private String bairro;
     private String complemento;
     private String cep;
+    @ManyToOne
+    @JoinTable(name = "endereco_cidade",
+            joinColumns = {
+                @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "cidade_id", referencedColumnName = "codigoIBGE")})
     private Cidade cidade;
+
+    @ManyToOne
+    @JoinTable(name = "endereco_estado",
+            joinColumns = {
+                @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "estado_id", referencedColumnName = "sigla")})
     private UF uf;
 
     public Endereco() {
@@ -33,6 +60,10 @@ public class Endereco {
         this.cep = cep;
         this.cidade = cidade;
         this.uf = uf;
+    }
+
+    public Long getIdendereco() {
+        return idendereco;
     }
 
     public String getLogradouro() {
@@ -135,6 +166,11 @@ public class Endereco {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" + "logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", complemento=" + complemento + ", cep=" + cep + ", cidade=" + cidade + ", uf=" + uf + '}';
     }
 
 }

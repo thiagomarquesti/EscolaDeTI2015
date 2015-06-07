@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
 @Transactional
+@Component
 public class FisicaService {
 
     @Autowired
@@ -40,7 +40,7 @@ public class FisicaService {
     }
 
     public List<Map<String, Object>> getFisica() {
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT id, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
+        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT idfisica, nome, telefones, email, enderecos, tipoPessoa, cpf, genero FROM pessoa",
                 new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(fisica);
     }
@@ -48,7 +48,7 @@ public class FisicaService {
     public Map<String, Object> getFisicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, nome, login, email, status FROM pessoa "
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT idfisica, nome, telefones, email, enderecos, tipoPessoa, cpf, genero FROM pessoa "
                 + "WHERE id = :aPessoaId", params, new MapRowMapper());
         return pessoa.get(0);
     }
