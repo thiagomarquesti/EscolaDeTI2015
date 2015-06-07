@@ -16,17 +16,17 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private ItemAcessoRepository repo;
-    
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-    
+
     @PostConstruct
     public void inicializar() {
-        if (repo.count()== 0) {
-            
+
+        Long linhas = repo.count();
+        if (linhas == 0) {
             repo.deleteAll();
 
-            Long linhas = repo.count();
             List<ItemAcesso> itensAcesso = new ArrayList();
             ItemAcesso menu = new ItemAcesso(1l, "Menu", "/");
             repo.save(menu);

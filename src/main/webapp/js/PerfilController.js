@@ -1,5 +1,28 @@
-module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
+module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location, $element, $attrs) {
+        
+//$(document).ready(function(){
+//     $("#itensselecionados").select2({});
+//     
+//     $("#itensselecionados").select2({
+//            closeOnSelect:false
+//        });
+//};
 
+        $scope.load = function(){
+            //var myEl = angular.element(document.querySelector("#itensselecionados"));
+            //var myEl = angular.element('#itensselecionados');
+            //myEl.select2();
+            //alert("TESTE");
+            //document.getElementById("itensselecionados").select2();
+            //toastr.error("TESTE");
+            //var a = angular.element( document.querySelector( "#itensselecionados" ) );
+            //a.select2();
+            //("#itensselecionados").select2();
+            //var a = angular.element($('#itensselecionados'));
+//            var a = angular.element(document.querySelector("#itensselecionados"));
+//            a.select2();
+            
+        }
         function novoPerfil() {
             $scope.perfil = {
                 nome: "",
@@ -8,12 +31,17 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             $scope.isNovo = true;
         }
         
-        $(".itemAcesso").select2();
         
         $scope.carregar = function () {
+            //$("#itensselecionados").select2();
+//            angular.element($("#itensselecionados").select2());
+            //console.log(999);
+            //console.log(angular.element(document.querySelector('#itensselecionados').innerHTML));
+            //console.log($("#itensselecionados"));
+            //$("#itensselecionados".itemAcesso).select2();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
-                $(".itemAcesso").select2('val','All');
+                //$("select").select2('val', 'All');
                 
             }
             else {
@@ -24,6 +52,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         })
                         .error(deuErro);
             }
+//            $("#itensselecionados").select2({});
+//            angular.element("#itensselecionados").select2();
+//            $("#itensselecionados").select2({
+//                closeOnSelect:false
+//            });
         };
         $scope.salvar = function () {
             if ($scope.isNovo) {
@@ -67,8 +100,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                             $scope.itensDoPerfil = data;
                             //alert(data.val());
                         })
-                                .error(function(){toastr.error("TESTE");})
-                        //.error(deuErro);
+                        .error(function () {
+                            toastr.error("TESTE");
+                        })
+                //.error(deuErro);
             }
         };
 
