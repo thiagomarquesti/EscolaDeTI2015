@@ -1,7 +1,8 @@
 <div ng-init="carregar()" class="panel panel-info">
 
     <div class="panel-heading"> 
-        <div class="panel-title">Cadastrar usuário / colaborador</div>
+        <div class="panel-title" ng-show="isNovo">Cadastrar usuário / colaborador</div>
+        <div class="panel-title" ng-show="!isNovo">Alterar usuário / colaborador</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
