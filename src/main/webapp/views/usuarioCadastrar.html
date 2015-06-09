@@ -115,9 +115,9 @@
             
             <div class="form-group">
                 <label for="complemento" class="col-md-2 control-label">Complemento: </label>
-                <div class="col-md-5"><input type="text" ng-model="usuario.complemento" id="complemento" name="complemento" class="form-control"></div>
+                <div class="col-md-3"><input type="text" ng-model="usuario.complemento" id="complemento" name="complemento" class="form-control"></div>
                 <label for="bairro" class="col-md-1 control-label">Bairro: </label>
-                <div class="col-md-4"><input type="text" ng-model="usuario.bairro" id="bairro" name="bairro" required="" class="form-control"></div>
+                <div class="col-md-3"><input type="text" ng-model="usuario.bairro" id="bairro" name="bairro" required="" class="form-control"></div>
             </div>
             
             <div ng-show="formCad.bairro.$dirty && formCad.bairro.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
@@ -135,6 +135,12 @@
                 <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
             
+            <div class="form-group">
+                <div class=" col-md-offset-2 col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
+                <label for="foto" class="col-md-1 control-label">OU: </label>
+                <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+            </div>
+            
     </div>
 
 </form>
@@ -143,7 +149,7 @@
 
 <div ng-show="isNovo">
 
-    <div class="panel panel-info">
+    <div class="panel panel-info" data-collapsed="1">
         <div class="panel-heading"> 
             <div class="panel-title">Usuário do sistema</div>
             <div class="panel-options">
