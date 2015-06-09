@@ -16,7 +16,6 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
-
 //------- Rotas do Perfil --------
     }).when('/Perfil/listar', {
         templateUrl: 'views/listarPerfis.html',

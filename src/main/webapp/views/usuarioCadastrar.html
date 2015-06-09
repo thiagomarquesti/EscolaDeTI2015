@@ -1,3 +1,5 @@
+<script src="bootstrap/neon/js/neon-custom.js"></script>
+
 <div ng-init="carregar()" class="panel panel-info">
 
     <div class="panel-heading"> 
@@ -8,7 +10,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="formCad" novalidate class="form-horizontal">
+        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
 
             <div ng-show="!isNovo" class="form-group">
                 <label for="id" class="col-md-2 control-label">ID: </label>
@@ -60,12 +62,12 @@
             <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
                 <span ng-show="formCad.funcao.$error.required">Selecione uma função. </span>
             </div>
-
+            
             <div class="form-group">
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-10">
                     <div class="col-md-3 input-group">
-                        <input type="text" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control datepicker" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy">
+                        <input type="text" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control datepicker" data-start-view="2" data-end-date="-10y" data-format="dd/mm/yyyy">
                         <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
                     </div>
                 </div>
@@ -136,7 +138,8 @@
             </div>
             
             <div class="form-group">
-                <div class=" col-md-offset-2 col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
+                <label for="tfoto" class="col-md-2 control-label">Foto: </label>
+                <div class="col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
             </div>
@@ -157,7 +160,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <form name="formCad" novalidate class="form-horizontal">
+            <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
 
                 <div class="form-group"> 
                     <label for="login" class="col-md-2 control-label">Login:</label>
@@ -183,7 +186,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
+                    <label for="rsenha" class="col-md-2 control-label">Confirmar senha: </label>
                     <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" password-match="usuario.senha" class="form-control"></div>
                 </div>
 
@@ -191,6 +194,12 @@
                     <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
                     <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
                 </div>
+                
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="perfis">Adicionar perfis: </label>
+                    <div class="col-md-10"><input type="input" ng-model="usuario.perfis" id="perfis" name="perfis" class="form-control"></div>
+                </div>
+                
             </form>
         </div>
     </div>
@@ -200,3 +209,4 @@
     <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>
+
