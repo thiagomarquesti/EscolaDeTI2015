@@ -2,8 +2,8 @@ module.config(function($routeProvider, $locationProvider) {
 //------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
-        template: '<h1>Página inicial</h1>',
-        controller: 'UsuarioController'
+        template: 'views/index.html',
+        controller: ''
     }).when('/Usuario/listar', {
         templateUrl: 'views/usuariosListar.html',
         controller: 'UsuarioController'
