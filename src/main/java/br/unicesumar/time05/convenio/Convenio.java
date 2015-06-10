@@ -13,13 +13,13 @@ public class Convenio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
 
-    Long idConvenio;
+    Long idconvenio;
     String descricao;
 
     public Convenio() {
     }
 
-    public Convenio(String convenio) {
+    public Convenio(String descricao) {
         this.descricao = descricao;
     }
 
@@ -27,8 +27,8 @@ public class Convenio implements Serializable {
         this.descricao = descricao;
     }
 
-    public Long getIdConvenio() {
-        return idConvenio;
+    public Long getIdconvenio() {
+        return idconvenio;
     }
 
     public String getDescricao() {
@@ -37,13 +37,13 @@ public class Convenio implements Serializable {
 
     @Override
     public String toString() {
-        return "Convenio{" + "idConvenio=" + idConvenio + ", descricao=" + descricao + '}';
+        return "Convenio{" + "idConvenio=" + idconvenio + ", descricao=" + descricao + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.idConvenio);
+        hash = 61 * hash + Objects.hashCode(this.idconvenio);
         return hash;
     }
 
@@ -56,7 +56,7 @@ public class Convenio implements Serializable {
             return false;
         }
         final Convenio other = (Convenio) obj;
-        if (!Objects.equals(this.idConvenio, other.idConvenio)) {
+        if (!Objects.equals(this.idconvenio, other.idconvenio)) {
             return false;
         }
         return true;
