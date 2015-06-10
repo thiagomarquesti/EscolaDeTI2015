@@ -6,16 +6,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             };
             $scope.isNovo = true;
         }
-        
-        
+
+
         $scope.carregar = function () {
-            //$("#itensselecionados").select2();
-//            angular.element($("#itensselecionados").select2());
-            //console.log(999);
-            //console.log(angular.element(document.querySelector('#itensselecionados').innerHTML));
-//            console.log($("#itensselecionados").select());
-            console.log($("#itensselecionados").select().val());
-            //$("#itensselecionados".itemAcesso).select2();
+            $scope.itensAcesso();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
             }
@@ -24,17 +18,18 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
+                            for (var x = 0; x < 5000; x++) {
+                            }
+                            $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
-            
-//            sleep(1000);
+
             $("select").select2();
-            console.log($("#itensselecionados").select2().val());
 
         };
-//        $timeout()
-        
+
+
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
@@ -75,11 +70,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
-                            //alert(data.val());
+                            $("#itensselecionados").select().val();
                         })
                         .error(function () {
                             toastr.error("TESTE");
-                        })
+                        });
                 //.error(deuErro);
             }
         };
