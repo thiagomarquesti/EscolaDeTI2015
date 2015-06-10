@@ -53,7 +53,11 @@ module.controller("EtniaController", ["$scope", "$http", function ($scope, $http
             $http.post("/etnia", $scope.etnia)
                     .success(function () {
                         toastr.success("Etnia inserida com sucesso!");
-                        reset('formEtnia');
+                        $scope.atualizarEtnias();
+                        novaEtnia();
+                        $scope.isNovaEtnia = true;
+                        $scope.formEtnia.$setPristine();
+                        $scope.formEtnia.$setUntouched();
                     })
                     .error(deuErro);
         }
@@ -61,24 +65,16 @@ module.controller("EtniaController", ["$scope", "$http", function ($scope, $http
             $http.put("/etnia/", $scope.etnia)
                     .success(function () {
                         toastr.success("Etnia atualizada com sucesso!");
-                        reset('formEtnia');
+                        $scope.atualizarEtnias();
+                        novaEtnia();
+                        $scope.isNovaEtnia = true;
+                        $scope.formEtnia.$setPristine();
+                        $scope.formEtnia.$setUntouched();
                     })
                     .error(deuErro);
         }
         
-        $scope.atualizarEtnias();
-        
     };
     
-    function reset(form) {
-        if(form) {
-          $scope.form.$setPristine();
-          $scope.form.$setUntouched();
-        }
-        novaEtnia();
-        
-        $scope.isNovaEtnia = true;
-    };
-
-
+    
 }]);
