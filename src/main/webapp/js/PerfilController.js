@@ -18,15 +18,12 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             //$("#itensselecionados".itemAcesso).select2();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
-                //$("select").select2('val', 'All');
-//                $("select").select2();
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
-//                            $("select").select2(data);
                         })
                         .error(deuErro);
             }
@@ -36,6 +33,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             console.log($("#itensselecionados").select2().val());
 
         };
+//        $timeout()
+        
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
