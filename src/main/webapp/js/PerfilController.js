@@ -18,13 +18,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
-                            for (var x = 0; x < 5000; x++) {
-                            }
+                            $("#itensselecionados").delay(30000).select2();
                             $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
-
             $("select").select2();
 
         };
