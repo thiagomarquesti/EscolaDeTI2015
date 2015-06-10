@@ -23,11 +23,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                }
                else {
                    $scope.nomeUsuario = data.nome;
-                   
+                   $scope.idUsuario = data.id;
                }
            })
            .error(function(){
-               window.location.href="/login.html"
+               window.location.href="/login.html";
            });
     };
     

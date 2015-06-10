@@ -1,3 +1,5 @@
+
+
 <div class="panel panel-info">
 
     <div class="panel-heading"> 
@@ -22,7 +24,10 @@
                 <tbody ng-init="atualizar()">
                     <tr ng-repeat='u in filtered = (usuarios| filter:busca
                             )' >
-                        <td><span class="badge badge-{{corStatus[u.status]}} tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.id}}</span></td>
+                        <td>
+                            <script src="js/tooltip-custom.js" type="text/javascript"></script>
+                            <span class="badge badge-{{corStatus[u.status]}} tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.id}}</span>
+                        </td>
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>
                         <td class="hidden-sm hidden-xs">{{u.email}}</td>
@@ -46,5 +51,6 @@
             <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
         </div>
         <a ng-href="#/Usuario/novo" class="btn btn-success">Cadastrar novo</a>
+        
     </div>
 </div>
