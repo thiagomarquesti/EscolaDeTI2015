@@ -1,7 +1,6 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
-import com.sun.javafx.beans.IDProperty;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
