@@ -115,25 +115,30 @@ public class SessaoUsuarioService {
                     + "         ia.nome, "
                     + "         ia.rota, "
                     + "         ia.superior_id "
-                    + "ORDER BY ia.id ";
+                    + "ORDER BY ia.superior_id NULLS FIRST, ia.id ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("idUsuario", sessaoUsuario.getUsuario().getId());
 
             List<Map<String, Object>> resultQuery = jdbcTemplate.query(SQL, params, new MapRowMapper());
 
-            ItemAcessoUsuarioInMemory itemDeAcesso;
+            if (!resultQuery.isEmpty()) {
 
-            itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                    Long.parseLong(resultQuery.get(0).get("id").toString()),
-                    resultQuery.get(0).get("nome").toString(),
-                    resultQuery.get(0).get("rota").toString(),
-                    null
-            );
+                ItemAcessoUsuarioInMemory itemDeAcesso;
 
-            itemDeAcesso.setItens(this.getListaDeFilhos(resultQuery, itemDeAcesso));
+                itemDeAcesso = new ItemAcessoUsuarioInMemory(
+                        Long.parseLong(resultQuery.get(0).get("id").toString()),
+                        resultQuery.get(0).get("nome").toString(),
+                        resultQuery.get(0).get("rota").toString(),
+                        null
+                );
 
-            return itemDeAcesso;
+                itemDeAcesso.setItens(this.getListaDeFilhos(resultQuery, itemDeAcesso));
+
+                return itemDeAcesso;
+            } else {
+                return null;
+            }
         }
         return null;
     }
