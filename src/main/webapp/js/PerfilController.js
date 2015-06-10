@@ -1,28 +1,4 @@
 module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location, $element, $attrs) {
-        
-//$(document).ready(function(){
-//     $("#itensselecionados").select2({});
-//     
-//     $("#itensselecionados").select2({
-//            closeOnSelect:false
-//        });
-//};
-
-        $scope.load = function(){
-            //var myEl = angular.element(document.querySelector("#itensselecionados"));
-            //var myEl = angular.element('#itensselecionados');
-            //myEl.select2();
-            //alert("TESTE");
-            //document.getElementById("itensselecionados").select2();
-            //toastr.error("TESTE");
-            //var a = angular.element( document.querySelector( "#itensselecionados" ) );
-            //a.select2();
-            //("#itensselecionados").select2();
-            //var a = angular.element($('#itensselecionados'));
-//            var a = angular.element(document.querySelector("#itensselecionados"));
-//            a.select2();
-            
-        }
         function novoPerfil() {
             $scope.perfil = {
                 nome: "",
@@ -37,26 +13,28 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 //            angular.element($("#itensselecionados").select2());
             //console.log(999);
             //console.log(angular.element(document.querySelector('#itensselecionados').innerHTML));
-            //console.log($("#itensselecionados"));
+//            console.log($("#itensselecionados").select());
+            console.log($("#itensselecionados").select().val());
             //$("#itensselecionados".itemAcesso).select2();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
                 //$("select").select2('val', 'All');
-                
+//                $("select").select2();
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
+//                            $("select").select2(data);
                         })
                         .error(deuErro);
             }
-//            $("#itensselecionados").select2({});
-//            angular.element("#itensselecionados").select2();
-//            $("#itensselecionados").select2({
-//                closeOnSelect:false
-//            });
+            
+//            sleep(1000);
+            $("select").select2();
+            console.log($("#itensselecionados").select2().val());
+
         };
         $scope.salvar = function () {
             if ($scope.isNovo) {
