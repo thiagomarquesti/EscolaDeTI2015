@@ -16,8 +16,9 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
+    })
 //------- Rotas do Perfil --------
-    }).when('/Perfil/listar', {
+    .when('/Perfil/listar', {
         templateUrl: 'views/listarPerfis.html',
         controller: 'PerfilController'
     }).when('/Perfil/novo', {
@@ -29,10 +30,20 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar', {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
-    }).when('/Etnias', {
-        templateUrl: 'views/etnias.html',
+    })
+ //------- Rotas do Etnia --------   
+    .when('/Etnia/nova', {
+        templateUrl: 'views/etniaCadastrar.html',
         controller: 'EtniaController'
-    }).otherwise ({ redirectTo: '/' });
+    }).when('/Etnia/listar', {
+        templateUrl: 'views/etniaListar.html',
+        controller: 'EtniaController'
+    }).when('/Etnia/editar/:id', {
+        templateUrl: 'views/etniaCadastrar.html',
+        controller: 'EtniaController'
+    })
+            
+    .otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
 });
