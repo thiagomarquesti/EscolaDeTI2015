@@ -42,6 +42,17 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/etniaCadastrar.html',
         controller: 'EtniaController'
     })
+    //------- Rotas do Indigena --------   
+    .when('/Indigena/novo', {
+        templateUrl: 'views/indigenaCadastrar.html',
+        controller: 'IndigenaController'
+    }).when('/Indigena/listar', {
+        templateUrl: 'views/indigenaListar.html',
+        controller: 'IndigenaController'
+    }).when('/indigena/editar/:id', {
+        templateUrl: 'views/indigenaCadastrar.html',
+        controller: 'EtniaController'
+    })
             
     .otherwise ({ redirectTo: '/' });
 

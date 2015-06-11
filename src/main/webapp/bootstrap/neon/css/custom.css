@@ -8,3 +8,8 @@ body {
         font-family: 'Roboto', Arial, Verdana, Tahoma, sans-serif;
 }
 
+.gamb-switch span.switch-info.switch-right, .gamb-switch span.switch-info.switch-right:hover {
+  background-color: #5bc0de;
+  color: #ffffff;
+}
+
