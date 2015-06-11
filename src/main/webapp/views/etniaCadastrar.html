@@ -1,7 +1,8 @@
 <div ng-init="carregarEtnia()" class="panel panel-info">
 
     <div class="panel-heading"> 
-        <div class="panel-title">Cadastrar nova etnia</div>
+        <div class="panel-title" ng-show="isNovaEtnia">Cadastrar nova etnia</div>
+        <div class="panel-title" ng-show="!isNovaEtnia">Alterar etnia</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
