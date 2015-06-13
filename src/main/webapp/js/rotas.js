@@ -31,8 +31,11 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
 //------- Convênio -------        
-    }).when('/Convenios', {
-        templateUrl: 'views/convenios.html',
+    }).when('/Convenio/novo', {
+        templateUrl: 'views/convenioCadastrar.html',
+        controller: 'ConvenioController'
+    }).when('/Convenio/listar', {
+        templateUrl: 'views/convenioListar.html',
         controller: 'ConvenioController'
     })
  //------- Rotas do Etnia --------   
