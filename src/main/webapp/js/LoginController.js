@@ -1,14 +1,29 @@
 module.controller("LoginController", ["$scope", "$http", function ($scope, $http) {
 
+    var optsMsg = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "7000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    
     function deuErro() {
-        alert("Algo deu errado. Tente novamente.");
+        toastr.error("Algo deu errado. Tente novamente.", null, optsMsg);
     }
     function erroLogin() {
-        alert("Login ou senha incorretos. Tente novamente.");
+        toastr.error("Login ou senha incorretos. Tente novamente.", null, optsMsg);
     }
     
     function erroBloqueio() {
-        alert("Esse usuário está com o acesso bloqueado Procure um administrador.");
+        toastr.warning("Esse usuário está com o acesso bloqueado. Procure um administrador.", null, optsMsg);
     }
 
     $scope.verificaTelaLogin = function () {

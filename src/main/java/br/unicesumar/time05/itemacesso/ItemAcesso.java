@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
@@ -27,12 +29,14 @@ public class ItemAcesso implements Serializable {
     public ItemAcesso() {
     }
 
-    public ItemAcesso(String nome, String rota) {
+    public ItemAcesso(Long id, String nome, String rota) {
+        this.iditemacesso = id;
         this.nome = nome;
         this.rota = rota;
     }
 
-    public ItemAcesso(String nome, String rota, ItemAcesso superior) {
+    public ItemAcesso(Long id, String nome, String rota, ItemAcesso superior) {
+        this.iditemacesso = id;
         this.nome = nome;
         this.rota = rota;
         this.superior = superior;

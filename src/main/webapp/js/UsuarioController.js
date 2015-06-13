@@ -22,11 +22,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                    window.location.href="/login.html";
                }
                else {
-                   $scope.nomeUsuario = data.nome;                   
+                   $scope.nomeUsuario = data.nome;
+                   $scope.idUsuario = data.idusuario;
                }
            })
            .error(function(){
-               window.location.href="/login.html"
+               window.location.href="/login.html";
            });
     };
     
@@ -34,7 +35,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         if($scope.isNovo){
             $http.post("/usuario", $scope.usuario)
                .success(function(){
-                   alert("Usuário cadastrado com sucesso!");
+                   toastr.success("Usuário cadastrado com sucesso!");
                    if($location.path() === "/Usuario/novo"){ 
                        $location.path("/Usuario/listar"); 
                    }
@@ -47,7 +48,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         else {
             $http.put("/usuario/", $scope.usuario)
                .success(function(){
-                   alert("Usuário atualizado com sucesso!");
+                   toastr.success("Usuário atualizado com sucesso!");
                    $location.path("/Usuario/listar");
                })
                .error(deuErro);
@@ -102,6 +103,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         novoUsuario();
     };
     
+    
     $scope.logout = function(){
         $http.get("/login/usuariologado")
            .success(function(data){
@@ -118,6 +120,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
     
     function deuErro(){
-        alert("Algo deu errado. Tente novamente.");
+        toastr.error("Algo deu errado. Tente novamente.");
     }
 }]);
