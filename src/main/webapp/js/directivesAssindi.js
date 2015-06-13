@@ -29,8 +29,8 @@ valida.directive('loginUnique', ['$http', function ($http) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
                         if (scope.usuario.login) {
-                            if (scope.usuario.id) {
-                                var dados = scope.usuario.login + "/" + scope.usuario.id;
+                            if (scope.usuario.idusuario) {
+                                var dados = scope.usuario.login + "/" + scope.usuario.idusuario;
                             }
                             else {
                                 var dados = scope.usuario.login;
@@ -53,8 +53,8 @@ valida.directive('emailUnique', ['$http', function ($http) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
                         if (scope.usuario.email) {
-                            if (scope.usuario.id) {
-                                var dados = scope.usuario.email + "/" + scope.usuario.id;
+                            if (scope.usuario.idusuario) {
+                                var dados = scope.usuario.email + "/" + scope.usuario.idusuario;
                             }
                             else {
                                 var dados = scope.usuario.email;
@@ -71,19 +71,20 @@ valida.directive('emailUnique', ['$http', function ($http) {
     }]);
 
 valida.directive('verifSenha', [function () {
-    return {
-        restrict: 'A',
-        scope: true,
-        require: 'ngModel',
-        link: function (scope, elem, attrs, control) {
-            var SENHA_REGEXP = RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.])");
-            var checker = function () {
-                var char = scope.$eval(attrs.ngModel);
-                return SENHA_REGEXP.test(char);
-            };
-            scope.$watch(checker, function(n) {
-                control.$setValidity("chsenha", n);
-            });
-        }
-    };
-}]);
+        return {
+            restrict: 'A',
+            scope: true,
+            require: 'ngModel',
+            link: function (scope, elem, attrs, control) {
+                var SENHA_REGEXP = RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.])");
+                if(!scope.isNovo){ SENHA_REGEXP = RegExp(""); }
+                var checker = function () {
+                    var char = scope.$eval(attrs.ngModel);
+                    return SENHA_REGEXP.test(char);
+                };
+                scope.$watch(checker, function (n) {
+                    control.$setValidity("chsenha", n);
+                });
+            }
+        };
+    }]);
