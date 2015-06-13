@@ -18,8 +18,8 @@ import javax.persistence.UniqueConstraint;
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
     @Id
-//    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long iditemacesso;
     private String nome;
     private String rota;
     @ManyToOne
@@ -30,20 +30,20 @@ public class ItemAcesso implements Serializable {
     }
 
     public ItemAcesso(Long id, String nome, String rota) {
-        this.id = id;
+        this.iditemacesso = id;
         this.nome = nome;
         this.rota = rota;
     }
 
     public ItemAcesso(Long id, String nome, String rota, ItemAcesso superior) {
-        this.id = id;
+        this.iditemacesso = id;
         this.nome = nome;
         this.rota = rota;
         this.superior = superior;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdItemAcesso() {
+        return iditemacesso;
     }
 
     public String getNome() {
@@ -73,7 +73,7 @@ public class ItemAcesso implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.iditemacesso);
         return hash;
     }
 
@@ -86,7 +86,7 @@ public class ItemAcesso implements Serializable {
             return false;
         }
         final ItemAcesso other = (ItemAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.iditemacesso, other.iditemacesso)) {
             return false;
         }
         return true;
@@ -94,7 +94,7 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemAcesso{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
+        return "ItemAcesso{" + "id=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
     }
         
 }

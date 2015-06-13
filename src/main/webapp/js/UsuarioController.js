@@ -18,12 +18,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.verificaLogado = function(){
          $http.get("/login/usuariologado")
            .success(function(data){
-               if(!data.id){
+               if(!data.idusuario){
                    window.location.href="/login.html";
                }
                else {
                    $scope.nomeUsuario = data.nome;
-                   $scope.idUsuario = data.id;
+                   $scope.idUsuario = data.idusuario;
                }
            })
            .error(function(){
@@ -65,7 +65,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     $scope.editar = function(usuario) {
-        $location.path("/Usuario/editar/" + usuario.id);
+        $location.path("/Usuario/editar/" + usuario.idusuario);
     };
     
     $scope.alteraStatus = function(id) {
