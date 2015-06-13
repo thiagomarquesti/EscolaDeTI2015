@@ -1,6 +1,5 @@
 package br.unicesumar.time05.usuario.sessaousuario;
 
-import br.unicesumar.time05.usuario.Usuario;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -34,7 +33,7 @@ public class SessaoUsuarioController {
     }
     
     @RequestMapping(value = "/statusLogin/{aLogin:.+}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){        
+    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){
         return service.getStatusPorLogin(aLogin);
     }
     
