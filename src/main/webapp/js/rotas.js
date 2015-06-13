@@ -44,10 +44,10 @@ module.config(function($routeProvider, $locationProvider) {
     })
     //------- Rotas do Função --------   
     .when('/Funcao/nova', {
-        templateUrl: 'views/funcaiCadastrar.html',
+        templateUrl: 'views/funcaoCadastrar.html',
         controller: 'FuncaoController'
     }).when('/Funcao/listar', {
-        templateUrl: 'views/FuncaoListar.html',
+        templateUrl: 'views/funcaoListar.html',
         controller: 'FuncaoController'
     }).when('/Funcao/editar/:id', {
         templateUrl: 'views/FuncaoCadastrar.html',
