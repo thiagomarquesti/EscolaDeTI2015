@@ -42,6 +42,17 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/etniaCadastrar.html',
         controller: 'EtniaController'
     })
+    //------- Rotas do Função --------   
+    .when('/Funcao/nova', {
+        templateUrl: 'views/funcaiCadastrar.html',
+        controller: 'FuncaoController'
+    }).when('/Funcao/listar', {
+        templateUrl: 'views/FuncaoListar.html',
+        controller: 'FuncaoController'
+    }).when('/Funcao/editar/:id', {
+        templateUrl: 'views/FuncaoCadastrar.html',
+        controller: 'FuncaoController'
+    })
     //------- Rotas do Indigena --------   
     .when('/Indigena/novo', {
         templateUrl: 'views/indigenaCadastrar.html',
