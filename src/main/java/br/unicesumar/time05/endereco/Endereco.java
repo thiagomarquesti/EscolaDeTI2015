@@ -4,6 +4,7 @@ import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Endereco implements Serializable {
     private String bairro;
     private String complemento;
     private String cep;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "endereco_cidade",
             joinColumns = {
                 @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
@@ -32,7 +33,7 @@ public class Endereco implements Serializable {
                 @JoinColumn(name = "cidade_id", referencedColumnName = "codigoIBGE")})
     private Cidade cidade;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "endereco_estado",
             joinColumns = {
                 @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},

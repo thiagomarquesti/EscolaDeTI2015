@@ -6,6 +6,7 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,11 +30,11 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idpessoa;
     
-    @NotBlank
+    @NotBlank(message = "Nome não estar vazio!")
     private String nome;
 
-    @NotBlank
-    @ManyToMany
+    @NotBlank(message = "Telefone não pode estar vazio!")
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_telefone",
             joinColumns = {
                 @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
@@ -41,8 +42,8 @@ public abstract class Pessoa implements Serializable {
                 @JoinColumn(name = "telefone_id", referencedColumnName = "telefone")})
     private Set<Telefone> telefones;
 
-    @NotBlank
-    @OneToOne
+    @NotBlank(message = "Email não pode estar vazio!")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_email",
             joinColumns = {
                 @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
@@ -50,7 +51,7 @@ public abstract class Pessoa implements Serializable {
                 @JoinColumn(name = "email_id", referencedColumnName = "email")})
     private Email email;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_endereco",
             joinColumns = {
                 @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
@@ -98,6 +99,10 @@ public abstract class Pessoa implements Serializable {
         this.telefones = telefones;
     }
 
+    public void setTelefone(Telefone telefone) {
+        this.telefones.add(telefone);
+    }
+
     public Email getEmail() {
         return email;
     }
@@ -114,7 +119,7 @@ public abstract class Pessoa implements Serializable {
         this.enderecos = enderecos;
     }
 
-    public void setEnderecos(Endereco endereco) {
+    public void setEndereco(Endereco endereco) {
         this.enderecos.add(endereco);
     }
 
