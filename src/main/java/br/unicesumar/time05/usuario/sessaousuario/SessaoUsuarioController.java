@@ -1,6 +1,6 @@
 package br.unicesumar.time05.usuario.sessaousuario;
 
-import br.unicesumar.time05.usuario.Usuario;
+import br.unicesumar.time05.itemacesso.ItemAcessoUsuarioInMemory;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -39,7 +39,7 @@ public class SessaoUsuarioController {
     }
     
     @RequestMapping(value = "/usuariologado/itensdeacesso", method = RequestMethod.GET)
-    public List<Map<String, Object>> getItensDeAcessoDoUsuarioLogado(){
+    public ItemAcessoUsuarioInMemory getItensDeAcessoDoUsuarioLogado(){
         return service.getItensDeAcessoUsuarioLogado();
     }
 }
