@@ -46,17 +46,39 @@ public class FisicaService {
     }
 
     public List<Map<String, Object>> getFisica() {
+//    public PessoaFisica getFisica() {
         List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.tipo_pessoa, pf.genero, cp.cpf, t.telefone,"
-                + " e.email, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.nome, u.sigla FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_cpf pc ON pc.pessoa_id = p.idpessoa INNER JOIN cpf cp ON pc.cpf_id = cp.cpf"
-                + " INNER JOIN pessoa_telefone pt ON pt.pessoa_id = p.idpessoa INNER JOIN telefone t ON pt.telefone_id = t.telefone"
-                + " INNER JOIN pessoa_email pe ON pe.pessoa_id = p.idpessoa INNER JOIN email e ON e.email = pe.email_id"
-                + " INNER JOIN pessoa_endereco pend ON pend.pessoa_id = p.idpessoa INNER JOIN endereco ende ON pend.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec ON ende.idendereco = ec.endereco_id INNER JOIN cidade c ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN endereco_estado ee ON ende.idendereco = ee.endereco_id INNER JOIN uf u ON ee.estado_id = u.sigla",
+                + " e.email, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.nome, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_fisica pf "
+                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_cpf pc "
+                + "    ON pc.pessoa_id = p.idpessoa "
+                + " INNER JOIN cpf cp "
+                + "    ON pc.cpf_id = cp.cpf"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.telefone"
+                + " INNER JOIN pessoa_email pe "
+                + "    ON pe.pessoa_id = p.idpessoa "
+                + " INNER JOIN email e "
+                + "    ON e.email = pe.email_id"
+                + " INNER JOIN pessoa_endereco pend "
+                + "    ON pend.pessoa_id = p.idpessoa "
+                + " INNER JOIN endereco ende "
+                + "    ON pend.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id "
+                + "INNER JOIN cidade c "
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN endereco_estado ee "
+                + "    ON ende.idendereco = ee.endereco_id "
+                + "INNER JOIN uf u "
+                + "    ON ee.estado_id = u.sigla",
                 new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(fisica);
+//        return fisicaRepo.findOne(1l);
     }
 
     public Map<String, Object> getFisicaById(Long aPessoaId) {
