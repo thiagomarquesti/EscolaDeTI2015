@@ -30,6 +30,13 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar', {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
+//------- Convênio -------        
+    }).when('/Convenio/novo', {
+        templateUrl: 'views/convenioCadastrar.html',
+        controller: 'ConvenioController'
+    }).when('/Convenio/listar', {
+        templateUrl: 'views/convenioListar.html',
+        controller: 'ConvenioController'
     })
  //------- Rotas do Etnia --------   
     .when('/Etnia/nova', {
@@ -52,9 +59,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
         controller: 'EtniaController'
-    })
-            
-    .otherwise ({ redirectTo: '/' });
+    }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
 });
