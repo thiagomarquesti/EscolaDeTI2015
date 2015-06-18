@@ -31,6 +31,11 @@ public class FuncaoController {
         funcaoService.removerFuncao(aIdFuncao);
     }
 
+    @RequestMapping(value = "/verificarDescricao/{aDescricao:.+}", method = RequestMethod.GET)
+    public boolean verifcarDescricao(@PathVariable String aDescricao) {
+        return funcaoService.verificarDescricao(aDescricao);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Map<String, Object>> getFuncoes() {
         return funcaoService.getFuncoes();

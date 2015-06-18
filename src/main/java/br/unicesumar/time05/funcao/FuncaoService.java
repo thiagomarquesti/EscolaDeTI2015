@@ -10,29 +10,37 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Component
 @Transactional
 class FuncaoService {
-    
+
     @Autowired
     private FuncaoRepository repo;
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-    
-    
+
     void salvarFuncao(Funcao aFuncao) {
         repo.save(aFuncao);
     }
 
-    
     public void alterarFuncao(Funcao aFuncao) {
         repo.save(aFuncao);
     }
-    
+
     void removerFuncao(Long aIdFuncao) {
         repo.delete(aIdFuncao);
     }
+
+    public boolean verificarDescricao(String aDescricao) {
+
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aDescricao", aDescricao);
+        List<Map<String, Object>> funcao = jdbcTemplate.query("SELECT descricao FROM FUNCAO WHERE descricao = :aDescricao", params, new MapRowMapper());
+        return funcao.isEmpty();
+
+        
+    }
+
     public List<Map<String, Object>> getFuncoes() {
 
         final String SQL = "SELECT idfuncao, descricao FROM FUNCAO";
