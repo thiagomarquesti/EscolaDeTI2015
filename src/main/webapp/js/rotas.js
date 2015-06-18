@@ -50,7 +50,7 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/funcaoListar.html',
         controller: 'FuncaoController'
     }).when('/Funcao/editar/:id', {
-        templateUrl: 'views/FuncaoCadastrar.html',
+        templateUrl: 'views/funcaoCadastrar.html',
         controller: 'FuncaoController'
     })
     //------- Rotas do Indigena --------   

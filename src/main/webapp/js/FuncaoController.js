@@ -39,10 +39,11 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
     
     $scope.editarFuncao = function(funcao) {
         $location.path("/Funcao/editar/" + funcao.idfuncao);
+        console.log(funcao.idfuncao);
     };
     
     $scope.deletarFuncao = function (funcao) {
-        $http.delete("/funcao/" + etnia.funcao)
+        $http.delete("/funcao/" + funcao.idfuncao)
                 .success(function (status) {
                     toastr.success("Funcao "+ funcao.descricao +" deletada com sucesso.");
                     $scope.atualizarFuncoes();
