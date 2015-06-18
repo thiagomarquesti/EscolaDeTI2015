@@ -37,6 +37,9 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Convenio/listar', {
         templateUrl: 'views/convenioListar.html',
         controller: 'ConvenioController'
+    }).when('/Convenio/editar/:id', {
+        templateUrl: 'views/convenioCadastrar.html',
+        controller: 'ConvenioController'
     })
  //------- Rotas do Etnia --------   
     .when('/Etnia/nova', {

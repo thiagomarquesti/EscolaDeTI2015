@@ -28,19 +28,22 @@ class ConvenioService {
     }
 
     void removerConvenio(Long aIdConvenio) {
-        repo.delete(aIdConvenio);
+        try {
+            repo.delete(aIdConvenio);
+        } catch(Exception e){
+            throw new RuntimeException("Convênio não encontrado!");                    
+        }
     }
-
+    
     public List<Map<String, Object>> getConvenios() {
-
-        final String SQL = "SELECT idConvenio, descricao FROM CONVENIO";
+        final String SQL = "SELECT idconvenio, descricao FROM convenio";
         List<Map<String, Object>> convenios = jdbcTemplate.query(SQL, new MapRowMapper());
         return Collections.unmodifiableList(convenios);
     }
 
     public List<Map<String, Object>> getConvenioById(Long aIdConvenio) {
 
-        final String SQL = "SELECT idConvenio, descricao FROM CONVENIO WHERE idConvenio = :idConvenio";
+        final String SQL = "SELECT idConvenio, descricao FROM convenio WHERE idConvenio = :idConvenio";
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("idConvenio", aIdConvenio);
 
