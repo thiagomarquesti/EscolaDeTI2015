@@ -8,8 +8,6 @@
 //
 //@ControllerAdvice
 //public class ExceptionManager {
-//    
-
 //    @ExceptionHandler
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ResponseBody
@@ -20,4 +18,3 @@
 //    }
 //    
 //}
-
