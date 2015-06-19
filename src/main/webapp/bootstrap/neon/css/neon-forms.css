@@ -6338,7 +6338,7 @@ hr + .mail-env {
 }
 .login-page .login-content {
   position: relative;
-  width: 320px;
+  width: 420px;
   margin: 0 auto;
   text-align: center;
   padding: 20px 0;
@@ -6347,6 +6347,7 @@ hr + .mail-env {
   -webkit-transition: all 550ms ease-in-out;
   transition: all 550ms ease-in-out;
 }
+
 .login-page .login-content a {
   color: #949494;
 }
