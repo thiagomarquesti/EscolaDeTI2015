@@ -53,12 +53,24 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
     $scope.salvarFuncao = function () {
         if ($scope.isNovaFuncao) {
-            $http.post("/funcao", $scope.funcao)
-                    .success(function () {
-                        $location.path("/Funcao/listar");
-                        toastr.success("Funcao inserida com sucesso!");
-                    })
-                    .error(deuErro);
+            
+            $http.get("/funcao//verificarDescricao/" + $scope.funcao.descricao)
+                    .success(function(data){
+                        console.log(data);
+                        if(data == false){
+                            toastr.error("Já existe uma função cadastrada com esse nome!");
+                            $scope.funcao.descricao = "";
+                        }
+                        else{
+                            $http.post("/funcao", $scope.funcao)
+                                .success(function () {
+                                    $location.path("/Funcao/listar");
+                                    toastr.success("Funcao inserida com sucesso!");
+                                })
+                                .error(deuErro);
+                        }
+                    }
+                    ).error(deuErro);
         }
         else {
             $http.put("/funcao/", $scope.funcao)
