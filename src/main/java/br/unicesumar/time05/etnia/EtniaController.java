@@ -27,7 +27,7 @@ public class EtniaController {
     }
     
     @RequestMapping(value = "/{aIdEtnia}", method = RequestMethod.DELETE)
-    public void editarEtnia(@PathVariable Long aIdEtnia){
+    public void removerEtnia(@PathVariable Long aIdEtnia){
         etniaService.removerEtnia(aIdEtnia);
     }
     

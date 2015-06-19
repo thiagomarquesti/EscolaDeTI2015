@@ -27,7 +27,7 @@ public class ConvenioController {
     }
 
     @RequestMapping(value = "/{aIdConvenio}", method = RequestMethod.DELETE)
-    public void editarConvenio(@PathVariable Long aIdConvenio) {
+    public void removerConvenio(@PathVariable Long aIdConvenio) {
         convenioService.removerConvenio(aIdConvenio);
     }
 
