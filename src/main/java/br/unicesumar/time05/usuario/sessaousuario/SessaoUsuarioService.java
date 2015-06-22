@@ -148,12 +148,12 @@ public class SessaoUsuarioService {
         List<ItemAcessoUsuarioInMemory> listaDeFilhos = new ArrayList<>();
 
         for (Map<String, Object> item : resultQuery) {
-            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getId().toString())) {
+            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getiditemacesso().toString())) {
 
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                        Long.parseLong(item.get("id").toString()),
+                        Long.parseLong(item.get("iditemacesso").toString()),
                         item.get("nome").toString(),
                         item.get("rota").toString(),
                         null

@@ -31,16 +31,16 @@ public class PerfilDeAcessoService {
         return Collections.unmodifiableList(perfisDeAcesso);
     }
     
-    public List<Map<String, Object>> getPerfilDeAcesso(Long aId){
+    public List<Map<String, Object>> getPerfilDeAcesso(Long aIdPerfilDeAcesso){
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aId", aId);
-        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT idperfildeacesso, nome FROM perfildeacesso WHERE idperfildeacesso = :aId", params, new MapRowMapper());
+        params.addValue("aIdPerfilDeAcesso", aIdPerfilDeAcesso);
+        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT idperfildeacesso, nome FROM perfildeacesso WHERE idperfildeacesso = :aIdPerfilDeAcesso", params, new MapRowMapper());
         return perfilDeAcesso;
     }
 
-    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(Long aId){
+    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(Long aIdPerfilDeAcesso){
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aId", aId);
+        params.addValue("aIdPerfilDeAcesso", aIdPerfilDeAcesso);
         
         String sql = 
                   "SELECT i.iditemacesso, "
@@ -49,7 +49,7 @@ public class PerfilDeAcessoService {
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
                 + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "
-                + " WHERE pi.perfildeacesso_id = :aId";
+                + " WHERE pi.perfildeacesso_id = :aIdPerfilDeAcesso";
         
         List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
         return itensPerfilDeAcesso;
@@ -59,8 +59,8 @@ public class PerfilDeAcessoService {
         repo.save(aPerfilDeAcesso);
     }
     
-    public void removerPerfilDeAcesso(Long aId){
-        repo.delete(aId);
+    public void removerPerfilDeAcesso(Long aIdPerfilDeAcesso){
+        repo.delete(aIdPerfilDeAcesso);
     }
     
     public void alterarPerfilDeAcesso(PerfilDeAcesso aPerfilDeAcesso){

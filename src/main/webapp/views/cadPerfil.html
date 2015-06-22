@@ -19,7 +19,7 @@
 
             <div ng-show="!isNovo" class="form-group">
                 <label for="id" class="col-md-2 control-label">ID: </label>
-                <div class="col-md-2"><input type="text" id="id" ng-model="perfil.id" disabled="disabled" class="form-control"></div>
+                <div class="col-md-2"><input type="text" id="idperfildeacesso" ng-model="perfil.idperfildeacesso" disabled="disabled" class="form-control"></div>
             </div>
 
             <div class="form-group">    
@@ -35,7 +35,7 @@
             <div class="form-group" ng-init="itensAcesso()">
                 <label for="nome" class="control-label" style="margin-left: 40px; margin-right: 25px">Adicionar Itens:</label>
                 <select id="itensselecionados" class="itemAcesso" multiple="multiple" style="width: 80%">
-                    <option ng-repeat="item in itens" ng-selected="selected(item.id)" ng-model="item.nome" value="{{item}}">{{item.nome}}</option>
+                    <option ng-repeat="item in itens" ng-selected="selected(item.iditemacesso)" ng-model="item.nome" value="{{item}}">{{item.nome}}</option>
                 </select>   
             </div>
             <div class="form-group">

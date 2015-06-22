@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class ItemAcessoUsuarioInMemory implements Serializable {
 
-    private Long id;
+    private Long iditemacesso;
     private String nome;
     private String rota;
     private List<ItemAcessoUsuarioInMemory> itens;
 
-    public ItemAcessoUsuarioInMemory(Long id, String nome, String rota, List<ItemAcessoUsuarioInMemory> itens) {
-        this.id = id;
+    public ItemAcessoUsuarioInMemory(Long iditemacesso, String nome, String rota, List<ItemAcessoUsuarioInMemory> itens) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
         this.itens = itens;
@@ -25,8 +25,8 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
     public ItemAcessoUsuarioInMemory() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getiditemacesso() {
+        return iditemacesso;
     }
 
     public String getNome() {
@@ -43,13 +43,13 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemAcessoUsuarioInMemory{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", itens=" + itens + '}';
+        return "ItemAcessoUsuarioInMemory{" + "iditemacesso=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", itens=" + itens + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.iditemacesso);
         return hash;
     }
 
@@ -62,7 +62,7 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
             return false;
         }
         final ItemAcessoUsuarioInMemory other = (ItemAcessoUsuarioInMemory) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.iditemacesso, other.iditemacesso)) {
             return false;
         }
         return true;

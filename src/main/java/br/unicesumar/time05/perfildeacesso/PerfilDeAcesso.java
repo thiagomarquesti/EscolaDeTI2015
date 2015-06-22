@@ -86,7 +86,7 @@ public class PerfilDeAcesso implements Serializable{
 
     @Override
     public String toString() {
-        return "PerfilDeAcesso{" + "id=" + idperfildeacesso + ", nome=" + nome + ", itens=" + itens + '}';
+        return "PerfilDeAcesso{" + "idperfildeacesso=" + idperfildeacesso + ", nome=" + nome + ", itens=" + itens + '}';
     }
     
     

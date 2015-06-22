@@ -28,8 +28,8 @@ public class ItemAcesso implements Serializable {
         this.rota = rota;
     }
     
-    public ItemAcesso(Long id, String nome, String rota) {
-        this.iditemacesso = id;
+    public ItemAcesso(Long iditemacesso, String nome, String rota) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
     }
@@ -40,8 +40,8 @@ public class ItemAcesso implements Serializable {
         this.superior = superior;
     }
 
-    public ItemAcesso(Long id, String nome, String rota, ItemAcesso superior) {
-        this.iditemacesso = id;
+    public ItemAcesso(Long iditemacesso, String nome, String rota, ItemAcesso superior) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
         this.superior = superior;
@@ -105,6 +105,6 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemAcesso{" + "id=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
+        return "ItemAcesso{" + "iditemacesso=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
     }
 }

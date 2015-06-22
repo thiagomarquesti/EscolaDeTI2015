@@ -14,15 +14,17 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 novoPerfil();
             }
             else {
-                $http.get("/perfildeacesso/" + $routeParams.id)
+                $http.get("/perfildeacesso/" + $routeParams.idperfilacesso)
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
-                            $("#itensselecionados").delay(30000).select2();
+                            for (var x = 0; x < 5000; x++) {
+                            }
                             $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
+
             $("select").select2();
 
         };
@@ -82,11 +84,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.editar = function (perfil) {
-            $location.path("/Perfil/editar/" + perfil.id);
+            $location.path("/Perfil/editar/" + perfil.idperfilacesso);
         };
 
         $scope.excluir = function (perfil) {
-            $http.delete("/perfildeacesso/" + perfil.id).success(function () {
+            $http.delete("/perfildeacesso/" + perfil.idperfilacesso).success(function () {
                 toastr.success("O Perfil foi excluido com sucesso", "Perfil Excluido");
                 $scope.atualizar();
             }).error(function () {
@@ -98,7 +100,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             var itens = $scope.itensDoPerfil;
             retorno = false;
             for (i = 0; i < itens.length; i++) {
-                if (itens[i].id === itemId) {
+                if (itens[i].iditemacesso === itemId) {
                     retorno = true;
                 }
             }
