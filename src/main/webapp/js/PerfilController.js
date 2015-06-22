@@ -1,28 +1,4 @@
 module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location, $element, $attrs) {
-        
-//$(document).ready(function(){
-//     $("#itensselecionados").select2({});
-//     
-//     $("#itensselecionados").select2({
-//            closeOnSelect:false
-//        });
-//};
-
-        $scope.load = function(){
-            //var myEl = angular.element(document.querySelector("#itensselecionados"));
-            //var myEl = angular.element('#itensselecionados');
-            //myEl.select2();
-            //alert("TESTE");
-            //document.getElementById("itensselecionados").select2();
-            //toastr.error("TESTE");
-            //var a = angular.element( document.querySelector( "#itensselecionados" ) );
-            //a.select2();
-            //("#itensselecionados").select2();
-            //var a = angular.element($('#itensselecionados'));
-//            var a = angular.element(document.querySelector("#itensselecionados"));
-//            a.select2();
-            
-        }
         function novoPerfil() {
             $scope.perfil = {
                 nome: "",
@@ -30,34 +6,30 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             };
             $scope.isNovo = true;
         }
-        
-        
+
+
         $scope.carregar = function () {
-            //$("#itensselecionados").select2();
-//            angular.element($("#itensselecionados").select2());
-            //console.log(999);
-            //console.log(angular.element(document.querySelector('#itensselecionados').innerHTML));
-            //console.log($("#itensselecionados"));
-            //$("#itensselecionados".itemAcesso).select2();
+            $scope.itensAcesso();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
-                //$("select").select2('val', 'All');
-                
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
+                            for (var x = 0; x < 5000; x++) {
+                            }
+                            $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
-//            $("#itensselecionados").select2({});
-//            angular.element("#itensselecionados").select2();
-//            $("#itensselecionados").select2({
-//                closeOnSelect:false
-//            });
+
+            $("select").select2();
+
         };
+
+
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
@@ -98,11 +70,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
-                            //alert(data.val());
+                            $("#itensselecionados").select().val();
                         })
                         .error(function () {
                             toastr.error("TESTE");
-                        })
+                        });
                 //.error(deuErro);
             }
         };
