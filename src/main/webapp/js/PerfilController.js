@@ -66,7 +66,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                     })
                     .error(deuErro);
             if (!$scope.isNovo) {
-                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
+                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.idperfildeacesso)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
@@ -116,7 +116,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             if (novo) {
                 perfil = '{"nome": "' + $scope.perfil.nome + '" , "itens": [' + perfil + ']};';
             } else {
-                perfil = '{"id":' + $scope.perfil.id + ', "nome": "' + $scope.perfil.nome + '", "itens": [' + perfil + ']};';
+                perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + ', "nome": "' + $scope.perfil.nome + '", "itens": [' + perfil + ']};';
             }
             return perfil;
         }

@@ -47,7 +47,7 @@ public class ItemAcesso implements Serializable {
         this.superior = superior;
     }
 
-    public Long getIdItemAcesso() {
+    public Long getIditemacesso() {
         return iditemacesso;
     }
 
