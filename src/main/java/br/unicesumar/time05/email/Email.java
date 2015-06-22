@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Email implements Serializable{
-    @Id
+    @org.hibernate.validator.constraints.Email
     private String email;
 
     public Email() {

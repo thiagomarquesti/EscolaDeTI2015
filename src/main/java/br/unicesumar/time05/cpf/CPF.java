@@ -2,12 +2,10 @@ package br.unicesumar.time05.cpf;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class CPF implements Serializable{
-    @Id
     @org.hibernate.validator.constraints.br.CPF
     private String cpf;
 

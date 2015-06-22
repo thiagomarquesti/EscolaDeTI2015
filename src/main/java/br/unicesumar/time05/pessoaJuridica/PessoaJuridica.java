@@ -9,25 +9,23 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PessoaJuridica extends Pessoa implements Serializable{
 
-    @OneToOne
+    @Embedded
     private Cnpj cnpj;
 
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, Set<Telefone> telefones, Email email, Set<Endereco> enderecos, TipoPessoa tipoPessoa) {
-        super(nome, telefones, email, enderecos, tipoPessoa);
+    public PessoaJuridica(Cnpj cnpj, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+        super(nome, telefones, email, endereco, tipoPessoa);
         this.cnpj = cnpj;
     }
 

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,8 +19,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -33,7 +33,7 @@ public abstract class Pessoa implements Serializable {
     @NotBlank(message = "Nome não estar vazio!")
     private String nome;
 
-    @NotBlank(message = "Telefone não pode estar vazio!")
+//    @NotBlank(message = "Telefone não pode estar vazio!")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_telefone",
             joinColumns = {
@@ -42,22 +42,13 @@ public abstract class Pessoa implements Serializable {
                 @JoinColumn(name = "telefone_id", referencedColumnName = "telefone")})
     private Set<Telefone> telefones;
 
-    @NotBlank(message = "Email não pode estar vazio!")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "pessoa_email",
-            joinColumns = {
-                @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "email_id", referencedColumnName = "email")})
+//    @NotBlank(message = "Email não pode estar vazio!")
+    @Embedded
     private Email email;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "pessoa_endereco",
-            joinColumns = {
-                @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")})
-    private Set<Endereco> enderecos;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")
+    private Endereco endereco;
     
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa;
@@ -65,11 +56,11 @@ public abstract class Pessoa implements Serializable {
     public Pessoa() {
     }
 
-    public Pessoa(String nome, Set<Telefone> telefones, Email email, Set<Endereco> enderecos, TipoPessoa tipoPessoa) {
+    public Pessoa(String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         this.nome = nome;
         this.telefones = telefones;
         this.email = email;
-        this.enderecos = enderecos;
+        this.endereco = endereco;
         this.tipoPessoa = tipoPessoa;
     }
 
@@ -111,16 +102,12 @@ public abstract class Pessoa implements Serializable {
         this.email = email;
     }
 
-    public Set<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(Set<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
-        this.enderecos.add(endereco);
+        this.endereco = endereco;
     }
 
     public TipoPessoa getTipo() {

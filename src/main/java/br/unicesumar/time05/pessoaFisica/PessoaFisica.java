@@ -10,34 +10,28 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PessoaFisica extends Pessoa implements Serializable{
 
-    @OneToOne
-    @JoinTable(name = "pessoa_cpf",
-            joinColumns = {
-                @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "cpf_id", referencedColumnName = "cpf")})
+    @Embedded
     private CPF cpf;
     
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Genero genero;
 
     public PessoaFisica() {
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Set<Endereco> enderecos, TipoPessoa tipoPessoa) {
-        super(nome, telefones, email, enderecos, tipoPessoa);
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+        super(nome, telefones, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
     }
