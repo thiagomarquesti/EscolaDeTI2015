@@ -1,0 +1,26 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body {
+        font-family: 'Roboto', Arial, Verdana, Tahoma, sans-serif;
+}
+
+.gamb-switch span.switch-info.switch-right, .gamb-switch span.switch-info.switch-right:hover {
+  background-color: #5bc0de;
+  color: #ffffff;
+}
+
+.formNovoAdmin  {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+  -moz-transition: all 550ms ease-in-out;
+  -o-transition: all 550ms ease-in-out;
+  -webkit-transition: all 550ms ease-in-out;
+  transition: all 550ms ease-in-out;
+}

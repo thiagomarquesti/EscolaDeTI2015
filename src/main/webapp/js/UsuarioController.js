@@ -18,14 +18,17 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.verificaLogado = function(){
          $http.get("/login/usuariologado")
            .success(function(data){
-               if(!data.id){
+               if(!data.idusuario){
                    window.location.href="/login.html";
                }
                else {
                    $scope.nomeUsuario = data.nome;
+                   $scope.idUsuario = data.idusuario;
                }
            })
-           .error(deuErro);
+           .error(function(){
+               window.location.href="/login.html";
+           });
     };
     
     $scope.salvar = function(){
@@ -62,7 +65,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     $scope.editar = function(usuario) {
-        $location.path("/Usuario/editar/" + usuario.id);
+        $location.path("/Usuario/editar/" + usuario.idusuario);
     };
     
     $scope.alteraStatus = function(id) {
@@ -72,7 +75,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                })
                .error(deuErro);
     };
-
+    
+    $scope.statusArray =  {"0":"Acesso Liberado", "1":"Acesso Bloqueado", "":"Sem acesso"};
+    $scope.corStatus =  {"0":"success", "1":"danger", "":"info"};
+    
     $scope.carregar = function(){
         if($location.path() === "/Usuario/novo"){
             novoUsuario();
@@ -97,6 +103,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         novoUsuario();
     };
     
+    
     $scope.logout = function(){
         $http.get("/login/usuariologado")
            .success(function(data){
@@ -116,5 +123,3 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         toastr.error("Algo deu errado. Tente novamente.");
     }
 }]);
-
-

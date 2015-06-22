@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionSystemException;
 
 @Component
 @Transactional
@@ -27,6 +24,7 @@ public class UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepo;
+    
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
     
@@ -48,7 +46,7 @@ public class UsuarioService {
     }
     
     public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT id, nome, login, email, senha, status FROM usuario"
+        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT idusuario, nome, login, email, senha, status FROM usuario"
                 , new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(usuarios);
     }
@@ -56,8 +54,8 @@ public class UsuarioService {
     public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, nome, login, email, status FROM usuario "+
-                 "WHERE id = :aUsuarioId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, nome, login, email, status FROM usuario "+
+                 "WHERE idusuario = :aUsuarioId", params, new MapRowMapper());
         return Collections.unmodifiableList(usuario);
     }
     
@@ -125,7 +123,7 @@ public class UsuarioService {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
             params.addValue("aId", aUsuarioId);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, email FROM usuario WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, email FROM usuario WHERE email = :aEmail AND idusuario <> :aId", params, new MapRowMapper());
             if(!usuario.isEmpty()){
                 return false;
             }
@@ -136,7 +134,7 @@ public class UsuarioService {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         params.addValue("aId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, login FROM usuario WHERE login = :aLogin AND id <> :aId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, login FROM usuario WHERE login = :aLogin AND idusuario <> :aId", params, new MapRowMapper());
         return usuario.isEmpty();
     }
     
@@ -155,10 +153,10 @@ public class UsuarioService {
         params.addValue("aId", aUsuarioId);
         
         String sql = 
-                  "SELECT p.id, "
+                  "SELECT p.idperfildeacesso, "
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
-                + "  JOIN perfildeacesso p ON (up.perfis_id = p.id) "
+                + "  JOIN perfildeacesso p ON (up.perfis_id = p.idperfildeacesso) "
                 + " WHERE up.usuario_id = :aId";
         
         List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());

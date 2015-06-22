@@ -1,33 +1,37 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import br.unicesumar.time05.itemacesso.ItemAcesso;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.sql.rowset.serial.SerialArray;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.engine.jdbc.SerializableBlobProxy;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity(name = "perfildeacesso")
-public class PerfilDeAcesso {
+public class PerfilDeAcesso implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long idperfildeacesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
     private String nome;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfildeacesso_itemacesso",
-            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idperfildeacesso")},
+            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "iditemacesso")})
     private Set<ItemAcesso> itens;
 
     public PerfilDeAcesso() {
@@ -38,8 +42,8 @@ public class PerfilDeAcesso {
         this.itens = itens;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPerfilDeAcesso() {
+        return idperfildeacesso;
     }
 
     public String getNome() {
@@ -61,7 +65,7 @@ public class PerfilDeAcesso {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.idperfildeacesso);
         return hash;
     }
 
@@ -74,7 +78,7 @@ public class PerfilDeAcesso {
             return false;
         }
         final PerfilDeAcesso other = (PerfilDeAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.idperfildeacesso, other.idperfildeacesso)) {
             return false;
         }
         return true;
@@ -82,7 +86,7 @@ public class PerfilDeAcesso {
 
     @Override
     public String toString() {
-        return "PerfilDeAcesso{" + "id=" + id + ", nome=" + nome + ", itens=" + itens + '}';
+        return "PerfilDeAcesso{" + "id=" + idperfildeacesso + ", nome=" + nome + ", itens=" + itens + '}';
     }
     
     

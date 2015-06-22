@@ -6,23 +6,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.jar.Attributes;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Usuario  implements Serializable{
-    @Id
+    @Id    
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long idusuario;
     
     @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
@@ -43,7 +46,7 @@ public class Usuario  implements Serializable{
     @Enumerated
     private Status status = Status.ATIVO;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<PerfilDeAcesso> perfis;
     
     public Usuario() {
@@ -88,8 +91,8 @@ public class Usuario  implements Serializable{
         this.senha = senha;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdUsuario() {
+        return idusuario;
     }
 
     public Status getStatus() {
@@ -116,7 +119,7 @@ public class Usuario  implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.idusuario);
         return hash;
     }
 
@@ -129,7 +132,7 @@ public class Usuario  implements Serializable{
             return false;
         }
         final Usuario other = (Usuario) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.idusuario, other.idusuario)) {
             return false;
         }
         return true;
@@ -137,7 +140,7 @@ public class Usuario  implements Serializable{
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + '}';
+        return "Usuario{" + "id=" + idusuario + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + '}';
     }
     
 }
