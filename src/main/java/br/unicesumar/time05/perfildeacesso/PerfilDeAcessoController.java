@@ -22,7 +22,7 @@ public class PerfilDeAcessoController {
     }
     
     @RequestMapping(value = "/{aIdPerfilDeAcesso}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getPerfilDeAcesso(@PathVariable Long aIdPerfilDeAcesso){
+    public Map<String, Object> getPerfilDeAcesso(@PathVariable Long aIdPerfilDeAcesso){
         return service.getPerfilDeAcesso(aIdPerfilDeAcesso);
     }
     

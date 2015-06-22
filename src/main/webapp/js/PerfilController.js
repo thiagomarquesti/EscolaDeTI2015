@@ -14,9 +14,9 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 novoPerfil();
             }
             else {
-                $http.get("/perfildeacesso/" + $routeParams.idperfilacesso)
+                $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.perfil = data[0];
+                            $scope.perfil = data;
                             $scope.isNovo = false;
                             $("#itensselecionados").delay(30000).select2();
                             $("#itensselecionados").select2().val();
@@ -65,7 +65,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                     })
                     .error(deuErro);
             if ($scope.isNovo == false) {
-                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.idperfildeacesso)
+                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
@@ -83,11 +83,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.editar = function (perfil) {
-            $location.path("/Perfil/editar/" + perfil.idperfilacesso);
+            $location.path("/Perfil/editar/" + perfil.idperfildeacesso);
         };
 
         $scope.excluir = function (perfil) {
-            $http.delete("/perfildeacesso/" + perfil.idperfilacesso).success(function () {
+            $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
                 toastr.success("O Perfil foi excluido com sucesso", "Perfil Excluido");
                 $scope.atualizar();
             }).error(function () {

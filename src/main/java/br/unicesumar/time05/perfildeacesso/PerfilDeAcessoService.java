@@ -31,11 +31,11 @@ public class PerfilDeAcessoService {
         return Collections.unmodifiableList(perfisDeAcesso);
     }
     
-    public List<Map<String, Object>> getPerfilDeAcesso(Long aIdPerfilDeAcesso){
+    public Map<String, Object> getPerfilDeAcesso(Long aIdPerfilDeAcesso){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aIdPerfilDeAcesso", aIdPerfilDeAcesso);
         List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT idperfildeacesso, nome FROM perfildeacesso WHERE idperfildeacesso = :aIdPerfilDeAcesso", params, new MapRowMapper());
-        return perfilDeAcesso;
+        return perfilDeAcesso.get(0);
     }
 
     public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(Long aIdPerfilDeAcesso){
