@@ -18,13 +18,12 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             $scope.perfil = data;
                             $scope.isNovo = false;
-                            $("#itensselecionados").delay(30000).select2();
-                            $("#itensselecionados").select2().val();
+//                            $("#itensselecionados").delay(30000).select2();
+//                            $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
 
-            $("select").select2();
 
         };
 
@@ -69,7 +68,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
-                            $("#itensselecionados").select().val();
+//                            $("#itensselecionados").select2().val();
                         })
                         .error(function () {
                             toastr.error("TESTE");
