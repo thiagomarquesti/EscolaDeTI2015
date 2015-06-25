@@ -25,7 +25,7 @@ public class Endereco implements Serializable {
     private String bairro;
     private String complemento;
     private String cep;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinTable(name = "endereco_cidade",
             joinColumns = {
                 @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
@@ -33,34 +33,34 @@ public class Endereco implements Serializable {
                 @JoinColumn(name = "cidade_id", referencedColumnName = "codigoIBGE")})
     private Cidade cidade;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "endereco_estado",
-            joinColumns = {
-                @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "estado_id", referencedColumnName = "sigla")})
-    private UF uf;
+//    @ManyToOne()
+//    @JoinTable(name = "endereco_estado",
+//            joinColumns = {
+//                @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
+//            inverseJoinColumns = {
+//                @JoinColumn(name = "estado_id", referencedColumnName = "sigla")})
+//    private UF uf;
 
     public Endereco() {
     }
 
-    public Endereco(String logradouro, String numero, String bairro, String cep, Cidade cidade, UF uf) {
+    public Endereco(String logradouro, String numero, String bairro, String cep, Cidade cidade) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.cep = cep;
         this.cidade = cidade;
-        this.uf = uf;
+//        this.uf = uf;
     }
 
-    public Endereco(String logradouro, String numero, String bairro, String complemento, String cep, Cidade cidade, UF uf) {
+    public Endereco(String logradouro, String numero, String bairro, String complemento, String cep, Cidade cidade) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
         this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
-        this.uf = uf;
+//        this.uf = uf;
     }
 
     public Long getIdendereco() {
@@ -115,13 +115,13 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    public UF getUf() {
-        return uf;
-    }
-
-    public void setUf(UF uf) {
-        this.uf = uf;
-    }
+//    public UF getUf() {
+//        return uf;
+//    }
+//
+//    public void setUf(UF uf) {
+//        this.uf = uf;
+//    }
 
     @Override
     public int hashCode() {
@@ -132,7 +132,7 @@ public class Endereco implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.complemento);
         hash = 97 * hash + Objects.hashCode(this.cep);
         hash = 97 * hash + Objects.hashCode(this.cidade);
-        hash = 97 * hash + Objects.hashCode(this.uf);
+//        hash = 97 * hash + Objects.hashCode(this.uf);
         return hash;
     }
 
@@ -163,15 +163,15 @@ public class Endereco implements Serializable {
         if (!Objects.equals(this.cidade, other.cidade)) {
             return false;
         }
-        if (!Objects.equals(this.uf, other.uf)) {
-            return false;
-        }
+//        if (!Objects.equals(this.uf, other.uf)) {
+//            return false;
+//        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Endereco{" + "logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", complemento=" + complemento + ", cep=" + cep + ", cidade=" + cidade + ", uf=" + uf + '}';
+        return "Endereco{" + "logradouro=" + logradouro + ", numero=" + numero + ", bairro=" + bairro + ", complemento=" + complemento + ", cep=" + cep + ", cidade=" + cidade + '}';
     }
 
 }

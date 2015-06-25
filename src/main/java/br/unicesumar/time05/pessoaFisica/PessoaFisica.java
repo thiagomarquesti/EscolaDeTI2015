@@ -10,6 +10,7 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,6 +23,7 @@ import javax.persistence.InheritanceType;
 public class PessoaFisica extends Pessoa implements Serializable{
 
     @Embedded
+    @Column(unique = true, nullable = false)
     private CPF cpf;
     
     @Enumerated(EnumType.STRING)

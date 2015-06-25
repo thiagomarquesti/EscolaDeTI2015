@@ -1,5 +1,6 @@
 package br.unicesumar.time05.pessoaFisica;
 
+import br.unicesumar.time05.pessoa.TipoPessoa;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class FisicaController {
         service.salvarFisica(aPessoa);
     }
 
-    @RequestMapping(value = "/{aPessoaId}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{aPessoaId}", method = RequestMethod.DELETE)
     public void deletarFisica(@PathVariable Long aPessoaId) {
         service.removerFisica(aPessoaId);
     }
@@ -38,8 +39,13 @@ public class FisicaController {
     }
 
     @RequestMapping(value = "/{aPessoaId}", method = RequestMethod.GET)
-    public Map<String, Object> getFisicaPorId(@PathVariable Long aPessoasId) {
-        return service.getFisicaById(aPessoasId);
+    public Map<String, Object> getFisicaPorId(@PathVariable Long aPessoaId) {
+        return service.getFisicaById(aPessoaId);
     }
-    
+
+    @RequestMapping(value = "/trocarTipo/{aPessoaId}", method = RequestMethod.POST)
+    public void alterarTipoPessoa(@PathVariable Long aPessoaId, @RequestBody String tipo) {
+        service.trocarTipoPessoa(aPessoaId, tipo);
+    }
+
 }

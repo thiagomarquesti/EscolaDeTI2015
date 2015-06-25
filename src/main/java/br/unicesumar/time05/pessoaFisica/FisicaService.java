@@ -1,14 +1,8 @@
 package br.unicesumar.time05.pessoaFisica;
 
-import br.unicesumar.time05.cidade.Cidade;
-import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
-import br.unicesumar.time05.endereco.Endereco;
-import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.rowMapper.MapRowMapper;
 import br.unicesumar.time05.pessoa.TipoPessoa;
-import br.unicesumar.time05.telefone.Telefone;
-import br.unicesumar.time05.uf.UF;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -48,24 +42,22 @@ public class FisicaService {
     public List<Map<String, Object>> getFisica() {
 //    public PessoaFisica getFisica() {
         List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.nome, u.sigla "
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
                 + "FROM pessoa p"
                 + " INNER JOIN pessoa_fisica pf "
                 + "    ON pf.idpessoa = p.idpessoa"
                 + " INNER JOIN pessoa_telefone pt "
                 + "    ON pt.pessoa_id = p.idpessoa"
                 + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.telefone"
+                + "    ON pt.telefone_id = t.idtelefone"
                 + " INNER JOIN endereco ende "
                 + "    ON p.endereco_id = ende.idendereco"
                 + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id "
-                + "INNER JOIN cidade c "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
                 + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN endereco_estado ee "
-                + "    ON ende.idendereco = ee.endereco_id "
-                + "INNER JOIN uf u "
-                + "    ON ee.estado_id = u.sigla",
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado",
                 new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(fisica);
 //        return fisicaRepo.findOne(1l);
@@ -74,9 +66,30 @@ public class FisicaService {
     public Map<String, Object> getFisicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.tipo_pessoa, pf.genero FROM pessoa p JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa"
-                + "WHERE id = :aPessoaId", params, new MapRowMapper());
-        return pessoa.get(0);
+        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_fisica pf "
+                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.idtelefone"
+                + " INNER JOIN endereco ende "
+                + "    ON p.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado "
+                + "WHERE p.idpessoa = :aPessoaId",
+                params, new MapRowMapper());
+        try {
+            return fisica.get(0);
+        } catch (Exception e) {
+            throw new RuntimeException("Nenhum resultado encontrado!");
+        }
     }
 
     public boolean verificarEmail(Email aEmail) {

@@ -41,7 +41,7 @@ public class Usuario  implements Serializable{
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Status status = Status.ATIVO;
     
     @ManyToMany(fetch = FetchType.EAGER)

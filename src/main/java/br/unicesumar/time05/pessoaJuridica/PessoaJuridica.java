@@ -9,6 +9,7 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -19,6 +20,7 @@ import javax.persistence.InheritanceType;
 public class PessoaJuridica extends Pessoa implements Serializable{
 
     @Embedded
+    @Column(unique = true, nullable = false)
     private Cnpj cnpj;
 
     public PessoaJuridica() {

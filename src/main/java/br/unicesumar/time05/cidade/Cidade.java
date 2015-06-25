@@ -1,20 +1,28 @@
 package br.unicesumar.time05.cidade;
 
+import br.unicesumar.time05.itemacesso.InicializadorItemAcesso;
+import br.unicesumar.time05.uf.UF;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Cidade {
+
     @Id
     private int codigoIBGE;
-    private String nome;
+    private String descricao;
+    @ManyToOne
+    private UF estado;
 
     public Cidade() {
+
     }
 
-    public Cidade(int codigoIBGE, String nome) {
+    public Cidade(int codigoIBGE, String descricao, UF estado) {
         this.codigoIBGE = codigoIBGE;
-        this.nome = nome;
+        this.descricao = descricao;
+        this.estado = estado;
     }
 
     public int getCodigoIBGE() {
@@ -25,12 +33,20 @@ public class Cidade {
         this.codigoIBGE = codigoIBGE;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public UF getEstado() {
+        return estado;
+    }
+
+    public void setEstado(UF estado) {
+        this.estado = estado;
     }
 
     @Override
@@ -54,5 +70,5 @@ public class Cidade {
         }
         return true;
     }
-    
+
 }

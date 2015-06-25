@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -33,16 +34,16 @@ public abstract class Pessoa implements Serializable {
     @NotBlank(message = "Nome não estar vazio!")
     private String nome;
 
-//    @NotBlank(message = "Telefone não pode estar vazio!")
+    @NotNull(message = "Telefone não pode estar vazio!")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_telefone",
             joinColumns = {
                 @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
             inverseJoinColumns = {
-                @JoinColumn(name = "telefone_id", referencedColumnName = "telefone")})
+                @JoinColumn(name = "telefone_id", referencedColumnName = "idtelefone")})
     private Set<Telefone> telefones;
 
-//    @NotBlank(message = "Email não pode estar vazio!")
+    @NotNull(message = "Email não pode estar vazio!")
     @Embedded
     private Email email;
 

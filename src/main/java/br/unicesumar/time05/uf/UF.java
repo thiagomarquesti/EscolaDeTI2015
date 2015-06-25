@@ -7,13 +7,27 @@ import javax.persistence.Id;
 @Entity
 public class UF {
     @Id
+    private Long codigoestado;
+    private String descricao;
     private String sigla;
 
     public UF() {
     }
 
-    public UF(String sigla) {
-        this.sigla = sigla;
+    public Long getCodigoestado() {
+        return codigoestado;
+    }
+
+    public void setCodigoestado(Long codigoestado) {
+        this.codigoestado = codigoestado;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getSigla() {
@@ -24,7 +38,12 @@ public class UF {
         this.sigla = sigla;
     }
 
-    @Override
+    public UF(Long codigoestado, String descricao, String sigla) {
+        this.codigoestado = codigoestado;
+        this.descricao = descricao;
+        this.sigla = sigla;
+    }
+
     public int hashCode() {
         int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.sigla);

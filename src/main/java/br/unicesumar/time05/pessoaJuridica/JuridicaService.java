@@ -6,6 +6,7 @@ import br.unicesumar.time05.rowMapper.MapRowMapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -40,17 +41,54 @@ public class JuridicaService {
     }
 
     public List<Map<String, Object>> getJuridica() {
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT idjuridica, nome, telefones, email, enderecos, tipoPessoa FROM pessoa",
+        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.cnpj, t.telefone,"
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_juridica pj "
+                + "    ON pj.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.idtelefone"
+                + " INNER JOIN endereco ende "
+                + "    ON p.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado",
                 new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(pessoa);
+        return Collections.unmodifiableList(juridica);
     }
 
     public Map<String, Object> getJuridicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT idjuridica, nome, telefones, email, enderecos, tipoPessoa FROM pessoa "
-                + "WHERE id = :aPessoaId", params, new MapRowMapper());
-        return pessoa.get(0);
+        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.genero, pj.cnpj, t.telefone,"
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_juridica pj "
+                + "    ON pj.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.idtelefone"
+                + " INNER JOIN endereco ende "
+                + "    ON p.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado"
+                + " WHERE p.idpessoa = :aPessoaId",
+                params, new MapRowMapper());
+        try {
+            return juridica.get(0);
+        } catch (Exception e) {
+            throw new RuntimeException("Nenhum resultado encontrado!");
+        }
     }
 
     public boolean verificarEmail(Email aEmail) {
