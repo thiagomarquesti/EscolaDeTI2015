@@ -1,4 +1,4 @@
-package br.unicesumar.time05.usuario.ConsultaPersonalizada;
+package br.unicesumar.time05.ConsultaPersonalizada;
 
 public final class OperadoresSQL {
     

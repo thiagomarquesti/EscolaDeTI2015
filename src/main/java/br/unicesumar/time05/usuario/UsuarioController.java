@@ -1,8 +1,8 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.usuario.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.usuario.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.usuario.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

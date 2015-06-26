@@ -1,7 +1,7 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
-import br.unicesumar.time05.usuario.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
