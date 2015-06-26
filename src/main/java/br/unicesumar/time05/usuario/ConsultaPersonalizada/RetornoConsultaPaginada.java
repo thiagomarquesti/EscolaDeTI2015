@@ -1,4 +1,4 @@
-package br.unicesumar.time05.usuario.QueryPersonalizada;
+package br.unicesumar.time05.usuario.ConsultaPersonalizada;
 
 import java.io.Serializable;
 import java.util.List;

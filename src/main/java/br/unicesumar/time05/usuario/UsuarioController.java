@@ -1,7 +1,8 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.usuario.QueryPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.usuario.QueryPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.RetornoConsultaPaginada;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @RequestMapping(value = "/teste", method = RequestMethod.GET)
+    public String teste(){
+        
+        ConstrutorDeSQL<Usuario> construtor = new ConstrutorDeSQL(Usuario.class, new ParametrosConsulta(1,"nome"));
+        return construtor.getSQL();
+    }
+    
     @RequestMapping(method = RequestMethod.POST)
     public void salvarUsuario(@RequestBody Usuario aUsuario) {
         usuarioService.salvarUsuario(aUsuario);

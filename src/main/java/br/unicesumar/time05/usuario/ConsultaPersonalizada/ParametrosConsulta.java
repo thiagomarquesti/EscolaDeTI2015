@@ -1,4 +1,4 @@
-package br.unicesumar.time05.usuario.QueryPersonalizada;
+package br.unicesumar.time05.usuario.ConsultaPersonalizada;
 
 import java.io.Serializable;
 
@@ -32,9 +32,9 @@ public class ParametrosConsulta implements Serializable {
         String campos[] = this.camposDaBusca.split(OperadoresSQL.SEPARADOR_CAMPOS_CONSULTA);
         for (String campo : campos) {
             if (expressao.isEmpty()) {
-                expressao += "((" + campo + " " + OperadoresSQL.ILIKE + " '%" + this.palavraChave + "%'" + ")";
+                expressao += "((" + campo + " " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
             } else {
-                expressao += OperadoresSQL.OR + "(" + campo + OperadoresSQL.ILIKE + "'%" + this.palavraChave + "%'" + ")";
+                expressao += OperadoresSQL.OR + "(" + campo + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
             }
         }
 

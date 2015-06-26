@@ -1,10 +1,10 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.usuario.QueryPersonalizada.QueryPersonalizada;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
-import br.unicesumar.time05.usuario.QueryPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.usuario.QueryPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.RetornoConsultaPaginada;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

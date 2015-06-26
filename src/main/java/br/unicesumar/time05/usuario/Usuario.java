@@ -1,6 +1,7 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
+import br.unicesumar.time05.usuario.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Usuario  implements Serializable{
@@ -25,13 +24,16 @@ public class Usuario  implements Serializable{
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     
+    @CampoConsulta
     @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
     
+    @CampoConsulta
     @NotBlank(message = "Campo login não pode estar vazio")
     @Column(unique = true, nullable = false)
     private String login;
     
+    @CampoConsulta
     @NotBlank(message = "Campo email não pode estar vazio")
     @Column(unique = true, nullable = false)
     @Pattern(regexp = "\\b(^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b")
@@ -41,6 +43,7 @@ public class Usuario  implements Serializable{
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
     
+    @CampoConsulta
     @Enumerated
     private Status status = Status.ATIVO;
     

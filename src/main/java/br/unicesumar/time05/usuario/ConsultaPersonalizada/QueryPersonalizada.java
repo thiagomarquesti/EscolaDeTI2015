@@ -1,11 +1,10 @@
-package br.unicesumar.time05.usuario.QueryPersonalizada;
+package br.unicesumar.time05.usuario.ConsultaPersonalizada;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -38,6 +37,8 @@ public class QueryPersonalizada {
                 SQL += this.adicionaOperadorCondicional(SQL);
                 SQL += parametrosConsulta.getExpressaoParaBusca();
             }
+            
+            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, parametrosConsulta.getPalavraChave());
 
             if (!parametrosConsulta.getOrdenarPor().isEmpty()) {
                 SQL += OperadoresSQL.ORDER_BY + parametrosConsulta.getOrdenarPor();
