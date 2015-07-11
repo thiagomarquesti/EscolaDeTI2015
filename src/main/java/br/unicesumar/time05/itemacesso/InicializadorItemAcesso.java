@@ -1,5 +1,9 @@
 package br.unicesumar.time05.itemacesso;
 
+import br.unicesumar.time05.cidade.Cidade;
+import br.unicesumar.time05.cidade.CidadeRepository;
+import br.unicesumar.time05.uf.UF;
+import br.unicesumar.time05.uf.UFRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -13,21 +17,27 @@ import org.springframework.stereotype.Component;
 public class InicializadorItemAcesso {
 
     @Autowired
-    private ItemAcessoRepository repo;
+    private ItemAcessoRepository ItemRepo;
+    
+    @Autowired
+    private CidadeRepository cidRepo;
+    
+    @Autowired
+    private UFRepository UfRepo;
     
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
     
     @PostConstruct
     public void inicializar() {
-        if (repo.count()== 0) {
+        if (ItemRepo.count()== 0) {
             
-            repo.deleteAll();
+            ItemRepo.deleteAll();
 
-            Long linhas = repo.count();
+            Long linhas = ItemRepo.count();
             List<ItemAcesso> itensAcesso = new ArrayList();
             ItemAcesso menu = new ItemAcesso(1l, "Menu", "/");
-            repo.save(menu);
+            ItemRepo.save(menu);
             menu.setSuperior(menu);
             itensAcesso.add(menu);
 
@@ -41,8 +51,13 @@ public class InicializadorItemAcesso {
             itensAcesso.add(new ItemAcesso(6l, "Listar Perfil", "#/perfil/list", menuPerfil));
             itensAcesso.add(new ItemAcesso(7l, "Novo Perfil", "#/perfil/novo", menuPerfil));
             for (ItemAcesso ia : itensAcesso) {
-                repo.save(ia);
+                ItemRepo.save(ia);
             }
+            UF uf = new UF(41l, "PARANÁ", "PR");
+            UfRepo.save(uf);
+            cidRepo.save(new Cidade(4105904, "COLORADO", uf));
+            cidRepo.save(new Cidade(4115200, "MARINGÁ", uf));
+            cidRepo.save(new Cidade(4114807, "MARIALVA", uf));
         }
     }
 }

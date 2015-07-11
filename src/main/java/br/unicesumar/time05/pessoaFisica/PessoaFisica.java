@@ -17,9 +17,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
 public class PessoaFisica extends Pessoa implements Serializable{
 
     @Embedded
@@ -49,6 +52,7 @@ public class PessoaFisica extends Pessoa implements Serializable{
     }
 
     public void setCpf(CPF cpf) {
+//        cpf.setCpf(String.format("^(\\d{3}\\.?){3}\\-\\d{2}", cpf.getCpf()));
         this.cpf = cpf;
     }
 

@@ -14,8 +14,11 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cnpj"}, name = "uk_cnpj")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PessoaJuridica extends Pessoa implements Serializable{
 
@@ -41,6 +44,7 @@ public class PessoaJuridica extends Pessoa implements Serializable{
     }
 
     public void setCnpj(Cnpj cnpj) {
+//        cnpj.setCnpj(String.format("/^d{2}.d{3}.d{3}/d{4}-d{2}$/", cnpj));
         this.cnpj = cnpj;
     }
 
