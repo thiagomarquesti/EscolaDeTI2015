@@ -1,4 +1,6 @@
-//papackage br.unicesumar.time05;
+
+//package br.unicesumar.time05;
+
 //
 //import org.springframework.http.HttpStatus;
 //import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,6 +11,7 @@
 //@ControllerAdvice
 //public class ExceptionManager {
 //    
+
 //    @ExceptionHandler
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    @ResponseBody
@@ -19,3 +22,4 @@
 //    }
 //    
 //}
+

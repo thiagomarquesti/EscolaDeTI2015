@@ -103,6 +103,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         novoUsuario();
     };
     
+    
     $scope.logout = function(){
         $http.get("/login/usuariologado")
            .success(function(data){

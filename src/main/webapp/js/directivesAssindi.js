@@ -71,19 +71,20 @@ valida.directive('emailUnique', ['$http', function ($http) {
     }]);
 
 valida.directive('verifSenha', [function () {
-    return {
-        restrict: 'A',
-        scope: true,
-        require: 'ngModel',
-        link: function (scope, elem, attrs, control) {
-            var SENHA_REGEXP = RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.])");
-            var checker = function () {
-                var char = scope.$eval(attrs.ngModel);
-                return SENHA_REGEXP.test(char);
-            };
-            scope.$watch(checker, function(n) {
-                control.$setValidity("chsenha", n);
-            });
-        }
-    };
-}]);
+        return {
+            restrict: 'A',
+            scope: true,
+            require: 'ngModel',
+            link: function (scope, elem, attrs, control) {
+                var SENHA_REGEXP = RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.])");
+                if(!scope.isNovo){ SENHA_REGEXP = RegExp(""); }
+                var checker = function () {
+                    var char = scope.$eval(attrs.ngModel);
+                    return SENHA_REGEXP.test(char);
+                };
+                scope.$watch(checker, function (n) {
+                    control.$setValidity("chsenha", n);
+                });
+            }
+        };
+    }]);

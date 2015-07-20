@@ -1,8 +1,9 @@
-<div ng-init="carregar()" class="panel panel-gradient">
+<div ng-init="carregar()" class="panel panel-info">
 
-    <div class="panel-heading panel-title">Cadastro de usuário
+    <div class="panel-heading"> 
+        <div class="panel-title">Cadastrar usuário</div>
         <div class="panel-options">
-           <a href="" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
     </div>
     <div class="panel-body">
@@ -46,33 +47,36 @@
                 <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
                 <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.   </span>
             </div>
+            <div ng-show="isNovo">
+                <div class="form-group">
+                    <label for="senha" class="col-md-2 control-label">Senha: </label>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
+                </div>      
 
-            <div ng-show="isNovo" class="form-group">
-                <label for="senha" class="col-md-2 control-label">Senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
-            </div>      
+                <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                    <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
+                    <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
+                    <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
+                </div>
 
-            <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formCad.senha.$error.required">Preencha sua senha. </span>
-                <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
-                <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
-                <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
-            </div>
 
-            <div ng-show="isNovo" class="form-group">
-                <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
-            </div>
+                <div class="form-group">
+                    <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" password-match="usuario.senha" class="form-control"></div>
+                </div>
+
             
-            <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
-                <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
-            </div>
 
+                <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                    <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
+                    <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+                </div>
+
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Alterar</button>
+                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
                     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
                 </div>
             </div>
