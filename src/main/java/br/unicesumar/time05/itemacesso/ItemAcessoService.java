@@ -20,7 +20,7 @@ public class ItemAcessoService {
     private NamedParameterJdbcTemplate jdbcTemplate;
     
     public List<Map<String, Object>> getItensAcesso(){
-        String vSql = " SELECT iditemacesso, nome, rota, superior_id " +
+        String vSql = " SELECT iditemacesso, nome, rota, icone, superior_id " +
                       "   FROM itemacesso " + 
                       "  WHERE iditemacesso <> superior_id " +
                       "    AND superior_id <> 1 ";
@@ -33,7 +33,7 @@ public class ItemAcessoService {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aSuperiorId", aSuperiorId);
         
-        String vSql = " SELECT iditemacesso, nome, rota, superior_id " +
+        String vSql = " SELECT iditemacesso, nome, rota, icone, superior_id " +
                      "   FROM itemacesso " +
                      "  WHERE superior_id = :aSuperiorId ";
         

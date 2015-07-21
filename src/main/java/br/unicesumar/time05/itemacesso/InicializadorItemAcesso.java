@@ -21,38 +21,38 @@ public class InicializadorItemAcesso {
 
         itensAcesso = repo.findAll();
 
-        ItemAcesso menu = new ItemAcesso("Menu", "/");
+        ItemAcesso menu = new ItemAcesso("Menu", "/","fa-bars");
         if (!itensAcesso.contains(menu)) {
             repo.save(menu);
             itensAcesso.add(menu);
         }
 
-        ItemAcesso menuUsuario = new ItemAcesso("Cadastro de Usuario", "", menu);
+        ItemAcesso menuUsuario = new ItemAcesso("Gerenciar Usuário", "", "fa-user", menu);
         if (!itensAcesso.contains(menuUsuario)) {
             itensAcesso.add(menuUsuario);
         }
 
-        ItemAcesso menuUsuarioListar = new ItemAcesso("Listar", "#/usuario/list", menuUsuario);
+        ItemAcesso menuUsuarioListar = new ItemAcesso("Listar Usuário", "#/usuario/list", "fa-list-alt", menuUsuario);
         if (!itensAcesso.contains(menuUsuarioListar)) {
             itensAcesso.add(menuUsuarioListar);
         }
 
-        ItemAcesso menuUsuarioNovo = new ItemAcesso("Novo", "#/usuario/novo", menuUsuario);
+        ItemAcesso menuUsuarioNovo = new ItemAcesso("Novo Usuário", "#/usuario/novo", "fa-plus", menuUsuario);
         if (!itensAcesso.contains(menuUsuarioNovo)) {
             itensAcesso.add(menuUsuarioNovo);
         }
 
-        ItemAcesso menuPerfil = new ItemAcesso("Cadastro de Perfil", "", menu);
+        ItemAcesso menuPerfil = new ItemAcesso("Gerenciar Perfil", "", "fa-pencil", menu);
         if (!itensAcesso.contains(menuPerfil)) {
             itensAcesso.add(menuPerfil);
         }
         
-        ItemAcesso menuPerfilListar = new ItemAcesso("Listar", "#/perfil/list", menuPerfil);
+        ItemAcesso menuPerfilListar = new ItemAcesso("Listar Perfil", "#/perfil/list", "fa-list-alt", menuPerfil);
         if (!itensAcesso.contains(menuPerfilListar)){
             itensAcesso.add(menuPerfilListar);
         }
         
-        ItemAcesso menuPerfilNovo = new ItemAcesso("Novo", "#/perfil/novo", menuPerfil);
+        ItemAcesso menuPerfilNovo = new ItemAcesso("Novo Perfil", "#/perfil/novo", "fa-plus", menuPerfil);
         if (!itensAcesso.contains(menuPerfilNovo)){
             itensAcesso.add(menuPerfilNovo);
         }
