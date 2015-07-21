@@ -1,4 +1,4 @@
-module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location){
+module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function($scope, $http, $routeParams, $location, $timeout){
          
     function novoUsuario(){
         $scope.usuario = {
@@ -63,6 +63,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            })
            .error(deuErro);
     };
+
+    $scope.atrasa = function(tempo){
+        $timeout(tempo);
+    }
 
     $scope.editar = function(usuario) {
         $location.path("/Usuario/editar/" + usuario.idusuario);
