@@ -36,9 +36,9 @@ public class IndigenaController {
         return service.getIndigenas(codigoAssindi);
     }
 
-    @RequestMapping(value = "/{codigoAssindi}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public void alterar(@RequestBody Indigena indigena) {
-        service.alterar(indigena);
+        service.salvar(indigena);
     }
 
     @RequestMapping(value = "/{codigoAssindi}", method = RequestMethod.DELETE)

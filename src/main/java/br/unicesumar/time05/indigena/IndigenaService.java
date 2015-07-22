@@ -34,9 +34,9 @@ public class IndigenaService {
     }
 
     public List<Map<String, Object>> getIndigenas() {
-        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, i.cpf, "
-                + "i.data_nascimento, i.etnia_idetnia, i.escolaridade,i.estado_civil, i.genero, "
-                + "i.nome, i.etnia_idetnia, i.telefone_idtelefone, i.terra_indigena_idterraindigena "
+        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
+                + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+                + "i.genero, i.nome, t.telefone, ti.nome_terra "
                 + "FROM indigena i "
                 + "INNER JOIN etnia e "
                 + "ON i.etnia_idetnia = e.id_etnia "
@@ -54,9 +54,9 @@ public class IndigenaService {
     public List<Map<String, Object>> getIndigenas(Long codigoAssindi) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("idIndigena", codigoAssindi);
-        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, i.cpf, "
-                + "i.data_nascimento, i.etnia_idetnia, i.escolaridade,i.estado_civil, i.genero, "
-                + "i.nome, i.etnia_idetnia, i.telefone_idtelefone, i.terra_indigena_idterraindigena "
+        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
+                + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+                + "i.genero, i.nome, t.telefone, ti.nome_terra "
                 + "FROM indigena i "
                 + "INNER JOIN etnia e "
                 + "ON i.etnia_idetnia = e.id_etnia "
@@ -73,9 +73,7 @@ public class IndigenaService {
         
     }
 
-    public void alterar(Indigena indigena) {
-        repo.save(indigena);
-    }
+   
 
     public void deletar(Long codigoAssindi) {
         repo.delete(codigoAssindi);
