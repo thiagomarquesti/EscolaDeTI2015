@@ -1,12 +1,10 @@
 package br.unicesumar.time05.indigena;
 
-import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.telefone.Telefone;
-import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
@@ -30,13 +28,18 @@ public class Indigena implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigoAssindi;
+   
     private String nome;
+    
     @Embedded
     private CPF cpf;
-    @ManyToOne
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     private Etnia etnia;
+    
     @Enumerated(EnumType.STRING)
     private Genero genero;
+    
     private Date dataNascimento;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -45,17 +48,20 @@ public class Indigena implements Serializable {
                 @JoinColumn(name = "indigena_id", referencedColumnName = "codigoAssindi")},
             inverseJoinColumns = {
                 @JoinColumn(name = "convenio_id", referencedColumnName = "idconvenio")})
-
     private Set<Convenio> convenio;
-    @ManyToOne
+   
+    @ManyToOne(cascade = CascadeType.ALL)
     private Telefone telefone;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TerraIndigena terraIndigena;
+    
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
+    
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
+    
     private Long codigoSUS;
 
     public Indigena() {
