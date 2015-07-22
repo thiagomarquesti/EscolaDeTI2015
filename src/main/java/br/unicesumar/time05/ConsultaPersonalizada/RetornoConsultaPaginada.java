@@ -8,19 +8,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class RetornoConsultaPaginada implements Serializable{
 
-    private Double paginas;
+    private int quantidadeDePaginas;
+    private int paginaAtual;
+
     private int totalDeRegistros;
     private List<Map<String, Object>> listaDeRegistros;
 
     public RetornoConsultaPaginada() {
     }
 
-    public Double getPaginas() {
-        return paginas;
+    public int getQuantidadeDePaginas() {
+        return quantidadeDePaginas;
     }
 
-    public void setPaginas(Double paginas) {
-        this.paginas = paginas;
+    public int getPaginaAtual() {
+        return paginaAtual;
+    }
+
+    public void setPaginaAtual(int paginaAtual) {
+        this.paginaAtual = paginaAtual;
+    }
+    
+    public void setQuantidadeDePaginas(int paginas) {
+        this.quantidadeDePaginas = paginas;
     }
 
     public int getTotalDeRegistros() {

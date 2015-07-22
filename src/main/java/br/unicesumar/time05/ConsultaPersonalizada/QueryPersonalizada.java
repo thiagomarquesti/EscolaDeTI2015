@@ -28,47 +28,37 @@ public class QueryPersonalizada {
     public List<Map<String, Object>> execute(String SQL, MapSqlParameterSource params) {
         return Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper));
     }
+    
+    public List<Map<String, Object>> executePorID(String SQL, Object ID){
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, ID);
+        return Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper));
+    }
 
-    public RetornoConsultaPaginada executeComPaginacao(String SQL, MapSqlParameterSource params, ParametrosConsulta parametrosConsulta) {
+    public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL construtorDeSQL, ParametrosConsulta parametrosConsulta) {
 
-        if (parametrosConsulta != null) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        if ((parametrosConsulta != null) && (parametrosConsulta.getPalavraChave() != null) && (!parametrosConsulta.getPalavraChave().isEmpty())) {
+            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, "%" + parametrosConsulta.getPalavraChave() + "%");
+            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, parametrosConsulta.getPalavraChave());
+        }
 
-            if (!parametrosConsulta.getPalavraChave().isEmpty()) {
-                SQL += this.adicionaOperadorCondicional(SQL);
-                SQL += parametrosConsulta.getExpressaoParaBusca();
-            }
-            
-            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, parametrosConsulta.getPalavraChave());
+        String SQL;
+        SQL = construtorDeSQL.getSQL(parametrosConsulta);
 
-            if (!parametrosConsulta.getOrdenarPor().isEmpty()) {
-                SQL += OperadoresSQL.ORDER_BY + parametrosConsulta.getOrdenarPor();
-            }
+        List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, RowMapper);
+        retornoConsulta.setTotalDeRegistros(result.size());
 
-            List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, RowMapper);
-            retornoConsulta.setTotalDeRegistros(result.size());
-            
-            Double paginas = (double) result.size() / NUM_REGISTROS_PAGINA;
-            retornoConsulta.setPaginas(Math.ceil(paginas));
+        Double paginas = (double) result.size() / NUM_REGISTROS_PAGINA;
+        retornoConsulta.setQuantidadeDePaginas((int)Math.ceil(paginas));
+        retornoConsulta.setPaginaAtual(parametrosConsulta.getPagina());
 
-            if (parametrosConsulta.getPagina() > 0) {
-                SQL += OperadoresSQL.LIMIT + NUM_REGISTROS_PAGINA + OperadoresSQL.OFFSET + ((parametrosConsulta.getPagina() * NUM_REGISTROS_PAGINA) - NUM_REGISTROS_PAGINA);
-            }
+        if ((parametrosConsulta != null) && (parametrosConsulta.getPagina() > 0)) {
+            SQL += OperadoresSQL.LIMIT + NUM_REGISTROS_PAGINA + OperadoresSQL.OFFSET + ((parametrosConsulta.getPagina() * NUM_REGISTROS_PAGINA) - NUM_REGISTROS_PAGINA);
         }
 
         System.out.println(SQL);
         retornoConsulta.setListaDeRegistros(Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper)));
         return retornoConsulta;
-    }
-
-    private String adicionaOperadorCondicional(String SQL) {
-
-        String operador;
-        if (!SQL.contains(OperadoresSQL.WHERE)) {
-            operador = OperadoresSQL.WHERE;
-        } else {
-            operador = OperadoresSQL.AND;
-        }
-
-        return operador;
     }
 }

@@ -1,79 +1,38 @@
 package br.unicesumar.time05.ConsultaPersonalizada;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
-public class ConstrutorDeSQL<E extends Object> {
+public class ConstrutorDeSQL {
 
-    private final Class<E> entidade;
-    private final ParametrosConsulta parametros;
-
+    private final Class entidade;
+    private DadosParaConsultaSQL dadosParaConsulta;
     private String SQL;
-    private String nomeDaEntidade;
-    private String campoId;
-    private List<String> camposDaConsulta;
 
-    public ConstrutorDeSQL(Class<E> entidade, ParametrosConsulta parametros) {
+    public ConstrutorDeSQL(Class entidade) {
         this.entidade = entidade;
-        this.parametros = parametros;
     }
 
-    public String getSQL() {
-        this.validaEntidade();
-        this.extrairNomeDaEntidade();
-        this.extrairCamposDaEntidade();
-
+    public String getSQL(ParametrosConsulta parametros) {
         this.SQL = "";
+        this.extrairDadosDaEntidade();
         this.preparaSelect();
         this.preparaFrom();
-        this.preparaWhere();
-        this.preparaOrderBy();
+        this.preparaWhere(parametros);
+        this.preparaOrderBy(parametros);
         return this.SQL;
     }
 
-    private void validaEntidade() {
-        if (!entidade.isAnnotationPresent(Entity.class)) {
-            throw new RuntimeException("A Entidade passada para construção de Consulta SQL não é válida.");
-        }
-    }
-
-    private void extrairCamposDaEntidade() {
-        this.camposDaConsulta = new ArrayList<>();
-        for (Field campo : this.entidade.getDeclaredFields()) {
-
-            if (campo.isAnnotationPresent(CampoConsulta.class)) {
-
-                String nomeCampo = "";
-                if (campo.isAnnotationPresent(Column.class)) {
-                    nomeCampo = campo.getAnnotation(Column.class).name();
-                }
-
-                if (nomeCampo.isEmpty() && campo.isAnnotationPresent(JoinColumn.class)) {
-                    nomeCampo = campo.getAnnotation(JoinColumn.class).name();
-                }
-
-                if (nomeCampo.isEmpty()) {
-                    nomeCampo = campo.getName();
-                }
-
-                this.camposDaConsulta.add(nomeCampo);
-            }
-        }
-    }
-
-    private void extrairNomeDaEntidade() {
-        String nomeTabela = "";
-        if (entidade.isAnnotationPresent(Entity.class)) {
-            nomeTabela = this.entidade.getAnnotation(Entity.class).name();
-        }
-        if (nomeTabela.isEmpty()) {
-            nomeTabela = entidade.getSimpleName();
-        }
-        this.nomeDaEntidade = nomeTabela;
+    public String getSQLComWherePorID() {
+        this.SQL = "";
+        this.extrairDadosDaEntidade();
+        this.preparaSelect();
+        this.preparaFrom();
+        this.preparaWherePorID();
+        return this.SQL;
     }
 
     private void preparaSelect() {
@@ -81,11 +40,11 @@ public class ConstrutorDeSQL<E extends Object> {
         this.SQL += OperadoresSQL.SELECT;
 
         String campos = "";
-        for (String campo : this.camposDaConsulta) {
+        for (CampoParaScriptSQL campo : this.dadosParaConsulta.getCampos()) {
             if (campos.isEmpty()) {
-                campos = campo;
+                campos = campo.getCampo();
             } else {
-                campos += (", " + campo);
+                campos += (", " + campo.getCampo());
             }
         }
 
@@ -94,28 +53,91 @@ public class ConstrutorDeSQL<E extends Object> {
 
     private void preparaFrom() {
         this.SQL += OperadoresSQL.FROM;
-        this.SQL += this.nomeDaEntidade;
+        this.SQL += this.dadosParaConsulta.getNomeTabela();
     }
 
-    private void preparaWhere() {
-        this.SQL += OperadoresSQL.WHERE;
+    private void preparaWherePorID() {
+            this.SQL += OperadoresSQL.WHERE + this.dadosParaConsulta.getIdTabela() + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL;
+    }
 
-        String campos = "";
-        for (String campo : this.camposDaConsulta) {
-            if (campos.isEmpty()) {
-                campos = "((" + campo + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
-            } else {
-                campos += (OperadoresSQL.OR + "(" + campo + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")");
+    private void preparaWhere(ParametrosConsulta parametros) {
+
+        if ((parametros != null) && (parametros.getPalavraChave() != null) && (!parametros.getPalavraChave().isEmpty())) {
+
+            this.SQL += OperadoresSQL.WHERE;
+            String campos = "";
+            for (CampoParaScriptSQL campo : this.dadosParaConsulta.getCampos()) {
+
+                if (campos.isEmpty()) {
+                    campos = "(" + montaCondicao(campo);
+                } else {
+                    campos += (OperadoresSQL.OR + montaCondicao(campo));
+                }
+            }
+            campos += ")";
+            this.SQL += campos;
+        }
+    }
+
+    private void preparaOrderBy(ParametrosConsulta parametros) {
+        if ((parametros != null) && (parametros.getOrdenarPor() != null) && (!parametros.getOrdenarPor().isEmpty())) {
+            this.SQL += (OperadoresSQL.ORDER_BY + parametros.getOrdenarPor());
+        }
+    }
+
+    private String montaCondicao(CampoParaScriptSQL campo) {
+        String resultado;
+        if (campo.getComparacao() == TipoComparacao.CONTEM) {
+            resultado = "(" + campo.getCampo() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
+        } else {
+            resultado = "(" + campo.getCampo() + "::varchar " + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL + ")";
+        }
+        return resultado;
+    }
+
+    private void extrairDadosDaEntidade() {
+
+        dadosParaConsulta = new DadosParaConsultaSQL();
+
+        String nomeTabela = "";
+        if (this.entidade.isAnnotationPresent(Entity.class)) {
+            Entity entidadeDaClasse = (Entity) this.entidade.getAnnotation(Entity.class);
+            nomeTabela = entidadeDaClasse.name();
+        }
+
+        if (nomeTabela.isEmpty()) {
+            nomeTabela = this.entidade.getSimpleName();
+        }
+        dadosParaConsulta.setNomeTabela(nomeTabela);
+
+        for (Field campo : this.entidade.getDeclaredFields()) {
+
+            if (campo.isAnnotationPresent(CampoConsulta.class)) {
+                CampoConsulta campoConsulta = campo.getAnnotation(CampoConsulta.class);
+                dadosParaConsulta.addCampo(new CampoParaScriptSQL(this.getNomeCampo(campo), campoConsulta.tipoComparacao()));
+            }
+
+            if (campo.isAnnotationPresent(Id.class)) {
+                dadosParaConsulta.setIdTabela(this.getNomeCampo(campo));
             }
         }
-        campos += ")";
-
-        this.SQL += campos;
     }
 
-    private void preparaOrderBy() {
-        if ((this.parametros.getOrdenarPor() != null) && (!this.parametros.getOrdenarPor().isEmpty())) {
-            this.SQL += (OperadoresSQL.ORDER_BY + this.parametros.getOrdenarPor());
+    private String getNomeCampo(Field campo) {
+
+        String nomeCampo = "";
+        if (campo.isAnnotationPresent(Column.class)) {
+            nomeCampo = campo.getAnnotation(Column.class).name();
         }
+
+        if (nomeCampo.isEmpty() && campo.isAnnotationPresent(JoinColumn.class)) {
+            nomeCampo = campo.getAnnotation(JoinColumn.class).name();
+        }
+
+        if (nomeCampo.isEmpty()) {
+            nomeCampo = campo.getName();
+        }
+
+        return nomeCampo;
     }
 }

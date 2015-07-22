@@ -5,10 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.FIELD})
+@Target(value = {ElementType.METHOD, ElementType.FIELD})
+@Retention(value = RetentionPolicy.RUNTIME)
 public @interface CampoConsulta {
-    
-    public boolean visivel = true;
-    public TipoComparacao tipoComparacao = TipoComparacao.CONTEM;
+   
+    public TipoComparacao tipoComparacao() default TipoComparacao.CONTEM;
 }

@@ -1,12 +1,11 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import classesBase.ServiceBase;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -18,50 +17,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Transactional
-public class UsuarioService {
+public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository>{
 
     @Autowired
     private QueryPersonalizada query;
 
     @Autowired
-    private UsuarioRepository usuarioRepo;
-
-    @Autowired
     private PerfilDeAcessoRepository perfilRepo;
 
-    public void salvarUsuario(Usuario aUsuario) {
-        try {
-            usuarioRepo.save(aUsuario);
-            usuarioRepo.flush();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void removerUsuario(Long aUsuarioId) {
-        try {
-            usuarioRepo.delete(aUsuarioId);
-        } catch (Exception e) {
-            throw new RuntimeException("Usuario não encontrado!");
-        }
-    }
-
-    public RetornoConsultaPaginada getUsuarios() {
-        return getUsuarios(null);
-    }
-
-    public RetornoConsultaPaginada getUsuarios(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(
-                "SELECT id, nome, login, email, senha, status FROM usuario",
-                new MapSqlParameterSource(),
-                parametrosConsulta);
-    }
-
-    public List<Map<String, Object>> getUsuarioById(Long aUsuarioId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute("SELECT id, nome, login, email, status FROM usuario WHERE id = :aUsuarioId", params);
-        return Collections.unmodifiableList(usuario);
+    public UsuarioService() {
+        setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
 
     public boolean verificarLogin(String aLogin) {
@@ -113,13 +78,13 @@ public class UsuarioService {
 
     public void trocarStatusUsuario(Long aUsuarioId) {
         try {
-            Usuario usuario = usuarioRepo.getOne(aUsuarioId);
+            Usuario usuario = super.repository.getOne(aUsuarioId);
             if (usuario.getStatus() == Status.ATIVO) {
                 usuario.setStatus(Status.INATIVO);
             } else {
                 usuario.setStatus(Status.ATIVO);
             }
-            usuarioRepo.save(usuario);
+            super.repository.save(usuario);
         } catch (Exception e) {
             throw new RuntimeException("Usuario não encontrado!");
         }
@@ -145,13 +110,14 @@ public class UsuarioService {
     }
 
     public void addPerfil(Long aUsuarioId, Long[] aPerfilId) {
-        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+        Usuario usuario = super.repository.findOne(aUsuarioId);
         List<PerfilDeAcesso> perfis = new ArrayList<>();
         for (Long aPerfil : aPerfilId) {
             perfis.add(perfilRepo.findOne(aPerfil));
         }
         usuario.setPerfil(perfis);
-        this.salvarUsuario(usuario);
+        super.salvar(usuario);
+        //this.salvarUsuario(usuario);
     }
 
     public List<Map<String, Object>> getPerfis(Long aUsuarioId) {
@@ -170,7 +136,7 @@ public class UsuarioService {
     }
 
     public void deletePerfis(Long aUsuarioId, Long[] perfis) {
-        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+        Usuario usuario = super.repository.findOne(aUsuarioId);
         for (Long perfil : perfis) {
             usuario.removerPerfil(perfilRepo.findOne(perfil));
         }

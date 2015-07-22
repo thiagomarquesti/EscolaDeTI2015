@@ -2,6 +2,8 @@ package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.TipoComparacao;
+import classesBase.EntidadeBase;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -19,41 +21,44 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class Usuario  implements Serializable{
+public class Usuario implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    
+
     @CampoConsulta
     @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;
-    
+
     @CampoConsulta
     @NotBlank(message = "Campo login não pode estar vazio")
     @Column(unique = true, nullable = false)
     private String login;
-    
+
     @CampoConsulta
     @NotBlank(message = "Campo email não pode estar vazio")
     @Column(unique = true, nullable = false)
     @Pattern(regexp = "\\b(^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b")
     private String email;
-    
+
     @NotBlank(message = "Campo senha não pode estar vazio")
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
-    
-    @CampoConsulta
+
+    @CampoConsulta(tipoComparacao = TipoComparacao.IGUAL)
     @Enumerated
     private Status status = Status.ATIVO;
-    
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<PerfilDeAcesso> perfis;
-    
+
     public Usuario() {
+        //setClass(this.getClass());
     }
 
     public Usuario(String nome, String login, String email, String senha) {
+        //setClass(this.getClass());
         this.nome = nome;
         this.login = login;
         this.email = email;
@@ -103,20 +108,19 @@ public class Usuario  implements Serializable{
     public void setStatus(Status status) {
         this.status = status;
     }
-    
-    public void setPerfil(List<PerfilDeAcesso> perfis){
+
+    public void setPerfil(List<PerfilDeAcesso> perfis) {
         this.perfis.addAll(perfis);
     }
 
-    public void removerPerfil(PerfilDeAcesso perfil){
+    public void removerPerfil(PerfilDeAcesso perfil) {
         this.perfis.remove(perfil);
     }
-    
-    public Set<PerfilDeAcesso> getPerfis(){
+
+    public Set<PerfilDeAcesso> getPerfis() {
         return Collections.unmodifiableSet(this.perfis);
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -143,5 +147,5 @@ public class Usuario  implements Serializable{
     public String toString() {
         return "Usuario{" + "id=" + id + ", nome=" + nome + ", login=" + login + ", email=" + email + ", senha=" + senha + '}';
     }
-    
+
 }
