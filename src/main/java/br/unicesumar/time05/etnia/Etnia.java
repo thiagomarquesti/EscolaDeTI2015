@@ -2,6 +2,7 @@ package br.unicesumar.time05.etnia;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +12,8 @@ import javax.persistence.Id;
 public class Etnia implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    Long idetnia;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long idEtnia;
     String descricao;
 
     public Etnia() {
@@ -26,9 +27,7 @@ public class Etnia implements Serializable{
         this.descricao = descricao;
     }
 
-    public Long getIdetnia() {
-        return idetnia;
-    }
+    
 
     public String getDescricao() {
         return descricao;
@@ -36,13 +35,14 @@ public class Etnia implements Serializable{
 
     @Override
     public String toString() {
-        return "Etnia{" + "idetnia=" + idetnia + ", descricao=" + descricao + '}';
+        return "Etnia{" + "descricao=" + descricao + '}';
     }
+    
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.idetnia);
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.descricao);
         return hash;
     }
 
@@ -55,10 +55,12 @@ public class Etnia implements Serializable{
             return false;
         }
         final Etnia other = (Etnia) obj;
-        if (!Objects.equals(this.idetnia, other.idetnia)) {
+        if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
         return true;
     }
+
+   
 
 }

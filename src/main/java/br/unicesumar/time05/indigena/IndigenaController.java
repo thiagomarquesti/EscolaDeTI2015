@@ -45,5 +45,6 @@ public class IndigenaController {
     public void deletar(@PathVariable Long codigoAssindi) {
         service.deletar(codigoAssindi);
     }
-
+    
+    
 }

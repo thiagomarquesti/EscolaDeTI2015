@@ -1,6 +1,5 @@
 package br.unicesumar.time05.indigena;
 
-
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
@@ -8,29 +7,54 @@ import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.uf.UF;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Indigena {
+public class Indigena implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigoAssindi;
     private String nome;
+    @Embedded
     private CPF cpf;
+    @ManyToOne
     private Etnia etnia;
+    @Enumerated(EnumType.STRING)
     private Genero genero;
     private Date dataNascimento;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "indigena_convenio",
+            joinColumns = {
+                @JoinColumn(name = "indigena_id", referencedColumnName = "codigoAssindi")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "convenio_id", referencedColumnName = "idconvenio")})
+
     private Set<Convenio> convenio;
+    @ManyToOne
     private Telefone telefone;
+
+    @ManyToOne
     private TerraIndigena terraIndigena;
+    @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
+    @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
     private Long codigoSUS;
 
@@ -168,8 +192,5 @@ public class Indigena {
         }
         return true;
     }
-    
-    
-    
-    
+
 }

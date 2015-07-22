@@ -12,7 +12,6 @@ public class Convenio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-
     Long idconvenio;
     String descricao;
 

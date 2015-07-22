@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EtniaController {
 
     @Autowired
-    EtniaService etniaService;
+    private EtniaService etniaService;
 
     @RequestMapping(method = RequestMethod.POST)
     public void salvarEtnia(@RequestBody Etnia aEtnia){

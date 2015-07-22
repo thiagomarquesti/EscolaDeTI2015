@@ -2,18 +2,21 @@ package br.unicesumar.time05.indigena;
 
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-
-class TerraIndigena {
+@Entity
+public class TerraIndigena implements Serializable{
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    private Long idTerraIndigena;
    private String nomeTerra;
-   private UF estado;
+   @ManyToOne
    private Cidade cidade;
 
     public TerraIndigena() {
@@ -43,7 +46,6 @@ class TerraIndigena {
    
     public TerraIndigena(String nomeTerra, UF estado, Cidade cidade) {
         this.nomeTerra = nomeTerra;
-        this.estado = estado;
         this.cidade = cidade;
     }
 
@@ -59,13 +61,7 @@ class TerraIndigena {
         this.nomeTerra = nomeTerra;
     }
 
-    public UF getEstado() {
-        return estado;
-    }
 
-    public void setEstado(UF estado) {
-        this.estado = estado;
-    }
 
     public Cidade getCidade() {
         return cidade;
