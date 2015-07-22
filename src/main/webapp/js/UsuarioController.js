@@ -126,4 +126,14 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     function deuErro(){
         toastr.error("Algo deu errado. Tente novamente.");
     }
+    
+    $scope.carregaScript = function(nScript){
+        $timeout(function(){
+            var script = document.createElement('script');
+            script.src = "js/"+nScript+".js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+            
+        },10);
+    };
+    
 }]);
