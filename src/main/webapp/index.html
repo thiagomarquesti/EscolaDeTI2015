@@ -42,7 +42,7 @@
         <link rel="stylesheet" href="css/toastr.min.css">
         <link href="css/angular-ui-tree.min.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ng-init="verificaLogado()">
+    <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ng-init="verificaLogado(); carregaitensAcesso(); ">
         <div class="page-container">
             <div class="sidebar-menu">
                 <div class="sidebar-menu-inner">
@@ -67,38 +67,44 @@
                         </div>
                     </header>
         
-        <div ng-repeat="item in itensAcesso[0].items | filter:{rota:''}" ng-click="item.visible=!item.visible">
-            <i class="fa {{item.icone}}"></i>
-            <span class="title">{{item.nome}} {{item.icone}}</span>
-            
-            <div ng-repeat="subitem in item.items" ng-show="item.visible">
-                
-                <a href="{{subitem.rota}}">
-                    <i class="fa {{item.icone}}"></i>
-                    <span class="title">{{subitem.nome}}</span>
-                </a>
-            </div>
-        </div>
-        
+                    <ul id="main-menu" class="main-menu auto-inherit-active-class">
+                        <li class="root-level has-sub" ng-repeat="item in itensAcesso.itens | filter:{rota:''}">
+                                <a href="#/">
+                                    <i class="fa {{item.icone}}"></i>
+                                    <span class="title" ng-click="item.visible=!item.visible">{{item.nome}}</span>
+                                </a>
+                                <div ng-repeat="subitem in item.itens" ng-show="item.visible">
+                                    <a ng-href="{{subitem.rota}}">
+                                        <i class="fa {{subitem.icone}}"></i>
+                                        <span class="title" >{{subitem.nome}}</span>
+                                    </a>
+                                </div>
+                        </li>
+                    </ul>
+                    
+                    <ul id="main-menu" class="main-menu auto-inherit-active-class">
+
                         <li class="root-level has-sub">
-                            <a href="#">
-                                <i class="fa fa-puzzle-piece"></i>
-                                <span class="title">Funções dos colaboradores</span>
+                            <a href="#/">
+                                <i class="fa fa-flag"></i>
+                                <span class="title">Etnias</span>
                             </a>
                             <ul>
                                 <li>
-                                    <a href="#/Funcao/nova">
-                                        <span class="title">Cadastrar função</span>
+                                    <a href="#/Etnia/nova">
+                                        <span class="title">Cadastrar etnia</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#/Funcao/listar">
-                                        <span class="title">Listar funções</span>
+                                    <a href="#/Etnia/listar">
+                                        <span class="title">Listar etnias</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+
                     </ul>
+                    
                 </div>
             </div>
             <div class="main-content">                

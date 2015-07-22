@@ -9,12 +9,14 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
     private Long id;
     private String nome;
     private String rota;
+    private String icone;
     private List<ItemAcessoUsuarioInMemory> itens;
 
-    public ItemAcessoUsuarioInMemory(Long id, String nome, String rota, List<ItemAcessoUsuarioInMemory> itens) {
+    public ItemAcessoUsuarioInMemory(Long id, String nome, String rota, String icone, List<ItemAcessoUsuarioInMemory> itens) {
         this.id = id;
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
         this.itens = itens;
     }
 
@@ -42,14 +44,9 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "ItemAcessoUsuarioInMemory{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", itens=" + itens + '}';
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -68,4 +65,7 @@ public class ItemAcessoUsuarioInMemory implements Serializable {
         return true;
     }
 
+    public String getIcone() {
+        return icone;
+    }
 }

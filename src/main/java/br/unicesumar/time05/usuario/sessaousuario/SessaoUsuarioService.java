@@ -128,9 +128,10 @@ public class SessaoUsuarioService {
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                        Long.parseLong(resultQuery.get(0).get("id").toString()),
+                        Long.parseLong(resultQuery.get(0).get("iditemacesso").toString()),
                         resultQuery.get(0).get("nome").toString(),
                         resultQuery.get(0).get("rota").toString(),
+                        resultQuery.get(0).get("icone").toString(),
                         null
                 );
 
@@ -154,9 +155,10 @@ public class SessaoUsuarioService {
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                        Long.parseLong(item.get("id").toString()),
+                        Long.parseLong(item.get("iditemacesso").toString()),
                         item.get("nome").toString(),
                         item.get("rota").toString(),
+                        item.get("icone").toString(),
                         null
                 );
 
