@@ -89,19 +89,10 @@ valida.directive('verifSenha', [function () {
         };
     }]);
 
+camera = angular.module('cameraWeb', []);
 
-/* global Webcam */
-(function(angular) {
-    'use strict';
-
-    angular
-        .module('camera')
-        .directive('ngCamera', directive);
-
-    directive.$inject = ['$q', '$timeout'];
-
-    function directive($q, $timeout) {
-        return {
+camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
+       return {
             'restrict': 'E',
             'scope': {
                 'actionMessage': '@',
@@ -118,7 +109,7 @@ valida.directive('verifSenha', [function () {
                 'jpegQuality': '@',
                 'snapshot': '='
             },
-            'templateUrl': '/angular/ng-camera.html',
+            'templateUrl': '/views/cameraWeb.html',
             'link': link
         };
 
@@ -252,6 +243,6 @@ valida.directive('verifSenha', [function () {
                 }
             };
         }
-    }
+}]);
 
-})(angular);
+
