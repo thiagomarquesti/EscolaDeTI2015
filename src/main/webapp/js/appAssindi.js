@@ -1,3 +1,3 @@
-module = angular.module("appAssindi", ['ngRoute', 'UserValidation', 'ui.tree']);
+module = angular.module("appAssindi", ['ngRoute', 'UserValidation']);
 
 

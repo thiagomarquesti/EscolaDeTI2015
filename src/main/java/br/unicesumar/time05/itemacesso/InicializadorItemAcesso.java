@@ -57,7 +57,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuEtniaNovo;
         menuEtniaNovo = this.getItemAcesso(itensAcesso, "Novo Etnia", "#/Etnia/novo");
         if (menuEtniaNovo == null) {
-            menuEtniaNovo = new ItemAcesso("Novo Etnia", "#/Etnia/novo", "fa-plus", menuEtnia);
+            menuEtniaNovo = new ItemAcesso("Cadastrar Etnia", "#/Etnia/nova", "fa-plus", menuEtnia);
             itensAcesso.add(menuEtniaNovo);
         }
         
@@ -79,7 +79,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuIndigenaNovo;
         menuIndigenaNovo = this.getItemAcesso(itensAcesso, "Novo Indígena", "#/Perfil/novo");
         if (menuIndigenaNovo == null) {
-            menuIndigenaNovo = new ItemAcesso("Novo Indígena", "#/Indigena/novo", "fa-plus", menuIndigena);
+            menuIndigenaNovo = new ItemAcesso("Cadastrar Indígena", "#/Indigena/novo", "fa-plus", menuIndigena);
             itensAcesso.add(menuIndigenaNovo);
         }
         
@@ -101,7 +101,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuConvenioNovo;
         menuConvenioNovo = this.getItemAcesso(itensAcesso, "Novo Convênio", "#/Perfil/novo");
         if (menuConvenioNovo == null) {
-            menuConvenioNovo = new ItemAcesso("Novo Convênio", "#/Convenio/novo", "fa-plus", menuConvenio);
+            menuConvenioNovo = new ItemAcesso("Cadastrar Convênio", "#/Convenio/novo", "fa-plus", menuConvenio);
             itensAcesso.add(menuConvenioNovo);
         }
         
@@ -123,7 +123,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuUsuarioNovo;
         menuUsuarioNovo = this.getItemAcesso(itensAcesso, "Novo Usuário", "#/Usuario/novo");
         if (menuUsuarioNovo == null) {
-            menuUsuarioNovo = new ItemAcesso("Novo Usuário", "#/Usuario/novo", "fa-plus", menuUsuario);
+            menuUsuarioNovo = new ItemAcesso("Cadastrar Usuário", "#/Usuario/novo", "fa-plus", menuUsuario);
             itensAcesso.add(menuUsuarioNovo);
         }
         
@@ -145,7 +145,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuPerfilNovo;
         menuPerfilNovo = this.getItemAcesso(itensAcesso, "Novo Perfil", "#/Perfil/novo");
         if (menuPerfilNovo == null) {
-            menuPerfilNovo = new ItemAcesso("Novo Usuário", "#/Perfil/novo", "fa-plus", menuPerfil);
+            menuPerfilNovo = new ItemAcesso("Cadastrar Usuário", "#/Perfil/novo", "fa-plus", menuPerfil);
             itensAcesso.add(menuPerfilNovo);
         }
         
@@ -167,7 +167,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuFuncaoNovo;
         menuFuncaoNovo = this.getItemAcesso(itensAcesso, "Novo Função", "#/Funcao/novo");
         if (menuFuncaoNovo == null) {
-            menuFuncaoNovo = new ItemAcesso("Novo Função", "#/Funcao/novo", "fa-plus", menuFuncao);
+            menuFuncaoNovo = new ItemAcesso("Cadastrar Função", "#/Funcao/nova", "fa-plus", menuFuncao);
             itensAcesso.add(menuFuncaoNovo);
         }
         
