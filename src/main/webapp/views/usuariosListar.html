@@ -1,5 +1,4 @@
-<div class="panel panel-info" ng-init="carregaScript('tooltip-custom');">
-
+<div class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title">Colaboradores cadastrados</div>
         <div class="panel-options">
@@ -16,13 +15,13 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th><th>Nome</th><th>Login</th><th class="hidden-sm hidden-xs">E-mail</th><th class="hidden-xs">Telefone</th><th>Ações</th>
+                        <th>Status</th><th>Nome</th><th>Login</th><th class="hidden-sm hidden-xs">E-mail</th><th class="hidden-xs">Telefone</th><th>Ações</th>
                     </tr>
                 </thead>
                 <tbody ng-init="atualizar()">
                     <tr ng-repeat='u in filtered = (usuarios| filter:busca)'>
                         <td>
-                            <span class="badge badge-{{corStatus[u.status]}} tooltip-primary tooltipteste" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{statusArray[u.status]}}">{{u.idusuario}}</span>
+                            <span class="badge badge-{{corStatus[u.status]}}">&nbsp;</span>
                         </td>
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>

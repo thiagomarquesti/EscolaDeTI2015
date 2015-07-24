@@ -133,7 +133,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             script.src = "js/"+nScript+".js";
             document.getElementsByTagName('head')[0].appendChild(script);
             
-        },10);
+        },100);
     };
     
 }]);
