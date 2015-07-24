@@ -1,5 +1,4 @@
 module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function($scope, $http, $routeParams, $location, $timeout){
-         
     function novoUsuario(){
         $scope.usuario = {
             nome : "",
@@ -123,6 +122,22 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            .error(deuErro);
     };
     
+
+    $scope.carregaitensAcesso = function(){
+       $http.get("/login/usuariologado/itensdeacesso")
+            .success(function(data){
+                $scope.itensAcesso = data;
+                console.log(data);
+                //alert("funcionou");
+            })
+            .error(erroListarItensAcessoDoMenu);
+    };
+//-----------------AKI-------------------------------
+    function erroListarItensAcessoDoMenu(){
+        alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");
+    }
+
+    
     function deuErro(){
         toastr.error("Algo deu errado. Tente novamente.");
     }
@@ -130,10 +145,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.carregaScript = function(nScript){
         $timeout(function(){
             var script = document.createElement('script');
-            script.src = "js/"+nScript+".js";
+            script.src = nScript+".js";
             document.getElementsByTagName('head')[0].appendChild(script);
-            
-        },100);
+        },10);
     };
-    
+
 }]);
