@@ -51,3 +51,19 @@ label {
 .form-groups-bordered > .form-group {
   border-bottom: 1px solid #fff;
 }
+
+.requerido {
+    background-image: url(../../../img/requerido.png);
+    background-position: left 2px  center  ;
+    background-repeat: no-repeat;
+}
+
+.requerido.ng-valid {
+    background-image: url(../../../img/requeridoOk.png);
+    background-position: left 2px  center  ;
+    background-repeat: no-repeat;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: #ff7c92;
+}
