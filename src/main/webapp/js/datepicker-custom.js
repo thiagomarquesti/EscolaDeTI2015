@@ -6,9 +6,6 @@ var public_vars = public_vars || {};
 
 	$(document).ready(function()
 	{
-		
-
-
 		// Datepicker
 		if($.isFunction($.fn.datepicker))
 		{
@@ -53,5 +50,3 @@ var public_vars = public_vars || {};
 	});
 
 })(jQuery, window);
-
-

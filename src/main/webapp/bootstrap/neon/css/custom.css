@@ -27,5 +27,27 @@ body {
 }
 
 .panel-body {
-    background-color: #D4CFC3;
+    background-color: #F0EEE9;
+}
+
+label {
+    color: #597A9E;
+}
+
+.panel-danger {
+  border-color: #fff;
+}
+
+.panel-danger > .panel-heading {
+  color: #fff;
+  background-color: #C72020;
+  border-color: #fff;
+}
+
+.panel-danger > .panel-heading > .panel-options > a {
+  color: #fff;
+}
+
+.form-groups-bordered > .form-group {
+  border-bottom: 1px solid #fff;
 }
