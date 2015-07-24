@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.unicesumar.time05.indigena;
 
 import java.util.List;
@@ -22,8 +18,8 @@ public class IndigenaController {
     private IndigenaService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void salvarIndigena(@RequestBody Indigena indigena) {
-        service.salvar(indigena);
+    public void salvarIndigena(@RequestBody Indigena aIndigena) {
+        service.salvar(aIndigena);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -31,9 +27,9 @@ public class IndigenaController {
         return service.getIndigenas();
     }
 
-    @RequestMapping(value = "/{codigoAssindi}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getIndigenas(@PathVariable Long codigoAssindi) {
-        return service.getIndigenas(codigoAssindi);
+    @RequestMapping(value = "/{aCodigoAssindi}", method = RequestMethod.GET)
+    public List<Map<String, Object>> getIndigenas(@PathVariable Long aCodigoAssindi) {
+        return service.getIndigenas(aCodigoAssindi);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -41,9 +37,9 @@ public class IndigenaController {
         service.salvar(indigena);
     }
 
-    @RequestMapping(value = "/{codigoAssindi}", method = RequestMethod.DELETE)
-    public void deletar(@PathVariable Long codigoAssindi) {
-        service.deletar(codigoAssindi);
+    @RequestMapping(value = "/{aCodigoAssindi}", method = RequestMethod.DELETE)
+    public void deletar(@PathVariable Long aCodigoAssindi) {
+        service.deletar(aCodigoAssindi);
     }
     
     

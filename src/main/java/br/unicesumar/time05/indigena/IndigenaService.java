@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.unicesumar.time05.indigena;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
@@ -15,10 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Bruno
- */
+
 @Component
 @Transactional
 public class IndigenaService {
@@ -29,12 +22,12 @@ public class IndigenaService {
     @Autowired
     private NamedParameterJdbcTemplate jdbc;
 
-    public void salvar(Indigena indigena) {
-        repo.save(indigena);
+    public void salvar(Indigena aIndigena) {
+        repo.save(aIndigena);
     }
 
     public List<Map<String, Object>> getIndigenas() {
-        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
+        List<Map<String, Object>> aIndigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
                 + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
                 + "i.genero, i.nome, t.telefone, ti.nome_terra "
                 + "FROM indigena i "
@@ -48,13 +41,13 @@ public class IndigenaService {
                 + "ON i.telefone_idtelefone = t.idtelefone "
                 + "INNER JOIN terra_indigena ti "
                 + "ON i.terra_indigena_idterraindigena = ti.id_terra_indigena", new MapSqlParameterSource() ,new MapRowMapper());
-        return Collections.unmodifiableList(indigena);
+        return Collections.unmodifiableList(aIndigena);
     }
 
-    public List<Map<String, Object>> getIndigenas(Long codigoAssindi) {
+    public List<Map<String, Object>> getIndigenas(Long aCodigoAssindi) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("idIndigena", codigoAssindi);
-        List<Map<String, Object>> indigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
+        params.addValue("idIndigena", aCodigoAssindi);
+        List<Map<String, Object>> aIndigena = jdbc.query("SELECT i.codigo_assindi,  i.codigoSUS, "
                 + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
                 + "i.genero, i.nome, t.telefone, ti.nome_terra "
                 + "FROM indigena i "
@@ -69,14 +62,14 @@ public class IndigenaService {
                 + "INNER JOIN terra_indigena ti "
                 + "ON i.terra_indigena_idterraindigena = ti.id_terra_indigena "
                 + "WHERE i.codigo_assindi = :idIndigena", params,new MapRowMapper());
-        return Collections.unmodifiableList(indigena);
+        return Collections.unmodifiableList(aIndigena);
         
     }
 
    
 
-    public void deletar(Long codigoAssindi) {
-        repo.delete(codigoAssindi);
+    public void deletar(Long aCodigoAssindi) {
+        repo.delete(aCodigoAssindi);
     }
     
    
