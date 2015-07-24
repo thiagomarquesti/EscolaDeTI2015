@@ -127,7 +127,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
        $http.get("/login/usuariologado/itensdeacesso")
             .success(function(data){
                 $scope.itensAcesso = data;
-                console.log(data);
+//                console.log(data);
                 //alert("funcionou");
             })
             .error(erroListarItensAcessoDoMenu);
