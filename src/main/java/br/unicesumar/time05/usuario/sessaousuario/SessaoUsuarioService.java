@@ -101,21 +101,22 @@ public class SessaoUsuarioService {
     public ItemAcessoUsuarioInMemory getItensDeAcessoUsuarioLogado() {
 
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL
-                    = "  SELECT ia.iditemacesso, "
-                    + "         ia.nome, "
-                    + "         ia.rota, "
-                    + "         ia.superior_id "
-                    + "    FROM usuario_perfis up "
-                    + "    JOIN perfildeacesso pa ON (up.perfis_id = pa.id) "
-                    + "    JOIN perfildeacesso_itemacesso pai ON (pa.id = pai.perfildeacesso_id) "
-                    + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.id) "
-                    + "   WHERE up.usuario_id = :idUsuario "
-                    + "GROUP BY ia.id, "
-                    + "         ia.nome, "
-                    + "         ia.rota, "
-                    + "         ia.superior_id "
-                    + "ORDER BY ia.superior_id NULLS FIRST, ia.id ";
+            String SQL = "  SELECT ia.iditemacesso, "
+                        + "         ia.nome, "
+                        + "         ia.rota, "
+                        + "         ia.icone, "
+                        + "         ia.superior_id "
+                        + "    FROM usuario_perfis up "
+                        + "    JOIN perfildeacesso pa ON (up.perfis_idperfildeacesso = pa.idperfildeacesso)  "
+                        + "    JOIN perfildeacesso_itemacesso pai ON (pa.idperfildeacesso = pai.perfildeacesso_id)  "
+                        + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.iditemacesso) "
+                        + "   WHERE up.perfis_idperfildeacesso = :idUsuario "
+                        + "   GROUP BY ia.iditemacesso,  "
+                        + "         ia.nome, "
+                        + "         ia.rota, "
+                        + "         ia.icone, "
+                        + "         ia.superior_id "
+                        + " ORDER BY ia.superior_id NULLS FIRST, ia.iditemacesso  ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdUsuario());
@@ -127,9 +128,10 @@ public class SessaoUsuarioService {
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                        Long.parseLong(resultQuery.get(0).get("id").toString()),
+                        Long.parseLong(resultQuery.get(0).get("iditemacesso").toString()),
                         resultQuery.get(0).get("nome").toString(),
                         resultQuery.get(0).get("rota").toString(),
+                        resultQuery.get(0).get("icone").toString(),
                         null
                 );
 
@@ -153,9 +155,10 @@ public class SessaoUsuarioService {
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
-                        Long.parseLong(item.get("id").toString()),
+                        Long.parseLong(item.get("iditemacesso").toString()),
                         item.get("nome").toString(),
                         item.get("rota").toString(),
+                        item.get("icone").toString(),
                         null
                 );
 
