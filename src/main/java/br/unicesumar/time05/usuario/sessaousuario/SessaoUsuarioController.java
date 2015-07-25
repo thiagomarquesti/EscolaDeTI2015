@@ -34,7 +34,7 @@ public class SessaoUsuarioController {
     }
     
     @RequestMapping(value = "/statusLogin/{aLogin:.+}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){        
+    public List<Map<String, Object>> getStatusPorLogin(@PathVariable String aLogin){
         return service.getStatusPorLogin(aLogin);
     }
     

@@ -1,5 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
+import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
