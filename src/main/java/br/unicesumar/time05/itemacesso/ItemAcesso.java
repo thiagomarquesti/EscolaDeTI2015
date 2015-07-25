@@ -1,5 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -14,9 +15,13 @@ public class ItemAcesso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long iditemacesso;
+    @CampoConsulta
     private String nome;
+    @CampoConsulta
     private String rota;
+    @CampoConsulta
     private String icone;
+    @CampoConsulta
     @ManyToOne
     @JoinColumn(name = "superior_id")
     private ItemAcesso superior;

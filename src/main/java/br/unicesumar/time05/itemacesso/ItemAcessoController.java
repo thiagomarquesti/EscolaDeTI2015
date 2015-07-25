@@ -1,9 +1,8 @@
 package br.unicesumar.time05.itemacesso;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import classesBase.ControllerBase;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,17 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/itemacesso")
-public class ItemAcessoController {
-    @Autowired
-    private ItemAcessoService service;
+public class ItemAcessoController extends ControllerBase<ItemAcesso, Long, ItemAcessoService>{
     
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Map<String, Object>> getItensAcesso(){
+    @Override
+    public List<Map<String,Object>> getEntidadesListagem(){
         return service.getItensAcesso();
     }
     
-    @RequestMapping(value = "/{aSuperiorId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/retornaItensPorSuperior/{aSuperiorId}",method = RequestMethod.GET)
     public List<Map<String, Object>> getItensAcessoPorSuperior(@PathVariable Long aSuperiorId ){
         return service.getItensAcessoPorSuperior(aSuperiorId);
     }
+    
 }

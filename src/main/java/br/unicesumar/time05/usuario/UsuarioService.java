@@ -1,7 +1,6 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import classesBase.ServiceBase;
@@ -18,9 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Transactional
 public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository>{
-
-    @Autowired
-    private QueryPersonalizada query;
 
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
@@ -105,7 +101,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         params.addValue("aId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute("SELECT idusuario, login FROM usuario WHERE login = :aLogin AND id <> :aId", params);
+        List<Map<String, Object>> usuario = query.execute("SELECT idusuario, login FROM usuario WHERE login = :aLogin AND idusuario <> :aId", params);
         return usuario.isEmpty();
     }
 

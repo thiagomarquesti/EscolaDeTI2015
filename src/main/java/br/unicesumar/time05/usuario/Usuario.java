@@ -27,7 +27,7 @@ public class Usuario  implements Serializable{
     @Id    
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long idusuario;
-   
+
     @CampoConsulta
     @NotBlank(message = "Campo nome não pode estar vazio")
     private String nome;

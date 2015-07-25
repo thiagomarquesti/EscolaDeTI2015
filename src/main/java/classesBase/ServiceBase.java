@@ -18,33 +18,49 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
 
     @Autowired
     public Reposity repository;
-    
+
     @Autowired
-    private QueryPersonalizada query;
-    
+    protected QueryPersonalizada query;
+
     private ConstrutorDeSQL construtorDeSQL;
-            
-    protected void setConstrutorDeSQL(ConstrutorDeSQL construtorDeSQL){
+
+    protected void setConstrutorDeSQL(ConstrutorDeSQL construtorDeSQL) {
         this.construtorDeSQL = construtorDeSQL;
     }
 
     public void salvar(Entidade Entidade) {
-        repository.save(Entidade);
+//        int y = 80;
+//        for (int x = 0; x < 80; x++) {
+//            Usuario u = new Usuario("teste", "teste", "teste@teste.com", "Re.123");
+//            u.setEmail(x + "teste@teste.com");
+//            u.setLogin("teste" + x);
+//            u.setNome("teste" + y);
+//            y--;
+            repository.save(Entidade);
+//        }
     }
 
     public void remover(ID aID) {
         repository.delete(aID);
     }
-    
-    public void alterar(Entidade Entidade){
+
+    public void alterar(Entidade Entidade) {
         repository.save(Entidade);
     }
-    
-    public List<Map<String, Object>> findByID(ID id){
+
+    public List<Map<String, Object>> findByID(ID id) {
         return query.executePorID(construtorDeSQL.getSQLComWherePorID(), id);
     }
-    
+
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
         return query.executeComPaginacao(construtorDeSQL, parametrosConsulta);
+    }
+    
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(construtorDeSQL, new ParametrosConsulta());
+    }
+    
+    public List<Map<String, Object>> listarSemPaginacao() {
+        return query.execute(construtorDeSQL.getSQL(new ParametrosConsulta()));
     }
 }
