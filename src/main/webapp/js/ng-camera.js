@@ -31,13 +31,13 @@
             }
             Webcam.attach("#ng-camera-feed");
             Webcam.on("load",function(){
-                console.info("library loaded");
+                //console.info("library loaded");
                 n.$apply(function(){
                     n.libraryLoaded=true
                 })
             });
             Webcam.on("live",function(){
-                console.info("camera live");
+                //console.info("camera live");
                 n.$apply(function(){
                     n.cameraLive=true
                 })

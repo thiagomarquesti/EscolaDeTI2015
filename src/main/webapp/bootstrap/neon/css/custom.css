@@ -67,3 +67,13 @@ label {
 .ng-invalid.ng-dirty {
     border-color: #ff7c92;
 }
+
+table.table-striped tr th {
+    background-color: #555;
+    color: #fff;
+}
+
+.panel .panel-footer {
+    background-color: #ddd;
+    color: #333;
+}

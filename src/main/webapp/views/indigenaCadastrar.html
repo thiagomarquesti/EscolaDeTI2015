@@ -144,8 +144,6 @@
                                     <div class="ng-camera" ng-controller="CameraController as vm">
                                         <div>    
                                             <ng-camera
-                                                capture-message="Click!"
-                                                countdown="1"
                                                 output-height="360"
                                                 output-width="480"
                                                 viewer-height="360"
@@ -159,7 +157,7 @@
                                                 shutter-url="sound/shutter.mp3"
                                             ></ng-camera>
                                         </div>
-                                        <div>
+                                        <div ng-model="canvasFoto">
                                             <img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="Foto">
                                         </div>
                                     </div>  
@@ -167,8 +165,8 @@
                             </div>
 
                             <div class="modal-footer">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-success" data-dismiss="modal">Continue</button>
+                                <div class="col-md-12" ng-controller="CameraController as vm">
+                                    <button ng-click="teste();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
                                 </div>
                             </div>
                         </div>
