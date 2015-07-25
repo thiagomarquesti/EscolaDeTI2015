@@ -147,7 +147,7 @@ public class SessaoUsuarioService {
         List<ItemAcessoUsuarioInMemory> listaDeFilhos = new ArrayList<>();
 
         for (Map<String, Object> item : resultQuery) {
-            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getId().toString())) {
+            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getiditemacesso().toString())) {
 
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 

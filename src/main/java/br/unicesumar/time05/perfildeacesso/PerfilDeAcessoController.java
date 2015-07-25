@@ -21,14 +21,14 @@ public class PerfilDeAcessoController {
         return service.getPerfisDeAcesso();
     }
     
-    @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getPerfilDeAcesso(@PathVariable Long aId){
-        return service.getPerfilDeAcesso(aId);
+    @RequestMapping(value = "/{aIdPerfilDeAcesso}", method = RequestMethod.GET)
+    public Map<String, Object> getPerfilDeAcesso(@PathVariable Long aIdPerfilDeAcesso){
+        return service.getPerfilDeAcesso(aIdPerfilDeAcesso);
     }
     
-    @RequestMapping(value = "/itensdeacesso/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(@PathVariable Long aId){
-        return service.getItensDeAcessoPorPerfilDeAcessoID(aId);
+    @RequestMapping(value = "/itensdeacesso/{aIdPerfilDeAcesso}", method = RequestMethod.GET)
+    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(@PathVariable Long aIdPerfilDeAcesso){
+        return service.getItensDeAcessoPorPerfilDeAcessoID(aIdPerfilDeAcesso);
     }
     
     @RequestMapping(method = RequestMethod.POST)
@@ -36,13 +36,14 @@ public class PerfilDeAcessoController {
         service.salvarPerfilDeAcesso(aPerfilDeAcesso);
     }
     
-    @RequestMapping(value = "/{aId}", method = RequestMethod.DELETE)
-    public void removerPerfilDeAcesso(@PathVariable Long aId){
-        service.removerPerfilDeAcesso(aId);
+    @RequestMapping(value = "/{aIdPerfilDeAcesso}", method = RequestMethod.DELETE)
+    public void removerPerfilDeAcesso(@PathVariable Long aIdPerfilDeAcesso){
+        service.removerPerfilDeAcesso(aIdPerfilDeAcesso);
     }
     
     @RequestMapping(method = RequestMethod.PUT)
     public void alterarPerfilDeAcesso(@RequestBody PerfilDeAcesso aPerfilDeAcesso){
+        System.out.println(aPerfilDeAcesso.toString());
         service.alterarPerfilDeAcesso(aPerfilDeAcesso);
     }
 }
