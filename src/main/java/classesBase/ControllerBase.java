@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControllerBase <Entidade extends Object, ID extends Serializable, Service extends ServiceBase> {
     
     @Autowired
-    public ServiceBase service;
+    public Service service;
     
     @RequestMapping(method = RequestMethod.POST)
     public void salvar(@RequestBody Entidade aEntidade){
@@ -27,8 +27,8 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
     }
     
     @RequestMapping(value = "/{aEntidadeID}", method = RequestMethod.DELETE)
-    public void remover(@PathVariable ID aUsuarioId){
-        service.remover(aUsuarioId);
+    public void remover(@PathVariable ID aEntidadeID){
+        service.remover(aEntidadeID);
     }
     
     @RequestMapping(method = RequestMethod.PUT)
@@ -37,23 +37,28 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
     }
     
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getUsuarioPorId(@PathVariable ID aId){
+    public List<Map<String, Object>> getEntidadePorId(@PathVariable ID aId){
         return service.findByID(aId);
     }
     
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Map<String, Object>> getEntidadesListagem() {
+        return service.listarSemPaginacao();
+    }
+    
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getUsuariosOrdenado() {
-        return service.listar(new ParametrosConsulta());
+    public RetornoConsultaPaginada getEntidadesPaginada() {
+        return service.listar();
     }
     
     @RequestMapping(value = "/listar/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getUsuariosOrdenado(@PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao) {
+    public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao) {
         ParametrosConsulta parametros = new ParametrosConsulta(pagina, ordenarPor, sentidoOrdenacao);
         return service.listar(parametros);
     }
 
     @RequestMapping(value = "/listar/{pagina}/{ordenarPor}/{sentidoOrdenacao}/{palavraChave}", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getUsuariosOrdenadoEComBusca(@PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao, @PathVariable String palavraChave) {
+    public RetornoConsultaPaginada getEntidadesOrdenadasEComBusca(@PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao, @PathVariable String palavraChave) {
         ParametrosConsulta parametros = new ParametrosConsulta(pagina, ordenarPor, sentidoOrdenacao, palavraChave);
         return service.listar(parametros);
     }

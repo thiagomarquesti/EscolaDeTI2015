@@ -57,7 +57,7 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
                     //console.log(data.length);
                     if (data.length > 0) {
                         var statusUsuario = data[0].status;
-                        if (statusUsuario == 0) {
+                        if (statusUsuario === 'ATIVO') {
                             $http.post("/login/efetuarlogin", $scope.login)
                                     .success(function (data) {
                                         window.location.href = "/";

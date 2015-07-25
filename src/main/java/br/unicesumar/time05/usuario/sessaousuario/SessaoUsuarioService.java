@@ -38,7 +38,6 @@ public class SessaoUsuarioService {
         params.addValue("senha", aDadosLogin.getSenha());
 
         List<Map<String, Object>> result = query.execute(SQL, params);
-        if (result.size() > 0) {
 
             Long idUsuario = (Long) result.get(0).get("idusuario");
 
@@ -48,7 +47,6 @@ public class SessaoUsuarioService {
                 sessaoUsuario.setUsuario(usuario);
                 return true;
             }
-        }
         return false;
     }
 
@@ -147,7 +145,7 @@ public class SessaoUsuarioService {
         List<ItemAcessoUsuarioInMemory> listaDeFilhos = new ArrayList<>();
 
         for (Map<String, Object> item : resultQuery) {
-            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getId().toString())) {
+            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getiditemacesso().toString())) {
 
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 
