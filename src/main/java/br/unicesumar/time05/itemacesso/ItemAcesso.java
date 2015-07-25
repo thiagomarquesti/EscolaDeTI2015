@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long iditemacesso;

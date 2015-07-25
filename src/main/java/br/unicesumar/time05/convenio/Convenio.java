@@ -1,5 +1,6 @@
 package br.unicesumar.time05.convenio;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -12,9 +13,12 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class Convenio implements Serializable {
 
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     Long idconvenio;
+    
+    @CampoConsulta
     @NotBlank(message = "Campo descrição não pode ser vazio!")
     @Column(unique = true, nullable = false)        
     String descricao;

@@ -27,8 +27,8 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
     }
     
     @RequestMapping(value = "/{aEntidadeID}", method = RequestMethod.DELETE)
-    public void remover(@PathVariable ID aEntidade){
-        service.remover(aEntidade);
+    public void remover(@PathVariable ID aEntidadeID){
+        service.remover(aEntidadeID);
     }
     
     @RequestMapping(method = RequestMethod.PUT)

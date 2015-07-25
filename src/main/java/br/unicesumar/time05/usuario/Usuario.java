@@ -24,6 +24,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Usuario  implements Serializable{
+    
+    @CampoConsulta
     @Id    
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long idusuario;

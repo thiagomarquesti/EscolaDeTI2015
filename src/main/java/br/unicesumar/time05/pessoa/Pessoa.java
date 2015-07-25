@@ -1,5 +1,6 @@
 package br.unicesumar.time05.pessoa;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.telefone.Telefone;
@@ -27,13 +28,16 @@ import org.hibernate.validator.constraints.NotBlank;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa implements Serializable {
 
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idpessoa;
     
+    @CampoConsulta
     @NotBlank(message = "Nome não estar vazio!")
     private String nome;
-
+    
+    @CampoConsulta
     @NotNull(message = "Telefone não pode estar vazio!")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "pessoa_telefone",
@@ -43,14 +47,17 @@ public abstract class Pessoa implements Serializable {
                 @JoinColumn(name = "telefone_id", referencedColumnName = "idtelefone")})
     private Set<Telefone> telefones;
 
+    @CampoConsulta
     @NotNull(message = "Email não pode estar vazio!")
     @Embedded
     private Email email;
 
+    @CampoConsulta
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")
     private Endereco endereco;
     
+    @CampoConsulta
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa;
 

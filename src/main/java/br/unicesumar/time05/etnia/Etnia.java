@@ -1,5 +1,6 @@
 package br.unicesumar.time05.etnia;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
@@ -11,9 +12,11 @@ import javax.persistence.Id;
 @Entity
 public class Etnia implements Serializable{
 
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idetnia;
+    @CampoConsulta
     String descricao;
 
     public Etnia() {

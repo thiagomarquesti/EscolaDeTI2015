@@ -1,5 +1,6 @@
 package br.unicesumar.time05.endereco;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
@@ -19,18 +20,26 @@ public class Endereco implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @CampoConsulta
     private Long idendereco;
+    @CampoConsulta
     private String logradouro;
+    @CampoConsulta
     private String numero;
+    @CampoConsulta
     private String bairro;
+    @CampoConsulta
     private String complemento;
+    @CampoConsulta
     private String cep;
+    @CampoConsulta
     @ManyToOne()
     @JoinTable(name = "endereco_cidade",
             joinColumns = {
                 @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")},
             inverseJoinColumns = {
                 @JoinColumn(name = "cidade_id", referencedColumnName = "codigoIBGE")})
+    
     private Cidade cidade;
 
 //    @ManyToOne()
