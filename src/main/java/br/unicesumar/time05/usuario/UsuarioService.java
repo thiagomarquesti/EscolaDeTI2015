@@ -1,5 +1,6 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.rowMapper.MapRowMapper;
@@ -45,17 +46,56 @@ public class UsuarioService {
         }
     }
     
+//    public Usuario getUsuarios(){
     public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT idusuario, nome, login, email, senha, status FROM usuario"
+        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_fisica pf "
+                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.idtelefone"
+                + " INNER JOIN endereco ende "
+                + "    ON p.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado"
+                + " INNER JOIN usuario us"
+                + "    ON us.idpessoa = p.idpessoa"
                 , new MapSqlParameterSource(), new MapRowMapper());
         return Collections.unmodifiableList(usuarios);
+//        Usuario r = usuarioRepo.findOne(20l);  
+//        return r;
     }
     
     public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, nome, login, email, status FROM usuario "+
-                 "WHERE idusuario = :aUsuarioId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
+                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+                + "FROM pessoa p"
+                + " INNER JOIN pessoa_fisica pf "
+                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_telefone pt "
+                + "    ON pt.pessoa_id = p.idpessoa"
+                + " INNER JOIN telefone t "
+                + "    ON pt.telefone_id = t.idtelefone"
+                + " INNER JOIN endereco ende "
+                + "    ON p.endereco_id = ende.idendereco"
+                + " INNER JOIN endereco_cidade ec "
+                + "    ON ende.idendereco = ec.endereco_id"
+                + " INNER JOIN cidade c"
+                + "    ON ec.cidade_id = c.codigoibge"
+                + " INNER JOIN uf u"
+                + "    ON c.estado_codigoestado = u.codigoestado"
+                + " INNER JOIN usuario us"
+                + "    ON us.idpessoa = p.idpessoa"
+                + " WHERE p.idpessoa = :aUsuarioId", params, new MapRowMapper());
         return Collections.unmodifiableList(usuario);
     }
     
@@ -67,43 +107,23 @@ public class UsuarioService {
         return usuario.isEmpty();
     }
     
-    public boolean verificarEmail(String aEmail){
-        if(aEmail != null && !aEmail.isEmpty()){
-            //verifica se o email é valido
-            String email = aEmail;
-            String emailPattern = "\\b(^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b";
-            Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if(!matcher.matches()){
-                return false;
-            }
+    public boolean verificarEmail(Email aEmail){
+        if(aEmail.verificarValido()){
         
-            //verifica se o email já existe no banco
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT email FROM usuario WHERE email = :aEmail", params, new MapRowMapper());
+            params.addValue("aEmail", aEmail.getEmail());
+            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT email FROM pessoa WHERE email = :aEmail", params, new MapRowMapper());
             if(!usuario.isEmpty()){
                 return false;
             }
-            //se o usuario array de usuario for vazio e o email for valido retorna true, indicando que o
-            //endereço de email esta disponivel
-            //Caso o array tenha algum valor, significa que o email já está cadastrado então retorna false, indicando email em uso
-            //caso o email seja invalido retorna false
             return true;
         }
         else
             throw new RuntimeException("Campo email vazio!");
     }
     
-    public boolean verificarSenha(String aSenha){
-        boolean valido = false;
-        String senha = aSenha;
-        
-        Pattern pattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})");
-        Matcher matcher = pattern.matcher(senha);
-        valido = matcher.matches();
-  
-        return valido;
+    public boolean verificarSenha(Senha aSenha){
+        return aSenha.senhaValida();
     }
     
     public void trocarStatusUsuario(Long aUsuarioId){
@@ -123,7 +143,7 @@ public class UsuarioService {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
             params.addValue("aId", aUsuarioId);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, email FROM usuario WHERE email = :aEmail AND idusuario <> :aId", params, new MapRowMapper());
+            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idpessoa, email FROM pessoa WHERE email = :aEmail AND idpessoa <> :aId", params, new MapRowMapper());
             if(!usuario.isEmpty()){
                 return false;
             }
@@ -134,7 +154,7 @@ public class UsuarioService {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         params.addValue("aId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT idusuario, login FROM usuario WHERE login = :aLogin AND idusuario <> :aId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT p.idpessoa, u.login FROM usuario u, pessoa p WHERE u.login = :aLogin AND p.idpessoa <> :aId", params, new MapRowMapper());
         return usuario.isEmpty();
     }
     
@@ -156,8 +176,8 @@ public class UsuarioService {
                   "SELECT p.idperfildeacesso, "
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
-                + "  JOIN perfildeacesso p ON (up.perfis_id = p.idperfildeacesso) "
-                + " WHERE up.usuario_id = :aId";
+                + "  JOIN perfildeacesso p ON (up.perfis_idperfildeacesso = p.idperfildeacesso) "
+                + " WHERE up.usuario_idpessoa = :aId";
         
         List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
         return itensPerfilDeAcesso;

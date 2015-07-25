@@ -1,11 +1,8 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
+import br.unicesumar.time05.email.Email;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +23,7 @@ public class UsuarioController {
     }
     
     @RequestMapping(method = RequestMethod.GET)
+//    public Usuario getUsuarios(){
     public List<Map<String, Object>> getUsuarios(){
         return usuarioService.getUsuarios();
     }
@@ -56,12 +54,12 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}" ,method = RequestMethod.GET)
-    public boolean verifcarEmail(@PathVariable String aEmail){
+    public boolean verifcarEmail(@PathVariable Email aEmail){
         return usuarioService.verificarEmail(aEmail);
     }
 
     @RequestMapping(value = "/verificarSenha/{aSenha:.+}" ,method = RequestMethod.GET)
-    public boolean verifcarSenha(@PathVariable String aSenha){
+    public boolean verifcarSenha(@PathVariable Senha aSenha){
         return usuarioService.verificarSenha(aSenha);
     }
 
