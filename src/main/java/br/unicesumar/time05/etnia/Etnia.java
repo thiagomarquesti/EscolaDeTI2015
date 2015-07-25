@@ -13,7 +13,7 @@ public class Etnia implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long idEtnia;
+    private Long idetnia;
     String descricao;
 
     public Etnia() {
