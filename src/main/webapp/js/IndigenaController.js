@@ -1,4 +1,4 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location){
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function($scope, $http, $routeParams, $location, $timeout){
          
     function novoIndio(){
         $scope.indio = {
@@ -81,4 +81,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     function deuErro(){
         toastr.error("Algo deu errado. Tente novamente.");
     }
+    
+    $scope.carregaScript = function(nScript){
+        $timeout(function(){
+            var script = document.createElement('script');
+            script.src = nScript+".js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+        },100);
+    };
 }]);

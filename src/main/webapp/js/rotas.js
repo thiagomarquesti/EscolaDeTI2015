@@ -63,6 +63,17 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/funcaoCadastrar.html',
         controller: 'FuncaoController'
     })
+    //------- Rotas da Terra Indigena --------   
+    .when('/TerraIndigena/nova', {
+        templateUrl: 'views/terraCadastrar.html',
+        controller: 'TerraController'
+    }).when('/TerraIndigena/listar', {
+        templateUrl: 'views/terraListar.html',
+        controller: 'TerraController'
+    }).when('/TerraIndigena/editar/:id', {
+        templateUrl: 'views/terraCadastrar.html',
+        controller: 'TerraController'
+    })
     //------- Rotas do Indigena --------   
     .when('/Indigena/novo', {
         templateUrl: 'views/indigenaCadastrar.html',
