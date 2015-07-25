@@ -16,6 +16,7 @@ public class ItemAcesso implements Serializable {
     private Long iditemacesso;
     private String nome;
     private String rota;
+    private String icone;
     @ManyToOne
     @JoinColumn(name = "superior_id")
     private ItemAcesso superior;
@@ -23,27 +24,31 @@ public class ItemAcesso implements Serializable {
     public ItemAcesso() {
     }
 
-    public ItemAcesso(String nome, String rota) {
+    public ItemAcesso(String nome, String rota, String icone) {
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
     }
     
-    public ItemAcesso(Long iditemacesso, String nome, String rota) {
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone) {
         this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
     }
     
-    public ItemAcesso(String nome, String rota, ItemAcesso superior) {
+    public ItemAcesso(String nome, String rota, String icone, ItemAcesso superior) {
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
         this.superior = superior;
     }
 
-    public ItemAcesso(Long iditemacesso, String nome, String rota, ItemAcesso superior) {
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone, ItemAcesso superior) {
         this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
         this.superior = superior;
     }
 
@@ -98,13 +103,23 @@ public class ItemAcesso implements Serializable {
         if (!Objects.equals(this.rota, other.rota)) {
             return false;
         }
+        if (!Objects.equals(this.superior, other.superior)) {
+            return false;
+        }
         return true;
     }
 
-    
-
     @Override
     public String toString() {
-        return "ItemAcesso{" + "iditemacesso=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
+        return "ItemAcesso{" + "iditemacesso=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", icone=" + icone + ", superior=" + superior + '}';
     }
+
+    public void setIcone(String icone) {
+        this.icone = icone;
+    }
+
+    public String getIcone() {
+        return icone;
+    }
+
 }

@@ -125,7 +125,7 @@ angular.module('ui.multiselect', [
                   if (attrs.msSelected) {
                       scope.header = $interpolate(attrs.msSelected)(scope);
                   } else {
-                      scope.header = modelCtrl.$modelValue.length + ' ' + 'selected';
+                      scope.header = modelCtrl.$modelValue.length + ' ' + 'selecionado';
                   }
 
             } else {

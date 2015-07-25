@@ -106,16 +106,41 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
 
         function createJsonPerfil(novo) {
-
-            var perfil = "" + $(".itemAcesso").val();
-            if (perfil === "null") {
-                perfil = "";
-            }
+            console.log($scope.perfil.itensselecionados);
+            
+//            var perfil = "" + $(".itemAcesso").val();
+//            if (perfil === "null") {
+//                perfil = "";
+//            }
             if (novo) {
-                perfil = '{"nome": "' + $scope.perfil.nome + '" , "itens": [' + perfil + ']};';
+                console.log('1');
+                perfil = '{"nome": "' + $scope.perfil.nome + 
+                          ', "itens": ' + $scope.perfil.itensselecionados + '}';
             } else {
-                perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + ', "nome": "' + $scope.perfil.nome + '", "itens": [' + perfil + ']};';
+                console.log('2');
+//                if ($scope.perfil.itensselecionados.length() == 0){
+//                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
+//                            ', "nome": "' + $scope.perfil.nome + 
+//                            '}';
+//                }
+//                else{
+//                    alert($scope.perfil.itensselecionados.length());
+//                    for (var i = 0, max = $scope.perfil.itensselecionados.length(); i < max; i++) {
+//                        itens = '{ "iditemacesso": ' + $scope.perfil.itensselecionados.iditemacesso + 
+//                                            ', "nome": ' + $scope.perfil.itensselecionados.nome +
+//                                            ', "rota": ' + $scope.perfil.itensselecionados.rota +
+//                                            ', "icone": ' + $scope.perfil.itensselecionados.icone +
+//                                            ', "superior_id": ' + $scope.perfil.itensselecionados.superior_id + '}';
+//                    };
+//                    alert(itens);
+                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
+                            ', "nome": "' + $scope.perfil.nome + 
+                            ', "itens": ' + $scope.perfil.itensselecionados + 
+                                '}';
+                    //alert(perfil);
+//                }
             }
+            console.log(perfil);
             return perfil;
         }
 

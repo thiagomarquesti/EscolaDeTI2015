@@ -24,7 +24,7 @@ public class PerfilDeAcesso implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long idperfildeacesso;
+        private Long idperfildeacesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
     private String nome;

@@ -43,6 +43,7 @@ public class PerfilDeAcessoController {
     
     @RequestMapping(method = RequestMethod.PUT)
     public void alterarPerfilDeAcesso(@RequestBody PerfilDeAcesso aPerfilDeAcesso){
+        System.out.println(aPerfilDeAcesso.toString());
         service.alterarPerfilDeAcesso(aPerfilDeAcesso);
     }
 }
