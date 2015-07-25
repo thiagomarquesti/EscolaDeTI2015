@@ -14,7 +14,7 @@
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código Assindi:</label>
                 <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cod" id="cod" name="cod" required="" class="form-control requerido" ng-minlength=8 ng-maxlength=8></div>
                 <label for="cpf" class="col-md-2 col-sm-1 control-label">CPF:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control"></div>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control cpf"></div>
             </div>
 
             <div ng-show="formInd.cod.$dirty && formInd.cod.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
@@ -58,10 +58,10 @@
                     </select>
                 </div>
                 <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>
-                <div class="col-md-3" ng-controller="TerraController" ng-init="atualizarTerras();">
+                <div class="col-md-3">
                     <select ng-model="indio.terraindigena" id="terraindigena" name="terraindigena" required="" class="form-control requerido">
                         <option value="">Selecione a terra indígena</option>
-                        <option ng-repeat="t in terras" value="{{t.idTerraIndigena}}">{{e.nomeTerra}}</option>
+                        <option value="1">Teste</option>
                     </select>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                     <label for="fem"> Feminino</label>
                 </div>
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control"></div>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control sus"></div>
                 
             </div>
             
@@ -91,7 +91,7 @@
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3">
                     <div class="input-group">
-                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
+                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido date" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
                         <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" name="telefone" required="" class="form-control requerido" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" name="telefone" required="" class="form-control requerido phone_with_ddd" placeholder="(99) 9999-9999"></div>
             </div>
             
             <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
