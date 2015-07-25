@@ -57,7 +57,7 @@ public class ConstrutorDeSQL {
     }
 
     private void preparaWherePorID() {
-            this.SQL += OperadoresSQL.WHERE + this.dadosParaConsulta.getIdTabela() + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL;
+        this.SQL += OperadoresSQL.WHERE + this.dadosParaConsulta.getIdTabela() + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL;
     }
 
     private void preparaWhere(ParametrosConsulta parametros) {
@@ -82,6 +82,9 @@ public class ConstrutorDeSQL {
     private void preparaOrderBy(ParametrosConsulta parametros) {
         if ((parametros != null) && (parametros.getOrdenarPor() != null) && (!parametros.getOrdenarPor().isEmpty())) {
             this.SQL += (OperadoresSQL.ORDER_BY + parametros.getOrdenarPor());
+            if (!parametros.getSentidoOrdenacao().isEmpty() && parametros.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC)){
+                this.SQL += OperadoresSQL.DESC;
+            }
         }
     }
 
