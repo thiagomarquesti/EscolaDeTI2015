@@ -1,7 +1,7 @@
 package br.unicesumar.time05.usuario.sessaousuario;
 
 import br.unicesumar.time05.itemacesso.ItemAcessoUsuarioInMemory;
-import br.unicesumar.time05.rowMapper.MapRowMapper;
+import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.usuario.Status;
 import br.unicesumar.time05.usuario.Usuario;
 import br.unicesumar.time05.usuario.UsuarioRepository;
@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +20,7 @@ public class SessaoUsuarioService {
     @Autowired
     EntityManager em;
     @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
+    private QueryPersonalizada query;
     @Autowired
     private SessaoUsuario sessaoUsuario;
     @Autowired
@@ -38,8 +37,7 @@ public class SessaoUsuarioService {
         params.addValue("login", aDadosLogin.getLogin());
         params.addValue("senha", aDadosLogin.getSenha());
 
-        List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, new MapRowMapper());
-        if (result.size() > 0) {
+        List<Map<String, Object>> result = query.execute(SQL, params);
 
             Long idUsuario = (Long) result.get(0).get("idusuario");
 
@@ -49,8 +47,6 @@ public class SessaoUsuarioService {
                 sessaoUsuario.setUsuario(usuario);
                 return true;
             }
-
-        }
         return false;
     }
 
@@ -63,7 +59,7 @@ public class SessaoUsuarioService {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
 
-            return jdbcTemplate.query(SQL, params, new MapRowMapper()).get(0);
+            return query.execute(SQL, params).get(0);
         }
         return null;
     }
@@ -94,7 +90,7 @@ public class SessaoUsuarioService {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
 
-        List<Map<String, Object>> statusUsuario = jdbcTemplate.query(SQL, params, new MapRowMapper());
+        List<Map<String, Object>> statusUsuario = query.execute(SQL, params);
         return statusUsuario;
     }
 
@@ -121,12 +117,11 @@ public class SessaoUsuarioService {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdUsuario());
 
-            List<Map<String, Object>> resultQuery = jdbcTemplate.query(SQL, params, new MapRowMapper());
+            List<Map<String, Object>> resultQuery = query.execute(SQL, params);
 
             if (!resultQuery.isEmpty()) {
 
                 ItemAcessoUsuarioInMemory itemDeAcesso;
-
                 itemDeAcesso = new ItemAcessoUsuarioInMemory(
                         Long.parseLong(resultQuery.get(0).get("iditemacesso").toString()),
                         resultQuery.get(0).get("nome").toString(),
@@ -150,7 +145,7 @@ public class SessaoUsuarioService {
         List<ItemAcessoUsuarioInMemory> listaDeFilhos = new ArrayList<>();
 
         for (Map<String, Object> item : resultQuery) {
-            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getId().toString())) {
+            if (item.get("superior_id") != null && item.get("superior_id").toString().equals(itemPai.getiditemacesso().toString())) {
 
                 ItemAcessoUsuarioInMemory itemDeAcesso;
 

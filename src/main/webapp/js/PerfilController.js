@@ -1,28 +1,4 @@
 module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location, $element, $attrs) {
-        
-//$(document).ready(function(){
-//     $("#itensselecionados").select2({});
-//     
-//     $("#itensselecionados").select2({
-//            closeOnSelect:false
-//        });
-//};
-
-        $scope.load = function(){
-            //var myEl = angular.element(document.querySelector("#itensselecionados"));
-            //var myEl = angular.element('#itensselecionados');
-            //myEl.select2();
-            //alert("TESTE");
-            //document.getElementById("itensselecionados").select2();
-            //toastr.error("TESTE");
-            //var a = angular.element( document.querySelector( "#itensselecionados" ) );
-            //a.select2();
-            //("#itensselecionados").select2();
-            //var a = angular.element($('#itensselecionados'));
-//            var a = angular.element(document.querySelector("#itensselecionados"));
-//            a.select2();
-            
-        }
         function novoPerfil() {
             $scope.perfil = {
                 nome: "",
@@ -30,34 +6,28 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             };
             $scope.isNovo = true;
         }
-        
-        
+
+
         $scope.carregar = function () {
-            //$("#itensselecionados").select2();
-//            angular.element($("#itensselecionados").select2());
-            //console.log(999);
-            //console.log(angular.element(document.querySelector('#itensselecionados').innerHTML));
-            //console.log($("#itensselecionados"));
-            //$("#itensselecionados".itemAcesso).select2();
+            $scope.itensAcesso();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
-                //$("select").select2('val', 'All');
-                
             }
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.perfil = data[0];
+                            $scope.perfil = data;
                             $scope.isNovo = false;
+//                            $("#itensselecionados").delay(30000).select2();
+//                            $("#itensselecionados").select2().val();
                         })
                         .error(deuErro);
             }
-//            $("#itensselecionados").select2({});
-//            angular.element("#itensselecionados").select2();
-//            $("#itensselecionados").select2({
-//                closeOnSelect:false
-//            });
+
+
         };
+
+
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
@@ -93,16 +63,16 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         $scope.itens = data;
                     })
                     .error(deuErro);
-            if (!$scope.isNovo) {
+            if ($scope.isNovo == false) {
                 $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
                             //console.log(data) 
                             $scope.itensDoPerfil = data;
-                            //alert(data.val());
+//                            $("#itensselecionados").select2().val();
                         })
                         .error(function () {
                             toastr.error("TESTE");
-                        })
+                        });
                 //.error(deuErro);
             }
         };
@@ -112,11 +82,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.editar = function (perfil) {
-            $location.path("/Perfil/editar/" + perfil.id);
+            $location.path("/Perfil/editar/" + perfil.idperfildeacesso);
         };
 
         $scope.excluir = function (perfil) {
-            $http.delete("/perfildeacesso/" + perfil.id).success(function () {
+            $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
                 toastr.success("O Perfil foi excluido com sucesso", "Perfil Excluido");
                 $scope.atualizar();
             }).error(function () {
@@ -128,7 +98,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             var itens = $scope.itensDoPerfil;
             retorno = false;
             for (i = 0; i < itens.length; i++) {
-                if (itens[i].id === itemId) {
+                if (itens[i].iditemacesso === itemId) {
                     retorno = true;
                 }
             }
@@ -136,16 +106,41 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
 
         function createJsonPerfil(novo) {
-
-            var perfil = "" + $(".itemAcesso").val();
-            if (perfil === "null") {
-                perfil = "";
-            }
+            console.log($scope.perfil.itensselecionados);
+            
+//            var perfil = "" + $(".itemAcesso").val();
+//            if (perfil === "null") {
+//                perfil = "";
+//            }
             if (novo) {
-                perfil = '{"nome": "' + $scope.perfil.nome + '" , "itens": [' + perfil + ']};';
+                console.log('1');
+                perfil = '{"nome": "' + $scope.perfil.nome + 
+                          ', "itens": ' + $scope.perfil.itensselecionados + '}';
             } else {
-                perfil = '{"id":' + $scope.perfil.id + ', "nome": "' + $scope.perfil.nome + '", "itens": [' + perfil + ']};';
+                console.log('2');
+//                if ($scope.perfil.itensselecionados.length() == 0){
+//                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
+//                            ', "nome": "' + $scope.perfil.nome + 
+//                            '}';
+//                }
+//                else{
+//                    alert($scope.perfil.itensselecionados.length());
+//                    for (var i = 0, max = $scope.perfil.itensselecionados.length(); i < max; i++) {
+//                        itens = '{ "iditemacesso": ' + $scope.perfil.itensselecionados.iditemacesso + 
+//                                            ', "nome": ' + $scope.perfil.itensselecionados.nome +
+//                                            ', "rota": ' + $scope.perfil.itensselecionados.rota +
+//                                            ', "icone": ' + $scope.perfil.itensselecionados.icone +
+//                                            ', "superior_id": ' + $scope.perfil.itensselecionados.superior_id + '}';
+//                    };
+//                    alert(itens);
+                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
+                            ', "nome": "' + $scope.perfil.nome + 
+                            ', "itens": ' + $scope.perfil.itensselecionados + 
+                                '}';
+                    //alert(perfil);
+//                }
             }
+            console.log(perfil);
             return perfil;
         }
 

@@ -8,6 +8,8 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.pessoaFisica.PessoaFisica;
 import br.unicesumar.time05.telefone.Telefone;
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.TipoComparacao;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -40,11 +42,12 @@ public class Usuario extends PessoaFisica implements Serializable{
     
     @Enumerated(EnumType.STRING)
     private Status status = Status.ATIVO;
-    
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<PerfilDeAcesso> perfis;
-    
+
     public Usuario() {
+        //setClass(this.getClass());
     }
 
     public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
@@ -86,24 +89,23 @@ public class Usuario extends PessoaFisica implements Serializable{
     public void setStatus(Status status) {
         this.status = status;
     }
-    
-    public void setPerfil(List<PerfilDeAcesso> perfis){
+
+    public void setPerfil(List<PerfilDeAcesso> perfis) {
         this.perfis.addAll(perfis);
     }
 
-    public void removerPerfil(PerfilDeAcesso perfil){
+    public void removerPerfil(PerfilDeAcesso perfil) {
         this.perfis.remove(perfil);
     }
-    
-    public Set<PerfilDeAcesso> getPerfis(){
+
+    public Set<PerfilDeAcesso> getPerfis() {
         return Collections.unmodifiableSet(this.perfis);
     }
-    
-    
+
 
     @Override
     public String toString() {
         return "Usuario{ nome=" + super.getNome() + ", login=" + login + ", email=" + super.getEmail() + '}';
     }
-    
+
 }
