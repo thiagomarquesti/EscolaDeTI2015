@@ -2,8 +2,6 @@ package br.unicesumar.time05.usuario;
 
 import java.util.regex.Matcher;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
 public class Senha {
