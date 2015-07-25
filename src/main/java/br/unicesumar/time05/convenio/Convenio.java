@@ -2,10 +2,12 @@ package br.unicesumar.time05.convenio;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Convenio implements Serializable {
@@ -13,6 +15,8 @@ public class Convenio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     Long idconvenio;
+    @NotBlank(message = "Campo descrição não pode ser vazio!")
+    @Column(unique = true, nullable = false)        
     String descricao;
 
     public Convenio() {

@@ -1,33 +1,72 @@
-module.controller("EtniaController", ["$scope", "$http", function ($scope, $http) {
+module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location) {
 
-        function deuErro() {
-            alert("Algo deu errado. Tente novamente.");
-        }
-        function erroLogin() {
-            alert("Login ou senha incorretos. Tente novamente.");
-        }
+    function deuErro() {
+        toastr.error("Algo deu errado. Tente novamente.");
+    }
 
-        function novaEtnia() {
-            $scope.etnia = {
-                nome: ""
-            };
-            $scope.isNovaEtnia = true;
+    function novaEtnia() {
+        $scope.etnia = {
+            descricao: ""
+        };
+        $scope.isNovaEtnia = true;
+    }
+    
+    $scope.novaEtnia = function() {
+        novaEtnia();
+    }
+    
+    $scope.carregarEtnia = function(){
+        if($location.path() === "/Etnia/nova"){
+            novaEtnia();
         }
-
-        $scope.atualizarEtnias = function () {
-            $http.get("/etnias")
-                    .success(function (data) {
-                        $scope.etnias = data;
+        else {
+            $http.get("/etnia/" + $routeParams.id)
+                    .success(function(data){
+                        $scope.etnia = data[0];
+                        $scope.isNovaEtnia = false;
                     })
                     .error(deuErro);
-        };
-        $scope.atualizarEtnias();
+        }
+    };
+    
+    $scope.atualizarEtnias = function () {
+        $http.get("/etnia")
+                .success(function (data) {
+                    $scope.etnias = data;
+                })
+                .error(deuErro);
+    };
+    
+    $scope.editarEtnia = function(etnia) {
+        $location.path("/Etnia/editar/" + etnia.idetnia);
+    };
+    
+    $scope.deletarEtnia = function (etnia) {
+        $http.delete("/etnia/" + etnia.idetnia)
+                .success(function (status) {
+                    toastr.success("Etnia "+ etnia.descricao +" deletada com sucesso.");
+                    $scope.atualizarEtnias();
+                })
+                .error(deuErro);
+    };
 
-        $scope.alterarEtnia = function (etnia) {
-            $scope.etnia = angular.copy(etnia);
-            $scope.isNovaEtnia = false;
-        };
-
-
-
-    }]);
+    $scope.salvarEtnia = function () {
+        if ($scope.isNovaEtnia) {
+            $http.post("/etnia", $scope.etnia)
+                    .success(function () {
+                        $location.path("/Etnia/listar");
+                        toastr.success("Etnia inserida com sucesso!");
+                    })
+                    .error(deuErro);
+        }
+        else {
+            $http.put("/etnia/", $scope.etnia)
+                    .success(function () {
+                        $location.path("/Etnia/listar");
+                        toastr.success("Etnia atualizada com sucesso!");
+                    })
+                    .error(deuErro);
+        }
+        
+    };
+}]);

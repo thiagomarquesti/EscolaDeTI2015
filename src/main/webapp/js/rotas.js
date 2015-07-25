@@ -2,8 +2,8 @@ module.config(function($routeProvider, $locationProvider) {
 //------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
-        template: '<h1>Página inicial</h1>',
-        controller: 'UsuarioController'
+        templateUrl: 'views/index.html',
+        controller: ''
     }).when('/Usuario/listar', {
         templateUrl: 'views/usuariosListar.html',
         controller: 'UsuarioController'
@@ -16,9 +16,9 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Usuario/editar', {
         templateUrl: 'views/usuarioCadastrar.html',
         controller: 'UsuarioController'
-
+    })
 //------- Rotas do Perfil --------
-    }).when('/Perfil/listar', {
+    .when('/Perfil/listar', {
         templateUrl: 'views/listarPerfis.html',
         controller: 'PerfilController'
     }).when('/Perfil/novo', {
@@ -30,8 +30,48 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar', {
         templateUrl: 'views/cadPerfil.html',
         controller: 'PerfilController'
-    }).when('/Etnias', {
-        templateUrl: 'views/etnias.html',
+//------- Convênio -------        
+    }).when('/Convenio/novo', {
+        templateUrl: 'views/convenioCadastrar.html',
+        controller: 'ConvenioController'
+    }).when('/Convenio/listar', {
+        templateUrl: 'views/convenioListar.html',
+        controller: 'ConvenioController'
+    }).when('/Convenio/editar/:id', {
+        templateUrl: 'views/convenioCadastrar.html',
+        controller: 'ConvenioController'
+    })
+ //------- Rotas do Etnia --------   
+    .when('/Etnia/nova', {
+        templateUrl: 'views/etniaCadastrar.html',
+        controller: 'EtniaController'
+    }).when('/Etnia/listar', {
+        templateUrl: 'views/etniaListar.html',
+        controller: 'EtniaController'
+    }).when('/Etnia/editar/:id', {
+        templateUrl: 'views/etniaCadastrar.html',
+        controller: 'EtniaController'
+    })
+    //------- Rotas do Função --------   
+    .when('/Funcao/nova', {
+        templateUrl: 'views/funcaoCadastrar.html',
+        controller: 'FuncaoController'
+    }).when('/Funcao/listar', {
+        templateUrl: 'views/funcaoListar.html',
+        controller: 'FuncaoController'
+    }).when('/Funcao/editar/:id', {
+        templateUrl: 'views/funcaoCadastrar.html',
+        controller: 'FuncaoController'
+    })
+    //------- Rotas do Indigena --------   
+    .when('/Indigena/novo', {
+        templateUrl: 'views/indigenaCadastrar.html',
+        controller: 'IndigenaController'
+    }).when('/Indigena/listar', {
+        templateUrl: 'views/indigenaListar.html',
+        controller: 'IndigenaController'
+    }).when('/indigena/editar/:id', {
+        templateUrl: 'views/indigenaCadastrar.html',
         controller: 'EtniaController'
     }).otherwise ({ redirectTo: '/' });
 
