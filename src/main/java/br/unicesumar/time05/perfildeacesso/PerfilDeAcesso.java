@@ -13,10 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.sql.rowset.serial.SerialArray;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.engine.jdbc.SerializableBlobProxy;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity(name = "perfildeacesso")
