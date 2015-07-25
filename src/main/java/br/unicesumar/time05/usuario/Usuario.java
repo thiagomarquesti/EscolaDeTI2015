@@ -47,6 +47,7 @@ public class Usuario  implements Serializable{
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})")
     private String senha;
 
+
     @CampoConsulta(tipoComparacao = TipoComparacao.IGUAL)
     @Enumerated
     private Status status = Status.ATIVO;

@@ -1,5 +1,10 @@
 package br.unicesumar.time05.itemacesso;
 
+
+import br.unicesumar.time05.cidade.Cidade;
+import br.unicesumar.time05.cidade.CidadeRepository;
+import br.unicesumar.time05.uf.UF;
+import br.unicesumar.time05.uf.UFRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -13,6 +18,11 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private ItemAcessoRepository repo;
+    @Autowired
+    private CidadeRepository cidRepo;
+    
+    @Autowired
+    private UFRepository UfRepo;
 
     private ItemAcesso getItemAcesso(List<ItemAcesso> lista, String nome, String rota) {
 
@@ -35,7 +45,6 @@ public class InicializadorItemAcesso {
         menu = this.getItemAcesso(itensAcesso, "Menu", "/");
         if (menu == null) {
             menu = new ItemAcesso("Menu", "/", "fa-bars");
-            repo.save(menu);
             itensAcesso.add(menu);
         }
 
@@ -133,6 +142,11 @@ public class InicializadorItemAcesso {
         if (menuPerfil == null) {
             menuPerfil = new ItemAcesso("Gerenciar Perfil", "", "fa-pencil", menu);
             itensAcesso.add(menuPerfil);
+            UF uf = new UF(41l, "PARANÁ", "PR");
+            UfRepo.save(uf);
+            cidRepo.save(new Cidade(4105904, "COLORADO", uf));
+            cidRepo.save(new Cidade(4115200, "MARINGÁ", uf));
+            cidRepo.save(new Cidade(4114807, "MARIALVA", uf));
         }
         
         ItemAcesso menuPerfilListar;
