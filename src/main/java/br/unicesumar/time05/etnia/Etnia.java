@@ -2,7 +2,6 @@ package br.unicesumar.time05.etnia;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +12,7 @@ public class Etnia implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long idetnia;
+    Long idetnia;
     String descricao;
 
     public Etnia() {
@@ -26,8 +25,6 @@ public class Etnia implements Serializable{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    
 
     public String getDescricao() {
         return descricao;
