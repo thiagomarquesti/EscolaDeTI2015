@@ -1,5 +1,6 @@
 package br.unicesumar.time05.pessoaJuridica;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.cnpj.Cnpj;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
@@ -22,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PessoaJuridica extends Pessoa implements Serializable{
 
+    @CampoConsulta
     @Embedded
     @Column(unique = true, nullable = false)
     private Cnpj cnpj;

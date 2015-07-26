@@ -1,5 +1,6 @@
 package br.unicesumar.time05.indigena;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.etnia.Etnia;
@@ -25,21 +26,27 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Indigena implements Serializable {
 
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigoAssindi;
    
+    @CampoConsulta
     private String nome;
     
+    @CampoConsulta
     @Embedded
     private CPF cpf;
     
+    @CampoConsulta
     @ManyToOne(cascade = CascadeType.ALL)
     private Etnia etnia;
     
+    @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
     
+    @CampoConsulta
     private Date dataNascimento;
 
     @ManyToMany

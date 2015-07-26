@@ -29,15 +29,7 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     }
 
     public void salvar(Entidade Entidade) {
-//        int y = 80;
-//        for (int x = 0; x < 80; x++) {
-//            Usuario u = new Usuario("teste", "teste", "teste@teste.com", "Re.123");
-//            u.setEmail(x + "teste@teste.com");
-//            u.setLogin("teste" + x);
-//            u.setNome("teste" + y);
-//            y--;
-            repository.save(Entidade);
-//        }
+        repository.save(Entidade);
     }
 
     public void remover(ID aID) {

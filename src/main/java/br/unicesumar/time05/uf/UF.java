@@ -1,14 +1,21 @@
 package br.unicesumar.time05.uf;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class UF {
+    
+    @CampoConsulta
     @Id
     private Long codigoestado;
+    
+    @CampoConsulta
     private String descricao;
+    
+    @CampoConsulta
     private String sigla;
 
     public UF() {
