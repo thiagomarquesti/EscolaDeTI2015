@@ -28,7 +28,7 @@ public class SessaoUsuarioService {
 
     public boolean efetuarLogin(DadosLogin aDadosLogin, HttpSession session) {
 
-        String SQL = "SELECT u.idusuario "
+        String SQL = "SELECT idpessoa "
                 + "  FROM usuario u "
                 + " WHERE u.login = :login "
                 + "   AND u.senha = :senha ";
@@ -39,9 +39,9 @@ public class SessaoUsuarioService {
 
         List<Map<String, Object>> result = query.execute(SQL, params);
 
-            Long idUsuario = (Long) result.get(0).get("idusuario");
+            Long idpessoa = (Long) result.get(0).get("idpessoa");
 
-            Usuario usuario = usuarioRepo.findOne(idUsuario);
+            Usuario usuario = usuarioRepo.findOne(idpessoa);
             if ((usuario != null) && usuario.getStatus() == Status.ATIVO) {
                 session.setAttribute("usuarioLogado", usuario);
                 sessaoUsuario.setUsuario(usuario);
@@ -52,9 +52,9 @@ public class SessaoUsuarioService {
 
     public Map<String, Object> getUsuarioLogado() {
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL = "SELECT u.idusuario, u.nome"
-                    + "     FROM usuario u"
-                    + "    WHERE u.idusuario = :id";
+            String SQL = "SELECT u.idpessoa, u.nome"
+                    + "     FROM pessoa u"
+                    + "    WHERE u.idpessoa = :id";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());

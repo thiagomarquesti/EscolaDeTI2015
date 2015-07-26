@@ -18,9 +18,10 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private ItemAcessoRepository repo;
+
     @Autowired
     private CidadeRepository cidRepo;
-    
+
     @Autowired
     private UFRepository UfRepo;
 
@@ -45,6 +46,7 @@ public class InicializadorItemAcesso {
         menu = this.getItemAcesso(itensAcesso, "Menu", "/");
         if (menu == null) {
             menu = new ItemAcesso("Menu", "/", "fa-bars");
+            repo.save(menu);
             itensAcesso.add(menu);
         }
 
@@ -69,7 +71,7 @@ public class InicializadorItemAcesso {
             menuEtniaNovo = new ItemAcesso("Cadastrar Etnia", "#/Etnia/nova", "fa-plus", menuEtnia);
             itensAcesso.add(menuEtniaNovo);
         }
-        
+
         //INDIGENA
         ItemAcesso menuIndigena;
         menuIndigena = this.getItemAcesso(itensAcesso, "Gerenciar Indígena", "");
@@ -77,21 +79,21 @@ public class InicializadorItemAcesso {
             menuIndigena = new ItemAcesso("Gerenciar Indígena", "", "fa-users", menu);
             itensAcesso.add(menuIndigena);
         }
-        
+
         ItemAcesso menuIndigenaListar;
         menuIndigenaListar = this.getItemAcesso(itensAcesso, "Listar Indígena", "#/Perfil/listar");
         if (menuIndigenaListar == null) {
             menuIndigenaListar = new ItemAcesso("Listar Indígena", "#/Indigena/listar", "fa-list-alt", menuIndigena);
             itensAcesso.add(menuIndigenaListar);
         }
-        
+
         ItemAcesso menuIndigenaNovo;
         menuIndigenaNovo = this.getItemAcesso(itensAcesso, "Novo Indígena", "#/Perfil/novo");
         if (menuIndigenaNovo == null) {
             menuIndigenaNovo = new ItemAcesso("Cadastrar Indígena", "#/Indigena/novo", "fa-plus", menuIndigena);
             itensAcesso.add(menuIndigenaNovo);
         }
-        
+
         //CONVENIO
         ItemAcesso menuConvenio;
         menuConvenio = this.getItemAcesso(itensAcesso, "Gerenciar Convênio", "");
@@ -113,7 +115,7 @@ public class InicializadorItemAcesso {
             menuConvenioNovo = new ItemAcesso("Cadastrar Coqnvênio", "#/Convenio/novo", "fa-plus", menuConvenio);
             itensAcesso.add(menuConvenioNovo);
         }
-        
+
         //USUARIO
         ItemAcesso menuUsuario;
         menuUsuario = this.getItemAcesso(itensAcesso, "Gerenciar Usuário", "");
@@ -121,22 +123,22 @@ public class InicializadorItemAcesso {
             menuUsuario = new ItemAcesso("Gerenciar Usuário", "", "fa-user", menu);
             itensAcesso.add(menuUsuario);
         }
-        
+
         ItemAcesso menuUsuarioListar;
         menuUsuarioListar = this.getItemAcesso(itensAcesso, "Listar Usuário", "#/Usuario/listar");
         if (menuUsuarioListar == null) {
             menuUsuarioListar = new ItemAcesso("Listar Usuário", "#/Usuario/listar", "fa-list-alt", menuUsuario);
             itensAcesso.add(menuUsuarioListar);
         }
-        
+
         ItemAcesso menuUsuarioNovo;
         menuUsuarioNovo = this.getItemAcesso(itensAcesso, "Novo Usuário", "#/Usuario/novo");
         if (menuUsuarioNovo == null) {
             menuUsuarioNovo = new ItemAcesso("Cadastrar Usuário", "#/Usuario/novo", "fa-plus", menuUsuario);
             itensAcesso.add(menuUsuarioNovo);
         }
-        
-        //PERFIL
+
+//        //PERFIL
         ItemAcesso menuPerfil;
         menuPerfil = this.getItemAcesso(itensAcesso, "Gerenciar Perfil", "");
         if (menuPerfil == null) {
@@ -148,21 +150,21 @@ public class InicializadorItemAcesso {
             cidRepo.save(new Cidade(4115200, "MARINGÁ", uf));
             cidRepo.save(new Cidade(4114807, "MARIALVA", uf));
         }
-        
+
         ItemAcesso menuPerfilListar;
         menuPerfilListar = this.getItemAcesso(itensAcesso, "Listar Perfil", "#/Perfil/listar");
         if (menuPerfilListar == null) {
             menuPerfilListar = new ItemAcesso("Listar Perfil", "#/Perfil/listar", "fa-list-alt", menuPerfil);
             itensAcesso.add(menuPerfilListar);
         }
-        
+
         ItemAcesso menuPerfilNovo;
         menuPerfilNovo = this.getItemAcesso(itensAcesso, "Novo Perfil", "#/Perfil/novo");
         if (menuPerfilNovo == null) {
             menuPerfilNovo = new ItemAcesso("Cadastrar Perfil", "#/Perfil/novo", "fa-plus", menuPerfil);
             itensAcesso.add(menuPerfilNovo);
         }
-        
+
         //FUNCAO
         ItemAcesso menuFuncao;
         menuFuncao = this.getItemAcesso(itensAcesso, "Gerenciar Função", "");
@@ -184,7 +186,7 @@ public class InicializadorItemAcesso {
             menuFuncaoNovo = new ItemAcesso("Cadastrar Função", "#/Funcao/nova", "fa-plus", menuFuncao);
             itensAcesso.add(menuFuncaoNovo);
         }
-        
+
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
