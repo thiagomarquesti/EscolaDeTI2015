@@ -1,6 +1,7 @@
 package br.unicesumar.time05.ConsultaPersonalizada;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,18 +35,22 @@ public class QueryPersonalizada {
         params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, ID);
         return Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper));
     }
-
+    
     public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL construtorDeSQL, ParametrosConsulta parametrosConsulta) {
+        String SQL;
+        SQL = construtorDeSQL.getSQL(parametrosConsulta);
+        return executeComPaginacao(SQL, parametrosConsulta);
+    }
 
+    public RetornoConsultaPaginada executeComPaginacao(String SQL, ParametrosConsulta parametrosConsulta){
+        
         MapSqlParameterSource params = new MapSqlParameterSource();
         if ((parametrosConsulta != null) && (parametrosConsulta.getPalavraChave() != null) && (!parametrosConsulta.getPalavraChave().isEmpty())) {
+            SQL += this.adicionaWhereEmSQL(SQL);
             params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, "%" + parametrosConsulta.getPalavraChave() + "%");
             params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, parametrosConsulta.getPalavraChave());
         }
-
-        String SQL;
-        SQL = construtorDeSQL.getSQL(parametrosConsulta);
-
+        
         List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, RowMapper);
         retornoConsulta.setTotalDeRegistros(result.size());
 
@@ -61,4 +66,24 @@ public class QueryPersonalizada {
         retornoConsulta.setListaDeRegistros(Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper)));
         return retornoConsulta;
     }
+
+    private String adicionaWhereEmSQL(String SQL){
+        
+        String StringComOsCampos = SQL.substring(SQL.indexOf(OperadoresSQL.SELECT.trim()) + OperadoresSQL.SELECT.trim().length(), SQL.indexOf(OperadoresSQL.FROM.trim()));
+        String[] campos = StringComOsCampos.split(",");
+        
+        SQL += OperadoresSQL.WHERE;
+        String camposDoWhere = "";
+        for (String campo : campos){
+            if (camposDoWhere.isEmpty()){
+                camposDoWhere += "((" + campo + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
+            } else {
+                camposDoWhere += "(" + campo + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
+            }
+        }
+        camposDoWhere += ")";
+        
+        return camposDoWhere;
+    }
+
 }

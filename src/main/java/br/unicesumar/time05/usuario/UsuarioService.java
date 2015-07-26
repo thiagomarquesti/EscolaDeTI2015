@@ -2,6 +2,8 @@ package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import classesBase.ServiceBase;
@@ -14,79 +16,97 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository>{
+public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository> {
 
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
-    
+
+    private final String SQLConsultaUsuarios
+            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " LEFT JOIN pessoa_fisica pf "
+            + "    ON pf.idpessoa = p.idpessoa"
+            + " LEFT JOIN pessoa_telefone pt "
+            + "    ON pt.pessoa_id = p.idpessoa"
+            + " LEFT JOIN telefone t "
+            + "    ON pt.telefone_id = t.idtelefone"
+            + " LEFT JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " LEFT JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " LEFT JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " LEFT JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado"
+            + " LEFT JOIN usuario us"
+            + "    ON us.idpessoa = p.idpessoa";
+
+    private final String SQLConsultaUsarioPorID
+            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " INNER JOIN pessoa_fisica pf "
+            + "    ON pf.idpessoa = p.idpessoa"
+            + " INNER JOIN pessoa_telefone pt "
+            + "    ON pt.pessoa_id = p.idpessoa"
+            + " INNER JOIN telefone t "
+            + "    ON pt.telefone_id = t.idtelefone"
+            + " INNER JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " INNER JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " INNER JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " INNER JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado"
+            + " INNER JOIN usuario us"
+            + "    ON us.idpessoa = p.idpessoa"
+            + " WHERE p.idpessoa = :aUsuarioId";
+
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
 
-    public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = query.execute("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado"
-                + " INNER JOIN usuario us"
-                + "    ON us.idpessoa = p.idpessoa"
-                , new MapSqlParameterSource());
-        return Collections.unmodifiableList(usuarios);
-    }
-    
-    public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
+    @Override
+    public List<Map<String, Object>> findByID(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado"
-                + " INNER JOIN usuario us"
-                + "    ON us.idpessoa = p.idpessoa"
-                + " WHERE p.idpessoa = :aUsuarioId", params);
+        List<Map<String, Object>> usuario = query.execute(SQLConsultaUsarioPorID, params);
         return Collections.unmodifiableList(usuario);
     }
-    public boolean verificarLogin(String aLogin){
+
+    @Override
+    public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, parametrosConsulta);
+    }
+
+    @Override
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, new ParametrosConsulta());
+    }
+
+    @Override
+    public List<Map<String, Object>> listarSemPaginacao() {
+        List<Map<String, Object>> usuarios = query.execute(this.SQLConsultaUsuarios, new MapSqlParameterSource());
+        return Collections.unmodifiableList(usuarios);
+    }
+
+    public boolean verificarLogin(String aLogin) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         List<Map<String, Object>> usuario = query.execute("SELECT login FROM usuario WHERE login = :aLogin", params);
         //se o array usuario estiver vazio retorna true, indicando que o login está disponível
         return usuario.isEmpty();
     }
-    
-    public boolean verificarEmail(Email aEmail){
-        if(aEmail.verificarValido()){
-        
+
+    public boolean verificarEmail(Email aEmail) {
+        if (aEmail.verificarValido()) {
+
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail.getEmail());
             List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
-            if(!usuario.isEmpty()){
+            if (!usuario.isEmpty()) {
                 return false;
             }
             return true;
@@ -94,7 +114,8 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             throw new RuntimeException("Campo email vazio!");
         }
     }
-    public boolean verificarSenha(Senha aSenha){
+
+    public boolean verificarSenha(Senha aSenha) {
         return aSenha.senhaValida();
     }
 
@@ -113,14 +134,14 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
 
     boolean verificarEmail(String aEmail, Long aUsuarioId) {
-            final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            params.addValue("aId", aUsuarioId);
-            List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, email FROM pessoa WHERE email = :aEmail AND idpessoa <> :aId", params);
-            if(!usuario.isEmpty()){
-                return false;
-            }
-            return true;
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aEmail", aEmail);
+        params.addValue("aId", aUsuarioId);
+        List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, email FROM pessoa WHERE email = :aEmail AND idpessoa <> :aId", params);
+        if (!usuario.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     boolean verificarLogin(String aLogin, Long aUsuarioId) {
@@ -145,13 +166,13 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public List<Map<String, Object>> getPerfis(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aId", aUsuarioId);
-        String sql = 
-                  "SELECT p.idperfildeacesso, "
+        String sql
+                = "SELECT p.idperfildeacesso, "
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
                 + "  JOIN perfildeacesso p ON (up.perfis_idperfildeacesso = p.idperfildeacesso) "
                 + " WHERE up.usuario_idpessoa = :aId";
-        
+
         List<Map<String, Object>> itensPerfilDeAcesso = query.execute(sql, params);
         return itensPerfilDeAcesso;
     }
