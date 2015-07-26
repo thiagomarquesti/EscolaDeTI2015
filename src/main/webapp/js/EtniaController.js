@@ -29,13 +29,33 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         }
     };
     
-    $scope.atualizarEtnias = function () {
-        $http.get("/etnia")
+    $scope.atualizarEtnias = function (pag,campo,order,string) {
+        if(pag == null || pag == ""){ pag = 1; }
+        if(campo == null || campo == ""){ campo = "descricao"; }
+        if(order != "asc" && order != "desc"){ order = "asc"; }
+        if(string == null){ string = ""; }
+        $http.get("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string)
                 .success(function (data) {
                     $scope.etnias = data;
+                    console.log(data);
+                    console.log("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string);
+                    
+                    atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string);
+                    
                 })
                 .error(deuErro);
     };
+    
+    function atualizaPaginacao(qtde, pag, campo, order, string){
+        $('#paginacao').bootpag({
+            total: qtde,
+            page: pag,
+            maxVisible:5
+        }).on('page', function(event, num){
+            $scope.atualizarEtnias(num,campo, order, string);
+            //console.log(event);
+        });
+    }
     
     $scope.editarEtnia = function(etnia) {
         $location.path("/Etnia/editar/" + etnia.idetnia);

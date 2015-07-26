@@ -39,7 +39,7 @@ public class SessaoUsuarioService {
 
         List<Map<String, Object>> result = query.execute(SQL, params);
 
-            Long idpessoa = (Long) result.get(0).get("idpessoa");
+            Long idpessoa = (Long) result.get(0).get("idusuario");
 
             Usuario usuario = usuarioRepo.findOne(idpessoa);
             if ((usuario != null) && usuario.getStatus() == Status.ATIVO) {

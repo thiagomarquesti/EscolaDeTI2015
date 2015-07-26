@@ -7,21 +7,34 @@
         </div>
     </div>
     <div class="panel-body">
+        <form name="buscaEtnia">
         <div class="input-group">
-            <span class="input-group-addon btn-info" id="basic-addon1"><i class="fa fa-search"></i></span>
-            <input type="text" ng-model="busca.descricao" placeholder="Buscar etnia (digite o nome)" class="form-control" aria-describedby="basic-addon1">
-        </div>    
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar etnia (digite o nome)" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarEtnias('','','asc',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>
         <br>
         <div class="panel panel-default">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
-                        <th>Etnia</th>
-                        <th>Ações</th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem"></i>
+                            <a ng-click="">Etnia</a>
+                        </th>
+                        <th>
+                            Ações
+                        </th>
                     </tr>
                 </thead>
                 <tbody ng-init="atualizarEtnias()">
-                    <tr ng-repeat='e in filtered = (etnias| filter:busca)' >
+                    <tr ng-repeat='e in etnias.listaDeRegistros' >
                         <td>{{e.descricao}}</td>
                         <td>
                             <div class="btn-group">
@@ -39,19 +52,11 @@
             </table>
 
             <div class="panel-footer">
-                <span> Registros encontrados: {{filtered.length}} </span>
+                <span> Registros encontrados: {{etnias.totalDeRegistros}} </span>
             </div>
         </div>
         <div id="paginacao"></div>
-        <script>
-            $('#paginacao').bootpag({
-                total: 23,
-                page: 1,
-                maxVisible:5
-            }).on('page', function(event, num){
-                 enviaConsulta();
-            });
-        </script>
+        
         <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>
