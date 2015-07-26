@@ -1,6 +1,5 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.email.Email;
 import classesBase.ControllerBase;
 import java.util.List;
 import java.util.Map;

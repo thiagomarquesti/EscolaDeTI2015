@@ -22,7 +22,6 @@ public class ConstrutorDeSQL {
         this.preparaSelect();
         this.preparaFrom();
         this.preparaWhere(parametros);
-        this.preparaOrderBy(parametros);
         return this.SQL;
     }
 
@@ -79,21 +78,12 @@ public class ConstrutorDeSQL {
         }
     }
 
-    private void preparaOrderBy(ParametrosConsulta parametros) {
-        if ((parametros != null) && (parametros.getOrdenarPor() != null) && (!parametros.getOrdenarPor().isEmpty())) {
-            this.SQL += (OperadoresSQL.ORDER_BY + parametros.getOrdenarPor());
-            if (!parametros.getSentidoOrdenacao().isEmpty() && parametros.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC)){
-                this.SQL += OperadoresSQL.DESC;
-            }
-        }
-    }
-
     private String montaCondicao(CampoParaScriptSQL campo) {
         String resultado;
         if (campo.getComparacao() == TipoComparacao.CONTEM) {
-            resultado = "(" + campo.getCampo() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
+            resultado = "(" + campo.getCampo().trim() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
         } else {
-            resultado = "(" + campo.getCampo() + "::varchar " + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL + ")";
+            resultado = "(" + campo.getCampo().trim() + "::varchar " + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL + ")";
         }
         return resultado;
     }

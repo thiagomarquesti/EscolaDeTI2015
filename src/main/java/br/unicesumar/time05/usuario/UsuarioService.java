@@ -72,7 +72,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public List<Map<String, Object>> findByID(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute(SQLConsultaUsarioPorID, params);
+        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsarioPorID, params);
         return Collections.unmodifiableList(usuario);
     }
 
