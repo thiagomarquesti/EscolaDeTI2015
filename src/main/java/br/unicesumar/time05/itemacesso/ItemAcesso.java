@@ -1,5 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -11,12 +12,17 @@ import javax.persistence.ManyToOne;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long iditemacesso;
+    @CampoConsulta
     private String nome;
+    @CampoConsulta
     private String rota;
+    @CampoConsulta
     private String icone;
+    @CampoConsulta
     @ManyToOne
     @JoinColumn(name = "superior_id")
     private ItemAcesso superior;
@@ -30,8 +36,8 @@ public class ItemAcesso implements Serializable {
         this.icone = icone;
     }
     
-    public ItemAcesso(Long id, String nome, String rota, String icone) {
-        this.iditemacesso = id;
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
         this.icone = icone;
@@ -44,15 +50,15 @@ public class ItemAcesso implements Serializable {
         this.superior = superior;
     }
 
-    public ItemAcesso(Long id, String nome, String rota, String icone, ItemAcesso superior) {
-        this.iditemacesso = id;
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone, ItemAcesso superior) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
         this.icone = icone;
         this.superior = superior;
     }
 
-    public Long getIdItemAcesso() {
+    public Long getIditemacesso() {
         return iditemacesso;
     }
 

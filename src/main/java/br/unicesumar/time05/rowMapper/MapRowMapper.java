@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MapRowMapper implements RowMapper<Map<String, Object>> {
 
     public MapRowMapper() {

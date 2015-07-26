@@ -1,60 +1,26 @@
 package br.unicesumar.time05.funcao;
 
-import br.unicesumar.time05.rowMapper.MapRowMapper;
-import java.util.Collections;
+import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import classesBase.ServiceBase;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-class FuncaoService {
+class FuncaoService extends ServiceBase<Funcao, Long, FuncaoRepository> {
 
-    @Autowired
-    private FuncaoRepository repo;
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-
-    void salvarFuncao(Funcao aFuncao) {
-        repo.save(aFuncao);
-    }
-
-    public void alterarFuncao(Funcao aFuncao) {
-        repo.save(aFuncao);
-    }
-
-    void removerFuncao(Long aIdFuncao) {
-        repo.delete(aIdFuncao);
+    public FuncaoService() {
+        setConstrutorDeSQL(new ConstrutorDeSQL(Funcao.class));
     }
 
     public boolean verificarDescricao(String aDescricao) {
-
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aDescricao", aDescricao);
-        List<Map<String, Object>> funcao = jdbcTemplate.query("SELECT descricao FROM FUNCAO WHERE descricao = :aDescricao", params, new MapRowMapper());
+        List<Map<String, Object>> funcao = super.query.execute("SELECT descricao FROM FUNCAO WHERE descricao = :aDescricao", params);
         return funcao.isEmpty();
-
-        
     }
 
-    public List<Map<String, Object>> getFuncoes() {
-
-        final String SQL = "SELECT idfuncao, descricao FROM FUNCAO";
-        List<Map<String, Object>> funcoes = jdbcTemplate.query(SQL, new MapRowMapper());
-        return Collections.unmodifiableList(funcoes);
-    }
-
-    public List<Map<String, Object>> getFuncaoById(Long aIdFuncao) {
-
-        final String SQL = "SELECT idfuncao, descricao FROM FUNCAO WHERE idfuncao = :idfuncao";
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("idfuncao", aIdFuncao);
-
-        List<Map<String, Object>> funcoes = jdbcTemplate.query(SQL, params, new MapRowMapper());
-        return Collections.unmodifiableList(funcoes);
-    }
 }

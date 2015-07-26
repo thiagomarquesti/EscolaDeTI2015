@@ -18,7 +18,7 @@
         </thead>
         <tbody ng-init="atualizar()">
             <tr ng-repeat='p in filtered = ( perfis | filter:busca)' >
-                <td>{{p.id}}</td>
+                <td>{{p.idperfildeacesso}}</td>
                 <td>{{p.nome}}</td>
                 <td>
                     <button class="btn btn-warning" ng-click="editar(p)">Editar</button>
