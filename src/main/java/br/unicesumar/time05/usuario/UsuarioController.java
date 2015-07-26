@@ -1,6 +1,5 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.email.Email;
 import classesBase.ControllerBase;
 import java.util.List;
 import java.util.Map;
@@ -14,31 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/usuario")
 public class UsuarioController extends ControllerBase<Usuario, Long, UsuarioService>{
     
-    @Override
-    public List<Map<String, Object>> getEntidadesListagem(){
-        return service.getUsuarios();
-    }
-    
-    @Override
-    public List<Map<String, Object>> getEntidadePorId(@PathVariable Long aId){
-        return service.getUsuarioById(aId);
-    }
-
-    @RequestMapping(value = "/{aUsuarioId}", method = RequestMethod.PUT)
-    public void alterarStatus(@PathVariable Long aUsuarioId) {
-        service.trocarStatusUsuario(aUsuarioId);
-    }
-
-    @RequestMapping(value = "/verificarLogin/{aLogin:.+}", method = RequestMethod.GET)
-    public boolean verifcarLogin(@PathVariable String aLogin) {
-        return service.verificarLogin(aLogin);
-    }
-
-    @RequestMapping(value = "/verificarEmail/{aEmail:.+}" ,method = RequestMethod.GET)
-    public boolean verifcarEmail(@PathVariable Email aEmail){
-        return service.verificarEmail(aEmail);
-    }
-
     @RequestMapping(value = "/verificarSenha/{aSenha:.+}" ,method = RequestMethod.GET)
     public boolean verifcarSenha(@PathVariable Senha aSenha){
         return service.verificarSenha(aSenha);

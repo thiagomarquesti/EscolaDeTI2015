@@ -8,5 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/etnia")
 public class EtniaController extends ControllerBase<Etnia, Long, EtniaService>{
 
-
 }
