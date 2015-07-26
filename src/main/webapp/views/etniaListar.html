@@ -1,6 +1,6 @@
 
 <div class="panel panel-danger">
-<div class="panel-heading"> 
+    <div class="panel-heading"> 
         <div class="panel-title">Etnias cadastradas</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
@@ -13,15 +13,15 @@
         </div>    
         <br>
         <div class="panel panel-default">
-            <table class="table table-striped table-hover">
+            <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
-                        <th>Etnia</th><th>Ações</th>
+                        <th>Etnia</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody ng-init="atualizarEtnias()">
-                    <tr ng-repeat='e in filtered = (etnias| filter:busca
-                            )' >
+                    <tr ng-repeat='e in filtered = (etnias| filter:busca)' >
                         <td>{{e.descricao}}</td>
                         <td>
                             <div class="btn-group">
@@ -37,9 +37,23 @@
                     </tr>
                 </tbody>
             </table>
-            
-            <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
+
+            <div class="panel-footer">
+                <span> Registros encontrados: {{filtered.length}} </span>
+            </div>
         </div>
+        <div id="paginacao"></div>
+        <script>
+            $('#paginacao').bootpag({
+                total: 23,
+                page: 1,
+                maxVisible:5
+            }).on('page', function(event, num){
+                 enviaConsulta();
+            });
+        </script>
         <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>
+
+

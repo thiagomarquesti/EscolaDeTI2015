@@ -77,3 +77,11 @@ table.table-striped tr th {
     background-color: #ddd;
     color: #333;
 }
+
+.dataTables_wrapper table thead tr th.sorting_asc,
+.dataTables_wrapper table thead tr th.sorting_desc,
+.dataTables_wrapper table thead tr th.sorting_asc:before,
+.dataTables_wrapper table thead tr th.sorting_desc:before{
+  color: #fff;
+}
+

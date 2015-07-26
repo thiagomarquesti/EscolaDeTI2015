@@ -147,7 +147,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             var script = document.createElement('script');
             script.src = nScript+".js";
             document.getElementsByTagName('head')[0].appendChild(script);
-        },10);
+        },100);
     };
 
 }]);
