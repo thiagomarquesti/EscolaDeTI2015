@@ -28,7 +28,7 @@ public class SessaoUsuarioService {
 
     public boolean efetuarLogin(DadosLogin aDadosLogin, HttpSession session) {
 
-        String SQL = "SELECT u.idusuario "
+        String SQL = "SELECT u.idpessoa AS idusuario "
                 + "  FROM usuario u "
                 + " WHERE u.login = :login "
                 + "   AND u.senha = :senha ";
@@ -52,9 +52,11 @@ public class SessaoUsuarioService {
 
     public Map<String, Object> getUsuarioLogado() {
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL = "SELECT u.idusuario, u.nome"
-                    + "     FROM usuario u"
-                    + "    WHERE u.idusuario = :id";
+            String SQL = "SELECT u.idpessoa as idusuario, "
+                       + "       p.nome "
+                       + "  FROM usuario u "
+                       + "  JOIN pessoa p ON (u.idpessoa = p.idpessoa) "
+                       + " WHERE u.idpessoa = :id";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
@@ -97,7 +99,7 @@ public class SessaoUsuarioService {
     public ItemAcessoUsuarioInMemory getItensDeAcessoUsuarioLogado() {
 
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL = "  SELECT ia.iditemacesso, "
+            String SQL  = "  SELECT ia.iditemacesso, "
                         + "         ia.nome, "
                         + "         ia.rota, "
                         + "         ia.icone, "
@@ -106,7 +108,7 @@ public class SessaoUsuarioService {
                         + "    JOIN perfildeacesso pa ON (up.perfis_idperfildeacesso = pa.idperfildeacesso)  "
                         + "    JOIN perfildeacesso_itemacesso pai ON (pa.idperfildeacesso = pai.perfildeacesso_id)  "
                         + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.iditemacesso) "
-                        + "   WHERE up.perfis_idperfildeacesso = :idUsuario "
+                        + "   WHERE up.usuario_idpessoa = :idUsuario "
                         + "   GROUP BY ia.iditemacesso,  "
                         + "         ia.nome, "
                         + "         ia.rota, "
