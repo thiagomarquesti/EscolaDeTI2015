@@ -39,9 +39,9 @@ public class SessaoUsuarioService {
 
         List<Map<String, Object>> result = query.execute(SQL, params);
 
-            Long idUsuario = (Long) result.get(0).get("idusuario");
+            Long idpessoa = (Long) result.get(0).get("idpessoa");
 
-            Usuario usuario = usuarioRepo.findOne(idUsuario);
+            Usuario usuario = usuarioRepo.findOne(idpessoa);
             if ((usuario != null) && usuario.getStatus() == Status.ATIVO) {
                 session.setAttribute("usuarioLogado", usuario);
                 sessaoUsuario.setUsuario(usuario);
@@ -57,7 +57,6 @@ public class SessaoUsuarioService {
                        + "  FROM usuario u "
                        + "  JOIN pessoa p ON (u.idpessoa = p.idpessoa) "
                        + " WHERE u.idpessoa = :id";
-
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
 

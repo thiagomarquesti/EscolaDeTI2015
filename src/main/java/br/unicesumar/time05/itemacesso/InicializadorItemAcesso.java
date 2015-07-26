@@ -1,5 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
+
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.uf.UF;
@@ -143,11 +144,6 @@ public class InicializadorItemAcesso {
         if (menuPerfil == null) {
             menuPerfil = new ItemAcesso("Gerenciar Perfil", "", "fa-pencil", menu);
             itensAcesso.add(menuPerfil);
-//            itensAcesso.add(new ItemAcesso(6l, "Listar Perfil", "#/perfil/list", menuPerfil));;;
-//            itensAcesso.add(new ItemAcesso(7l, "Novo Perfil", "#/perfil/novo", menuPerfil));
-//            for (ItemAcesso ia : itensAcesso) {
-//                repo.save(ia);
-//            }
             UF uf = new UF(41l, "PARANÁ", "PR");
             UfRepo.save(uf);
             cidRepo.save(new Cidade(4105904, "COLORADO", uf));

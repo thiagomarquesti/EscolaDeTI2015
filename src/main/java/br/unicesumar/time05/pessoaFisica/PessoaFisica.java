@@ -1,5 +1,6 @@
 package br.unicesumar.time05.pessoaFisica;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
@@ -25,10 +26,12 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
 public class PessoaFisica extends Pessoa implements Serializable{
 
+    @CampoConsulta
     @Embedded
     @Column(unique = true, nullable = false)
     private CPF cpf;
     
+    @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
 

@@ -1,5 +1,6 @@
 package br.unicesumar.time05.cidade;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.itemacesso.InicializadorItemAcesso;
 import br.unicesumar.time05.uf.UF;
 import javax.persistence.Entity;
@@ -8,10 +9,13 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Cidade {
-
+    @CampoConsulta
     @Id
     private int codigoIBGE;
+    @CampoConsulta
     private String descricao;
+    
+    @CampoConsulta
     @ManyToOne
     private UF estado;
 

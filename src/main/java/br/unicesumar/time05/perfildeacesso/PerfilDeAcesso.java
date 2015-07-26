@@ -1,5 +1,6 @@
 package br.unicesumar.time05.perfildeacesso;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,16 +19,19 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity(name = "perfildeacesso")
 public class PerfilDeAcesso implements Serializable{
     
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
         private Long idperfildeacesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
+    @CampoConsulta
     private String nome;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfildeacesso_itemacesso",
             joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idperfildeacesso")},
             inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "iditemacesso")})
+    @CampoConsulta
     private Set<ItemAcesso> itens;
 
     public PerfilDeAcesso() {
