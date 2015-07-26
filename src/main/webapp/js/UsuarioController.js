@@ -1,5 +1,4 @@
 module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function($scope, $http, $routeParams, $location, $timeout){
-
     function novoUsuario(){
         $scope.usuario = {
             nome : "",
@@ -64,6 +63,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            .error(deuErro);
     };
 
+    $scope.atrasa = function(tempo){
+        $timeout(tempo);
+    }
+
     $scope.editar = function(usuario) {
         $location.path("/Usuario/editar/" + usuario.idusuario);
     };
@@ -119,62 +122,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
            .error(deuErro);
     };
     
-//    $scope.itensAcesso = [
-//                            {
-//                                "id": 1,
-//                                "nome": "Menu",
-//                                "rota": "",
-//                                "icone" : "fa-plus",
-//                                "items": [
-//                                        {"id": 2,
-//                                        "nome": "Cadastro de Usuario",
-//                                        "rota": "",
-//                                        "icone" : "fa-plus",
-//                                        "items":[
-//                                                {"id": 3,
-//                                                "nome": "Listar Usuário",
-//                                                "rota": "#/usuario/list",
-//                                                "icone" : "fa-plus",
-//                                                "items":[]
-//                                                },
-//                                                {"id": 4,
-//                                                "nome": "Novo Usuário",
-//                                                "rota": "#/usuario/novo",
-//                                                "icone" : "fa-plus",
-//                                                "items":[]
-//                                                }
-//                                                ]
-//                                        },
-//                                        {"id": 5,
-//                                        "nome": "Cadastro de Perfil",
-//                                        "rota": "",
-//                                        "icone" : "fa-plus",
-//                                        "items":[
-//                                                {"id": 6,
-//                                                "nome": "Listar Perfil",
-//                                                "rota": "#/perfil/list",
-//                                                "icone" : "fa-plus",
-//                                                "items":[]
-//                                                },
-//                                                {"id": 7,
-//                                                "nome": "Novo Perfil",
-//                                                "rota": "#/perfil/novo",
-//                                                "icone" : "fa-plus",
-//                                                "items":[]
-//                                                }
-//                                                ]
-//                                        }
-//                                        ]
-//                            }
-//                            ];
 
-//console.log($scope.itensAcesso);
-//-----------------AKI-------------------------------
     $scope.carregaitensAcesso = function(){
        $http.get("/login/usuariologado/itensdeacesso")
             .success(function(data){
                 $scope.itensAcesso = data;
-                console.log(data);
+//                console.log(data);
                 //alert("funcionou");
             })
             .error(erroListarItensAcessoDoMenu);
@@ -194,6 +147,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             var script = document.createElement('script');
             script.src = nScript+".js";
             document.getElementsByTagName('head')[0].appendChild(script);
-        },10);
+        },100);
     };
+
 }]);
