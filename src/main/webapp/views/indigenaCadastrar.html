@@ -1,6 +1,4 @@
-<script src="js/datepicker-custom.js" type="text/javascript"></script>
-<script src="bootstrap/neon/js/bootstrap-switch.min.js" type="text/javascript"></script>
-<div ng-init="carregarIndios()" class="panel panel-info">
+<div ng-init="carregarIndios()" class="panel panel-danger">
 
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovoIndio">Cadastrar indígena</div>
@@ -13,19 +11,36 @@
         <form name="formInd" novalidate class="form-horizontal form-groups-bordered">
             
             <div class="form-group">    
-                <label for="nome" class="col-md-2 control-label">Código Assindi:</label>
-                <div class="col-md-2 col-xs-12"><input type="text" ng-model="indio.cod" id="cod" name="cod" required="" class="form-control" ng-minlength=8 ng-maxlength=8></div>
+                <label for="nome" class="col-md-2 col-sm-1 control-label">Código Assindi:</label>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cod" id="cod" name="cod" required="" class="form-control requerido" ng-minlength=8 ng-maxlength=8></div>
+                <label for="cpf" class="col-md-2 col-sm-1 control-label">CPF:</label>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control cpf"></div>
             </div>
 
             <div ng-show="formInd.cod.$dirty && formInd.cod.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
-                <span ng-show="formInd.nome.$error.required">Preencha o código Assindi. </span>
-                <span ng-show="formInd.nome.$error.minlength">Código deve ter 8 caracteres. </span>
-                <span ng-show="formInd.nome.$error.maxlength">Código deve ter 8 caracteres. </span>
+                <span ng-show="formInd.cod.$error.required">Preencha o código Assindi. </span>
+                <span ng-show="formInd.cod.$error.minlength">Código deve ter 8 caracteres. </span>
+                <span ng-show="formInd.cod.$error.maxlength">Código deve ter 8 caracteres. </span>
+            </div>
+            
+            <div ng-show="formInd.cpf.$dirty && formInd.cpf.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                <span ng-show="formInd.cpf.$error.required">Preencha o CPF. </span>
+                <span ng-show="formInd.cpf.$error.uncpf">CPF já cadastrado. </span>
             </div>
             
             <div class="form-group">    
                 <label for="nome" class="col-md-2 control-label">Nome:</label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+                <div class="col-md-4"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
+                <label for="cep" class="col-md-2 control-label">Estado civil:</label>
+                <div class="col-md-3">
+                    <select name="estadoCivil" ng-model="indio.estadoCivil" id="estadoCivil" required="" class="form-control requerido">
+                        <option value="">Selecione o estado civil</option>
+                        <option value="SOLTEIRO">Solteiro(a)</option>
+                        <option value="CASADO">Casado(a)</option>
+                        <option value="DIVORCIADO">Divorciado(a)</option>
+                        <option value="VIUVO">Viúvo(a)</option>
+                    </select>
+                </div>
             </div>
 
             <div ng-show="formInd.nome.$dirty && formInd.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
@@ -36,10 +51,17 @@
             
             <div class="form-group">
                 <label for="etnia" class="col-md-2 control-label">Etnia: </label>
-                <div class="col-md-4">
-                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control">
+                <div class="col-md-3" ng-controller="EtniaController" ng-init="atualizarEtnias();">
+                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
                         <option value="">Selecione a etnia</option>
-                        <!-- FAZER BUSCA POR ETNIAS -->
+                        <option ng-repeat="e in etnias" value="{{e.idetnia}}">{{e.descricao}}</option>
+                    </select>
+                </div>
+                <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>
+                <div class="col-md-3">
+                    <select ng-model="indio.terraindigena" id="terraindigena" name="terraindigena" required="" class="form-control requerido">
+                        <option value="">Selecione a terra indígena</option>
+                        <option value="1">Teste</option>
                     </select>
                 </div>
             </div>
@@ -47,91 +69,49 @@
             <div ng-show="formInd.etnia.$dirty && formInd.etnia.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
                 <span ng-show="formInd.etnia.$error.required">Selecione uma etnia. </span>
             </div>
-            
-            <div class="form-group"> 
-                <label for="cpf" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control"></div>
-            </div>
-
-            <div ng-show="formInd.cpf.$dirty && formInd.cpf.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formInd.cpf.$error.required">Preencha o CPF. </span>
-                <span ng-show="formInd.cpf.$error.uncpf">CPF já cadastrado. </span>
+            <div ng-show="formInd.terraindigena.$dirty && formInd.terraindigena.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formInd.terraindigena.$error.required">Selecione uma terra indígena. </span>
             </div>
             
             <div class="form-group">
                 <label for="genero" class="col-md-2 control-label">Gênero:</label>
-                <div class="col-md-10">
-                    <div class="make-switch gamb-switch" data-on="primary" data-off="info" data-on-label="M" data-off-label="F" data-text-label="<i class='fa fa-male'></i><i class='fa fa-female'></i>">
-                        <input type="checkbox" ng-model="indio.genero" id="genero" name="genero" ng-true-value="masculino" ng-false-value="feminino" checked="" ng-checked="true">
-                        
-                    </div>
+                <div class="col-md-3">
+                    <label for="masc">Masculino </label>
+                    <input type="radio" id="masc" name="genero" required=""> &nbsp;
+                    <i class='fa fa-male'></i><i class='fa fa-female'></i>
+                    &nbsp;<input type="radio" id="fem" name="genero" required=""> 
+                    <label for="fem"> Feminino</label>
                 </div>
+                <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control sus"></div>
+                
             </div>
             
             <div class="form-group">
-                <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
-                <div class="col-md-10">
-                    <div class="col-md-3 input-group">
-                        <input type="text" ng-model="indio.datanasc" id="datanasc" name="datanasc" class="form-control datepicker" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy">
+                <label for="dataNascimento" class="col-md-2 control-label">Data de nascimento: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido date" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
                         <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="cep" class="col-md-2 control-label">CEP: </label>
-                <div class="col-md-2"><input type="text" ng-model="indio.cep" id="cep" name="cep" required="" class="form-control"></div>
-                <label for="uf" class="col-md-1 control-label">Estado: </label>
+                <label for="escolaridade" class="col-md-2 control-label">Escolaridade: </label>
                 <div class="col-md-3">
-                    <select ng-model="indio.uf" id="uf" name="uf" required="" class="form-control">
-                        <option value="">Selecione um estado</option>
-                        <!-- FAZER BUSCA POR ESTADOS -->
-                    </select>
-                </div>
-                <label for="cidade" class="col-md-1 control-label">Cidade: </label>
-                <div class="col-md-3">
-                    <select ng-model="indio.cidade" id="cidade" name="cidade" required="" class="form-control">
-                        <option value="">Aguardando estado...</option>
-                        <!-- FAZER BUSCA POR CIDADES -->
+                    <select name="escolaridade" ng-model="indio.escolaridade" id="escolaridade" required="" class="form-control requerido">
+                        <option value="">Selecione a escolaridade</option>
+                        <option value="FUNDAMENTALINCOMPLETO">Fundamental incompleto</option>
+                        <option value="FUNDAMENTALCOMPLETO">Fundamental completo</option>
+                        <option value="MEDIOINCOMPLETO">Médio incompleto</option>
+                        <option value="MEDIOCOMPLETO">Médio completo</option>
+                        <option value="SUPERIORINCOMPLETO">Superior incompleto</option>
+                        <option value="SUPERIORCOMPLETO">Superior completo</option>
                     </select>
                 </div>
             </div>
 
-            <div ng-show="(formInd.cep.$dirty && formInd.cep.$invalid) || (formInd.uf.$dirty && formInd.uf.$invalid) || (formInd.cidade.$dirty && formInd.cidade.$invalid)" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
-                <span ng-show="formInd.cep.$error.required">Preencha CEP. </span>
-                <span ng-show="formInd.uf.$error.required">Selecione estado. </span>
-                <span ng-show="formInd.cidade.$error.required">Selecione cidade. </span>
-            </div>
-
-            <div class="form-group">
-                <label for="endereco" class="col-md-2 control-label">Endereço: </label>
-                <div class="col-md-10 form-group">
-                    <div class="col-md-8 col-sm-8"><input type="text" ng-model="indio.endereco" id="endereco" name="endereco" required="" class="form-control" placeholder="Logradouro (Rua, Estrada, etc)"></div>
-                    <div class="col-md-2 col-sm-4"><input type="text" ng-model="indio.numero" id="numero" name="numero" required="" class="form-control" placeholder="nº"></div>
-                </div>
-            </div>
-            
-            <div ng-show="(formInd.endereco.$dirty && formInd.endereco.$invalid) || (formInd.numero.$dirty && formInd.numero.$invalid)" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
-                <span ng-show="formInd.endereco.$error.required">Preencha o endereço. </span>
-                <span ng-show="formInd.numero.$error.required">Preencha o número. </span>
-            </div>
-            
-            <div class="form-group">
-                <label for="complemento" class="col-md-2 control-label">Complemento: </label>
-                <div class="col-md-3"><input type="text" ng-model="indio.complemento" id="complemento" name="complemento" class="form-control"></div>
-                <label for="bairro" class="col-md-1 control-label">Bairro: </label>
-                <div class="col-md-4"><input type="text" ng-model="indio.bairro" id="bairro" name="bairro" required="" class="form-control"></div>
-            </div>
-            
-            <div ng-show="formInd.bairro.$dirty && formInd.bairro.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
-                <span ng-show="formInd.bairro.$error.required">Preencha o bairro. </span>
-            </div>
-            
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
-                <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="indio.telefone2" id="telefone2" name="telefone2" class="form-control" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" name="telefone" required="" class="form-control requerido phone_with_ddd" placeholder="(99) 9999-9999"></div>
             </div>
             
             <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
@@ -144,14 +124,56 @@
             </div>
 
             <div class="form-group">
-                <label for="tfoto" class="col-md-2 control-label">Foto: </label>
-                <div class="col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
+                <label class="col-md-2 control-label">Foto: </label>
+                <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="indio.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+                
+                <div id="arquivoFoto" name="arquivoFoto" ng-model="indio.arquivoOk" ng-show="indio.arquivoFoto">Arquivo selecionado: <strong>{{indio.arquivoFoto}}</strong></div>
+                
+                <div class="modal fade" id="fotoModal" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                    <h4 class="modal-title">Tire a foto</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="ng-camera" ng-controller="CameraController as vm">
+                                        <div>    
+                                            <ng-camera
+                                                output-height="360"
+                                                output-width="480"
+                                                viewer-height="360"
+                                                viewer-width="480"
+                                                image-format="jpeg"
+                                                jpeg-quality="100"
+                                                action-message="Tirar foto"
+                                                snapshot="vm.picture"
+                                                flash-fallback-url="img/webcam.swf"
+                                                overlay-url="img/overlay.png"
+                                                shutter-url="sound/shutter.mp3"
+                                            ></ng-camera>
+                                        </div>
+                                        <div ng-model="canvasFoto">
+                                            <img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="Foto">
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="col-md-12" ng-controller="CameraController as vm">
+                                    <button ng-click="teste();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-    </div>
-
 </form>
 </div>
 </div>
@@ -160,5 +182,13 @@
     <button ng-show="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-hide="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovoIndio" ng-click="reset(formInd)" class="btn btn-info">Limpar</button>
+    <span ng-show="!formInd.$valid"><img src="../img/requerido.png" alt=""/> Há campos obrigatórios ainda não preenchidos corretamente.</span>
+    
 </div>
 
+<script src="js/webcam.js" type="text/javascript"></script>
+<script src="js/ng-camera.js" type="text/javascript"></script>
+
+<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker');
+    carregaScript('js/datepicker-custom');">
+</div>

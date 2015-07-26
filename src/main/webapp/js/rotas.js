@@ -2,8 +2,8 @@ module.config(function($routeProvider, $locationProvider) {
 //------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
-        templateUrl: 'views/index.html',
-        controller: ''
+        templateUrl: 'views/home.html',
+        controller: 'HomeController'
     }).when('/Usuario/listar', {
         templateUrl: 'views/usuariosListar.html',
         controller: 'UsuarioController'
@@ -62,6 +62,17 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Funcao/editar/:id', {
         templateUrl: 'views/funcaoCadastrar.html',
         controller: 'FuncaoController'
+    })
+    //------- Rotas da Terra Indigena --------   
+    .when('/TerraIndigena/nova', {
+        templateUrl: 'views/terraCadastrar.html',
+        controller: 'TerraController'
+    }).when('/TerraIndigena/listar', {
+        templateUrl: 'views/terraListar.html',
+        controller: 'TerraController'
+    }).when('/TerraIndigena/editar/:id', {
+        templateUrl: 'views/terraCadastrar.html',
+        controller: 'TerraController'
     })
     //------- Rotas do Indigena --------   
     .when('/Indigena/novo', {

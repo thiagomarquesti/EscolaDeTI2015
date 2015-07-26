@@ -1,6 +1,5 @@
-<script src="js/datepicker-custom.js" type="text/javascript"></script>
 
-<div ng-init="carregar()" class="panel panel-info">
+<div ng-init="carregar()" class="panel panel-danger">
 
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovo">Cadastrar usuário / colaborador</div>
@@ -143,7 +142,7 @@
 
 <div ng-show="isNovo">
 
-    <div class="panel panel-info" data-collapsed="1">
+    <div class="panel panel-danger" data-collapsed="1">
         <div class="panel-heading"> 
             <div class="panel-title">Usuário do sistema</div>
             <div class="panel-options">
@@ -201,3 +200,7 @@
     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>
 
+<script src="js/webcam.js" type="text/javascript"></script>
+<script src="js/ng-camera.js" type="text/javascript"></script>
+<script src="bootstrap/neon/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="js/datepicker-custom.js" type="text/javascript"></script>
