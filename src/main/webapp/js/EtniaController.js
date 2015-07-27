@@ -29,31 +29,53 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         }
     };
     
-    $scope.atualizarEtnias = function (pag,campo,order,string) {
+    $scope.todasEtnias = function(){
+        $http.get("/etnia")
+            .success(function (data) {
+                $scope.etnias = data;
+            })
+            .error(deuErro);
+    };
+    
+    $scope.atualizarEtnias = function (pag,campo,order,string, paro) {
         if(pag == null || pag == ""){ pag = 1; }
         if(campo == null || campo == ""){ campo = "descricao"; }
         if(order != "asc" && order != "desc"){ order = "asc"; }
         if(string == null){ string = ""; }
+//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
         $http.get("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string)
-                .success(function (data) {
-                    $scope.etnias = data;
-                    console.log(data);
-                    console.log("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string);
-                    
-                    atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string);
-                    
-                })
-                .error(deuErro);
+            .success(function (data) {
+                $scope.etnias = data;
+                console.log(data);
+                console.log("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string);
+
+                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
+                
+            })
+            .error(deuErro);
     };
     
-    function atualizaPaginacao(qtde, pag, campo, order, string){
+    $scope.trocaOrdem = function(){
+        if($scope.tipoOrdem == true){
+            $scope.tipoOrdem = false;
+            var ordem = "asc";
+        }
+        else {
+            $scope.tipoOrdem = true;
+            var ordem = "desc";
+        }
+        $scope.atualizarEtnias("","", ordem ,"", true);
+    };
+    
+    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
         $('#paginacao').bootpag({
             total: qtde,
             page: pag,
             maxVisible:5
         }).on('page', function(event, num){
-            $scope.atualizarEtnias(num,campo, order, string);
-            //console.log(event);
+            paro = true;
+            $scope.atualizarEtnias(num, campo, order, string, paro);
+            
         });
     }
     
