@@ -12,7 +12,7 @@
             
             <div class="form-group">    
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código Assindi:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cod" id="cod" name="cod" required="" class="form-control requerido" ng-minlength=8 ng-maxlength=8></div>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoAssindi" id="cod" name="cod" required="" class="form-control requerido" ng-minlength=8 ng-maxlength=8></div>
                 <label for="cpf" class="col-md-2 col-sm-1 control-label">CPF:</label>
                 <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control cpf"></div>
             </div>
@@ -54,12 +54,12 @@
                 <div class="col-md-3" ng-controller="EtniaController" ng-init="todasEtnias();">
                     <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
                         <option value="">Selecione a etnia</option>
-                        <option ng-repeat="e in etnias" value="{{e.idetnia}}">{{e.descricao}}</option>
+                        <option ng-repeat="e in etnias" value="{{e}}">{{e.descricao}}</option>
                     </select>
                 </div>
                 <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>
                 <div class="col-md-3">
-                    <select ng-model="indio.terraindigena" id="terraindigena" name="terraindigena" required="" class="form-control requerido">
+                    <select ng-model="indio.terraIndigena" id="terraindigena" name="terraindigena" required="" class="form-control requerido">
                         <option value="">Selecione a terra indígena</option>
                         <option value="1">Reserva Indígena Ivaí</option>
                     </select>
@@ -83,7 +83,7 @@
                     <label for="fem"> Feminino</label>
                 </div>
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control sus"></div>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control"></div>
                 
             </div>
             
@@ -120,7 +120,7 @@
             
             <div class="form-group">    
                 <label for="convenios" class="col-md-2 control-label">Convênios: </label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.convenios" id="convenios" name="convenios" class="form-control"></div>
+                <div class="col-md-10"><input type="text" ng-model="usuario.convenio" id="convenios" name="convenios" class="form-control"></div>
             </div>
 
             <div class="form-group">
@@ -166,7 +166,7 @@
 
                             <div class="modal-footer">
                                 <div class="col-md-12" ng-controller="CameraController as vm">
-                                    <button ng-click="teste();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
                                 </div>
                             </div>
                         </div>
