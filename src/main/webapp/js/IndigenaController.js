@@ -41,6 +41,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     };
     
     $scope.carregarIndios = function(){
+        $scope.convenios();
         if($location.path() === "/Indigena/novo"){
             novoIndio();
         }
@@ -89,4 +90,24 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             document.getElementsByTagName('head')[0].appendChild(script);
         },100);
     };
+    
+    $scope.convenios = function () {
+            $http.get("/convenio")
+                    .success(function (data) {
+//                        console.log(data) 
+                        $scope.itens = data;
+                    })
+                    .error(deuErro);
+//            if ($scope.isNovo == false) {
+//                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
+//                        .success(function (data) {
+//                            //console.log(data) 
+//                            $scope.itensDoPerfil = data;
+//                        })
+//                        .error(function () {
+//                            toastr.error("TESTE");
+//                        });
+//                //.error(deuErro);
+//            }
+        };
 }]);

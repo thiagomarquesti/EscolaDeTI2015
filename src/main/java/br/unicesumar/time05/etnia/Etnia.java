@@ -3,7 +3,6 @@ package br.unicesumar.time05.etnia;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,12 +11,12 @@ import javax.persistence.Id;
 @Entity
 public class Etnia implements Serializable{
 
-    @CampoConsulta
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @CampoConsulta
     private Long idetnia;
     @CampoConsulta
-    String descricao;
+    private String descricao;
 
     public Etnia() {
     }
@@ -26,26 +25,22 @@ public class Etnia implements Serializable{
         this.descricao = descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public Long getIdetnia() {
+        return idetnia;
     }
-
-    
 
     public String getDescricao() {
         return descricao;
     }
 
-    @Override
-    public String toString() {
-        return "Etnia{" + "descricao=" + descricao + '}';
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
-    
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.descricao);
+        hash = 97 * hash + Objects.hashCode(this.idetnia);
         return hash;
     }
 
@@ -58,12 +53,14 @@ public class Etnia implements Serializable{
             return false;
         }
         final Etnia other = (Etnia) obj;
-        if (!Objects.equals(this.descricao, other.descricao)) {
+        if (!Objects.equals(this.idetnia, other.idetnia)) {
             return false;
         }
         return true;
     }
 
-   
-
+    @Override
+    public String toString() {
+        return "Etnia{" + "idetnia=" + idetnia + ", descricao=" + descricao + '}';
+    }    
 }
