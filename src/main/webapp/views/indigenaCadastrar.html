@@ -194,13 +194,11 @@
     <button ng-show="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-hide="isNovoIndio" ng-click="salvarIndio()" ng-disabled="!formInd.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovoIndio" ng-click="reset(formInd)" class="btn btn-info">Limpar</button>
-    <span ng-show="!formInd.$valid"><img src="../img/requerido.png" alt=""/> Há campos obrigatórios ainda não preenchidos corretamente.</span>
+    <span ng-show="!formInd.$valid"> <img src="../img/requerido.png" alt="" style="margin-left: 10px;" /> Há campos obrigatórios ainda não preenchidos corretamente.</span>
     
 </div>
 
 <script src="js/webcam.js" type="text/javascript"></script>
 <script src="js/ng-camera.js" type="text/javascript"></script>
 
-<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker');
-    carregaScript('js/datepicker-custom');">
-</div>
+<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker'); carregaScript('js/datepicker-custom');"></div>

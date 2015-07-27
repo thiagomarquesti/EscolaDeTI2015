@@ -37,47 +37,62 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             .error(deuErro);
     };
     
-    $scope.atualizarEtnias = function (pag,campo,order,string, paro) {
+    $scope.atualizarEtnias = function (pag,campo,string) {
         if(pag == null || pag == ""){ pag = 1; }
         if(campo == null || campo == ""){ campo = "descricao"; }
-        if(order != "asc" && order != "desc"){ order = "asc"; }
+        var order = $scope.tipoOrdem; 
         if(string == null){ string = ""; }
-//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
         $http.get("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string)
             .success(function (data) {
                 $scope.etnias = data;
                 console.log(data);
                 console.log("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string);
-
-                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
                 
+                $('#paginacao').bootpag({
+                    total: data.quantidadeDePaginas,
+                    page: pag,
+                    maxVisible:5,
+                });
+                if(!$scope.paro){
+                    $('#paginacao').bootpag().on('page', function(event, num){
+                        $scope.atualizarEtnias(num, campo, string);
+                        $scope.paro = true;
+                    });
+            }
             })
             .error(deuErro);
     };
     
-    $scope.trocaOrdem = function(){
-        if($scope.tipoOrdem == true){
-            $scope.tipoOrdem = false;
-            var ordem = "asc";
+    $scope.inverteTipo = function(){
+       if($scope.tipoOrdem != "asc"){
+            $scope.tipoOrdem = "asc";
         }
         else {
-            $scope.tipoOrdem = true;
-            var ordem = "desc";
-        }
-        $scope.atualizarEtnias("","", ordem ,"", true);
+            $scope.tipoOrdem = "desc";
+        } 
     };
     
-    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
-        $('#paginacao').bootpag({
-            total: qtde,
-            page: pag,
-            maxVisible:5
-        }).on('page', function(event, num){
-            paro = true;
-            $scope.atualizarEtnias(num, campo, order, string, paro);
-            
-        });
-    }
+//    $scope.trocaOrdem = function(){
+//        if($scope.tipoOrdem == "desc"){
+//            $scope.tipoOrdem = "asc";
+//        }
+//        else {
+//            $scope.tipoOrdem = "desc";
+//        }
+//        $scope.atualizarEtnias("","", $scope.tipoOrdem ,"", true);
+//    };
+    
+//    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
+//        $('#paginacao').bootpag({
+//            total: qtde,
+//            page: pag,
+//            maxVisible:5
+//        }).on('page', function(event, num){
+//            paro = true;
+//            $scope.atualizarEtnias(num, campo, order, string, paro);
+//            
+//        });
+//    }
     
     $scope.editarEtnia = function(etnia) {
         $location.path("/Etnia/editar/" + etnia.idetnia);
