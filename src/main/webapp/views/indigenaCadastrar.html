@@ -1,4 +1,4 @@
-<div ng-init="carregarIndios()" class="panel panel-danger">
+<div ng-init="carregarIndios(); ;" class="panel panel-danger">
 
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovoIndio">Cadastrar indígena</div>
@@ -118,9 +118,19 @@
                 <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
             
-            <div class="form-group">    
+            <div class="form-group" ng-init="convenios()">    
                 <label for="convenios" class="col-md-2 control-label">Convênios: </label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.convenios" id="convenios" name="convenios" class="form-control"></div>
+                <div class="col-md-10">
+                    <multiselect class="input-lg" ng-model="itens"  
+                                 id="convenios" 
+                                 name="convenios" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione o(s) Convênio(s)"
+                                 options="item.descricao for item in itens"
+                                 >
+                    </multiselect>
+                </div>
             </div>
 
             <div class="form-group">
