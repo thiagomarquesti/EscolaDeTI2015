@@ -22,7 +22,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Indigena implements Serializable {
@@ -50,7 +49,7 @@ public class Indigena implements Serializable {
     @CampoConsulta
     private Date dataNascimento;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "indigena_convenio",
             joinColumns = {
                 @JoinColumn(name = "indigena_id", referencedColumnName = "codigoAssindi")},
