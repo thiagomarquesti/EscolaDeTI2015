@@ -73,7 +73,7 @@ table.table-striped tr th {
     color: #fff;
 }
 
-table.table-striped tr a {
+table.table-striped tr th a {
     padding-left: 5px;
     color:#fff;
 }
