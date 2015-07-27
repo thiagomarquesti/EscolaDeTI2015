@@ -72,28 +72,6 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         } 
     };
     
-//    $scope.trocaOrdem = function(){
-//        if($scope.tipoOrdem == "desc"){
-//            $scope.tipoOrdem = "asc";
-//        }
-//        else {
-//            $scope.tipoOrdem = "desc";
-//        }
-//        $scope.atualizarEtnias("","", $scope.tipoOrdem ,"", true);
-//    };
-    
-//    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
-//        $('#paginacao').bootpag({
-//            total: qtde,
-//            page: pag,
-//            maxVisible:5
-//        }).on('page', function(event, num){
-//            paro = true;
-//            $scope.atualizarEtnias(num, campo, order, string, paro);
-//            
-//        });
-//    }
-    
     $scope.editarEtnia = function(etnia) {
         $location.path("/Etnia/editar/" + etnia.idetnia);
     };

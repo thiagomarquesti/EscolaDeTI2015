@@ -29,12 +29,39 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
         }
     };
 
-    $scope.atualizarFuncoes = function () {
-        $http.get("/funcao")
-                .success(function (data) {
-                    $scope.funcoes = data;
-                })
-                .error(deuErro);
+    $scope.inverteTipo = function(){
+        if($scope.tipoOrdem != "asc"){
+             $scope.tipoOrdem = "asc";
+         }
+         else {
+             $scope.tipoOrdem = "desc";
+         } 
+     };  
+
+     $scope.atualizarFuncoes = function (pag,campo,string) {
+        if(pag == null || pag == ""){ pag = 1; }
+        if(campo == null || campo == ""){ campo = "descricao"; }
+        var order = $scope.tipoOrdem; 
+        if(string == null){ string = ""; }
+        $http.get("/funcao/listar/"+pag+"/"+campo+"/"+order+"/"+string)
+            .success(function (data) {
+                $scope.funcoes = data;
+                console.log(data);
+                console.log("/funcao/listar/"+pag+"/"+campo+"/"+order+"/"+string);
+
+                $('#paginacao').bootpag({
+                    total: data.quantidadeDePaginas,
+                    page: pag,
+                    maxVisible:5,
+                });
+                if(!$scope.paro){
+                    $('#paginacao').bootpag().on('page', function(event, num){
+                        $scope.atualizarFuncoes(num, campo, string);
+                        $scope.paro = true;
+                    });
+            }
+            })
+            .error(deuErro);
     };
 
     $scope.editarFuncao = function (funcao) {
