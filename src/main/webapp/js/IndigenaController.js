@@ -2,8 +2,19 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
          
     function novoIndio(){
         $scope.indio = {
+            codigoAssindi : "",
             nome : "",
-            status : "ATIVO"
+            cpf : "",
+            etnia : "",
+            genero : "",
+            dataNascimento : "",
+            Convenio : "",
+            telefone : "",
+            terraIndigena : "",
+            escolaridade : "",
+            estadoCivil : "",
+            codigoSUS : ""
+
         };
         $scope.isNovoIndio = true;
     }
@@ -60,22 +71,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
           form.$setUntouched();
         }
         novoIndio();
-    };
-    
-    
-    $scope.logout = function(){
-        $http.get("/login/usuariologado")
-           .success(function(data){
-               console.log(data.login);
-               var dadosLogin = {"login": data.login, "senha" : data.senha };
-               $http.post("/login/efetuarlogout", dadosLogin)
-                .success(function() {
-                    window.location.href="/login.html";
-                }
-                )
-                .error(deuErro);
-           })
-           .error(deuErro);
     };
     
     function deuErro(){
