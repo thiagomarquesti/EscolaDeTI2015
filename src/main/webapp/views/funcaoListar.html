@@ -1,0 +1,57 @@
+
+<div class="panel panel-info">
+<div class="panel-heading"> 
+        <div class="panel-title">Funções cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="buscaFuncao">
+        <div class="input-group">
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar função (digite o nome)" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarFuncoes('','',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>  
+        <br>
+        <div class="panel panel-default">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem == 'asc'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem == 'desc'"></i>
+                            <a ng-click="inverteTipo(); atualizarFuncoes('','',busca.descricao); ">Função</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarFuncoes('','',busca.descricao)">
+                    <tr ng-repeat='f in funcoes.listaDeRegistros' >
+                        <td>{{f.descricao}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarFuncao(f)">Editar</a></li>
+                                    <li><a ng-click="deletarFuncao(f)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="panel-footer">Registros encontrados: {{funcoes.totalDeRegistros}}</div>
+        </div>
+        <div id="paginacao"></div>
+        <a ng-href="#/Funcao/nova" class="btn btn-success">Cadastrar nova</a>
+    </div>
+</div>

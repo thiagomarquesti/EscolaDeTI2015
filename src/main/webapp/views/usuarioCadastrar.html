@@ -1,18 +1,15 @@
-<div ng-init="carregar()" class="panel panel-gradient">
 
-    <div class="panel-heading panel-title">Cadastro de usuário
+<div ng-init="carregar()" class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovo">Cadastrar usuário / colaborador</div>
+        <div class="panel-title" ng-show="!isNovo">Alterar usuário / colaborador</div>
         <div class="panel-options">
-           <a href="" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
     </div>
     <div class="panel-body">
-        <form name="formCad" novalidate class="form-horizontal">
-
-            <div ng-show="!isNovo" class="form-group">
-                <label for="id" class="col-md-2 control-label">ID: </label>
-                <div class="col-md-2"><input type="text" id="id" ng-model="usuario.id" disabled="disabled" class="form-control"></div>
-            </div>
-
+        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">    
                 <label for="nome" class="col-md-2 control-label">Nome:</label>
                 <div class="col-md-10"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
@@ -25,15 +22,13 @@
             </div>
 
             <div class="form-group"> 
-                <label for="login" class="col-md-2 control-label">Login:</label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
+                <label for="cpf" class="col-md-2 control-label">CPF:</label>
+                <div class="col-md-10"><input type="text" ng-model="usuario.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control"></div>
             </div>
 
-            <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formCad.login.$error.required">Preencha seu login. </span>
-                <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
-                <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres. </span>
-                <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
+            <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
+                <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
             </div>
 
             <div class="form-group">
@@ -48,34 +43,164 @@
             </div>
 
             <div class="form-group">
-                <label for="senha" class="col-md-2 control-label">Senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" required="" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
-            </div>      
-
-            <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formCad.senha.$error.required">Preencha sua senha. </span>
-                <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
-                <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
-                <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
-            </div>
-
-            <div class="form-group">
-                <label for="rsenha" class="col-md-2 control-label">Repetir senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" required password-match="usuario.senha" class="form-control"></div>
-            </div>
-            
-            <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
-                <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
-                <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"> </span> Alterar</button>
-                    <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+                <label for="funcao" class="col-md-2 control-label">Função: </label>
+                <div class="col-md-3">
+                    <select ng-model="usuario.funcao" id="funcao" name="funcao" required="" class="form-control">
+                        <option value="">Selecione uma função</option>
+                        <!-- FAZER BUSCA POR FUNÇÕES -->
+                    </select>
                 </div>
             </div>
-        </form>
+
+            <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.funcao.$error.required">Selecione uma função. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
+                <div class="col-md-10">
+                    <div class="col-md-3 input-group">
+                        <input type="text" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control datepicker" data-start-view="2" data-end-date="-10y" data-format="dd/mm/yyyy">
+                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="formCad.datanasc.$dirty && formCad.datanasc.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.datanasc.$error.required">Preencha data de nascimento. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="cep" class="col-md-2 control-label">CEP: </label>
+                <div class="col-md-2"><input type="text" ng-model="usuario.cep" id="cep" name="cep" required="" class="form-control"></div>
+                <label for="uf" class="col-md-1 control-label">Estado: </label>
+                <div class="col-md-2">
+                    <select ng-model="usuario.uf" id="uf" name="uf" required="" class="form-control">
+                        <option value="">Selecione um estado</option>
+                        <!-- FAZER BUSCA POR ESTADOS -->
+                    </select>
+                </div>
+                <label for="cidade" class="col-md-1 control-label">Cidade: </label>
+                <div class="col-md-3">
+                    <select ng-model="usuario.cidade" id="cidade" name="cidade" required="" class="form-control">
+                        <option value="">Aguardando estado...</option>
+                        <!-- FAZER BUSCA POR CIDADES -->
+                    </select>
+                </div>
+            </div>
+
+            <div ng-show="(formCad.cep.$dirty && formCad.cep.$invalid) || (formCad.uf.$dirty && formCad.uf.$invalid) || (formCad.cidade.$dirty && formCad.cidade.$invalid)" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.cep.$error.required">Preencha CEP. </span>
+                <span ng-show="formCad.uf.$error.required">Selecione estado. </span>
+                <span ng-show="formCad.cidade.$error.required">Selecione cidade. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco" class="col-md-2 control-label">Endereço: </label>
+                <div class="col-md-10 form-group">
+                    <div class="col-md-5 col-sm-8"><input type="text" ng-model="usuario.endereco" id="endereco" name="endereco" required="" class="form-control" placeholder="Logradouro (Rua, Estrada, etc)"></div>
+                    <div class="col-md-2 col-sm-4"><input type="text" ng-model="usuario.numero" id="numero" name="numero" required="" class="form-control" placeholder="nº"></div>
+                </div>
+            </div>
+
+            <div ng-show="(formCad.endereco.$dirty && formCad.endereco.$invalid) || (formCad.numero.$dirty && formCad.numero.$invalid)" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.endereco.$error.required">Preencha o endereço. </span>
+                <span ng-show="formCad.numero.$error.required">Preencha o número. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="complemento" class="col-md-2 control-label">Complemento: </label>
+                <div class="col-md-3"><input type="text" ng-model="usuario.complemento" id="complemento" name="complemento" class="form-control"></div>
+                <label for="bairro" class="col-md-1 control-label">Bairro: </label>
+                <div class="col-md-3"><input type="text" ng-model="usuario.bairro" id="bairro" name="bairro" required="" class="form-control"></div>
+            </div>
+
+            <div ng-show="formCad.bairro.$dirty && formCad.bairro.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.bairro.$error.required">Preencha o bairro. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefone" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
+                <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefone2" id="bairro" name="telefone2" class="form-control" placeholder="(99) 99999-9999"></div>
+            </div>
+
+            <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+                <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="tfoto" class="col-md-2 control-label">Foto: </label>
+                <div class="col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
+                <label for="foto" class="col-md-1 control-label">OU: </label>
+                <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+            </div>
+        </form>  
     </div>
 </div>
+
+<div ng-show="isNovo">
+
+    <div class="panel panel-danger" data-collapsed="1">
+        <div class="panel-heading"> 
+            <div class="panel-title">Usuário do sistema</div>
+            <div class="panel-options">
+                <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
+
+                <div class="form-group"> 
+                    <label for="login" class="col-md-2 control-label">Login:</label>
+                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
+                </div>
+
+                <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                    <span ng-show="formCad.login.$error.required">Preencha seu login. </span>
+                    <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
+                    <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres. </span>
+                    <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha" class="col-md-2 control-label">Senha: </label>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.senha" id="senha" name="senha" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
+                </div>      
+
+                <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                    <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
+                    <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
+                    <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="rsenha" class="col-md-2 control-label">Confirmar senha: </label>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" password-match="usuario.senha" class="form-control"></div>
+                </div>
+
+                <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
+                    <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
+                    <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="perfis">Adicionar perfis: </label>
+                    <div class="col-md-10"><input type="input" ng-model="usuario.perfis" id="perfis" name="perfis" class="form-control"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+</div>
+
+<script src="js/webcam.js" type="text/javascript"></script>
+<script src="js/ng-camera.js" type="text/javascript"></script>
+<script src="bootstrap/neon/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="js/datepicker-custom.js" type="text/javascript"></script>

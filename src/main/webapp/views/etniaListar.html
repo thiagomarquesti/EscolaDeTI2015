@@ -1,0 +1,62 @@
+
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Etnias cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="buscaEtnia">
+        <div class="input-group">
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar etnia (digite o nome)" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarEtnias('','',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>
+        <br>
+        <div class="panel panel-default">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem == 'asc'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem == 'desc'"></i>
+                            <a ng-click="inverteTipo(); atualizarEtnias('','',busca.descricao); ">Etnia</a>
+                        </th>
+                        <th>
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarEtnias('','',busca.descricao)">
+                    <tr ng-repeat='e in etnias.listaDeRegistros' >
+                        <td>{{e.descricao}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarEtnia(e)">Editar</a></li>
+                                    <li><a ng-click="deletarEtnia(e)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="panel-footer">
+                <span> Registros encontrados: {{etnias.totalDeRegistros}} </span>
+            </div>
+        </div>
+        <div id="paginacao"></div>
+        <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
+    </div>
+</div>
+

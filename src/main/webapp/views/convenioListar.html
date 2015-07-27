@@ -1,0 +1,55 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="panel-title">Convênios cadastrados</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>    
+    </div>
+    <div class="panel-body">
+        <form name="buscaConvenio">
+        <div class="input-group">
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar convênio (digite o nome)" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarConvenios('','',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>
+        <br>
+        <div class="panel panel-default">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem == 'asc'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem == 'desc'"></i>
+                            <a ng-click="inverteTipo(); atualizarConvenios('','',busca.descricao); ">Convênio</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarConvenios('','',busca.descricao)">
+                    <tr ng-repeat='c in convenios.listaDeRegistros' >
+                        <td>{{c.descricao}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarConvenio(c)">Editar</a></li>
+                                    <li><a ng-click="deletarConvenio(c)">Excluir</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-footer">Registros encontrados: {{convenios.totalDeRegistros}}</div>
+        </div>
+        <div id="paginacao"></div>
+        <a ng-href="#/Convenio/novo" class="btn btn-success">Cadastrar novo</a>
+    </div>
+</div>     
