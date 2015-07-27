@@ -26,7 +26,7 @@
                         <th>
                             <i class="fa fa-sort-asc" ng-show="!tipoOrdem"></i>
                             <i class="fa fa-sort-desc" ng-show="tipoOrdem"></i>
-                            <a ng-click="">Etnia</a>
+                            <a ng-click="trocaOrdem()">Etnia</a>
                         </th>
                         <th>
                             Ações
@@ -56,6 +56,16 @@
             </div>
         </div>
         <div id="paginacao"></div>
+<!--        <script>
+            $('#paginacao').bootpag({
+                total: etnias.quantidadeDePaginas,
+                page: etnias.paginaAtual,
+                maxVisible:5
+            }).on('page', function(event, num){
+                atualizarEtnias(num,campo, order, string);
+                //console.log(event);
+            });
+        </script>-->
         
         <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
