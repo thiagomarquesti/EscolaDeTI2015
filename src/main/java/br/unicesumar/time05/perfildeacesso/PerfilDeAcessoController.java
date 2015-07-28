@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/perfildeacesso")
 public class PerfilDeAcessoController extends ControllerBase<PerfilDeAcesso, Long, PerfilDeAcessoService>{
     
+    @RequestMapping(value = "/salvar", method = RequestMethod.POST)
+    public void salvar(@RequestBody PerfilBuilder perfilBuilder){
+        service.salvarPefil(perfilBuilder);
+    }
+    
     @RequestMapping(value = "/itensdeacesso/{aIdPerfilDeAcesso}", method = RequestMethod.GET)
     public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(@PathVariable Long aIdPerfilDeAcesso){
         return service.getItensDeAcessoPorPerfilDeAcessoID(aIdPerfilDeAcesso);

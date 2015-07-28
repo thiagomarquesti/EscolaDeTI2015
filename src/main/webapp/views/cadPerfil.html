@@ -32,7 +32,7 @@
                 <label for="nome" class="col-md-2 control-label">Adicionar Itens:</label>
                 <multiselect class="input-lg" ng-model="perfil.itensselecionados" multiple="true" ms-selected ="{{itens.selected.length}}" 
                              ng-model="item.nome" ms-header="Selecione os Itens"
-                             options="item.nome for item in itens">
+                             options="item.nome for item in itens" scroll-after-rows="8">
                 </multiselect>
                 <div>
                         {{perfil.itensselecionados}}
