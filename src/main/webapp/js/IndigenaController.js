@@ -2,14 +2,30 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
          
     function novoIndio(){
         $scope.indio = {
+            codigoAssindi : "",
             nome : "",
-            status : "ATIVO"
+            cpf : "",
+            etnia : "",
+            genero : "",
+            dataNascimento : "",
+            Convenio : "",
+            telefone : "",
+            terraIndigena : "",
+            escolaridade : "",
+            estadoCivil : "",
+            codigoSUS : ""
+
         };
         $scope.isNovoIndio = true;
     }
     
     $scope.salvarIndio = function(){
-        if($scope.isNovo){
+        
+        if($scope.isNovoIndio){
+            
+            $scope.indio.dataNascimento = dataToDate($scope.indio.dataNascimento);
+            
+            alert($scope.indio.dataNascimento);
             $http.post("/indigena", $scope.indio)
                .success(function(){
                    toastr.success("Indígena cadastrado com sucesso!");
@@ -27,7 +43,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
 
     };
-
+    
+    function dataToDate(dados) {
+        var data = dados.substring(6,10)+"-"+dados.substring(3,5)+"-"+dados.substring(0,2);
+        return data;
+    }  
+      
     $scope.atualizarIndio = function(){
        $http.get("/indigena")
            .success(function(data){
@@ -61,22 +82,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
           form.$setUntouched();
         }
         novoIndio();
-    };
-    
-    
-    $scope.logout = function(){
-        $http.get("/login/usuariologado")
-           .success(function(data){
-               console.log(data.login);
-               var dadosLogin = {"login": data.login, "senha" : data.senha };
-               $http.post("/login/efetuarlogout", dadosLogin)
-                .success(function() {
-                    window.location.href="/login.html";
-                }
-                )
-                .error(deuErro);
-           })
-           .error(deuErro);
     };
     
     function deuErro(){
