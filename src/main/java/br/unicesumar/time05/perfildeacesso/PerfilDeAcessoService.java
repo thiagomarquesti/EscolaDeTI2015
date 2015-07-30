@@ -35,7 +35,7 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
                 + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "
-                + " WHERE pi.perfildeacesso_id = :aId";
+                + " WHERE pi.perfildeacesso_id = :aId AND i.superior_id <> 1 OR i.iditemacesso <> 1";
 
         List<Map<String, Object>> itensPerfilDeAcesso = super.query.execute(sql, params);
         return itensPerfilDeAcesso;
