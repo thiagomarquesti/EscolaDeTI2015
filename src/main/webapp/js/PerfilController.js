@@ -16,8 +16,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.perfil = data;
+                            $scope.perfil = data[0];
                             $scope.isNovo = false;
+                            $scope.itensAcesso();
+
 //                            $("#itensselecionados").delay(30000).select2();
 //                            $("#itensselecionados").select2().val();
                         })
@@ -38,7 +40,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .error(deuErro);
             }
             else {
-                $http.put("/perfildeacesso/salvar", createJsonPerfil($scope.isNovo))
+                $http.put("/perfildeacesso/alterar", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil atualizado com sucesso!");
                             $location.path("/Perfil/listar");
@@ -63,11 +65,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         $scope.itens = data;
                     })
                     .error(deuErro);
-            if ($scope.isNovo == false) {
+            if ($scope.isNovo === false) {
                 $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            //console.log(data) 
-                            $scope.itensDoPerfil = data;
+                            $scope.perfil.itensselecionados = data;
 //                            $("#itensselecionados").select2().val();
                         })
                         .error(function () {
@@ -110,7 +111,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             var it = $scope.perfil.itensselecionados;
             var itens = "[";
             for (var i = 0; i < it.length; i++) {
-                if (i === (it.length-1)) {
+                if (i === (it.length - 1)) {
                     itens = itens + '{"iditemacesso":"' + it[i].iditemacesso + '","rota":"' + it[i].rota + '","nome":"' + it[i].nome + '","icone":"' + it[i].icone + '","superior_id":' + it[i].superior_id + '}]';
                 } else {
                     itens = itens + '{"iditemacesso":"' + it[i].iditemacesso + '","rota":"' + it[i].rota + '","nome":"' + it[i].nome + '","icone":"' + it[i].icone + '","superior_id":' + it[i].superior_id + '},';
@@ -126,7 +127,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 perfil = '{"idperfil":' + $scope.perfil.idperfildeacesso +
                         ', "nome": "' + $scope.perfil.nome + '"' +
                         ', "iditens": ' + itens + '}';
-                alert($scope.perfil.itensselecionados);
+//                alert($scope.perfil.itensselecionados);
 //                }
             }
             console.log(perfil);

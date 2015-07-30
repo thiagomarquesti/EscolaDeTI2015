@@ -1,1 +1,1 @@
-module = angular.module("appAssindi", ['ngRoute', 'UserValidation', 'cameraWeb', 'ui.multiselect','ngSanitize']);
+module = angular.module("appAssindi", ['ngRoute', 'UserValidation', 'cameraWeb', 'ui.multiselect']);

@@ -35,7 +35,7 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
                 + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "
-                + " WHERE pi.perfildeacesso_id = :aId AND i.superior_id <> 1 OR i.iditemacesso <> 1";
+                + " WHERE pi.perfildeacesso_id = :aId AND i.iditemacesso<>1 AND i.superior_id <> 1";
 
         List<Map<String, Object>> itensPerfilDeAcesso = super.query.execute(sql, params);
         return itensPerfilDeAcesso;
@@ -53,6 +53,7 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
 
         if (perfilBuilder.getIdperfil()!= null) {
             perfil = repository.findOne(perfilBuilder.getIdperfil());
+            perfil.setNome(perfilBuilder.getNome());
             perfil.setItens(new HashSet<>(itens));
         } else {
             perfil.setNome(perfilBuilder.getNome());
