@@ -3,9 +3,12 @@ package br.unicesumar.time05.itemacesso;
 
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.uf.UF;
 import br.unicesumar.time05.uf.UFRepository;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -24,6 +27,8 @@ public class InicializadorItemAcesso {
 
     @Autowired
     private UFRepository UfRepo;
+    @Autowired
+    private PerfilDeAcessoRepository perfilRepo;
 
     private ItemAcesso getItemAcesso(List<ItemAcesso> lista, String nome, String rota) {
 
@@ -190,6 +195,11 @@ public class InicializadorItemAcesso {
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
-//        repo.flush();
+
+        if (perfilRepo.count() == 0) {
+            PerfilDeAcesso perfilAdm = new PerfilDeAcesso("Administrador", new HashSet<>(repo.findAll()));
+            perfilRepo.save(perfilAdm);
+        }
+        
     }
 }
