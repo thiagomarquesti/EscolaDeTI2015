@@ -38,6 +38,10 @@ public class PessoaFisica extends Pessoa implements Serializable{
     public PessoaFisica() {
     }
 
+    public PessoaFisica(String nome, Email email) {
+        super(nome, email);
+    }
+
     public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         super(nome, telefones, email, endereco, tipoPessoa);
         this.cpf = cpf;

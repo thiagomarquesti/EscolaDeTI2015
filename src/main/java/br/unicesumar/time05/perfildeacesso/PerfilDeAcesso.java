@@ -3,6 +3,7 @@ package br.unicesumar.time05.perfildeacesso;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -31,8 +32,8 @@ public class PerfilDeAcesso implements Serializable{
     @JoinTable(name = "perfildeacesso_itemacesso",
             joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idperfildeacesso")},
             inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "iditemacesso")})
-    @CampoConsulta
-    private Set<ItemAcesso> itens;
+//    @CampoConsulta
+    private Set<ItemAcesso> itens = new HashSet<>();
 
     public PerfilDeAcesso() {
     }
@@ -60,6 +61,10 @@ public class PerfilDeAcesso implements Serializable{
 
     public void setItens(Set<ItemAcesso> itens) {
         this.itens = itens;
+    }
+    
+    public void addItens(Set<ItemAcesso> itens) {
+        this.itens.addAll(itens);
     }
 
     @Override

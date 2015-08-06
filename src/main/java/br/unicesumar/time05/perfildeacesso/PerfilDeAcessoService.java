@@ -1,9 +1,14 @@
 package br.unicesumar.time05.perfildeacesso;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.itemacesso.ItemAcesso;
+import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
 import classesBase.ServiceBase;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, PerfilDeAcessoRepository> {
+
+    @Autowired
+    private ItemAcessoRepository itemRepo;
 
     public PerfilDeAcessoService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(PerfilDeAcesso.class));
@@ -33,4 +41,23 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
         return itensPerfilDeAcesso;
     }
 
+    void salvarPefil(PerfilBuilder perfilBuilder) {
+        PerfilDeAcesso perfil = new PerfilDeAcesso();
+        List<ItemAcesso> itens = new ArrayList<>();
+        itens.add(itemRepo.findOne(1l));
+        
+        for (ItemAcesso item : perfilBuilder.getIditens()) {
+            itens.add(itemRepo.findOne(item.getIditemacesso()));
+            itens.add(itemRepo.findOne(item.getIditemacesso()).getSuperior());
+        }
+
+        if (perfilBuilder.getIdperfil()!= null) {
+            perfil = repository.findOne(perfilBuilder.getIdperfil());
+            perfil.setItens(new HashSet<>(itens));
+        } else {
+            perfil.setNome(perfilBuilder.getNome());
+            perfil.addItens(new HashSet<>(itens));
+        }
+        repository.save(perfil);
+    }
 }

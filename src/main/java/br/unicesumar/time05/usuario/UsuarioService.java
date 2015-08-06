@@ -4,13 +4,21 @@ import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.cpf.CPF;
+import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.genero.Genero;
+import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
+import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.telefone.Telefone;
 import classesBase.ServiceBase;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -66,6 +74,22 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
 
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
+    }
+
+    @Override
+    public void salvar(Usuario aUsuario) {
+        if (repository.count() == 0) {
+            Usuario usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), aUsuario.getPerfis(), new CPF(), Genero.FEMININO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO);
+            aUsuario = usuario;
+            aUsuario.setPerfil(perfilRepo.findAll());
+        }
+        try {
+            repository.save(aUsuario);
+            repository.flush();
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

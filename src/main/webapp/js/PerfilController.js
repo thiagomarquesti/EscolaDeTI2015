@@ -30,7 +30,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                $http.post("/perfildeacesso", createJsonPerfil($scope.isNovo))
+                $http.post("/perfildeacesso/salvar", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil cadastrado com sucesso!");
                             $location.path("/Perfil/listar");
@@ -38,7 +38,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .error(deuErro);
             }
             else {
-                $http.put("/perfildeacesso/", createJsonPerfil($scope.isNovo))
+                $http.put("/perfildeacesso/salvar", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil atualizado com sucesso!");
                             $location.path("/Perfil/listar");
@@ -107,37 +107,26 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 
         function createJsonPerfil(novo) {
             console.log($scope.perfil.itensselecionados);
-            
-//            var perfil = "" + $(".itemAcesso").val();
-//            if (perfil === "null") {
-//                perfil = "";
-//            }
+            var it = $scope.perfil.itensselecionados;
+            var itens = "[";
+            for (var i = 0; i < it.length; i++) {
+                if (i === (it.length-1)) {
+                    itens = itens + '{"iditemacesso":"' + it[i].iditemacesso + '","rota":"' + it[i].rota + '","nome":"' + it[i].nome + '","icone":"' + it[i].icone + '","superior_id":' + it[i].superior_id + '}]';
+                } else {
+                    itens = itens + '{"iditemacesso":"' + it[i].iditemacesso + '","rota":"' + it[i].rota + '","nome":"' + it[i].nome + '","icone":"' + it[i].icone + '","superior_id":' + it[i].superior_id + '},';
+                }
+            }
+
             if (novo) {
                 console.log('1');
-                perfil = '{"nome": "' + $scope.perfil.nome + 
-                          ', "itens": ' + $scope.perfil.itensselecionados + '}';
+                perfil = '{"nome": "' + $scope.perfil.nome + '"' +
+                        ', "iditens": ' + itens + ' }';
             } else {
                 console.log('2');
-//                if ($scope.perfil.itensselecionados.length() == 0){
-//                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
-//                            ', "nome": "' + $scope.perfil.nome + 
-//                            '}';
-//                }
-//                else{
-//                    alert($scope.perfil.itensselecionados.length());
-//                    for (var i = 0, max = $scope.perfil.itensselecionados.length(); i < max; i++) {
-//                        itens = '{ "iditemacesso": ' + $scope.perfil.itensselecionados.iditemacesso + 
-//                                            ', "nome": ' + $scope.perfil.itensselecionados.nome +
-//                                            ', "rota": ' + $scope.perfil.itensselecionados.rota +
-//                                            ', "icone": ' + $scope.perfil.itensselecionados.icone +
-//                                            ', "superior_id": ' + $scope.perfil.itensselecionados.superior_id + '}';
-//                    };
-//                    alert(itens);
-                    perfil = '{"idperfildeacesso":' + $scope.perfil.idperfildeacesso + 
-                            ', "nome": "' + $scope.perfil.nome + 
-                            ', "itens": ' + $scope.perfil.itensselecionados + 
-                                '}';
-                    //alert(perfil);
+                perfil = '{"idperfil":' + $scope.perfil.idperfildeacesso +
+                        ', "nome": "' + $scope.perfil.nome + '"' +
+                        ', "iditens": ' + itens + '}';
+                alert($scope.perfil.itensselecionados);
 //                }
             }
             console.log(perfil);
