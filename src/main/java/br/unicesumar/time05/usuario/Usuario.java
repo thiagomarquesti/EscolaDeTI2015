@@ -12,6 +12,7 @@ import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.TipoComparacao;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
@@ -29,25 +30,31 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"login"}, name = "uk_login")})
-public class Usuario extends PessoaFisica implements Serializable{
-    
-    
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"login"}, name = "uk_login")})
+public class Usuario extends PessoaFisica implements Serializable {
+
     @NotBlank(message = "Campo login não pode estar vazio")
     @Column(unique = true, nullable = false)
     private String login;
-    
+
     @Embedded
     private Senha senha;
-    
+
     @Enumerated(EnumType.STRING)
     private Status status = Status.ATIVO;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<PerfilDeAcesso> perfis;
+    private Set<PerfilDeAcesso> perfis = new HashSet<>();
 
     public Usuario() {
         //setClass(this.getClass());
+    }
+
+    public Usuario(String login, Senha senha, String nome, Email email) {
+        super(nome, email);
+        this.login = login;
+        this.senha = senha;
     }
 
     public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
@@ -58,9 +65,10 @@ public class Usuario extends PessoaFisica implements Serializable{
         this.perfis = perfis;
     }
 
-    public Long getIdUsuario(){
+    public Long getIdUsuario() {
         return super.getIdpessoa();
     }
+
     public String getLogin() {
         return login;
     }
@@ -74,8 +82,12 @@ public class Usuario extends PessoaFisica implements Serializable{
         super.setEmail(email);
     }
 
-    public String getSenha() {
-        return senha.getSenha();
+//    public String getSenha() {
+//        return senha.getSenha();
+//    }
+
+    public Senha getSenha() {
+        return this.senha;
     }
 
     public void setSenha(Senha senha) {
@@ -91,7 +103,7 @@ public class Usuario extends PessoaFisica implements Serializable{
     }
 
     public void setPerfil(List<PerfilDeAcesso> perfis) {
-        this.perfis.addAll(perfis);
+        this.perfis = new HashSet<>(perfis);
     }
 
     public void removerPerfil(PerfilDeAcesso perfil) {
@@ -101,7 +113,6 @@ public class Usuario extends PessoaFisica implements Serializable{
     public Set<PerfilDeAcesso> getPerfis() {
         return Collections.unmodifiableSet(this.perfis);
     }
-
 
     @Override
     public String toString() {
