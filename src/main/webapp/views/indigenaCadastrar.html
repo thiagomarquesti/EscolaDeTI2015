@@ -11,18 +11,10 @@
         <form name="formInd" novalidate class="form-horizontal form-groups-bordered">
             
             <div class="form-group">    
-                <label for="nome" class="col-md-2 col-sm-1 control-label">Código Assindi:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoAssindi" id="cod" name="cod" required="" class="form-control requerido" ng-minlength=8 ng-maxlength=8></div>
                 <label for="cpf" class="col-md-2 col-sm-1 control-label">CPF:</label>
                 <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.cpf" id="cpf" name="cpf" cpf-unique class="form-control cpf"></div>
             </div>
 
-            <div ng-show="formInd.cod.$dirty && formInd.cod.$invalid" role="alert" class="alert alert-danger col-md-12">
-                <span ng-show="formInd.cod.$error.required">Preencha o código Assindi. </span>
-                <span ng-show="formInd.cod.$error.minlength">Código deve ter 8 caracteres. </span>
-                <span ng-show="formInd.cod.$error.maxlength">Código deve ter 8 caracteres. </span>
-            </div>
-            
             <div ng-show="formInd.cpf.$dirty && formInd.cpf.$invalid" role="alert" class="alert alert-danger col-md-offset-2 col-md-10">
                 <span ng-show="formInd.cpf.$error.required">Preencha o CPF. </span>
                 <span ng-show="formInd.cpf.$error.uncpf">CPF já cadastrado. </span>
@@ -54,7 +46,7 @@
                 <div class="col-md-3" ng-controller="EtniaController" ng-init="todasEtnias();">
                     <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
                         <option value="">Selecione a etnia</option>
-                        <option ng-repeat="e in etnias" value="{{e}}">{{e.descricao}}</option>
+                        <option ng-repeat="e in etnias" data-value="{{e}}">{{e.descricao}}</option>
                     </select>
                 </div>
                 <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>
