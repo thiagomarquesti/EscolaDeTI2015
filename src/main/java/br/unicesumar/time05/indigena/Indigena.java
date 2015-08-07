@@ -39,7 +39,7 @@ public class Indigena implements Serializable {
     private CPF cpf;
     
     @CampoConsulta
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Etnia etnia;
     
     @CampoConsulta
