@@ -7,9 +7,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             $scope.isNovo = true;
         }
 
-
         $scope.carregar = function () {
-            $scope.itensAcesso();
+            //$scope.itensAcesso();
             if ($location.path() === "/Perfil/novo") {
                 novoPerfil();
             }
@@ -19,16 +18,11 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                             $scope.perfil = data[0];
                             $scope.isNovo = false;
                             $scope.itensAcesso();
-
-//                            $("#itensselecionados").delay(30000).select2();
-//                            $("#itensselecionados").select2().val();
+                            //console.log(data);
                         })
                         .error(deuErro);
             }
-
-
         };
-
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
@@ -47,7 +41,6 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         })
                         .error(deuErro);
             }
-
         };
 
         $scope.atualizar = function () {
@@ -68,13 +61,12 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             if ($scope.isNovo === false) {
                 $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.perfil.itensselecionados = data;
-//                            $("#itensselecionados").select2().val();
+                            $scope.perfil.itensselecionados = data; //carrega itens gravados
+                            //console.log(data);
                         })
                         .error(function () {
-                            toastr.error("TESTE");
+                            toastr.error(deuErro);
                         });
-                //.error(deuErro);
             }
         };
 
@@ -107,7 +99,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         };
 
         function createJsonPerfil(novo) {
-            console.log($scope.perfil.itensselecionados);
+            //console.log($scope.perfil.itensselecionados);
             var it = $scope.perfil.itensselecionados;
             var itens = "[";
             for (var i = 0; i < it.length; i++) {
@@ -130,7 +122,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 //                alert($scope.perfil.itensselecionados);
 //                }
             }
-            console.log(perfil);
+            //console.log(perfil);
             return perfil;
         }
 

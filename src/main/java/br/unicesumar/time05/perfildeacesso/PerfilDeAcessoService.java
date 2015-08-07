@@ -32,6 +32,7 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
                 = "SELECT i.iditemacesso, "
                 + "       i.nome, "
                 + "       i.rota, "
+                + "       i.icone, "
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
                 + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "

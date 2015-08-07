@@ -30,17 +30,14 @@
 
             <div class="form-group" ng-init="itensAcesso()">
                 <label for="nome" class="col-md-2 control-label">Adicionar Itens:</label>
-                <multiselect class="input-lg" ng-model="perfil.itensselecionados" multiple="true" ms-selected ="{{itens.selected.length}}" 
-                             ng-model="item.nome" ms-header="Selecione os Itens"
-                             options="item.nome for item in itens" scroll-after-rows="8">
+                <multiselect class="input-lg" 
+                             ng-model="perfil.itensselecionados" 
+                             multiple="true" 
+                             ms-selected ="{{itens.selected.length}}" 
+                             ms-header="Selecione os Itens"
+                             options="item.nome for item in itens" 
+                             scroll-after-rows="8">
                 </multiselect>
-<!--                <div>
-                    {{perfil.itensselecionados}}
-                </div>-->
-
-                <!--                <select id="itensselecionados" class="itemAcesso col-md-10" multiple="multiple">
-                                    <option ng-repeat="item in itens" ng-selected="selected(item.idperfildeacesso)" ng-model="item.nome" value="{{item}}">{{item.nome}}</option>
-                                </select>   -->
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
