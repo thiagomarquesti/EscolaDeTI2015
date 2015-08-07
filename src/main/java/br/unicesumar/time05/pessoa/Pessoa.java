@@ -64,6 +64,11 @@ public abstract class Pessoa implements Serializable {
     public Pessoa() {
     }
 
+    public Pessoa(String nome, Email email) {
+        this.nome = nome;
+        this.email = email;
+    }
+
     public Pessoa(String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         this.nome = nome;
         this.telefones = telefones;
