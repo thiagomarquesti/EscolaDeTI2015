@@ -155,12 +155,12 @@
 
                     <div class="form-group"> 
                         <label for="login" class="col-md-2 control-label">Login:</label>
-                        <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
+                        <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=5 ng-maxlength=20></div>
                     </div>
                     <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10">
                         <span ng-show="formCad.login.$error.required">Preencha seu login. </span>
                         <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
-                        <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres. </span>
+                        <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 4 caracteres. </span>
                         <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
                     </div>
 
