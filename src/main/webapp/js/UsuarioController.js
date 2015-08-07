@@ -3,7 +3,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         function novoUsuario() {
             $scope.usuario = {
                 nome: "",
-                telefones: [{}],
+                telefones: [{
+                        telefone_1: "",                        
+                        telefone_2: ""                        
+                }],
                 email: {
                     email: ""
                 },
