@@ -75,17 +75,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
-    public void salvar(Usuario aUsuario) {
-        if (repository.count() == 0) {
-            aUsuario.setPerfil(perfilRepo.findAll());
-        }
-        try {
-            repository.save(aUsuario);
-            repository.flush();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    
     @Override
     public void salvar(Usuario aUsuario) {
         if (repository.count() == 0) {

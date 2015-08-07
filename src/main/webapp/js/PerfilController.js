@@ -80,7 +80,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
 
         $scope.excluir = function (perfil) {
             $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
-                toastr.success("O Perfil foi excluido com sucesso", "Perfil Excluido");
+                toastr.success("O Perfil " + perfil.nome + " foi deletado com sucesso", "Perfil Excluído");
                 $scope.atualizar();
             }).error(function () {
                 toastr.error("Não foi possível excluir o perfil", "Houve um erro");
