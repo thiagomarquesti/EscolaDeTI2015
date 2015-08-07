@@ -82,10 +82,6 @@ public class Usuario extends PessoaFisica implements Serializable {
         super.setEmail(email);
     }
 
-//    public String getSenha() {
-//        return senha.getSenha();
-//    }
-
     public Senha getSenha() {
         return this.senha;
     }

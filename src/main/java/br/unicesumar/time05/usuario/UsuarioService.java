@@ -50,25 +50,25 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             + " LEFT JOIN usuario us"
             + "    ON us.idpessoa = p.idpessoa";
 
-    private final String SQLConsultaUsarioPorID
+    private final String SQLConsultaUsuarioPorID
             = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
             + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
             + "FROM pessoa p"
-            + " INNER JOIN pessoa_fisica pf "
+            + " LEFT JOIN pessoa_fisica pf "
             + "    ON pf.idpessoa = p.idpessoa"
-            + " INNER JOIN pessoa_telefone pt "
+            + " LEFT JOIN pessoa_telefone pt "
             + "    ON pt.pessoa_id = p.idpessoa"
-            + " INNER JOIN telefone t "
+            + " LEFT JOIN telefone t "
             + "    ON pt.telefone_id = t.idtelefone"
-            + " INNER JOIN endereco ende "
+            + " LEFT JOIN endereco ende "
             + "    ON p.endereco_id = ende.idendereco"
-            + " INNER JOIN endereco_cidade ec "
+            + " LEFT JOIN endereco_cidade ec "
             + "    ON ende.idendereco = ec.endereco_id"
-            + " INNER JOIN cidade c"
+            + " LEFT JOIN cidade c"
             + "    ON ec.cidade_id = c.codigoibge"
-            + " INNER JOIN uf u"
+            + " LEFT JOIN uf u"
             + "    ON c.estado_codigoestado = u.codigoestado"
-            + " INNER JOIN usuario us"
+            + " LEFT JOIN usuario us"
             + "    ON us.idpessoa = p.idpessoa"
             + " WHERE p.idpessoa = :aUsuarioId";
 
@@ -96,7 +96,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public List<Map<String, Object>> findByID(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsarioPorID, params);
+        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsuarioPorID, params);
         return Collections.unmodifiableList(usuario);
     }
 
