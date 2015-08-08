@@ -4,8 +4,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $scope.usuario = {
                 nome: "",
                 telefones: [{
-                        telefone_1: "",
-                        telefone_2: ""
+                        telefone1: "",
+                        telefone2: ""
                     }],
                 email: {
                     email: ""
@@ -18,13 +18,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     cep: "",
                     cidade: {
                         codigoIBGE: "",
-                        descricao: "",
                         estado: {
-                            codigoestado: "",
-                            descricao: "",
-                            sigla: ""
+                            codigoestado: ""
                         }
-
                     }
                 },
                 cpf: {
@@ -123,8 +119,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(deuErro);
         };
 
-        $scope.statusArray = {"0": "Acesso Liberado", "1": "Acesso Bloqueado", "": "Sem acesso"};
-        $scope.corStatus = {"0": "success", "1": "danger", "": "info"};
+        $scope.statusArray = {"ATIVO": "Acesso Liberado", "INATIVO": "Acesso Bloqueado", "": "Sem acesso"};
+        $scope.corStatus = {"ATIVO": "success", "INATIVO": "danger", "": "info"};
 
         $scope.carregar = function () {
             if ($location.path() === "/Usuario/novo") {

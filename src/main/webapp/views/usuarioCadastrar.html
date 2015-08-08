@@ -86,14 +86,14 @@
                 <div class="col-md-2"><input type="text" ng-model="usuario.endereco.cep" id="cep" name="cep" required="" class="form-control"></div>
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2">
-                    <select ng-model="usuario.endereco.cidade.estado" id="uf" name="uf" required="" class="form-control">
+                    <select ng-model="usuario.endereco.cidade.estado.codigoestado" id="uf" name="uf" required="" class="form-control">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                     </select>
                 </div>
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
                 <div class="col-md-3">
-                    <select ng-model="usuario.endereco.cidade" id="cidade" name="cidade" required="" class="form-control">
+                    <select ng-model="usuario.endereco.cidade.codigoIBGE" id="cidade" name="cidade" required="" class="form-control">
                         <option value="">Aguardando estado...</option>
                         <!-- FAZER BUSCA POR CIDADES -->
                     </select>
@@ -132,9 +132,9 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="usuario.telefones[1]" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefones.telefone1" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
                 <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="usuario.telefones[2]" id="telefone" name="telefone" class="form-control" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefones.telefone2" id="telefone" name="telefone" class="form-control" placeholder="(99) 99999-9999"></div>
             </div>
 
             <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
