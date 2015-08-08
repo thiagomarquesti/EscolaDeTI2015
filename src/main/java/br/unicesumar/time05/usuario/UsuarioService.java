@@ -79,7 +79,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     @Override
     public void salvar(Usuario aUsuario) {
         if (repository.count() == 0) {
-            Usuario usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), aUsuario.getPerfis(), new CPF(), Genero.FEMININO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO);
+            Usuario usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), aUsuario.getPerfis(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO);
             aUsuario = usuario;
             aUsuario.setPerfil(perfilRepo.findAll());
         }

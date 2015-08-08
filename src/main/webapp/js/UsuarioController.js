@@ -4,8 +4,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $scope.usuario = {
                 nome: "",
                 telefones: [{
-                        telefone1: "",
-                        telefone2: ""
+                        telefone: ""
                     }],
                 email: {
                     email: ""
@@ -17,9 +16,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     complemento: "",
                     cep: "",
                     cidade: {
-                        codigoIBGE: "",
+                        codigoIBGE: 4105904,
                         estado: {
-                            codigoestado: ""
+                            codigoestado: 41
                         }
                     }
                 },
@@ -69,9 +68,20 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         window.location.href = "/login.html";
                     });
         };
+        
+        function removerMascara(aCampo){
+            words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
+            aCampo = aCampo.replace(words, "");
+            return aCampo;
+        };
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
+                
+                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
+                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
+                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
+                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -92,7 +102,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         })
                         .error(deuErro);
             }
-
         };
 
         $scope.atualizar = function () {
@@ -103,16 +112,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(deuErro);
         };
 
-        $scope.atrasa = function (tempo) {
-            $timeout(tempo);
-        };
-
         $scope.editar = function (usuario) {
             $location.path("/Usuario/editar/" + usuario.idpessoa);
         };
 
         $scope.alteraStatus = function (id) {
-            $http.put("/usuario/" + id)
+            $http.put("/usuario/trocarStatusUsuario/" + id)
                     .success(function () {
                         $scope.atualizar();
                     })

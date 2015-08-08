@@ -18,6 +18,11 @@ public class UsuarioController extends ControllerBase<Usuario, Long, UsuarioServ
         return service.verificarSenha(aSenha);
     }
 
+    @RequestMapping(value = "/trocarStatusUsuario/{aUsuarioId}" ,method = RequestMethod.PUT)
+    public void alterarStatus(@PathVariable Long aUsuarioId){
+        service.trocarStatusUsuario(aUsuarioId);
+    }
+
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)
     public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId) {
         return service.verificarEmail(aEmail, aUsuarioId);

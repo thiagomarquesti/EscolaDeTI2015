@@ -1,5 +1,4 @@
 <div ng-init="carregar()" class="panel panel-info">
-
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovo">Cadastrar usuário / colaborador</div>
         <div class="panel-title" ng-show="!isNovo">Alterar usuário / colaborador</div>
@@ -22,7 +21,7 @@
 
             <div class="form-group"> 
                 <label for="cpf" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control"></div>
+                <div class="col-md-10"><input type="text" ng-model="usuario.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf"></div>
             </div>
 
             <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -33,14 +32,13 @@
             <div class="form-group">
                 <label for="genero" class="col-md-2 control-label">Gênero:</label>
                 <div class="col-md-3">
-                    <label for="masc">Masculino </label>
-                    <input type="radio" id="masc" name="genero" required=""> &nbsp;
+                    <label for="masculino">Masculino </label>
+                    <input type="radio" ng-model="usuario.genero" id="masculino" name="masculino" value="MASCULINO" required=""> &nbsp;
                     <i class='fa fa-male'></i><i class='fa fa-female'></i>
-                    &nbsp;<input type="radio" id="fem" name="genero" required=""> 
-                    <label for="fem"> Feminino</label>
+                    &nbsp;<input type="radio" ng-model="usuario.genero" id="feminino" name="feminino" value="FEMININO" required=""> 
+                    <label for="feminino"> Feminino</label>
                 </div>
             </div>
-
 
             <div class="form-group">
                 <label for="email" class="col-md-2 control-label">E-mail: </label>
@@ -83,7 +81,7 @@
 
             <div class="form-group">
                 <label for="cep" class="col-md-2 control-label">CEP: </label>
-                <div class="col-md-2"><input type="text" ng-model="usuario.endereco.cep" id="cep" name="cep" required="" class="form-control"></div>
+                <div class="col-md-2"><input type="text" ng-model="usuario.endereco.cep" id="cep" name="cep" required="" class="form-control cep"></div>
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2">
                     <select ng-model="usuario.endereco.cidade.estado.codigoestado" id="uf" name="uf" required="" class="form-control">
@@ -132,9 +130,9 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="usuario.telefones.telefone1" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
-                <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="usuario.telefones.telefone2" id="telefone" name="telefone" class="form-control" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefones[0].telefone" id="telefone" name="telefone" required="" class="form-control phone_with_ddd" placeholder="(99) 99999-9999"></div>
+                <label for="telefone" class="col-md-2 control-label">Telefone secundário: </label>
+                <div class="col-md-3"><input type="text" ng-model="usuario.telefones[1].telefone" id="telefone" name="telefone" class="form-control phone_with_ddd" placeholder="(99) 99999-9999"></div>
             </div>
 
             <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -152,7 +150,6 @@
 </div>
 
 <div ng-show="isNovo">
-
     <div class="panel panel-info" data-collapsed="1">
         <div class="panel-heading"> 
             <div class="panel-title">Usuário do sistema</div>
@@ -198,7 +195,7 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="perfis">Adicionar perfis: </label>
-                    <div class="col-md-10"><input type="input" ng-model="usuario.perfis[]" id="perfis" name="perfis" class="form-control"></div>
+                    <div class="col-md-10"><input type="input" ng-model="usuario.perfis" id="perfis" name="perfis" class="form-control"></div>
                 </div>
 
             </form>
@@ -207,7 +204,7 @@
 </div>
 <div>
     <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
-    <button ng-show="!isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
+    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>
 
