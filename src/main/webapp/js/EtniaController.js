@@ -55,7 +55,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             .error(deuErro);
     };
     
-    $scope.trocaOrdem = function(){
+    $scope.trocaOrdem = function(string){
         if($scope.tipoOrdem == true){
             $scope.tipoOrdem = false;
             var ordem = "asc";
@@ -64,7 +64,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             $scope.tipoOrdem = true;
             var ordem = "desc";
         }
-        $scope.atualizarEtnias("","", ordem ,"", true);
+        $scope.atualizarEtnias("","", ordem ,string, true);
     };
     
     function atualizaPaginacao(qtde, pag, campo, order, string, paro){
