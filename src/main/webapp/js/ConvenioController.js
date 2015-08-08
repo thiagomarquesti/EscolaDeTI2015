@@ -41,39 +41,12 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
             }
         };
 
-        $scope.inverteTipo = function(){
-            if($scope.tipoOrdem != "asc"){
-                 $scope.tipoOrdem = "asc";
-             }
-             else {
-                 $scope.tipoOrdem = "desc";
-             } 
-         };  
-
-         $scope.atualizarConvenios = function (pag,campo,string) {
-            if(pag == null || pag == ""){ pag = 1; }
-            if(campo == null || campo == ""){ campo = "descricao"; }
-            var order = $scope.tipoOrdem; 
-            if(string == null){ string = ""; }
-            $http.get("/convenio/listar/"+pag+"/"+campo+"/"+order+"/"+string)
-                .success(function (data) {
-                    $scope.convenios = data;
-                    console.log(data);
-                    console.log("/convenio/listar/"+pag+"/"+campo+"/"+order+"/"+string);
-
-                    $('#paginacao').bootpag({
-                        total: data.quantidadeDePaginas,
-                        page: pag,
-                        maxVisible:5,
-                    });
-                    if(!$scope.paro){
-                        $('#paginacao').bootpag().on('page', function(event, num){
-                            $scope.atualizarConvenios(num, campo, string);
-                            $scope.paro = true;
-                        });
-                }
-                })
-                .error(deuErro);
+        $scope.atualizarConvenios = function () {
+            $http.get("/convenio")
+                    .success(function (data) {
+                        $scope.convenios = data;
+                    })
+                    .error(deuErro);
         };
 
         $scope.editarConvenio = function (convenio) {
