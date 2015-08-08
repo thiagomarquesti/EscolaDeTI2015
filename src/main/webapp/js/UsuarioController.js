@@ -4,9 +4,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $scope.usuario = {
                 nome: "",
                 telefones: [{
-                        telefone_1: "",                        
-                        telefone_2: ""                        
-                }],
+                        telefone_1: "",
+                        telefone_2: ""
+                    }],
                 email: {
                     email: ""
                 },
@@ -109,10 +109,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.atrasa = function (tempo) {
             $timeout(tempo);
-        }
+        };
 
         $scope.editar = function (usuario) {
-            $location.path("/Usuario/editar/" + usuario.idusuario);
+            $location.path("/Usuario/editar/" + usuario.idpessoa);
         };
 
         $scope.alteraStatus = function (id) {
