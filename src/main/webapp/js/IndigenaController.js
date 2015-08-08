@@ -65,6 +65,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
         };
 
+        $scope.atualizarIndio = function () {
+            $http.get("/indigena")
+                    .success(function (data) {
+                        $scope.indio = data;
+                    })
+                    .error(deuErro);
+        };
         function arrumaCPF(arruma) {
             var str = arruma.replace(".", "");
             str = str.replace("-", "");
@@ -122,23 +129,24 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }, 100);
         };
 
+        function deuErro() {
+            toastr.error("Algo deu errado. Tente novamente.");
+        }
+
+        $scope.carregaScript = function (nScript) {
+            $timeout(function () {
+                var script = document.createElement('script');
+                script.src = nScript + ".js";
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }, 100);
+        };
+
         $scope.convenios = function () {
+
             $http.get("/convenio")
                     .success(function (data) {
-//                        console.log(data) 
                         $scope.itens = data;
                     })
                     .error(deuErro);
-//            if ($scope.isNovo == false) {
-//                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
-//                        .success(function (data) {
-//                            //console.log(data) 
-//                            $scope.itensDoPerfil = data;
-//                        })
-//                        .error(function () {
-//                            toastr.error("TESTE");
-//                        });
-//                //.error(deuErro);
-//            }
         };
     }]);

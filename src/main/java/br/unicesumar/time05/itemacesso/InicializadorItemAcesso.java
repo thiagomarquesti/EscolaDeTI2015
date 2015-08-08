@@ -117,7 +117,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuConvenioNovo;
         menuConvenioNovo = this.getItemAcesso(itensAcesso, "Novo Convênio", "#/Perfil/novo");
         if (menuConvenioNovo == null) {
-            menuConvenioNovo = new ItemAcesso("Cadastrar Coqnvênio", "#/Convenio/novo", "fa-plus", menuConvenio);
+            menuConvenioNovo = new ItemAcesso("Cadastrar Convênio", "#/Convenio/novo", "fa-plus", menuConvenio);
             itensAcesso.add(menuConvenioNovo);
         }
 
