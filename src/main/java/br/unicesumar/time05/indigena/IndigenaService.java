@@ -19,31 +19,25 @@ public class IndigenaService extends ServiceBase<Indigena, Long, IndigenaReposit
         setConstrutorDeSQL(new ConstrutorDeSQL(Indigena.class));
     }
 
+    //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLConsultaIndigena = "SELECT i.codigo_assindi,  i.codigoSUS, "
             + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
             + "i.genero, i.nome, t.telefone, ti.nome_terra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN indigena_convenio incon "
-            + " ON i.codigo_assindi = incon.indigena_id "
-            + "LEFT JOIN convenio con "
-            + "ON incon.convenio_id = con.idconvenio "
             + "LEFT JOIN telefone t "
             + "ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terra_indigena ti "
             + "ON i.terra_indigena_idterraindigena = ti.id_terra_indigena";
     
+    //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigo_assindi,  i.codigoSUS, "
             + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
             + "i.genero, i.nome, t.telefone, ti.nome_terra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN indigena_convenio incon "
-            + " ON i.codigo_assindi = incon.indigena_id "
-            + "LEFT JOIN convenio con "
-            + " ON incon.convenio_id = con.idconvenio "
             + "LEFT JOIN telefone t "
             + " ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terra_indigena ti "
