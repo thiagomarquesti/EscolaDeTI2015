@@ -1,4 +1,4 @@
-<div ng-init="carregarIndios(); ;" class="panel panel-info">
+<div ng-init="carregarIndios();" class="panel panel-info">
 
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovoIndio">Cadastrar indígena</div>
@@ -45,13 +45,10 @@
             <div class="form-group">
                 <label for="etnia" class="col-md-2 control-label">Etnia: </label>
                 <div class="col-md-3" ng-controller="EtniaController" ng-init="todasEtnias();">
-                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
+                    <select data-ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
                         <option value="">Selecione a etnia</option>
-<<<<<<< HEAD
                         <option ng-repeat="e in etnias" data-value="{{e}}">{{e.descricao}}</option>
-=======
-                        <option ng-repeat="e in etnias" value="{{e.idetnia}}">{{e.descricao}}</option>
->>>>>>> 3322523d79158a9062640ea7921f4cd3510520df
+
                     </select>
                 </div>
                 <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>

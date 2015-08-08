@@ -19,7 +19,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     }
                 ],
                 telefone: {
-                    telefone: ""
+                    telefone: null ,
                 },
                 terraIndigena: {
                     nomeTerra: "",
@@ -38,6 +38,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 codigoSUS: ""
 
             };
+            
             $scope.isNovoIndio = true;
         }
 
