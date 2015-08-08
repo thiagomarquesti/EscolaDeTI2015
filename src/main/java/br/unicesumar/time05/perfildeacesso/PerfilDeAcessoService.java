@@ -47,7 +47,7 @@ public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, Per
         List<ItemAcesso> itens = new ArrayList<>();
         itens.add(itemRepo.findOne(1l));
         
-        for (ItemAcesso item : perfilBuilder.getIditens()) {
+        for (ItemAcesso item : perfilBuilder.getItens()) {
             itens.add(itemRepo.findOne(item.getIditemacesso()));
             itens.add(itemRepo.findOne(item.getIditemacesso()).getSuperior());
         }

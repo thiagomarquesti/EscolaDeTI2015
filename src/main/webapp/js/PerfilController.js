@@ -148,12 +148,12 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             if (novo) {
                 console.log('1');
                 perfil = '{"nome": "' + $scope.perfil.nome + '"' +
-                        ', "iditens": ' + itens + ' }';
+                        ', "itens": ' + itens + ' }';
             } else {
                 console.log('2');
                 perfil = '{"idperfil":' + $scope.perfil.idperfildeacesso +
                         ', "nome": "' + $scope.perfil.nome + '"' +
-                        ', "iditens": ' + itens + '}';
+                        ', "itens": ' + itens + '}';
 //                alert($scope.perfil.itensselecionados);
 //                }
             }
