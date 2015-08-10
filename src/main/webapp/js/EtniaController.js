@@ -33,6 +33,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $http.get("/etnia")
             .success(function (data) {
                 $scope.etnias = data;
+                console.log($scope.etnias);
             })
             .error(deuErro);
     };

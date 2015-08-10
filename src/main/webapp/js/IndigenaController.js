@@ -3,36 +3,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         function novoIndio() {
             $scope.indio = {
                 nome: "",
-                cpf: {
-                    cpf: ""
-                },
-                etnia: {
-                    idetnia: "",
-                    descricao: ""
-                },
+                cpf: "",
+                etnia: "",
                 genero: "",
                 dataNascimento: "",
-                convenio: [
-                    {
-                        idconvenio: "",
-                        descricao: ""
-                    }
-                ],
-                telefone: {
-                    telefone: null ,
-                },
-                terraIndigena: {
-                    nomeTerra: "",
-                    cidade: {
-                        codigoIBGE: "",
-                        descricao: "",
-                        estado: {
-                            codigoestado: "",
-                            descricao: "",
-                            sigla: ""
-                        }
-                    }
-                },
+                convenio: "",
+                telefone: "",
+                terraIndigena: "",
                 escolaridade: "",
                 estadoCivil: "",
                 codigoSUS: ""
@@ -43,8 +20,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
 
         $scope.salvarIndio = function () {
-            $scope.indio.cpf.cpf = arrumaCPF($scope.indio.cpf.cpf);
-            alert($scope.indio.cpf.cpf);
+            $scope.indio.cpf = arrumaCPF($scope.indio.cpf);
+            alert($scope.indio.cpf);
             $scope.indio.dataNascimento = dataToDate($scope.indio.dataNascimento);
             if ($scope.isNovoIndio) {
 
