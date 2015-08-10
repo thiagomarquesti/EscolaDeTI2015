@@ -1,5 +1,6 @@
-package br.unicesumar.time05.indigena;
+package br.unicesumar.time05.terraIndigena;
 
+import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class TerraIndigena implements Serializable{
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    private Long idTerraIndigena;
+   @CampoConsulta
    private String nomeTerra;
    @ManyToOne
    private Cidade cidade;

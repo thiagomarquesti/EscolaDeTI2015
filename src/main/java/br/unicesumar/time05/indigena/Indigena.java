@@ -1,5 +1,6 @@
 package br.unicesumar.time05.indigena;
 
+import br.unicesumar.time05.terraIndigena.TerraIndigena;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
