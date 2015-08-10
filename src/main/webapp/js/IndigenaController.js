@@ -1,13 +1,14 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
 
         function novoIndio() {
+            $scope.isNovoIndio = true;
             $scope.indio = {
                 nome: "",
                 cpf: "",
                 etnia: "",
                 genero: "",
                 dataNascimento: "",
-                convenio: "",
+                conveniosselecionados:[],
                 telefone: "",
                 terraIndigena: "",
                 escolaridade: "",
@@ -15,8 +16,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 codigoSUS: ""
 
             };
-            
-            $scope.isNovoIndio = true;
         }
 
         $scope.salvarIndio = function () {
@@ -50,6 +49,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
         };
+       
         function arrumaCPF(arruma) {
             var str = arruma.replace(".", "");
             str = str.replace("-", "");
@@ -60,20 +60,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             return data;
         }
 
-        $scope.atualizarIndio = function () {
-            $http.get("/indigena")
-                    .success(function (data) {
-                        $scope.indio = data;
-                    })
-                    .error(deuErro);
-        };
 
         $scope.editarIndio = function (indio) {
             $location.path("/Indigena/editar/" + indio.id);
         };
 
         $scope.carregarIndios = function () {
-            $scope.convenios();
             if ($location.path() === "/Indigena/novo") {
                 novoIndio();
             }
@@ -85,10 +77,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         })
                         .error(deuErro);
             }
-        };
-        
-        $scope.carregaTerras = function (){
-            
         };
         
         $scope.reset = function (form) {
@@ -123,12 +111,4 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }, 100);
         };
 
-        $scope.convenios = function () {
-
-            $http.get("/convenio")
-                    .success(function (data) {
-                        $scope.itens = data;
-                    })
-                    .error(deuErro);
-        };
     }]);

@@ -50,19 +50,19 @@
 
                     </select>
                 </div>
-                <label for="etnia" class="col-md-2 control-label">Terra indígena: </label>
-                <div class="col-md-3">
-                    <select ng-model="indio.terraindigena" id="terraindigena" name="terraindigena" required="" class="form-control requerido">
+                <label for="terra" class="col-md-2 control-label">Terra indígena: </label>
+                <div class="col-md-3" ng-controller="TerraController" ng-init="todasTerras();">
+                    <select ng-model="indio.terra" ng-options="terra as terra.nometerra for terra in terras" id="terra" name="terra" required="" class="form-control requerido">
                         <option value="">Selecione a terra indígena</option>
-                        <option value="1">Terra indígena</option>
+
                     </select>
                 </div>
             </div>
             
-            <div ng-show="formInd.etnia.$dirty && formInd.etnia.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+            <div ng-show="formInd.etnia.$dirty && formInd.etnia.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert" >
                 <span ng-show="formInd.etnia.$error.required">Selecione uma etnia. </span>
             </div>
-            <div ng-show="formInd.terraindigena.$dirty && formInd.terraindigena.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-2 col-md-10" >
+            <div ng-show="formInd.terraindigena.$dirty && formInd.terraindigena.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert" >
                 <span ng-show="formInd.terraindigena.$error.required">Selecione uma terra indígena. </span>
             </div>
             
@@ -111,19 +111,17 @@
                 <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
             
-            <div class="form-group" ng-init="convenios()">    
-                <label for="convenios" class="col-md-2 control-label">Convênios: </label>
-                <div class="col-md-10">
-                    <multiselect class="input-lg" ng-model="itens"  
-                                 id="convenios" 
-                                 name="convenios" 
-                                 multiple="true" 
-                                 ms-selected ="{{itens.selected.length}}" 
-                                 ms-header="Selecione o(s) Convênio(s)"
-                                 options="item.descricao for item in itens"
-                                 >
-                    </multiselect>
-                </div>
+            <div class="form-group" ng-controller="ConvenioController" ng-init="atualizarConvenios()">
+                <label for="nome" class="col-md-2 control-label">Convênios:</label>
+                <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                             ng-model="indio.conveniosselecionados" 
+                             multiple="true" 
+                             ms-selected ="{{convenios.selected.length}}" 
+                             ms-header="Selecione os convênios"
+                             options="convenio.descricao for convenio in convenios" 
+                             scroll-after-rows="8">
+                </multiselect>
+
             </div>
 
             <div class="form-group">

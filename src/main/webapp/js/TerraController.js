@@ -30,12 +30,13 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         }
     };
     
-    $scope.atualizarTerras = function () {
-        $http.get("/terra")
-                .success(function (data) {
-                    $scope.terras = data;
-                })
-                .error(deuErro);
+    $scope.todasTerras = function(){
+        $http.get("/terraIndigena")
+            .success(function (data) {
+                $scope.terras = data;
+                console.log($scope.terras);
+            })
+            .error(deuErro);
     };
     
     $scope.editarTerra = function(terra) {
