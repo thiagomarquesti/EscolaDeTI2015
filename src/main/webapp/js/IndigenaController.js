@@ -86,7 +86,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         .error(deuErro);
             }
         };
-
+        
+        $scope.carregaTerras = function (){
+            
+        };
+        
         $scope.reset = function (form) {
             if (form) {
                 form.$setPristine();
