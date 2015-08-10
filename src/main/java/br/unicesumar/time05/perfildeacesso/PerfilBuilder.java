@@ -6,24 +6,24 @@ import java.util.List;
 public class PerfilBuilder {
     private Long idperfil;
     private String nome;
-    private List<ItemAcesso> iditens;
+    private List<ItemAcesso> itens;
 
     public PerfilBuilder() {
     }
 
-    public PerfilBuilder(String nome, List<ItemAcesso> iditens) {
+    public PerfilBuilder(String nome, List<ItemAcesso> itens) {
         this.nome = nome;
-        this.iditens = iditens;
+        this.itens = itens;
     }
 
-    public PerfilBuilder(Long idperfil, String nome, List<ItemAcesso> iditens) {
+    public PerfilBuilder(Long idperfil, String nome, List<ItemAcesso> itens) {
         this.idperfil = idperfil;
         this.nome = nome;
-        this.iditens = iditens;
+        this.itens = itens;
     }
     public Long getIdperfil() {
-        return idperfil;
-    }
+        return idperfil; 
+   }
 
     public void setIdperfil(Long idperfil) {
         this.idperfil = idperfil;
@@ -37,12 +37,12 @@ public class PerfilBuilder {
         this.nome = nome;
     }
 
-    public List<ItemAcesso> getIditens() {
-        return iditens;
+    public List<ItemAcesso> getItens() {
+        return itens;
     }
 
-    public void setIditens(List<ItemAcesso> iditens) {
-        this.iditens = iditens;
+    public void setItens(List<ItemAcesso> itens) {
+        this.itens = itens;
     }
     
 }
