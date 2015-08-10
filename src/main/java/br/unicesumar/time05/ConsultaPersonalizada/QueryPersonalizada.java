@@ -1,7 +1,6 @@
 package br.unicesumar.time05.ConsultaPersonalizada;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QueryPersonalizada {
-
-    final int NUM_REGISTROS_PAGINA = 10;
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -39,10 +36,10 @@ public class QueryPersonalizada {
     public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL construtorDeSQL, ParametrosConsulta parametrosConsulta) {
         String SQL;
         SQL = construtorDeSQL.getSQL(parametrosConsulta);
-        return executeComPaginacao(SQL, parametrosConsulta);
+        return executeComPaginacao(SQL, construtorDeSQL.getCampoOrdenacaoPadrao(), parametrosConsulta);
     }
 
-    public RetornoConsultaPaginada executeComPaginacao(String SQL, ParametrosConsulta parametrosConsulta){
+    public RetornoConsultaPaginada executeComPaginacao(String SQL, String CampoOrdenacaoPadrao, ParametrosConsulta parametrosConsulta){
         
         MapSqlParameterSource params = new MapSqlParameterSource();
         if ((parametrosConsulta != null) && (parametrosConsulta.getPalavraChave() != null) && (!parametrosConsulta.getPalavraChave().isEmpty())) {
@@ -56,7 +53,7 @@ public class QueryPersonalizada {
         List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, RowMapper);
         retornoConsulta.setTotalDeRegistros(result.size());
 
-        Double paginas = (double) result.size() / NUM_REGISTROS_PAGINA;
+        Double paginas = (double) result.size() / parametrosConsulta.getRegistrosPorPagina();
         retornoConsulta.setQuantidadeDePaginas((int)Math.ceil(paginas));
         retornoConsulta.setPaginaAtual(parametrosConsulta.getPagina());
         
@@ -65,10 +62,15 @@ public class QueryPersonalizada {
             if ((!parametrosConsulta.getSentidoOrdenacao().isEmpty()) && (parametrosConsulta.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC.trim()))){
                 SQL += OperadoresSQL.DESC;
             }
+        } else {            
+            if (CampoOrdenacaoPadrao.isEmpty()) {
+                CampoOrdenacaoPadrao = "1";
+            }            
+            SQL += OperadoresSQL.ORDER_BY + CampoOrdenacaoPadrao;
         }
 
         if ((parametrosConsulta != null) && (parametrosConsulta.getPagina() > 0)) {
-            SQL += OperadoresSQL.LIMIT + NUM_REGISTROS_PAGINA + OperadoresSQL.OFFSET + ((parametrosConsulta.getPagina() * NUM_REGISTROS_PAGINA) - NUM_REGISTROS_PAGINA);
+            SQL += OperadoresSQL.LIMIT + parametrosConsulta.getRegistrosPorPagina() + OperadoresSQL.OFFSET + ((parametrosConsulta.getPagina() * parametrosConsulta.getRegistrosPorPagina()) - parametrosConsulta.getRegistrosPorPagina());
         }
         
         System.out.println(SQL);

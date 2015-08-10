@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface CampoConsulta {
    
     public TipoComparacao tipoComparacao() default TipoComparacao.CONTEM;
+    public boolean campoOrdenacaoPadrao() default false;
 }

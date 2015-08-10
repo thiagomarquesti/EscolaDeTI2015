@@ -1,6 +1,6 @@
 package br.unicesumar.time05.perfildeacesso;
 
-import classesBase.ControllerBase;
+import br.unicesumar.time05.classesbase.ControllerBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

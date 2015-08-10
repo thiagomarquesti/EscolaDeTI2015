@@ -1,6 +1,6 @@
 package br.unicesumar.time05.usuario;
 
-import classesBase.ControllerBase;
+import br.unicesumar.time05.classesbase.ControllerBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;

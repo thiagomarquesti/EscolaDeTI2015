@@ -3,7 +3,7 @@ package br.unicesumar.time05.perfildeacesso;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
-import classesBase.ServiceBase;
+import br.unicesumar.time05.classesbase.ServiceBase;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
