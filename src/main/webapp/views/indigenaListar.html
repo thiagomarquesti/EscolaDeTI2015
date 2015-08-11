@@ -8,39 +8,49 @@
         </div>
     </div>
     <div class="panel-body">
+        <form name="buscaIndigena">
         <div class="input-group">
-            <span class="input-group-addon btn-info" id="basic-addon1"><i class="fa fa-search"></i></span>
-            <input type="text" ng-model="busca.cod" placeholder="Buscar indígena (codigo Assindi)" class="form-control" aria-describedby="basic-addon1">
-        </div>    
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar indígena" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarIndigenas('','','asc',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>   
         <br>
         <div class="panel panel-default">
-            <table class="table table-striped table-hover">
+            <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
-                        <th>COD Assindi</th><th>Nome</th><th>Etnia</th><th>Ações</th>
+                        <th>COD Assindi</th><th>Nome</th><th>Etnia</th><th>Telefone</th><th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizar()">
-                    <tr ng-repeat='i in filtered = (indigenas| filter:busca
-                            )' >
+                <tbody ng-init="atualizarIndigenas()">
+                    <tr ng-repeat='i in indigenas.listaDeRegistros' >
                         <td>{{i.cod}}</td>
                         <td>{{i.nome}}</td>
-                        <td>{{i.etnia}}</td>
+                        <td>Etnia: {{i.etnia.descricao}} <br> Terra indígena: {{i.terraIndigena.nomeTerra}}</td>
+                        <td>{{i.telefone.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editar(u)">Editar</a></li>
+                                    <li><a ng-click="editarIndio(i)">Editar</a></li>
+                                    <li><a ng-click="excluirIndio(i)">Editar</a></li>
                                 </ul>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
+            <div class="panel-footer">Registros encontrados: {{indigenas.totalDeRegistros}}</div>
+            
         </div>
+        <div id="paginacao"></div>
         <a ng-href="#/Indigena/novo" class="btn btn-success">Cadastrar novo</a>
         
     </div>

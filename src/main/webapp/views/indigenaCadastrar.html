@@ -12,7 +12,7 @@
             
             <div class="form-group">    
                 <label for="nome" class="col-md-2 control-label">Nome:</label>
-                <div class="col-md-4"><input type="text" ng-model="usuario.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
+                <div class="col-md-4"><input type="text" ng-model="indio.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
                 <label for="cep" class="col-md-2 control-label">Estado civil:</label>
                 <div class="col-md-3">
                     <select name="estadoCivil" ng-model="indio.estadoCivil" id="estadoCivil" required="" class="form-control requerido">
@@ -52,7 +52,7 @@
                 </div>
                 <label for="terra" class="col-md-2 control-label">Terra indígena: </label>
                 <div class="col-md-3" ng-controller="TerraController" ng-init="todasTerras();">
-                    <select ng-model="indio.terra" ng-options="terra as terra.nometerra for terra in terras" id="terra" name="terra" required="" class="form-control requerido">
+                    <select ng-model="indio.terraIndigena" ng-options="terra as terra.nometerra for terra in terras" id="terraIndigena" name="terraIndigena" required="" class="form-control requerido">
                         <option value="">Selecione a terra indígena</option>
 
                     </select>
@@ -70,9 +70,9 @@
                 <label for="genero" class="col-md-2 control-label">Gênero:</label>
                 <div class="col-md-3">
                     <label for="masc">Masculino </label>
-                    <input type="radio" id="masc" name="genero" required=""> &nbsp;
+                    <input type="radio" id="masc" name="genero" ng-model="indio.genero" value="MASCULINO" required=""> &nbsp;
                     <i class='fa fa-male'></i><i class='fa fa-female'></i>
-                    &nbsp;<input type="radio" id="fem" name="genero" required=""> 
+                    &nbsp;<input type="radio" id="fem" name="genero" ng-model="indio.genero" value="FEMININO" required=""> 
                     <label for="fem"> Feminino</label>
                 </div>
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
