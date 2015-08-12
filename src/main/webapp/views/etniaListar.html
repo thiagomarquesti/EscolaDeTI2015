@@ -12,7 +12,7 @@
             
             <input type="text" ng-model="busca.descricao" placeholder="Buscar etnia (digite o nome)" class="form-control">
             <span class="input-group-btn">
-                <button ng-click="atualizarEtnias('','',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+                <button ng-click="atualizarEtnias('','','asc',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
             </span>
             
             
@@ -24,16 +24,16 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem == 'asc'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem == 'desc'"></i>
-                            <a ng-click="inverteTipo(); atualizarEtnias('','',busca.descricao); ">Etnia</a>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem"></i>
+                            <a ng-click="trocaOrdem(busca.descricao)">Etnia</a>
                         </th>
                         <th>
                             Ações
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarEtnias('','',busca.descricao)">
+                <tbody ng-init="atualizarEtnias()">
                     <tr ng-repeat='e in etnias.listaDeRegistros' >
                         <td>{{e.descricao}}</td>
                         <td>
@@ -56,7 +56,19 @@
             </div>
         </div>
         <div id="paginacao"></div>
+<!--        <script>
+            $('#paginacao').bootpag({
+                total: etnias.quantidadeDePaginas,
+                page: etnias.paginaAtual,
+                maxVisible:5
+            }).on('page', function(event, num){
+                atualizarEtnias(num,campo, order, string);
+                //console.log(event);
+            });
+        </script>-->
+        
         <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>
+
 

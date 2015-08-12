@@ -101,6 +101,10 @@ public class Usuario extends PessoaFisica implements Serializable {
     public void setPerfil(List<PerfilDeAcesso> perfis) {
         this.perfis = new HashSet<>(perfis);
     }
+    
+//    public void setPerfil(PerfilDeAcesso perfil){
+//        this.perfis.add(perfil);
+//    }
 
     public void removerPerfil(PerfilDeAcesso perfil) {
         this.perfis.remove(perfil);

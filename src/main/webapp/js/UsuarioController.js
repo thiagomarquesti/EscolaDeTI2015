@@ -70,7 +70,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         function removerMascara(aCampo) {
-            console.log(aCampo)
+            console.log(aCampo);
             if (aCampo !== "" && aCampo !== null) {
                 words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
                 aCampo = aCampo.replace(words, "");
@@ -139,7 +139,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         .success(function (data) {
                             $scope.usuario.nome = data[0].nome; 
                             $scope.usuario.cpf.cpf = data[0].cpf; 
-//                            $scope.usuario = data[0];;
+//                            $scope.usuario = data[0];
                             $scope.usuario.rsenha = $scope.usuario.senha;
                             //console.log(data[0]);
                             $scope.isNovo = false;

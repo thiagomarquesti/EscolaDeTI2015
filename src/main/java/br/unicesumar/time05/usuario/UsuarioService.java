@@ -75,7 +75,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
-
+    
     @Override
     public void salvar(Usuario aUsuario) {
         if (repository.count() == 0) {
@@ -196,7 +196,6 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
                 + "  FROM usuario_perfis up "
                 + "  JOIN perfildeacesso p ON (up.perfis_idperfildeacesso = p.idperfildeacesso) "
                 + " WHERE up.usuario_idpessoa = :aId";
-
         List<Map<String, Object>> itensPerfilDeAcesso = query.execute(sql, params);
         return itensPerfilDeAcesso;
     }
