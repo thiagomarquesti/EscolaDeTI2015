@@ -20,7 +20,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.salvarIndio = function () {
         var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
-        var cpfSemPonto = tiraCaracter($scope.indio.cpf, "-");
+        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var susSemEspaco = tiraCaracter($scope.indio.codigoSUS, " ");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
         
