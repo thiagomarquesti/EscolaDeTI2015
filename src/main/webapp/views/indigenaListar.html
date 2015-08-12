@@ -29,10 +29,10 @@
                 </thead>
                 <tbody ng-init="atualizarIndigenas()">
                     <tr ng-repeat='i in indigenas.listaDeRegistros' >
-                        <td>{{i.cod}}</td>
+                        <td>{{i.codigo_assindi}}</td>
                         <td>{{i.nome}}</td>
-                        <td>Etnia: {{i.etnia.descricao}} <br> Terra indígena: {{i.terraIndigena.nomeTerra}}</td>
-                        <td>{{i.telefone.telefone}}</td>
+                        <td>Etnia: {{i.descricao}} <br> Terra indígena: {{i.nome_terra}}</td>
+                        <td>{{i.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
