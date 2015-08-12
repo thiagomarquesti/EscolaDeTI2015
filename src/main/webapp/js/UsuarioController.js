@@ -68,20 +68,23 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         window.location.href = "/login.html";
                     });
         };
-        
-        function removerMascara(aCampo){
-            words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
-            aCampo = aCampo.replace(words, "");
+
+        function removerMascara(aCampo) {
+            console.log(aCampo)
+            if (aCampo !== "" && aCampo !== null) {
+                words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
+                aCampo = aCampo.replace(words, "");
+            }
             return aCampo;
-        };
+        }
+        ;
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                
                 $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
                 $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
-                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
-                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
+//                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
+//                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -112,8 +115,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(deuErro);
         };
 
-        $scope.editar = function (usuario) {
-            $location.path("/Usuario/editar/" + usuario.idpessoa);
+        $scope.editar = function (aId) {
+            $location.path("/Usuario/editar/" + aId);
         };
 
         $scope.alteraStatus = function (id) {
@@ -134,7 +137,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             else {
                 $http.get("/usuario/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.usuario = data[0];
+                            $scope.usuario.nome = data[0].nome; 
+                            $scope.usuario.cpf.cpf = data[0].cpf; 
+//                            $scope.usuario = data[0];;
                             $scope.usuario.rsenha = $scope.usuario.senha;
                             //console.log(data[0]);
                             $scope.isNovo = false;
