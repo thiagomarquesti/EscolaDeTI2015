@@ -45,8 +45,13 @@ public class IndigenaService extends ServiceBase<Indigena, Long, IndigenaReposit
             + "WHERE i.codigo_assindi = :idIndigena";
 
     @Override
-    public Indigena findByID(Long id) {
-        return (Indigena) repository.findOne(id);
+    public List<Map<String, Object>> findByID(Long aCodigoAssindi) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("idIndigena", aCodigoAssindi);
+
+        List<Map<String, Object>> aIndigena = query.execute(SQLCOnsultaIndigenaPorId, params);
+
+        return Collections.unmodifiableList(aIndigena);
     }
 
     @Override
