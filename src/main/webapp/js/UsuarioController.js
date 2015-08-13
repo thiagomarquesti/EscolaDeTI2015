@@ -185,6 +185,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     })
                     .error(erroListarItensAcessoDoMenu);
         };
+        
+    $scope.carregaPerfis = function(){
+        $http.get("/perfildeacesso")
+                .success(function(data){
+                    $scope.usuario.perfis = data;
+                }).error(deuErro());
+    };    
 //-----------------AKI-------------------------------
         function erroListarItensAcessoDoMenu() {
             alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");
