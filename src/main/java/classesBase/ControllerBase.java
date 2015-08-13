@@ -11,46 +11,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+public class ControllerBase<Entidade extends Object, ID extends Serializable, Service extends ServiceBase> {
 
-public class ControllerBase <Entidade extends Object, ID extends Serializable, Service extends ServiceBase> {
-    
     @Autowired
     public Service service;
-    
+
     @RequestMapping(method = RequestMethod.POST)
-    public void salvar(@RequestBody Entidade aEntidade){
+    public void salvar(@RequestBody Entidade aEntidade) {
         try {
             service.salvar(aEntidade);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar entidade, verifique os dados fornecidos!");
         }
     }
-    
+
     @RequestMapping(value = "/{aEntidadeID}", method = RequestMethod.DELETE)
-    public void remover(@PathVariable ID aEntidadeID){
+    public void remover(@PathVariable ID aEntidadeID) {
         service.remover(aEntidadeID);
     }
-    
+
     @RequestMapping(method = RequestMethod.PUT)
-    public void editar(@RequestBody Entidade aEntidade){
+    public void editar(@RequestBody Entidade aEntidade) {
         service.salvar(aEntidade);
     }
-    
+
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getEntidadePorId(@PathVariable ID aId){
+    public List<Map<String, Object>> getEntidadePorId(@PathVariable ID aId) {
         return service.findByID(aId);
     }
-    
+
+    @RequestMapping(value = "/obj/{aId}", method = RequestMethod.GET)
+    public Entidade getObjeto(@PathVariable ID aId) {
+        return (Entidade) service.getObjeto(aId);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Map<String, Object>> getEntidadesListagem() {
         return service.listarSemPaginacao();
     }
-    
+
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesPaginada() {
         return service.listar();
     }
-    
+
     @RequestMapping(value = "/listar/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao) {
         ParametrosConsulta parametros = new ParametrosConsulta(pagina, ordenarPor, sentidoOrdenacao);
