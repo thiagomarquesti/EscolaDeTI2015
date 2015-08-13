@@ -1,7 +1,6 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
 
     function novoIndio() {
-        $scope.isNovoIndio = true;
         $scope.indio = {
             nome: "",
             cpf: "",
@@ -14,10 +13,37 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             escolaridade: "",
             estadoCivil: "",
             codigoSUS: ""
-
         };
+        $scope.isNovoIndio = true;
     }
 
+    $scope.carregarIndio = function () {
+        console.log($location.path());
+        if ($location.path() === "/Indigena/novo") {
+            novoIndio();
+        }
+        else {
+            $timeout(function () {
+                $http.get("/indigena/obj/" + $routeParams.id)
+                    .success(function(data) {
+                        console.log(data);
+                        var dados = data;
+                        dados.cpf = data.cpf.cpf;
+                        dados.telefone = data.telefone.telefone;
+                        dados.dataNascimento = dateToData(data.dataNascimento);
+                        dados.etnia = data.etnia;
+                        dados.terraIndigena = data.terraIndigena.idTerraIndigena;
+                        dados.conveniosselecionados = data.conveniosselecionados;
+                        
+                        $scope.indio = dados;
+
+                        $scope.isNovoIndio = false;
+                    })
+                    .error(deuErro);
+            }, 100);
+        }
+    };
+    
     $scope.salvarIndio = function () {
         var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
         var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
@@ -45,7 +71,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         console.log(indioCompleto);
         
         if ($scope.isNovoIndio) {
-            $http.post("/indigena", indioCompleto)
+            $http.post("/indigena/salvar", indioCompleto)
                     .success(function () {
                         toastr.success("Indígena cadastrado com sucesso!");
                         $location.path("/Indigena/listar");
@@ -53,7 +79,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     .error(erroCadastraIndio);
         }
         else {
-            $http.put("/indigena/", $scope.indio)
+            $http.put("/indigena/salvar", indioCompleto)
                     .success(function () {
                         toastr.success("Indígena atualizado com sucesso!");
                         $location.path("/Indigena/listar");
@@ -65,15 +91,15 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.atualizarIndigenas = function (pag,campo,order,string, paro) {
         if(pag == null || pag == ""){ pag = 1; }
-        if(campo == null || campo == ""){ campo = "descricao"; }
+        if(campo == null || campo == ""){ campo = "nome"; }
         if(order != "asc" && order != "desc"){ order = "asc"; }
         if(string == null){ string = ""; }
 //      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
         $http.get("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string)
             .success(function (data) {
                 $scope.indigenas = data;
-                console.log(data);
-                console.log("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string);
+                //console.log(data);
+                //console.log("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string);
 
                 if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
                 
@@ -81,7 +107,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             .error(deuErro);
     };
 
-    $scope.trocaOrdem = function(string){
+    $scope.trocaOrdem = function(campo, string){
         if($scope.tipoOrdem == true){
             $scope.tipoOrdem = false;
             var ordem = "asc";
@@ -90,7 +116,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             $scope.tipoOrdem = true;
             var ordem = "desc";
         }
-        $scope.atualizarIndigenas("","", ordem ,string, true);
+        $scope.campoAtual = campo;
+        $scope.atualizarIndigenas("",campo, ordem ,string, true);
     };
     
     function atualizaPaginacao(qtde, pag, campo, order, string, paro){
@@ -114,30 +141,17 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         var data = dados.substring(6, 10) + "-" + dados.substring(3, 5) + "-" + dados.substring(0, 2);
         return data;
     }
+    
+    function dateToData(dados) {
+        var data = dados.substring(8, 10) + "/" + dados.substring(5, 7) + "/" + dados.substring(0, 4);
+        return data;
+    }
 
 
     $scope.editarIndio = function (indio) {
-        $location.path("/Indigena/editar/" + indio.id);
+        $location.path("/Indigena/editar/" + indio.codigo_assindi);
     };
     
-    $scope.excluirIndio = function (indio){
-        
-    };
-    
-    $scope.carregarIndios = function () {
-        if ($location.path() === "/Indigena/novo") {
-            novoIndio();
-        }
-        else {
-            $http.get("/indigena/" + $routeParams.id)
-                    .success(function (data) {
-                        $scope.indio = data[0];
-                        $scope.isNovoIndio = false;
-                    })
-                    .error(deuErro);
-        }
-    };
-
     $scope.reset = function (form) {
         if (form) {
             form.$setPristine();
@@ -153,7 +167,42 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     function erroCadastraIndio() {
         toastr.error("Não foi possível cadastrar o indígena. ","Erro");
     }
+    
+    $scope.ehMeninoMenina = {
+         "MASCULINO" : {
+             "icone" : "fa fa-male",
+             "cor" : "#9CC7FF"
+         },
+         "FEMININO" : {
+             "icone" : "fa fa-female",
+             "cor" : "#FFC4C4"
+         }
+    };
+    
+    $scope.calculaIdade = function(data){
+        
+        var ano_aniversario = data.substring(0, 4);
+        var mes_aniversario = data.substring(5,7);
+        var dia_aniversario = data.substring(8,10);
+        
+        var d = new Date,
+        ano_atual = d.getFullYear(),
+        mes_atual = d.getMonth() + 1,
+        dia_atual = d.getDate(),
 
+        ano_aniversario = +ano_aniversario,
+        mes_aniversario = +mes_aniversario,
+        dia_aniversario = +dia_aniversario,
+
+        quantos_anos = ano_atual - ano_aniversario;
+
+        if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
+            quantos_anos--;
+        }
+
+        return quantos_anos < 0 ? 0 : quantos_anos;
+    };
+    
     $scope.carregaScript = function (nScript) {
         $timeout(function () {
             var script = document.createElement('script');

@@ -24,14 +24,40 @@
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
-                        <th>COD Assindi</th><th>Nome</th><th>Etnia</th><th>Telefone</th><th>Ações</th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='codigo_assindi'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='codigo_assindi'"></i>
+                            <a ng-click="trocaOrdem('codigo_assindi', busca.descricao)">COD Assindi</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='nome'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='nome'"></i>
+                            <a ng-click="trocaOrdem('nome', busca.descricao)">Nome</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='data_nascimento'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='data_nascimento'"></i>
+                            <a ng-click="trocaOrdem('data_nascimento', busca.descricao)">Idade</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='descricao'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='descricao'"></i>
+                            <a ng-click="trocaOrdem('descricao', busca.descricao)">Etnia e terra indígena</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='telefone'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='telefone'"></i>
+                            <a ng-click="trocaOrdem('telefone', busca.descricao)">Telefone</a>
+                        </th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody ng-init="atualizarIndigenas()">
                     <tr ng-repeat='i in indigenas.listaDeRegistros' >
                         <td>{{i.codigo_assindi}}</td>
-                        <td>{{i.nome}}</td>
-                        <td>Etnia: {{i.descricao}} <br> Terra indígena: {{i.nome_terra}}</td>
+                        <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
+                        <td>{{calculaIdade(i.data_nascimento)}} anos</td>
+                        <td>{{i.descricao}} <br> {{i.nometerra}}</td>
                         <td>{{i.telefone}}</td>
                         <td>
                             <div class="btn-group">
