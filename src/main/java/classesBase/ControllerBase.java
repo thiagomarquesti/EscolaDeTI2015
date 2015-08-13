@@ -37,13 +37,8 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
     }
     
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getEntidadePorId(@PathVariable ID aId){
-        return service.findByID(aId);
-    }
-    
-    @RequestMapping(value = "/obj/{aId}", method = RequestMethod.GET)
     public Entidade ObjetoByID(@PathVariable ID aId){
-        return (Entidade) service.objetoByID(aId);
+        return (Entidade) service.findByID(aId);
     }
     
     @RequestMapping(method = RequestMethod.GET)

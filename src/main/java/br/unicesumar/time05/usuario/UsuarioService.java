@@ -7,7 +7,6 @@ import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.genero.Genero;
-import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
@@ -93,11 +92,8 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
 
     @Override
-    public List<Map<String, Object>> findByID(Long aUsuarioId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsarioPorID, params);
-        return Collections.unmodifiableList(usuario);
+    public Usuario findByID(Long id){
+        return (Usuario) repository.findOne(id);
     }
 
     @Override

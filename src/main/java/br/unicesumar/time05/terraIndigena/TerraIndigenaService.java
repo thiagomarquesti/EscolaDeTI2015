@@ -38,13 +38,8 @@ public class TerraIndigenaService extends ServiceBase<TerraIndigena, Long, Terra
             + " ON c.estado_codigoestado = u.codigoestado";
     
     @Override
-    public List<Map<String, Object>> findByID(Long aIdTerraIndigena) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("idTerraIndigena", aIdTerraIndigena);
-
-        List<Map<String, Object>> aIndigena = query.execute(SQLConsultaPorId, params);
-
-        return Collections.unmodifiableList(aIndigena);
+    public TerraIndigena findByID(Long aIdTerraIndigena) {
+        return repository.findOne(aIdTerraIndigena);
     }
 
     @Override

@@ -40,11 +40,7 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
         repository.save(Entidade);
     }
 
-    public List<Map<String, Object>> findByID(ID id) {
-        return query.executePorID(construtorDeSQL.getSQLComWherePorID(), id);
-    }
-
-    public Entidade objetoByID(ID id){
+    public Entidade findByID(ID id){
         return (Entidade) repository.findOne(id);
     }
     
