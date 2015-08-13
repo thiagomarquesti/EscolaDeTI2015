@@ -131,7 +131,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         else {
             $http.get("/indigena/" + $routeParams.id)
                     .success(function (data) {
-                        $scope.indio = data[0];
+                        console.log(data);
+                        $scope.indio = data;
                         $scope.isNovoIndio = false;
                     })
                     .error(deuErro);
