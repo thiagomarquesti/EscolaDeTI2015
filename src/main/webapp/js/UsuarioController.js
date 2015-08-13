@@ -17,8 +17,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     cep: "",
                     cidade: {
                         codigoIBGE: 4105904,
+                        descricao: "",
                         estado: {
-                            codigoestado: 41
+                            codigoestado: 41,
+                            descricao: "",
+                            sigla:""  
                         }
                     }
                 },
