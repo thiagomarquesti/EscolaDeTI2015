@@ -41,7 +41,7 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
     }
 
     @RequestMapping(value = "/obj/{aId}", method = RequestMethod.GET)
-    public Entidade getObjeto(ID aId) {
+    public Entidade getObjeto(@PathVariable ID aId) {
         return (Entidade) service.getObjeto(aId);
     }
 
