@@ -38,8 +38,8 @@ public class TerraIndigenaService extends ServiceBase<TerraIndigena, Long, Terra
             + " ON c.estado_codigoestado = u.codigoestado";
     
     @Override
-    public TerraIndigena findByID(Long aIdTerraIndigena) {
-        return repository.findOne(aIdTerraIndigena);
+    public List<Map<String, Object>> findByID(Long id) {
+        return query.executePorID(SQLConsultaPorId, id);
     }
 
     @Override

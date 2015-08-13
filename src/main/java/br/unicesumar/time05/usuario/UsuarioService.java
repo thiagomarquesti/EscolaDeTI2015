@@ -74,7 +74,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
-    
+
     @Override
     public void salvar(Usuario aUsuario) {
         if (repository.count() == 0) {
@@ -92,8 +92,11 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
 
     @Override
-    public Usuario findByID(Long id){
-        return (Usuario) repository.findOne(id);
+    public List<Map<String, Object>> findByID(Long aUsuarioId) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aUsuarioId", aUsuarioId);
+        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsarioPorID, params);
+        return Collections.unmodifiableList(usuario);
     }
 
     @Override
