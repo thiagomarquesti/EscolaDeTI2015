@@ -84,8 +84,9 @@
                 <label for="dataNascimento" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3">
                     <div class="input-group">
-                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido date" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
-                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
+<!--                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido date" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
+                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
+                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control requerido date" required="">
                     </div>
                 </div>
                 <label for="escolaridade" class="col-md-2 control-label">Escolaridade: </label>
@@ -190,7 +191,7 @@
 <script src="js/webcam.js" type="text/javascript"></script>
 <script src="js/ng-camera.js" type="text/javascript"></script>
 
-<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker');
-    carregaScript('js/datepicker-custom');
-    carregarIndio();">
+<div ng-init="carregaScript('bootstrap/neon/js/bootstrap-datepicker'); carregarIndio();">
 </div>
+
+<!--carregaScript('js/datepicker-custom');-->

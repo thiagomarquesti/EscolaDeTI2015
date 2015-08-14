@@ -49,7 +49,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var susSemEspaco = tiraCaracter($scope.indio.codigoSUS, " ");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
-        
         var indioCompleto = {
             nome : $scope.indio.nome ,
             cpf: {
@@ -141,13 +140,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         return str;
     }
 
-    function dataToDate(dados) {
-        var data = dados.substring(6, 10) + "-" + dados.substring(3, 5) + "-" + dados.substring(0, 2);
+    function dataToDate(valor) {
+        var data = valor.substring(6, 10) + "-" + valor.substring(3, 5) + "-" + valor.substring(0, 2);
         return data;
     }
     
-    function dateToData(dados) {
-        var data = dados.substring(8, 10) + "/" + dados.substring(5, 7) + "/" + dados.substring(0, 4);
+    function dateToData(valor) {
+        var data = valor.substring(8, 10) + "/" + valor.substring(5, 7) + "/" + valor.substring(0, 4);
         return data;
     }
 
