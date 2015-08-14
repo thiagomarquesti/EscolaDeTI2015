@@ -3,7 +3,12 @@ package br.unicesumar.time05.indigena;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.etnia.Etnia;
+import br.unicesumar.time05.etnia.EtniaRepository;
+import br.unicesumar.time05.etnia.EtniaService;
+import br.unicesumar.time05.terraIndigena.TerraIndigena;
 import br.unicesumar.time05.terraIndigena.TerraIndigenaRepository;
+import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
 import classesBase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +27,10 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     }
 
     @Autowired
-    TerraIndigenaRepository terraRepository;
-    
+    private TerraIndigenaService terraService;
+    @Autowired
+    private EtniaService etniaService;
+
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLConsultaIndigena = "SELECT i.codigo_assindi,  i.codigoSUS, "
             + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
@@ -50,12 +57,21 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "WHERE i.codigo_assindi = :idIndigena";
 
     @Override
-    public void salvar(CriarIndigena aCIndigena){
-        Indigena i = new Indigena(aCIndigena.getNome(), aCIndigena.getCpf(), aCIndigena.getEtnia(), aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
-        i.setTerraIndigena(terraRepository.findOne(aCIndigena.getTerraIndigena()));
+    public void salvar(CriarIndigena aCIndigena) {
+        Indigena i = new Indigena(null, aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aCIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
         repository.save(i);
     }
-    
+
+    @Override
+    public void alterar(CriarIndigena aCIndigena) {
+        Indigena i = new Indigena(aCIndigena.getCodigoAssindi(), aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aCIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
+        repository.save(i);
+    }
+
     @Override
     public List<Map<String, Object>> findByID(Long aCodigoAssindi) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
@@ -80,5 +96,5 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(SQLConsultaIndigena);
     }
-    
+
 }

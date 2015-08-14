@@ -44,8 +44,8 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
         return query.executePorID(construtorDeSQL.getSQLComWherePorID(), id);
     }
 
-    public Entidade getObjeto(ID aId) {
-        return (Entidade) repository.findOne(aId);
+    public Object getObjeto(ID aId) {
+        return repository.findOne(aId);
     }
 
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {

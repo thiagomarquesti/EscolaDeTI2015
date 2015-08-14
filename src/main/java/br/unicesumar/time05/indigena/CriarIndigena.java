@@ -13,7 +13,7 @@ public class CriarIndigena implements Serializable{
     private Long codigoAssindi;
     private String nome;
     private CPF cpf;
-    private Etnia etnia;
+    private Long etnia;
     private Genero genero;
     private Date dataNascimento;
     private Set<Convenio> convenio;
@@ -26,7 +26,7 @@ public class CriarIndigena implements Serializable{
     public CriarIndigena() {
     }
 
-    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
         this.codigoAssindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
@@ -65,11 +65,11 @@ public class CriarIndigena implements Serializable{
         this.cpf = cpf;
     }
 
-    public Etnia getEtnia() {
+    public Long getEtnia() {
         return etnia;
     }
 
-    public void setEtnia(Etnia etnia) {
+    public void setEtnia(Long etnia) {
         this.etnia = etnia;
     }
 

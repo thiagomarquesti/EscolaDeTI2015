@@ -32,7 +32,7 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
 
     @RequestMapping(method = RequestMethod.PUT)
     public void editar(@RequestBody Entidade aEntidade) {
-        service.salvar(aEntidade);
+        service.alterar(aEntidade);
     }
 
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
@@ -41,8 +41,8 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
     }
 
     @RequestMapping(value = "/obj/{aId}", method = RequestMethod.GET)
-    public Entidade getObjeto(@PathVariable ID aId) {
-        return (Entidade) service.getObjeto(aId);
+    public Object getObjeto(@PathVariable ID aId) {
+        return service.getObjeto(aId);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -74,8 +74,9 @@ public class Indigena implements Serializable{
 
     public Indigena() {
     }
-
-    public Indigena(String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+    
+    public Indigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+        this.codigoAssindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
         this.etnia = etnia;

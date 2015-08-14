@@ -31,9 +31,9 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         dados.cpf = data.cpf.cpf;
                         dados.telefone = data.telefone.telefone;
                         dados.dataNascimento = dateToData(data.dataNascimento);
-                        dados.etnia = data.etnia;
+                        dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idTerraIndigena;
-                        dados.conveniosselecionados = data.conveniosselecionados;
+                        dados.conveniosselecionados = data.convenio;
                         
                         $scope.indio = dados;
 
@@ -68,10 +68,9 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             codigoSUS: susSemEspaco
         };
         
-        console.log(indioCompleto);
         
         if ($scope.isNovoIndio) {
-            $http.post("/indigena/salvar", indioCompleto)
+            $http.post("/indigena", indioCompleto)
                     .success(function () {
                         toastr.success("Indígena cadastrado com sucesso!");
                         $location.path("/Indigena/listar");
@@ -79,7 +78,9 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     .error(erroCadastraIndio);
         }
         else {
-            $http.put("/indigena/salvar", indioCompleto)
+            indioCompleto.codigoAssindi = $routeParams.id;
+            console.log(indioCompleto);
+            $http.put("/indigena", indioCompleto)
                     .success(function () {
                         toastr.success("Indígena atualizado com sucesso!");
                         $location.path("/Indigena/listar");
@@ -133,6 +134,9 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
 
     function tiraCaracter(campo, oque) {
+    if (!$scope.isNovoIndio) {
+        return campo;
+        }
         var str = campo.split(oque).join("");
         return str;
     }
