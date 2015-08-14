@@ -1,4 +1,4 @@
-package br.unicesumar.time05.classesbase;
+package classesbase;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;

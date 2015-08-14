@@ -1,6 +1,6 @@
 package br.unicesumar.time05.etnia;
 
-import br.unicesumar.time05.classesbase.ControllerBase;
+import classesbase.ControllerBase;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

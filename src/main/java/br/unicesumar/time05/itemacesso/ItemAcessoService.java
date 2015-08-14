@@ -1,7 +1,7 @@
 package br.unicesumar.time05.itemacesso;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.classesbase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

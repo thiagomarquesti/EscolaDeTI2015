@@ -1,4 +1,4 @@
-package br.unicesumar.time05.classesbase;
+package classesbase;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
@@ -50,13 +50,13 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
     public RetornoConsultaPaginada getEntidadesPaginadaSimples() {
         return service.listar();
     }
-    /*
+    
     @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesPaginada(@PathVariable int registrosPorPagina, @PathVariable int pagina) {
         ParametrosConsulta parametros = new ParametrosConsulta(registrosPorPagina, pagina);
         return service.listar(parametros);
     }
-    */
+    
     @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int registrosPorPagina, @PathVariable int pagina, @PathVariable String ordenarPor, @PathVariable String sentidoOrdenacao) {
         ParametrosConsulta parametros = new ParametrosConsulta(registrosPorPagina, pagina, ordenarPor, sentidoOrdenacao);

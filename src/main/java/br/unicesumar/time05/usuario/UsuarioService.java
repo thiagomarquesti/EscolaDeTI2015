@@ -12,7 +12,7 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
-import br.unicesumar.time05.classesbase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

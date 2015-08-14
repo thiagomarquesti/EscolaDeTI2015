@@ -15,7 +15,7 @@ public class Etnia implements Serializable{
     @GeneratedValue(strategy = GenerationType.TABLE)
     @CampoConsulta
     private Long idetnia;
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String descricao;
 
     public Etnia() {

@@ -17,14 +17,14 @@ public class ParametrosConsulta implements Serializable {
         this.sentidoOrdenacao = "";
         this.palavraChave = "";
     }
-/*
+
     public ParametrosConsulta(int pagina, int registrosPorPagina) {
         this.pagina = pagina;
         this.registrosPorPagina = registrosPorPagina;
         this.ordenarPor = "";
         this.sentidoOrdenacao = "";
         this.palavraChave = "";
-    }*/
+    }
 
     public ParametrosConsulta(int registrosPorPagina, int pagina, String ordenarPor, String sentidoOrdenacao, String palavraChave) {
         this.registrosPorPagina = registrosPorPagina;
