@@ -22,6 +22,7 @@ public class ControllerBase <Entidade extends Object, ID extends Serializable, S
         try {
             service.salvar(aEntidade);
         } catch (Exception e) {
+            System.out.println(e);
             throw new RuntimeException("Erro ao salvar entidade, verifique os dados fornecidos!");
         }
     }
