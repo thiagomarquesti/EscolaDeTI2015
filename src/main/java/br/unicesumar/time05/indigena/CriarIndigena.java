@@ -1,7 +1,5 @@
 package br.unicesumar.time05.indigena;
 
-import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.etnia.Etnia;
@@ -9,73 +7,26 @@ import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
-@Entity
-public class Indigena implements Serializable{
-
-    @CampoConsulta
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class CriarIndigena implements Serializable{
     private Long codigoAssindi;
-   
-    @CampoConsulta
     private String nome;
-    
-    @CampoConsulta
-    @Embedded
     private CPF cpf;
-    
-    @CampoConsulta
-    @ManyToOne
-    private Etnia etnia;
-    
-    @CampoConsulta
-    @Enumerated(EnumType.STRING)
+    private Long etnia;
     private Genero genero;
-    
-    @CampoConsulta
     private Date dataNascimento;
-
-    @ManyToMany
-    @JoinTable(name = "indigena_convenio",
-            joinColumns = {
-                @JoinColumn(name = "indigena_id", referencedColumnName = "codigoAssindi")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "convenio_id", referencedColumnName = "idconvenio")})
     private Set<Convenio> convenio;
-   
-    @ManyToOne(cascade = CascadeType.ALL)
     private Telefone telefone;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private TerraIndigena terraIndigena;
-    
-    @Enumerated(EnumType.STRING)
+    private Long terraIndigena;
     private Escolaridade escolaridade;
-    
-    @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
-    
     private Long codigoSUS;
 
-    public Indigena() {
+    public CriarIndigena() {
     }
-    
-    public Indigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+
+    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
         this.codigoAssindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
@@ -89,7 +40,7 @@ public class Indigena implements Serializable{
         this.estadoCivil = estadoCivil;
         this.codigoSUS = codigoSUS;
     }
-
+    
     public Long getCodigoAssindi() {
         return codigoAssindi;
     }
@@ -114,11 +65,11 @@ public class Indigena implements Serializable{
         this.cpf = cpf;
     }
 
-    public Etnia getEtnia() {
+    public Long getEtnia() {
         return etnia;
     }
 
-    public void setEtnia(Etnia etnia) {
+    public void setEtnia(Long etnia) {
         this.etnia = etnia;
     }
 
@@ -154,11 +105,11 @@ public class Indigena implements Serializable{
         this.telefone = telefone;
     }
 
-    public TerraIndigena getTerraIndigena() {
+    public Long getTerraIndigena() {
         return terraIndigena;
     }
 
-    public void setTerraIndigena(TerraIndigena terraIndigena) {
+    public void setTerraIndigena(Long terraIndigena) {
         this.terraIndigena = terraIndigena;
     }
 
@@ -185,27 +136,6 @@ public class Indigena implements Serializable{
     public void setCodigoSUS(Long codigoSUS) {
         this.codigoSUS = codigoSUS;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.codigoAssindi);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Indigena other = (Indigena) obj;
-        if (!Objects.equals(this.codigoAssindi, other.codigoAssindi)) {
-            return false;
-        }
-        return true;
-    }
-
+    
+    
 }

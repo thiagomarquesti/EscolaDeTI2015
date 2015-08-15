@@ -83,7 +83,7 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'IndigenaController'
     }).when('/Indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
-        controller: 'EtniaController'
+        controller: 'IndigenaController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
