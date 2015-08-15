@@ -77,8 +77,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
-                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
+//                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
+//                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
 //                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
 //                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 $http.post("/usuario", $scope.usuario)
@@ -190,12 +190,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(erroListarItensAcessoDoMenu);
         };
         
-    $scope.carregaPerfis = function(){
-        $http.get("/perfildeacesso")
-                .success(function(data){
-                    $scope.usuario.perfis = data;
-                }).error(deuErro());
-    };    
+//    $scope.carregaPerfis = function(){
+//        $http.get("/perfildeacesso")
+//                .success(function(data){
+//                    $scope.usuario.perfis = data;
+//                }).error(deuErro());
+//    };    
 //-----------------AKI-------------------------------
         function erroListarItensAcessoDoMenu() {
             alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");
