@@ -30,7 +30,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         var dados = data;
                         dados.cpf = data.cpf.cpf;
                         dados.telefone = data.telefone.telefone;
-                        dados.dataNascimento = dateToData(data.dataNascimento);
+                        alert(data.dataNascimento);
+                        dados.dataNascimento = new Date(data.dataNascimento);
                         dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idTerraIndigena;
                         dados.conveniosselecionados = data.convenio;
@@ -49,6 +50,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var susSemEspaco = tiraCaracter($scope.indio.codigoSUS, " ");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
+        alert(dataNasc);
         var indioCompleto = {
             nome : $scope.indio.nome ,
             cpf: {
@@ -133,22 +135,21 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
 
     function tiraCaracter(campo, oque) {
-    if (!$scope.isNovoIndio) {
-        return campo;
-        }
         var str = campo.split(oque).join("");
         return str;
     }
 
     function dataToDate(valor) {
-        var data = valor.substring(6, 10) + "-" + valor.substring(3, 5) + "-" + valor.substring(0, 2);
+        //var data = valor.substring(6, 10) + "-" + valor.substring(3, 5) + "-" + valor.substring(0, 2);
+        var date = new Date(valor);
+        var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
         return data;
     }
     
-    function dateToData(valor) {
-        var data = valor.substring(8, 10) + "/" + valor.substring(5, 7) + "/" + valor.substring(0, 4);
-        return data;
-    }
+//    function dateToData(valor) {
+//        var data = valor.substring(8, 10) + "/" + valor.substring(5, 7) + "/" + valor.substring(0, 4);
+//        return data;
+//    }
 
 
     $scope.editarIndio = function (indio) {
