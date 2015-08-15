@@ -4,8 +4,12 @@ import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.cidade.Cidade;
+import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.funcao.Funcao;
+import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
@@ -13,6 +17,7 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import classesBase.ServiceBase;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,10 +29,16 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository> {
+public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepository> {
 
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
+    @Autowired
+    private FuncaoRepository funcaoRepo;
+    @Autowired
+    private CidadeRepository cidadeRepo;
+    
+    
 
     private final String SQLConsultaUsuarios
             = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
@@ -77,14 +88,25 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
     
     @Override
-    public void salvar(Usuario aUsuario) {
+    public void salvar(CriarUsuario aUsuario) {
+        Usuario usuario;
         if (repository.count() == 0) {
-            Usuario usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), aUsuario.getPerfis(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO);
-            aUsuario = usuario;
-            aUsuario.setPerfil(perfilRepo.findAll());
+            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(),new HashSet<PerfilDeAcesso>(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Funcao(), new Date(1L));
+            usuario.setPerfil(perfilRepo.findAll());
+        }else{
+            Cidade cidade = cidadeRepo.findOne(aUsuario.getCodigoIBGE());
+            Endereco end = new Endereco(aUsuario.getLogradouro(), aUsuario.getNumero(), aUsuario.getBairro(), aUsuario.getComplemento(), aUsuario.getCep(), cidade);
+            usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+            List<PerfilDeAcesso> perfis = new ArrayList<>();
+            for (Long id : aUsuario.getPerfis()) {
+                perfis.add(perfilRepo.findOne(id));
+            }
+            usuario.setPerfil(perfis);
+            usuario.setTipoPessoa(TipoPessoa.USUÁRIO);
         }
+        
         try {
-            repository.save(aUsuario);
+            repository.save(usuario);
             repository.flush();
         } catch (Exception e) {
             System.out.println(e);
@@ -183,7 +205,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             perfis.add(perfilRepo.findOne(aPerfil));
         }
         usuario.setPerfil(perfis);
-        super.salvar(usuario);
+        repository.save(usuario);
         //this.salvarUsuario(usuario);
     }
 

@@ -9,22 +9,15 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 email: {
                     email: ""
                 },
-                endereco: {
-                    logradouro: "",
-                    numero: "",
-                    bairro: "",
-                    complemento: "",
-                    cep: "",
-                    cidade: {
-                        codigoIBGE: 4105904,
-                        descricao: "",
-                        estado: {
-                            codigoestado: 41,
-                            descricao: "",
-                            sigla:""  
-                        }
-                    }
-                },
+                funcao:"",
+                logradouro: "",
+                numero: "",
+                bairro: "",
+                complemento: "",
+                cep: "",
+                codigoIBGE: "",
+                codigoestado:"41",
+                datanasc:"",
                 cpf: {
                     cpf: ""
                 },
@@ -159,6 +152,17 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             novoUsuario();
         };
 
+        $scope.estado = function (){
+            $http.get("/uf").success(function (data){
+                $scope.estados = data;
+            }).error(deuErro());
+        };
+        
+        $scope.cidade = function (id){
+            $http.get("/cidade/cidadePorEstado/"+id).success(function (data){
+                $scope.cidades = data;
+            }).error(deuErro());
+        };
 
         $scope.logout = function () {
             $http.get("/login/usuariologado")

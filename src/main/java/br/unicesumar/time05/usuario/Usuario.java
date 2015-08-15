@@ -10,7 +10,9 @@ import br.unicesumar.time05.pessoaFisica.PessoaFisica;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.TipoComparacao;
+import br.unicesumar.time05.funcao.Funcao;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +35,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"login"}, name = "uk_login")})
 public class Usuario extends PessoaFisica implements Serializable {
+    
+    @CampoConsulta
+    private Funcao funcao;
 
     @NotBlank(message = "Campo login não pode estar vazio")
     @Column(unique = true, nullable = false)
@@ -58,12 +63,22 @@ public class Usuario extends PessoaFisica implements Serializable {
     }
 
     public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
-            Email email, Endereco endereco, TipoPessoa tipoPessoa) {
-        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa);
+            Email email, Endereco endereco, TipoPessoa tipoPessoa, Funcao funcao, Date datanasc) {
+        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
         this.login = login;
         this.senha = senha;
         this.perfis = perfis;
+        this.funcao = funcao;
     }
+
+    public Usuario(CriarUsuario u, Endereco endereco, Funcao funcao) {
+        super(u.getCpf(), u.getGenero(), u.getNome(), u.getTelefones(), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
+        this.funcao = funcao;
+        this.login = u.getLogin();
+        this.senha = u.getSenha();
+    }
+    
+    
 
     public Long getIdUsuario() {
         return super.getIdpessoa();

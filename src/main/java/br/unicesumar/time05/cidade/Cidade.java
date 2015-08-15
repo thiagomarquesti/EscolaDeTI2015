@@ -3,6 +3,7 @@ package br.unicesumar.time05.cidade;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.itemacesso.InicializadorItemAcesso;
 import br.unicesumar.time05.uf.UF;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 public class Cidade {
     @CampoConsulta
     @Id
-    private int codigoIBGE;
+    private Long codigoIBGE;
     @CampoConsulta
     private String descricao;
     
@@ -23,17 +24,17 @@ public class Cidade {
 
     }
 
-    public Cidade(int codigoIBGE, String descricao, UF estado) {
+    public Cidade(Long codigoIBGE, String descricao, UF estado) {
         this.codigoIBGE = codigoIBGE;
         this.descricao = descricao;
         this.estado = estado;
     }
 
-    public int getCodigoIBGE() {
+    public Long getCodigoIBGE() {
         return codigoIBGE;
     }
 
-    public void setCodigoIBGE(int codigoIBGE) {
+    public void setCodigoIBGE(Long codigoIBGE) {
         this.codigoIBGE = codigoIBGE;
     }
 
@@ -55,8 +56,8 @@ public class Cidade {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.codigoIBGE;
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.codigoIBGE);
         return hash;
     }
 
@@ -69,7 +70,7 @@ public class Cidade {
             return false;
         }
         final Cidade other = (Cidade) obj;
-        if (this.codigoIBGE != other.codigoIBGE) {
+        if (!Objects.equals(this.codigoIBGE, other.codigoIBGE)) {
             return false;
         }
         return true;
