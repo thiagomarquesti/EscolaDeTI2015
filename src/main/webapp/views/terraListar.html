@@ -16,23 +16,21 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th><th>Terra Indígena</th><th>Cidade</th><th>Ações</th>
+                       <th>Terra Indígena</th><th>Cidade</th><th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarTerras()">
-                    <tr ng-repeat='t in filtered = (terras| filter:busca
-                            )' >
-                        <td>{{t.idterra}}</td>
+                <tbody ng-init="todasTerras()">
+                    <tr ng-repeat='t in filtered = (terras| filter:busca)' >
+                        <td>{{t.nometerra}}</td>
                         <td>{{t.cidade}}</td>
-                        <td>{{t.nomeTerra}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editarTerra(e)">Editar</a></li>
-                                    <li><a ng-click="deletarTerra(e)">Excluir</a></li>
+                                    <li><a ng-click="editarTerra(t)">Editar</a></li>
+                                    <li><a ng-click="deletarTerra(t)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>

@@ -18,11 +18,11 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.todasCidades = function(){
         $http.get("/cidade")
-                .success(function(data){
-                    //console.log(data);
-                    $scope.cidades = data;
-                })
-                .error(deuErro);
+            .success(function(data){
+                //console.log(data);
+                $scope.cidades = data;
+            })
+            .error(deuErro);
     };
     
     $scope.carregarTerra = function(){
@@ -30,9 +30,10 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
             novaTerra();
         }
         else {
-            $http.get("/terraIndigena/" + $routeParams.id)
+            $http.get("/terraIndigena/obj/" + $routeParams.id)
                     .success(function(data){
-                        $scope.terra = data[0];
+                        $scope.terra = data;
+                        console.log(data);
                         $scope.isNovaTerra = false;
                     })
                     .error(deuErro);
@@ -43,20 +44,20 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         $http.get("/terraIndigena")
             .success(function (data) {
                 $scope.terras = data;
-                //console.log($scope.terras);
+                console.log($scope.terras);
             })
             .error(deuErro);
     };
     
     $scope.editarTerra = function(terra) {
-        $location.path("/TerraIndigena/editar/" + terra.idTerraIndigena);
+        $location.path("/TerraIndigena/editar/" + terra.idterraindigena);
     };
     
     $scope.deletarTerra = function (terra) {
-        $http.delete("/terraIndigena/" + terra.idTerraIndigena)
+        $http.delete("/terraIndigena/" + terra.idterraindigena)
                 .success(function (status) {
-                    toastr.success("Terra "+ terra.nomeTerra +" deletada com sucesso.");
-                    $scope.atualizarTerras();
+                    toastr.success("Terra indígena "+ terra.nometerra +" deletada com sucesso.");
+                    $scope.todasTerras();
                 })
                 .error(deuErro);
     };
