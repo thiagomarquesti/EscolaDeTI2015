@@ -16,12 +16,21 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         novaTerra();
     };
     
+    $scope.todasCidades = function(){
+        $http.get("/cidade")
+                .success(function(data){
+                    //console.log(data);
+                    $scope.cidades = data;
+                })
+                .error(deuErro);
+    };
+    
     $scope.carregarTerra = function(){
         if($location.path() === "/TerraIndigena/nova"){
             novaTerra();
         }
         else {
-            $http.get("/terra/" + $routeParams.id)
+            $http.get("/terraIndigena/" + $routeParams.id)
                     .success(function(data){
                         $scope.terra = data[0];
                         $scope.isNovaTerra = false;
@@ -44,7 +53,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     };
     
     $scope.deletarTerra = function (terra) {
-        $http.delete("/terra/" + terra.idTerraIndigena)
+        $http.delete("/terraIndigena/" + terra.idTerraIndigena)
                 .success(function (status) {
                     toastr.success("Terra "+ terra.nomeTerra +" deletada com sucesso.");
                     $scope.atualizarTerras();
@@ -53,22 +62,27 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     };
 
     $scope.salvarTerra = function () {
-        if ($scope.isNovaTerra) {
-            $http.post("/terra", $scope.terra)
-                    .success(function () {
-                        $location.path("/TerraIndigena/listar");
-                        toastr.success("Terra indígena inserida com sucesso!");
-                    })
-                    .error(deuErro);
+        if($scope.terra.cidade == ""){
+            toastr.error("A cidade não foi preenchida corretamente.","Atenção");
         }
-        else {
-            $http.put("/terra/", $scope.terra)
-                    .success(function () {
-                        $location.path("/TerraIndigena/listar");
-                        toastr.success("Terra indígena atualizada com sucesso!");
-                    })
-                    .error(deuErro);
+        else{
+            console.log($scope.terra.cidade);
+            if ($scope.isNovaTerra) {
+                $http.post("/terraIndigena", $scope.terra)
+                        .success(function () {
+                            $location.path("/TerraIndigena/listar");
+                            toastr.success("Terra indígena inserida com sucesso!");
+                        })
+                        .error(deuErro);
+            }
+            else {
+                $http.put("/terraIndigena/", $scope.terra)
+                        .success(function () {
+                            $location.path("/TerraIndigena/listar");
+                            toastr.success("Terra indígena atualizada com sucesso!");
+                        })
+                        .error(deuErro);
+            }
         }
-        
     };
 }]);

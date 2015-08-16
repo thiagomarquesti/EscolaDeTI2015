@@ -21,21 +21,17 @@
                 <span ng-show="formTerra.nomeTerra.$error.maxlength">Terra indígena não pode ter mais de 50 caracteres. </span>
             </div>
             
-            <div class="form-group">    
+            <div class="form-group" ng-init="todasCidades()">    
                 <label for="nome" class="col-md-1 col-sm-2 control-label">Cidade:</label>
                 
                     <multiselect id="cidade" name="cidade" class="input-lg" 
                              ng-model="terra.cidade" 
-                             ms-selected ="{{cidades.selected.length}}" 
                              ms-header="Selecione a cidade"
-                             options="cidade.nome for cidade in cidades" 
-                             scroll-after-rows="8">
+                             options='c.codigoibge as (c.nomecidade + " - " + c.sigla) for c in cidades' 
+                             scroll-after-rows="8"
+                             >
                     </multiselect>
                
-            </div>
-
-            <div ng-show="formTerra.cidade.$dirty && formTerra.cidade.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
-                <span ng-show="formTerra.cidade.$error.required">Preencha a cidade. </span>
             </div>
             
             <div class="form-group">
