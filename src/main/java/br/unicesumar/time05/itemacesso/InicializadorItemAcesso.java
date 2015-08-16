@@ -76,6 +76,28 @@ public class InicializadorItemAcesso {
             menuEtniaNovo = new ItemAcesso("Cadastrar Etnia", "#/Etnia/nova", "fa-plus", menuEtnia);
             itensAcesso.add(menuEtniaNovo);
         }
+                
+        //TERRA INDIGENA
+        ItemAcesso menuTerraIndigena;
+        menuTerraIndigena = this.getItemAcesso(itensAcesso, "Gerenciar Terra Indígena", "");
+        if (menuTerraIndigena == null) {
+            menuTerraIndigena = new ItemAcesso("Gerenciar Terra Indígena", "", "fa-leaf", menu);
+            itensAcesso.add(menuTerraIndigena);
+        }
+
+        ItemAcesso menuTerraIndigenaListar;
+        menuTerraIndigenaListar = this.getItemAcesso(itensAcesso, "Listar Terra Indígena", "#/TerraIndigena/listar");
+        if (menuTerraIndigenaListar == null) {
+            menuTerraIndigenaListar = new ItemAcesso("Listar Terra Indígena", "#/TerraIndigena/listar", "fa-list-alt", menuTerraIndigena);
+            itensAcesso.add(menuTerraIndigenaListar);
+        }
+
+        ItemAcesso menuTerraIndigenaNovo;
+        menuTerraIndigenaNovo = this.getItemAcesso(itensAcesso, "Novo Terra Indígena", "#/TerraIndigena/nova");
+        if (menuTerraIndigenaNovo == null) {
+            menuTerraIndigenaNovo = new ItemAcesso("Cadastrar Terra Indígena", "#/TerraIndigena/nova", "fa-plus", menuTerraIndigena);
+            itensAcesso.add(menuTerraIndigenaNovo);
+        }
 
         //INDIGENA
         ItemAcesso menuIndigena;
@@ -192,28 +214,6 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuFuncaoNovo);
         }
         
-        //TERRA INDIGENA
-        ItemAcesso menuTerraIndigena;
-        menuTerraIndigena = this.getItemAcesso(itensAcesso, "Gerenciar Terra Indígena", "");
-        if (menuTerraIndigena == null) {
-            menuTerraIndigena = new ItemAcesso("Gerenciar Terra Indígena", "", "fa-leaf", menu);
-            itensAcesso.add(menuTerraIndigena);
-        }
-
-        ItemAcesso menuTerraIndigenaListar;
-        menuTerraIndigenaListar = this.getItemAcesso(itensAcesso, "Listar Terra Indígena", "#/TerraIndigena/listar");
-        if (menuTerraIndigenaListar == null) {
-            menuTerraIndigenaListar = new ItemAcesso("Listar Terra Indígena", "#/TerraIndigena/listar", "fa-list-alt", menuTerraIndigena);
-            itensAcesso.add(menuTerraIndigenaListar);
-        }
-
-        ItemAcesso menuTerraIndigenaNovo;
-        menuTerraIndigenaNovo = this.getItemAcesso(itensAcesso, "Novo Terra Indígena", "#/TerraIndigena/nova");
-        if (menuTerraIndigenaNovo == null) {
-            menuTerraIndigenaNovo = new ItemAcesso("Cadastrar Terra Indígena", "#/TerraIndigena/nova", "fa-plus", menuTerraIndigena);
-            itensAcesso.add(menuTerraIndigenaNovo);
-        }
-
         
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
