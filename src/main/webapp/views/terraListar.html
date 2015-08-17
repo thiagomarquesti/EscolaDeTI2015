@@ -7,22 +7,39 @@
         </div>
     </div>
     <div class="panel-body">
+       <form name="buscaTerra">
         <div class="input-group">
-            <span class="input-group-addon btn-info" id="basic-addon1"><i class="fa fa-search"></i></span>
-            <input type="text" ng-model="busca.nomeTerra" placeholder="Buscar terra indígena (digite o nome)" class="form-control" aria-describedby="basic-addon1">
-        </div>    
+            
+            <input type="text" ng-model="busca.descricao" placeholder="Buscar terra indígena)" class="form-control">
+            <span class="input-group-btn">
+                <button ng-click="atualizarTerras('','','asc',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
+            </span>
+            
+            
+        </div>  
+            </form>
         <br>
         <div class="panel panel-default">
-            <table class="table table-striped table-hover">
+            <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
-                       <th>Terra Indígena</th><th>Cidade</th><th>Ações</th>
+                       <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='nomeTerra'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='nomeTerra'"></i>
+                            <a ng-click="trocaOrdem('nomeTerra', busca.descricao)">Terra indígena</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='cidade'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='cidade'"></i>
+                            <a ng-click="trocaOrdem('cidade', busca.descricao)">Cidade</a>
+                        </th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="todasTerras()">
-                    <tr ng-repeat='t in filtered = (terras| filter:busca)' >
+                <tbody ng-init="atualizarTerras()">
+                    <tr ng-repeat='t in terras.listaDeRegistros' >
                         <td>{{t.nometerra}}</td>
-                        <td>{{t.cidade}}</td>
+                        <td>{{t.cidade}} - {{t.sigla}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
@@ -38,8 +55,9 @@
                 </tbody>
             </table>
             
-            <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
+            <div class="panel-footer">Registros encontrados: {{terras.totalDeRegistros}}</div>
         </div>
+        <div id="paginacao"></div>
         <a ng-href="#/TerraIndigena/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>

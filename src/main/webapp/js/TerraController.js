@@ -57,7 +57,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         $http.delete("/terraIndigena/" + terra.idterraindigena)
                 .success(function (status) {
                     toastr.success("Terra indígena "+ terra.nometerra +" deletada com sucesso.");
-                    $scope.todasTerras();
+                    $scope.atualizarTerras();
                 })
                 .error(deuErro);
     };
@@ -68,8 +68,21 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         }
         else{
             console.log($scope.terra.cidade);
+            var terraCompleta = {
+                nomeTerra: $scope.terra.nomeTerra,
+                cidade: {
+                    codigoIBGE: $scope.terra.cidade.codigoibge,
+                    descricao: $scope.terra.cidade.nomecidade,
+                    estado: {
+                        codigoestado: $scope.terra.cidade.codigoestado,
+                        descricao: $scope.terra.cidade.descricao,
+                        sigla: $scope.terra.cidade.sigla
+                    }
+                }
+            };
+            console.log(terraCompleta);
             if ($scope.isNovaTerra) {
-                $http.post("/terraIndigena", $scope.terra)
+                $http.post("/terraIndigena", terraCompleta)
                         .success(function () {
                             $location.path("/TerraIndigena/listar");
                             toastr.success("Terra indígena inserida com sucesso!");
@@ -86,4 +99,44 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
             }
         }
     };
+    
+    $scope.atualizarTerras = function (pag,campo,order,string, paro) {
+        if(pag == null || pag == ""){ pag = 1; }
+        if(campo == null || campo == ""){ campo = "nomeTerra"; }
+        if(order != "asc" && order != "desc"){ order = "asc"; }
+        if(string == null){ string = ""; }
+//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
+        $http.get("/terraIndigena/listar/"+pag+"/"+campo+"/"+order+"/"+string)
+            .success(function (data) {
+                $scope.terras = data;
+                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
+            })
+            .error(deuErro);
+    };
+
+    $scope.trocaOrdem = function(campo, string){
+        var ordem;
+        if($scope.tipoOrdem == true){
+            $scope.tipoOrdem = false;
+            ordem = "asc";
+        }
+        else {
+            $scope.tipoOrdem = true;
+            ordem = "desc";
+        }
+        $scope.campoAtual = campo;
+        $scope.atualizarTerras("",campo, ordem ,string, true);
+    };
+    
+    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
+        $('#paginacao').bootpag({
+            total: qtde,
+            page: pag,
+            maxVisible:5
+        }).on('page', function(event, num){
+            paro = true;
+            $scope.atualizarTerras(num, campo, order, string, paro);
+        });
+    }
+    
 }]);
