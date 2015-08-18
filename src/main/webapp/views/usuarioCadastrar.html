@@ -83,16 +83,17 @@
             <div class="form-group">
                 <label for="cep" class="col-md-2 control-label">CEP: </label>
                 <div class="col-md-2"><input type="text" ng-model="usuario.cep" id="cep" name="cep" required="" class="form-control cep"></div>
+              
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2" ng-controller="UsuarioController" ng-init="estado()">
-                    <select ng-model="usuario.codigoestado" id="uf" ng-oninput="cidade(usuario.codigoestado)" name="uf" required="" class="form-control">
+                    <select ng-model="usuario.codigoestado" id="uf" name="uf" required="" class="form-control">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
                     </select>
                 </div>
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
-                <div class="col-md-3" ng-controller="UsuarioController" ng-init="cidade(usuario.codigoestado)">
+                <div class="col-md-3" ng-controller="UsuarioController" ng-click="cidade()">
                     <select ng-model="usuario.codigoIBGE" id="cidade" name="cidade" required="" class="form-control">
                         <option value="">Aguardando estado...</option>
                         <!-- FAZER BUSCA POR CIDADES -->

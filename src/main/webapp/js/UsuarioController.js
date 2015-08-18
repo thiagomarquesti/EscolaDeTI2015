@@ -9,15 +9,15 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 email: {
                     email: ""
                 },
-                funcao:"",
+                funcao: "",
                 logradouro: "",
                 numero: "",
                 bairro: "",
                 complemento: "",
                 cep: "",
                 codigoIBGE: "",
-                codigoestado:"41",
-                datanasc:"",
+                codigoestado: "41",
+                datanasc: "",
                 cpf: {
                     cpf: ""
                 },
@@ -133,8 +133,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             else {
                 $http.get("/usuario/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.usuario.nome = data[0].nome; 
-                            $scope.usuario.cpf.cpf = data[0].cpf; 
+                            $scope.usuario.nome = data[0].nome;
+                            $scope.usuario.cpf.cpf = data[0].cpf;
 //                            $scope.usuario = data[0];
                             $scope.usuario.rsenha = $scope.usuario.senha;
                             //console.log(data[0]);
@@ -152,16 +152,21 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             novoUsuario();
         };
 
-        $scope.estado = function (){
-            $http.get("/uf").success(function (data){
-                $scope.estados = data;
+        $scope.estado = function () {
+            $http.get("/uf").success(function (data) {
+                $scope.estados = data[0];
+                console.log(data[0]);
+                console.log($scope.estados.codigoestado);
             }).error(deuErro());
         };
-        
-        $scope.cidade = function (id){
-            $http.get("/cidade/cidadePorEstado/"+id).success(function (data){
-                $scope.cidades = data;
-            }).error(deuErro());
+
+        $scope.cidade = function () {
+            if ($scope.usuario.codigoestado !== ""){
+                console.log($scope.usuario.codigoestado);
+                $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
+                    $scope.cidades = data[0];
+                }).error(deuErro());
+            }
         };
 
         $scope.logout = function () {
@@ -189,7 +194,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     })
                     .error(erroListarItensAcessoDoMenu);
         };
-        
+
 //    $scope.carregaPerfis = function(){
 //        $http.get("/perfildeacesso")
 //                .success(function(data){
