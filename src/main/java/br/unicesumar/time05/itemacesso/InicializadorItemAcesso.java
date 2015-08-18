@@ -601,7 +601,33 @@ public class InicializadorItemAcesso {
         cidRepo.save(new Cidade(4121208, "QUITANDINHA", uf));
         cidRepo.save(new Cidade(4122305, "RIO NEGRO", uf));
         cidRepo.save(new Cidade(4127601, "TIJUCAS DO SUL", uf));
+    }
+    
+    private void InsereSantaCatarina() {
+        UF uf = new UF(42l, "SANTA CATARINA", "SC");
+        UfRepo.save(uf);
+        cidRepo.save(new Cidade(4100608, "ALTO PARANÁ", uf));
         
+    }
+    
+    private void InsereRioGrandeDoSul() {
+        UF uf = new UF(43l, "RIO GRANDE DO SUL", "RS");
+        UfRepo.save(uf);
+        cidRepo.save(new Cidade(4100608, "ALTO PARANÁ", uf));
+        
+    }
+    
+    private void InsereMatoGrossoDoSul() {
+        UF uf = new UF(50l, "MATO GROSSO DO SUL", "MS");
+        UfRepo.save(uf);
+        cidRepo.save(new Cidade(4100608, "ALTO PARANÁ", uf));
+        
+    }
+    
+    private void InsereSaoPaulo() {
+        UF uf = new UF(35l, "SÃO PAULO", "SP");
+        UfRepo.save(uf);
+        cidRepo.save(new Cidade(4100608, "ALTO PARANÁ", uf));
         
     }
 }
