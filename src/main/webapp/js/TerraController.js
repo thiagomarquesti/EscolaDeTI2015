@@ -33,7 +33,13 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
             $http.get("/terraIndigena/obj/" + $routeParams.id)
                     .success(function(data){
                         $scope.terra = data;
-                        console.log(data);
+                        $scope.terra.cidade = {
+                            codigoibge: data.cidade.codigoibge,
+                            nomecidade: data.cidade.descricao,
+                            codigoestado: data.cidade.estado.codigoestado,
+                            descricao: data.cidade.estado.descricao,
+                            sigla: data.cidade.estado.sigla,
+                        }   
                         $scope.isNovaTerra = false;
                     })
                     .error(deuErro);
@@ -90,7 +96,8 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                         .error(deuErro);
             }
             else {
-                $http.put("/terraIndigena/", $scope.terra)
+                terraCompleta.idTerraIndigena = $scope.terra.idTerraIndigena;
+                $http.put("/terraIndigena/", terraCompleta)
                         .success(function () {
                             $location.path("/TerraIndigena/listar");
                             toastr.success("Terra indígena atualizada com sucesso!");
