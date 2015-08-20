@@ -34,7 +34,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                     .success(function(data){
                         $scope.terra = data;
                         $scope.terra.cidade = {
-                            codigoibge: data.cidade.codigoibge,
+                            codigoibge: data.cidade.codigoIBGE,
                             nomecidade: data.cidade.descricao,
                             codigoestado: data.cidade.estado.codigoestado,
                             descricao: data.cidade.estado.descricao,
@@ -97,7 +97,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
             }
             else {
                 terraCompleta.idTerraIndigena = $scope.terra.idTerraIndigena;
-                $http.put("/terraIndigena/", terraCompleta)
+                $http.put("/terraIndigena", terraCompleta)
                         .success(function () {
                             $location.path("/TerraIndigena/listar");
                             toastr.success("Terra indígena atualizada com sucesso!");
