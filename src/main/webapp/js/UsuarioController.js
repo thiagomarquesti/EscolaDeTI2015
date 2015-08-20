@@ -9,14 +9,14 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 email: {
                     email: ""
                 },
-                funcao: "",
+                idfuncao: "",
                 logradouro: "",
                 numero: "",
                 bairro: "",
                 complemento: "",
                 cep: "",
                 codigoIBGE: "",
-                codigoestado: "41",
+//                codigoestado: "",
                 datanasc: "",
                 cpf: {
                     cpf: ""
@@ -30,6 +30,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 tipo: "USUÁRIO",
                 status: "ATIVO"
             };
+            $scope.codigoestado = "";
             $scope.isNovo = true;
         }
 
@@ -81,6 +82,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 //                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
 //                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
 //                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
+                console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -133,8 +135,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             else {
                 $http.get("/usuario/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.usuario.nome = data[0].nome;
-                            $scope.usuario.cpf.cpf = data[0].cpf;
+                            $scope.usuario = data[0];
+//                            $scope.usuario.cpf.cpf = data[0].cpf;
 //                            $scope.usuario = data[0];
                             $scope.usuario.rsenha = $scope.usuario.senha;
                             //console.log(data[0]);
@@ -152,20 +154,21 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             novoUsuario();
         };
 
-        $scope.estado = function () {
+        $scope.listarEstados = function () {
             $http.get("/uf").success(function (data) {
-                $scope.estados = data[0];
-                console.log(data[0]);
-                console.log($scope.estados.codigoestado);
-            }).error(deuErro());
+                $scope.estados = data;
+//                console.log(data);
+//                console.log($scope.estados.codigoestado);
+            }).error(deuErro);
         };
 
-        $scope.cidade = function () {
-            if ($scope.usuario.codigoestado !== ""){
-                console.log($scope.usuario.codigoestado);
-                $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
-                    $scope.cidades = data[0];
-                }).error(deuErro());
+        $scope.listarCidades = function () {
+            if ($scope.codigoestado !== ""){
+                console.log($scope.codigoestado);
+                $http.get("/cidade/cidadePorEstado/" + $scope.codigoestado).success(function (data) {
+                    $scope.cidades = data;
+                    console.log(data);
+                }).error(deuErro);
             }
         };
 
