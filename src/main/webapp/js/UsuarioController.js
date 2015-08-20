@@ -134,8 +134,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
             else {
                 $http.get("/usuario/" + $routeParams.id)
-                        .success(function (data) {
-                            $scope.usuario = data[0];
+                        .success(function (data) {                           
+                            $scope.usuario = data[];
 //                            $scope.usuario.cpf.cpf = data[0].cpf;
 //                            $scope.usuario = data[0];
                             $scope.usuario.rsenha = $scope.usuario.senha;
