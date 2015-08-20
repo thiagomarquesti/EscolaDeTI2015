@@ -17,11 +17,9 @@ public class TerraIndigena implements Serializable{
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    @CampoConsulta
-   @Column(name = "idterraindigena")
-   private Long idTerraIndigena;
+   private Long idterraindigena;
    @CampoConsulta
-   @Column(name = "nometerra")
-   private String nomeTerra;
+   private String nometerra;
    @ManyToOne
    private Cidade cidade;
 
@@ -31,7 +29,7 @@ public class TerraIndigena implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.idTerraIndigena);
+        hash = 37 * hash + Objects.hashCode(this.idterraindigena);
         return hash;
     }
 
@@ -44,27 +42,27 @@ public class TerraIndigena implements Serializable{
             return false;
         }
         final TerraIndigena other = (TerraIndigena) obj;
-        if (!Objects.equals(this.idTerraIndigena, other.idTerraIndigena)) {
+        if (!Objects.equals(this.idterraindigena, other.idterraindigena)) {
             return false;
         }
         return true;
     }
    
     public TerraIndigena(String nomeTerra, UF estado, Cidade cidade) {
-        this.nomeTerra = nomeTerra;
+        this.nometerra = nomeTerra;
         this.cidade = cidade;
     }
 
     public Long getIdTerraIndigena() {
-        return idTerraIndigena;
+        return idterraindigena;
     }
 
     public String getNomeTerra() {
-        return nomeTerra;
+        return nometerra;
     }
 
     public void setNomeTerra(String nomeTerra) {
-        this.nomeTerra = nomeTerra;
+        this.nometerra = nomeTerra;
     }
 
 

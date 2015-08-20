@@ -32,6 +32,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         dados.telefone = data.telefone.telefone;
                         alert(data.dataNascimento);
                         dados.dataNascimento = new Date(data.dataNascimento);
+                        console.log(dados.dataNascimento);   
                         dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idTerraIndigena;
                         dados.conveniosselecionados = data.convenio;
@@ -58,7 +59,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             },
             etnia: $scope.indio.etnia ,
             genero: $scope.indio.genero,
-            dataNascimento: dataNasc,
+            dataNascimento: dataNasc + "T00:00:00-03",
             convenio: $scope.indio.conveniosselecionados ,
             telefone: {
                 telefone: $scope.indio.telefone
@@ -153,7 +154,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
 
     $scope.editarIndio = function (indio) {
-        $location.path("/Indigena/editar/" + indio.codigo_assindi);
+        $location.path("/Indigena/editar/" + indio.codigoassindi);
     };
     
     $scope.reset = function (form) {

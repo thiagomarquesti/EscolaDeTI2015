@@ -25,8 +25,8 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='codigo_assindi'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='codigo_assindi'"></i>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='codigoassindi'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='codigoassindi'"></i>
                             <a ng-click="trocaOrdem('codigo_assindi', busca.descricao)">COD Assindi</a>
                         </th>
                         <th>
@@ -35,9 +35,9 @@
                             <a ng-click="trocaOrdem('nome', busca.descricao)">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='data_nascimento'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='data_nascimento'"></i>
-                            <a ng-click="trocaOrdem('data_nascimento', busca.descricao)">Idade</a>
+                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='datanascimento'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='datanascimento'"></i>
+                            <a ng-click="trocaOrdem('datanascimento', busca.descricao)">Idade</a>
                         </th>
                         <th>
                             <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='descricao'"></i>
@@ -54,9 +54,9 @@
                 </thead>
                 <tbody ng-init="atualizarIndigenas()">
                     <tr ng-repeat='i in indigenas.listaDeRegistros' >
-                        <td>{{i.codigo_assindi}}</td>
+                        <td>{{i.codigoassindi}}</td>
                         <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
-                        <td>{{calculaIdade(i.data_nascimento)}} anos</td>
+                        <td>{{calculaIdade(i.datanascimento)}} anos</td>
                         <td>{{i.descricao}} <br> {{i.nometerra}}</td>
                         <td>{{i.telefone}}</td>
                         <td>
