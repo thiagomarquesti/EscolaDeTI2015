@@ -28,10 +28,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     .success(function(data) {
                         console.log(data);
                         var dados = data;
+                        var d = new Date(data.dataNascimento);
                         dados.cpf = data.cpf.cpf;
                         dados.telefone = data.telefone.telefone;
-                        alert(data.dataNascimento);
-                        dados.dataNascimento = new Date(data.dataNascimento);
+//                        alert(data.dataNascimento);
+                        dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                         console.log(dados.dataNascimento);   
                         dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idTerraIndigena;
@@ -51,7 +52,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var susSemEspaco = tiraCaracter($scope.indio.codigoSUS, " ");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
-        alert(dataNasc);
+//        alert(dataNasc);
         var indioCompleto = {
             nome : $scope.indio.nome ,
             cpf: {
