@@ -41,9 +41,10 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     
 
     private final String SQLConsultaUsuarios
-            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
-            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-            + "FROM pessoa p"
+            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.codigoibge, u.codigoestado,"
+            + " us.funcao_idfuncao"
+            + " FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
             + "    ON pf.idpessoa = p.idpessoa"
             + " LEFT JOIN pessoa_telefone pt "
@@ -62,9 +63,10 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             + "    ON us.idpessoa = p.idpessoa";
 
     private final String SQLConsultaUsuarioPorID
-            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, t.telefone,"
-            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-            + "FROM pessoa p"
+            = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.codigoibge, u.codigoestado,"
+            + " us.funcao_idfuncao"
+            + " FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
             + "    ON pf.idpessoa = p.idpessoa"
             + " LEFT JOIN pessoa_telefone pt "

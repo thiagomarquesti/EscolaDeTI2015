@@ -9,7 +9,6 @@ import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.pessoaFisica.PessoaFisica;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.TipoComparacao;
 import br.unicesumar.time05.funcao.Funcao;
 import java.io.Serializable;
 import java.sql.Date;
@@ -26,6 +25,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.validator.constraints.NotBlank;
@@ -37,6 +37,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Usuario extends PessoaFisica implements Serializable {
     
     @CampoConsulta
+    @ManyToOne
     private Funcao funcao;
 
     @NotBlank(message = "Campo login não pode estar vazio")
@@ -127,6 +128,14 @@ public class Usuario extends PessoaFisica implements Serializable {
 
     public Set<PerfilDeAcesso> getPerfis() {
         return Collections.unmodifiableSet(this.perfis);
+    }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
     }
 
     @Override

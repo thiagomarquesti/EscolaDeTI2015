@@ -23,6 +23,7 @@ public class CriarUsuario implements Serializable{
     private String complemento;
     private String cep;
     private Long codigoIBGE;
+    private Long codigoUF;
     private Long idfuncao;
     private Date datanasc;
     private TipoPessoa tipo;
@@ -35,8 +36,8 @@ public class CriarUsuario implements Serializable{
 
     public CriarUsuario() {
     }
-    
-    public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long idfuncao, Date datanasc, TipoPessoa tipoPessoa, CPF cpf, Genero genero, String login, Senha senha) {
+
+    public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha) {
         this.idpessoa = idpessoa;
         this.nome = nome;
         this.telefones = telefones;
@@ -47,15 +48,16 @@ public class CriarUsuario implements Serializable{
         this.complemento = complemento;
         this.cep = cep;
         this.codigoIBGE = codigoIBGE;
+//        this.codigoUF = codigoUF;
         this.idfuncao = idfuncao;
         this.datanasc = datanasc;
-        this.tipo = tipoPessoa;
+        this.tipo = tipo;
         this.cpf = cpf;
         this.genero = genero;
         this.login = login;
         this.senha = senha;
     }
-
+    
     public Long getIdpessoa() {
         return idpessoa;
     }
