@@ -76,7 +76,7 @@
                     <label for="fem"> Feminino</label>
                 </div>
                 <label for="nome" class="col-md-2 col-sm-1 control-label">Código SUS:</label>
-                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control sus"></div>
+                <div class="col-md-3 col-sm-4"><input type="text" ng-model="indio.codigoSUS" id="codigoSUS" name="codigoSUS" class="form-control" maxlength="16"></div>
                 
             </div>
             
@@ -84,8 +84,6 @@
                 <label for="dataNascimento" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3">
                     <div class="input-group">
-<!--                        <input type="text" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control datepicker requerido date" data-start-view="2" data-end-date="-1d" data-format="dd/mm/yyyy" required="">
-                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                         <input type="date" ng-model="indio.dataNascimento" id="dataNascimento" name="dataNascimento" class="form-control requerido" required="">
                     </div>
                 </div>

@@ -35,7 +35,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                         console.log(dados.dataNascimento);   
                         dados.etnia = data.etnia.idetnia;
-                        dados.terraIndigena = data.terraIndigena.idTerraIndigena;
+                        dados.terraIndigena = data.terraIndigena.idterraindigena;
                         dados.conveniosselecionados = data.convenio;
                         
                         $scope.indio = dados;
@@ -48,15 +48,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     };
     
     $scope.salvarIndio = function () {
-        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
-        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
-        var susSemEspaco = tiraCaracter($scope.indio.codigoSUS, " ");
+//        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
+//        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
 //        alert(dataNasc);
         var indioCompleto = {
             nome : $scope.indio.nome ,
             cpf: {
-                cpf:cpfSemPonto
+                cpf: $scope.indio.cpf
             },
             etnia: $scope.indio.etnia ,
             genero: $scope.indio.genero,
@@ -68,7 +67,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             terraIndigena: $scope.indio.terraIndigena ,
             escolaridade: $scope.indio.escolaridade ,
             estadoCivil: $scope.indio.estadoCivil ,
-            codigoSUS: susSemEspaco
+            codigoSUS: $scope.indio.codigoSUS
         };
         
         
