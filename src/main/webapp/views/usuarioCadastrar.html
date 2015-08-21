@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label for="funcao" class="col-md-2 control-label">Função: </label>
                 <div class="col-md-3" ng-controller="FuncaoController" ng-init="todasFuncoes();">
-                    <select ng-model="usuario.funcao" id="funcao" name="funcao" required="" class="form-control">
+                    <select ng-model="usuario.idfuncao" id="funcao" name="funcao" required="" class="form-control">
                         <option value="">Selecione uma função</option>
                         <!-- FAZER BUSCA POR FUNÇÕES -->
                         <option ng-repeat="f in funcoes" value="{{f.idfuncao}}">{{f.descricao}}</option>
@@ -70,8 +70,8 @@
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-10">
                     <div class="col-md-3 input-group">
-                        <input type="text" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control">
-                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>
+                        <input type="date" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control">
+<!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                     </div>
                 </div>
             </div>
@@ -85,15 +85,15 @@
                 <div class="col-md-2"><input type="text" ng-model="usuario.cep" id="cep" name="cep" required="" class="form-control cep"></div>
               
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
-                <div class="col-md-2" ng-controller="UsuarioController" ng-init="estado()">
-                    <select ng-model="usuario.codigoestado" id="uf" name="uf" required="" class="form-control">
+                <div class="col-md-2"  ng-init="listarEstados()" ng-click="listarCidades()">
+                    <select ng-model="codigoestado" id="uf" name="uf" required="" class="form-control">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
                     </select>
                 </div>
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
-                <div class="col-md-3" ng-controller="UsuarioController" ng-click="cidade()">
+                <div class="col-md-3">
                     <select ng-model="usuario.codigoIBGE" id="cidade" name="cidade" required="" class="form-control">
                         <option value="">Aguardando estado...</option>
                         <!-- FAZER BUSCA POR CIDADES -->
