@@ -4,11 +4,9 @@ import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import classesBase.ServiceBase;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
