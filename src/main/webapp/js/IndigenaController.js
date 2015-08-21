@@ -35,7 +35,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                         console.log(dados.dataNascimento);   
                         dados.etnia = data.etnia.idetnia;
-                        dados.terraIndigena = data.terraIndigena.idTerraIndigena;
+                        dados.terraIndigena = data.terraIndigena.idterraindigena;
                         dados.conveniosselecionados = data.convenio;
                         
                         $scope.indio = dados;
