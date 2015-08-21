@@ -18,7 +18,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
 
     $scope.carregarIndio = function () {
-        console.log($location.path());
         if ($location.path() === "/Indigena/novo") {
             novoIndio();
         }
@@ -26,24 +25,20 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             $timeout(function () {
                 $http.get("/indigena/obj/" + $routeParams.id)
                     .success(function(data) {
-                        console.log(data);
                         var dados = data;
                         var d = new Date(data.dataNascimento);
                         dados.cpf = data.cpf.cpf;
                         dados.telefone = data.telefone.telefone;
-//                        alert(data.dataNascimento);
                         dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                        console.log(dados.dataNascimento);   
                         dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idterraindigena;
                         dados.conveniosselecionados = data.convenio;
-                        
                         $scope.indio = dados;
-
                         $scope.isNovoIndio = false;
                     })
                     .error(deuErro);
             }, 100);
+            
         }
     };
     
@@ -51,9 +46,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 //        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
 //        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
         var dataNasc = dataToDate($scope.indio.dataNascimento);
-//        alert(dataNasc);
         var indioCompleto = {
-            nome : $scope.indio.nome ,
+            nome: $scope.indio.nome ,
             cpf: {
                 cpf: $scope.indio.cpf
             },
@@ -83,11 +77,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             indioCompleto.codigoAssindi = $routeParams.id;
             console.log(indioCompleto);
             $http.put("/indigena", indioCompleto)
-                    .success(function () {
-                        toastr.success("Indígena atualizado com sucesso!");
-                        $location.path("/Indigena/listar");
-                    })
-                    .error(deuErro);
+                .success(function () {
+                    toastr.success("Indígena atualizado com sucesso!");
+                    $location.path("/Indigena/listar");
+                })
+                .error(deuErro);
         }
 
     };
@@ -101,11 +95,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $http.get("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string)
             .success(function (data) {
                 $scope.indigenas = data;
-                //console.log(data);
-                //console.log("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string);
-
                 if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
-                
             })
             .error(deuErro);
     };
@@ -131,7 +121,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }).on('page', function(event, num){
             paro = true;
             $scope.atualizarIndigenas(num, campo, order, string, paro);
-            
         });
     }
 
@@ -141,18 +130,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
 
     function dataToDate(valor) {
-        //var data = valor.substring(6, 10) + "-" + valor.substring(3, 5) + "-" + valor.substring(0, 2);
         var date = new Date(valor);
         var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
         return data;
     }
     
-//    function dateToData(valor) {
-//        var data = valor.substring(8, 10) + "/" + valor.substring(5, 7) + "/" + valor.substring(0, 4);
-//        return data;
-//    }
-
-
     $scope.editarIndio = function (indio) {
         $location.path("/Indigena/editar/" + indio.codigoassindi);
     };
