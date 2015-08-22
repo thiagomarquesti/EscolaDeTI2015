@@ -1,5 +1,5 @@
 module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
-        
+
         function novoUsuario() {
             $scope.usuario = {
                 nome: "",
@@ -165,10 +165,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
-        $scope.callateinteval = function (){
+        $scope.callateinteval = function () {
             console.log("intervalo");
         };
-        
+
         $scope.reset = function (form) {
             if (form) {
                 form.$setPristine();
@@ -186,7 +186,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.listarCidades = function () {
-            if ($scope.usuario.codigoestado != "") {
+            if ($scope.usuario.codigoestado !== "" && $scope.usuario.codigoestado !== undefined) {
                 console.log($scope.usuario.codigoestado);
                 $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
                     $scope.cidades = data;
@@ -221,12 +221,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(erroListarItensAcessoDoMenu);
         };
 
-//    $scope.carregaPerfis = function(){
-//        $http.get("/perfildeacesso")
-//                .success(function(data){
-//                    $scope.usuario.perfis = data;
-//                }).error(deuErro());
-//    };    
+    $scope.carregaPerfis = function(){
+        $http.get("/perfildeacesso")
+                .success(function(data){
+                    $scope.usuario.perfis = data;
+                }).error(deuErro());
+    };    
+    
 //-----------------AKI-------------------------------
         function erroListarItensAcessoDoMenu() {
             alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");
