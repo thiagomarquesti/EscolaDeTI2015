@@ -71,7 +71,7 @@
                 <div class="col-md-10">
                     <div class="col-md-3 input-group">
                         <input type="date" ng-model="usuario.datanasc" id="datanasc" name="datanasc" required="" class="form-control">
-<!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
+                        <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
             <div class="form-group">
                 <label for="cep" class="col-md-2 control-label">CEP: </label>
                 <div class="col-md-2"><input type="text" ng-model="usuario.cep" id="cep" name="cep" required="" class="form-control cep"></div>
-              
+
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2"  ng-init="listarEstados()" ng-click="listarCidades()">
                     <select ng-model="usuario.codigoestado" id="uf" name="uf" required="" class="form-control">
@@ -165,27 +165,24 @@
             </div>
         </div>
         <div class="panel-body">
-            <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
+            <form name="formCadUser" novalidate class="form-horizontal form-groups-bordered">
 
                 <div class="form-group"> 
                     <label for="login" class="col-md-2 control-label">Login:</label>
-                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" required="" login-unique class="form-control" ng-minlength=6 ng-maxlength=20></div>
+                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" login-unique class="form-control" ng-maxlength=20></div>
                 </div>
 
                 <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.login.$error.required">Preencha seu login. </span>
                     <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
-                    <span ng-show="formCad.login.$error.minlength">Login deve ter mais de 6 caracteres. </span>
                     <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
                 </div>
 
                 <div class="form-group">
                     <label for="senha" class="col-md-2 control-label">Senha: </label>
-                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" ng-minlength=6 ng-maxlength=10 verif-senha class="form-control"></div>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" ng-maxlength=10 verif-senha class="form-control"></div>
                 </div>      
 
                 <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.senha.$error.minlength">Senha deve ter mais de 6 caracteres. </span>
                     <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
                     <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
                 </div>
@@ -196,7 +193,6 @@
                 </div>
 
                 <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.rsenha.$error.required">Preencha a confirmação da senha.</span>
                     <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
                 </div>
 
@@ -204,17 +200,17 @@
                     <label class="col-md-2 control-label" for="perfis">Adicionar perfis: </label>
                     <div class="col-md-10"><input type="input" ng-model="usuario.perfis" id="perfis" name="perfis" class="form-control"></div>
                 </div>
-                <!--                <div class="form-group" ng-init="carregaPerfis()">
-                                    <label for="perfis" class="col-md-2 control-label">Adicionar Perfis:</label>
-                                    <multiselect class="input-lg" 
-                                                 ng-model="usuario.perfis" 
-                                                 multiple="true" 
-                                                 ms-selected ="{{usuario.perfis.selected.length}}" 
-                                                 ms-header="Selecione os Perfis"
-                                                 options="perfil.nome for perfil in usuario.perfis" 
-                                                 scroll-after-rows="8">
-                                    </multiselect>
-                                </div>-->
+                <div class="form-group" ng-init="carregaPerfis()">
+                    <label for="perfis" class="col-md-2 control-label">Adicionar Perfis:</label>
+                    <multiselect class="input-lg" 
+                                 ng-model="usuario.perfis" 
+                                 multiple="true" 
+                                 ms-selected ="{{usuario.perfis.selected.length}}" 
+                                 ms-header="Selecione os Perfis"
+                                 options="perfil.nome for perfil in usuario.perfis" 
+                                 scroll-after-rows="8">
+                    </multiselect>
+                </div>
             </form>
         </div>
     </div>
