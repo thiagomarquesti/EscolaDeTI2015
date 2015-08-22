@@ -1,7 +1,6 @@
 package br.unicesumar.time05.ConsultaPersonalizada;
 
 import br.unicesumar.time05.rowMapper.MapRowMapper;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -80,17 +79,26 @@ public class QueryPersonalizada {
         
         String StringComOsCampos = aSQL.substring(aSQL.indexOf(OperadoresSQL.SELECT.trim()) + OperadoresSQL.SELECT.trim().length(), aSQL.indexOf(OperadoresSQL.FROM.trim()));
         String[] campos = StringComOsCampos.split(",");
-        
+        String campoSemFormatacao;
+        for (int i = 0; i < campos.length; i++) {
+            campoSemFormatacao = campos[i];
+            campoSemFormatacao = campoSemFormatacao.trim();
+            if (campoSemFormatacao.contains(" ")) {
+                campoSemFormatacao = campoSemFormatacao.substring(0, campoSemFormatacao.indexOf(" "));
+            }
+            campos[i] = campoSemFormatacao;
+        }
+
         String camposDoWhere = "";
-        for (String campo : campos){
-            if (camposDoWhere.isEmpty()){
+        for (String campo : campos) {
+            if (camposDoWhere.isEmpty()) {
                 camposDoWhere += "((" + campo.trim() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
             } else {
                 camposDoWhere += OperadoresSQL.OR + "(" + campo.trim() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
             }
         }
         camposDoWhere += ")";
-        
+
         return OperadoresSQL.WHERE + camposDoWhere;
     }
 }

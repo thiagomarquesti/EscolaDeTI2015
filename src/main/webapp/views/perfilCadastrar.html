@@ -2,7 +2,8 @@
 <div ng-init="carregar()" class="panel panel-info">
 
     <div class="panel-heading">
-        <h1 class="panel-title">Cadastro Perfil</h1>
+        <h1 class="panel-title" ng-show="isNovo">Cadastrar Perfil</h1>
+        <h1 class="panel-title" ng-show="!isNovo">Alterar Perfil</h1>
     </div>
     <div class="panel-body">
         <form name="formPerfil" novalidate class="form-horizontal">

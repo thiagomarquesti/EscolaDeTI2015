@@ -47,11 +47,15 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
         return query.executeComPaginacao(ConstrutorDeSQL, aParametrosConsulta);
     }
-    
+
+    public Object getObjeto(ID aId) {
+        return repository.findOne(aId);
+    }
+
     public RetornoConsultaPaginada listar() {
         return query.executeComPaginacao(ConstrutorDeSQL, new ParametrosConsulta());
     }
-    
+
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(ConstrutorDeSQL.getSQL(new ParametrosConsulta()));
     }
