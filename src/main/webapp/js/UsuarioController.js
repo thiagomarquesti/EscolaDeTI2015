@@ -15,7 +15,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 bairro: "",
                 complemento: "",
                 cep: "",
-                codigoIBGE: "",
+                codigoibge: "",
                 codigoestado: "",
                 datanasc: "",
                 cpf: {
@@ -31,6 +31,33 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 status: "ATIVO"
             };
             $scope.isNovo = true;
+        }
+
+        function criarUsuarioParaEditar() {
+            $scope.usuario = {
+                nome: "",
+                telefones: [{
+                        telefone: ""
+                    }],
+                email: {
+                    email: ""
+                },
+                idfuncao: "",
+                logradouro: "",
+                numero: "",
+                bairro: "",
+                complemento: "",
+                cep: "",
+                codigoibge: "",
+                codigoestado: "",
+                datanasc: "",
+                cpf: {
+                    cpf: ""
+                },
+                genero: "",
+                tipo: "USUÁRIO",
+                status: ""
+            };
         }
 
         function novoUsuarioAdmin() {
@@ -95,6 +122,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         .error(deuErro);
             }
             else {
+                console.log($scope.usuario);
                 $http.put("/usuario/", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário atualizado com sucesso!");
@@ -135,7 +163,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 $timeout(function () {
                     $http.get("/usuario/" + $routeParams.id)
                             .success(function (data) {
-                                novoUsuario();
+                                criarUsuarioParaEditar();
 
                                 console.log(data[0]);
                                 $scope.usuario.nome = data[0].nome;
@@ -148,7 +176,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.idfuncao = data[0].funcao_idfuncao;
                                 $scope.usuario.codigoestado = data[0].codigoestado;
                                 $scope.listarCidades();
-                                $scope.usuario.codigoIBGE = data[0].codigoIBGE;
+                                $scope.usuario.codigoibge = data[0].codigoibge;
                                 $scope.usuario.logradouro = data[0].logradouro;
                                 $scope.usuario.numero = data[0].numero;
                                 $scope.usuario.complemento = data[0].complemento;
@@ -156,8 +184,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.telefones[0].telefone = data[0].telefone;
 //                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
                                 $scope.usuario.bairro = data[0].bairro;
+                                $scope.usuario.status = data[0].status;
+                                $scope.usuario.tipo = data[0].tipo_pessoa;
+                                
 
-                                $scope.usuario.rsenha = $scope.usuario.senha;
+//                                $scope.usuario.rsenha = $scope.usuario.senha;
 
                                 $scope.isNovo = false;
                             }).error(deuErro);
@@ -221,13 +252,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .error(erroListarItensAcessoDoMenu);
         };
 
-    $scope.carregaPerfis = function(){
-        $http.get("/perfildeacesso")
-                .success(function(data){
-                    $scope.perfis = data;
-                }).error(deuErro);
-    };    
-    
+        $scope.carregaPerfis = function () {
+            $http.get("/perfildeacesso")
+                    .success(function (data) {
+                        $scope.perfis = data;
+                    }).error(deuErro);
+        };
+
 //-----------------AKI-------------------------------
         function erroListarItensAcessoDoMenu() {
             alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");
