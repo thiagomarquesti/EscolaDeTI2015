@@ -137,26 +137,26 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                             novoUsuario();
                             
                             console.log(data[0]);
-                            $scope.auxUsuario.nome = data[0].nome;
-                            $scope.auxUsuario.cpf.cpf = data[0].cpf;
-                            $scope.auxUsuario.genero = data[0].genero;
-                            $scope.auxUsuario.email.email = data[0].email;
-                            $scope.auxUsuario.idfuncao = data[0].idfuncao;
-                            $scope.auxUsuario.datanasc = data[0].datanasc;
-                            $scope.auxUsuario.cep = data[0].cep;
-                            $scope.auxUsuario.codigoestado = data[0].codigoestado;
-                            $scope.auxUsuario.codigoIBGE = data[0].codigoIBGE;
-                            $scope.auxUsuario.logradouro = data[0].logradouro;
-                            $scope.auxUsuario.numero = data[0].numero;
-                            $scope.auxUsuario.complemento = data[0].complemento;
-                            $scope.auxUsuario.bairro = data[0].bairro;
-                            $scope.auxUsuario.telefones[0].telefone = data[0].telefone;
+                            $scope.usuario.nome = data[0].nome;
+                            $scope.usuario.cpf.cpf = data[0].cpf;
+                            $scope.usuario.genero = data[0].genero;
+                            $scope.usuario.email.email = data[0].email;
+                            $scope.usuario.idfuncao = data[0].funcao_idfuncao;
+                            $scope.usuario.datanasc =  new Date(data[0].datanascimento);
+                            $scope.usuario.cep = data[0].cep;
+                            $scope.usuario.codigoestado = data[0].codigoestado;
+                            $scope.listarCidades();    
+                            $scope.usuario.codigoIBGE = data[0].codigoIBGE;
+                            $scope.usuario.logradouro = data[0].logradouro;
+                            $scope.usuario.numero = data[0].numero;
+                            $scope.usuario.complemento = data[0].complemento;
+                            $scope.usuario.bairro = data[0].bairro;
+                            $scope.usuario.telefones[0].telefone = data[0].telefone;
 //                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
-                            $scope.auxUsuario.bairro = data[0].bairro;
+                            $scope.usuario.bairro = data[0].bairro;
 
-                            $scope.usuario = $scope.auxUsuario;
                             $scope.usuario.rsenha = $scope.usuario.senha;
-                            console.log($scope.usuario.cpf.cpf);
+                            
                             $scope.isNovo = false;
                         })
                         .error(deuErro);

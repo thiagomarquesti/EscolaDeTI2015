@@ -35,9 +35,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"login"}, name = "uk_login")})
 public class Usuario extends PessoaFisica implements Serializable {
-    
+
     @CampoConsulta
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Funcao funcao;
 
     @NotBlank(message = "Campo login não pode estar vazio")
@@ -72,14 +72,20 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.funcao = funcao;
     }
 
+    public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
+            Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
+        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
+        this.login = login;
+        this.senha = senha;
+        this.perfis = perfis;
+    }
+
     public Usuario(CriarUsuario u, Endereco endereco, Funcao funcao) {
         super(u.getCpf(), u.getGenero(), u.getNome(), u.getTelefones(), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
         this.funcao = funcao;
         this.login = u.getLogin();
         this.senha = u.getSenha();
     }
-    
-    
 
     public Long getIdUsuario() {
         return super.getIdpessoa();
@@ -117,11 +123,10 @@ public class Usuario extends PessoaFisica implements Serializable {
     public void setPerfil(List<PerfilDeAcesso> perfis) {
         this.perfis = new HashSet<>(perfis);
     }
-    
+
 //    public void setPerfil(PerfilDeAcesso perfil){
 //        this.perfis.add(perfil);
 //    }
-
     public void removerPerfil(PerfilDeAcesso perfil) {
         this.perfis.remove(perfil);
     }
