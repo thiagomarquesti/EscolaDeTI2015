@@ -305,7 +305,7 @@ angular.module('multiselect.tpl.html', [])
                         "      <button class=\"btn btn-link btn-xs\" ng-click=\"checkAll()\" type=\"button\"><i class=\"glyphicon glyphicon-ok\"></i> Todos</button>\n" +
                         "      <button class=\"btn btn-link btn-xs\" style=\"padding-left:25px;\" ng-click=\"uncheckAll()\" type=\"button\"><i class=\"glyphicon glyphicon-remove\"></i> Nenhum</button>\n" +
                         "    </li>\n" +
-                        "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:searchText\">\n" +
+                        "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:searchText | limitTo: 10\">\n" +
                         "      <a ng-click=\"select(i)\" style=\"padding:3px 10px;cursor:pointer; focus()\">\n" +
                         "        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
                         "    </li>\n" +

@@ -12,7 +12,7 @@ public class Cidade {
     @CampoConsulta
     @Id
     private int codigoIBGE;
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String descricao;
     
     @CampoConsulta

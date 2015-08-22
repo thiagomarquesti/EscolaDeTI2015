@@ -3,6 +3,7 @@ package br.unicesumar.time05.etnia;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,9 @@ public class Etnia implements Serializable{
     @GeneratedValue(strategy = GenerationType.TABLE)
     @CampoConsulta
     private Long idetnia;
+
     @CampoConsulta(campoOrdenacaoPadrao = true)
+    @Column(unique = true)
     private String descricao;
 
     public Etnia() {

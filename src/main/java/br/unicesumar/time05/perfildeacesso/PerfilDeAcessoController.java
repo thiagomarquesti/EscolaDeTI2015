@@ -19,6 +19,11 @@ public class PerfilDeAcessoController extends ControllerBase<PerfilDeAcesso, Lon
         service.salvarPefil(perfilBuilder);
     }
     
+    @RequestMapping(value = "/alterar", method = RequestMethod.PUT)
+    public void alterar(@RequestBody PerfilBuilder perfilBuilder){
+        service.salvarPefil(perfilBuilder);
+    }
+    
     @RequestMapping(value = "/itensdeacesso/{aIdPerfilDeAcesso}", method = RequestMethod.GET)
     public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(@PathVariable Long aIdPerfilDeAcesso){
         return service.getItensDeAcessoPorPerfilDeAcessoID(aIdPerfilDeAcesso);

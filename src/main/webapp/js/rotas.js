@@ -19,16 +19,16 @@ module.config(function($routeProvider, $locationProvider) {
     })
 //------- Rotas do Perfil --------
     .when('/Perfil/listar', {
-        templateUrl: 'views/listarPerfis.html',
+        templateUrl: 'views/perfilListar.html',
         controller: 'PerfilController'
     }).when('/Perfil/novo', {
-        templateUrl: 'views/cadPerfil.html',
+        templateUrl: 'views/perfilCadastrar.html',
         controller: 'PerfilController'
     }).when('/Perfil/editar/:id', {
-        templateUrl: 'views/cadPerfil.html',
+        templateUrl: 'views/perfilCadastrar.html',
         controller: 'PerfilController'
     }).when('/Perfil/editar', {
-        templateUrl: 'views/cadPerfil.html',
+        templateUrl: 'views/perfilCadastrar.html',
         controller: 'PerfilController'
 //------- Convênio -------        
     }).when('/Convenio/novo', {
@@ -81,9 +81,9 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Indigena/listar', {
         templateUrl: 'views/indigenaListar.html',
         controller: 'IndigenaController'
-    }).when('/indigena/editar/:id', {
+    }).when('/Indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
-        controller: 'EtniaController'
+        controller: 'IndigenaController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
