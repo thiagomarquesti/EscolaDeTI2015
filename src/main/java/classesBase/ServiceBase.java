@@ -22,41 +22,41 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     @Autowired
     protected QueryPersonalizada query;
 
-    private ConstrutorDeSQL construtorDeSQL;
+    private ConstrutorDeSQL ConstrutorDeSQL;
 
-    protected void setConstrutorDeSQL(ConstrutorDeSQL construtorDeSQL) {
-        this.construtorDeSQL = construtorDeSQL;
+    protected void setConstrutorDeSQL(ConstrutorDeSQL aConstrutorDeSQL) {
+        this.ConstrutorDeSQL = aConstrutorDeSQL;
     }
 
-    public void salvar(Entidade Entidade) {
-        repository.save(Entidade);
+    public void salvar(Entidade aEntidade) {
+        repository.save(aEntidade);
     }
 
     public void remover(ID aID) {
         repository.delete(aID);
     }
 
-    public void alterar(Entidade Entidade) {
-        repository.save(Entidade);
+    public void alterar(Entidade aEntidade) {
+        repository.save(aEntidade);
     }
 
-    public List<Map<String, Object>> findByID(ID id) {
-        return query.executePorID(construtorDeSQL.getSQLComWherePorID(), id);
+    public List<Map<String, Object>> findByID(ID aID) {
+        return query.executePorID(ConstrutorDeSQL.getSQLComWherePorID(), aID);
+    }
+
+    public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
+        return query.executeComPaginacao(ConstrutorDeSQL, aParametrosConsulta);
     }
 
     public Object getObjeto(ID aId) {
         return repository.findOne(aId);
     }
 
-    public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(construtorDeSQL, parametrosConsulta);
-    }
-
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(construtorDeSQL, new ParametrosConsulta());
+        return query.executeComPaginacao(ConstrutorDeSQL, new ParametrosConsulta());
     }
 
     public List<Map<String, Object>> listarSemPaginacao() {
-        return query.execute(construtorDeSQL.getSQL(new ParametrosConsulta()));
+        return query.execute(ConstrutorDeSQL.getSQL(new ParametrosConsulta()));
     }
 }

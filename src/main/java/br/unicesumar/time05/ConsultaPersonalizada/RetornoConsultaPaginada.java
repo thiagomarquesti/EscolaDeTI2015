@@ -25,27 +25,27 @@ public class RetornoConsultaPaginada implements Serializable{
         return paginaAtual;
     }
 
-    public void setPaginaAtual(int paginaAtual) {
-        this.paginaAtual = paginaAtual;
+    public void setPaginaAtual(int aPaginaAtual) {
+        this.paginaAtual = aPaginaAtual;
     }
     
-    public void setQuantidadeDePaginas(int paginas) {
-        this.quantidadeDePaginas = paginas;
+    public void setQuantidadeDePaginas(int aPaginas) {
+        this.quantidadeDePaginas = aPaginas;
     }
 
     public int getTotalDeRegistros() {
         return totalDeRegistros;
     }
 
-    public void setTotalDeRegistros(int totalDeRegistros) {
-        this.totalDeRegistros = totalDeRegistros;
+    public void setTotalDeRegistros(int aTotalDeRegistros) {
+        this.totalDeRegistros = aTotalDeRegistros;
     }
 
     public List<Map<String, Object>> getListaDeRegistros() {
         return listaDeRegistros;
     }
 
-    public void setListaDeRegistros(List<Map<String, Object>> listaDeRegistros) {
-        this.listaDeRegistros = listaDeRegistros;
+    public void setListaDeRegistros(List<Map<String, Object>> aListaDeRegistros) {
+        this.listaDeRegistros = aListaDeRegistros;
     }    
 }

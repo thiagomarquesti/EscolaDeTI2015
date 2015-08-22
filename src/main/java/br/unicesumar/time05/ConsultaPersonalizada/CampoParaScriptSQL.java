@@ -5,9 +5,9 @@ public class CampoParaScriptSQL {
     String campo;
     TipoComparacao comparacao;
 
-    public CampoParaScriptSQL(String campo, TipoComparacao comparacao) {
-        this.campo = campo;
-        this.comparacao = comparacao;
+    public CampoParaScriptSQL(String aCampo, TipoComparacao aComparacao) {
+        this.campo = aCampo;
+        this.comparacao = aComparacao;
     }
 
     public String getCampo() {
