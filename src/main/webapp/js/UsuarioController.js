@@ -1,5 +1,5 @@
 module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
-
+        
         function novoUsuario() {
             $scope.usuario = {
                 nome: "",
@@ -132,37 +132,43 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 novoUsuario();
             }
             else {
-                $http.get("/usuario/" + $routeParams.id)
-                        .success(function (data) {                           
-                            novoUsuario();
-                            
-                            console.log(data[0]);
-                            $scope.usuario.nome = data[0].nome;
-                            $scope.usuario.cpf.cpf = data[0].cpf;
-                            $scope.usuario.genero = data[0].genero;
-                            $scope.usuario.email.email = data[0].email;
-                            $scope.usuario.idfuncao = data[0].funcao_idfuncao;
-                            $scope.usuario.datanasc =  new Date(data[0].datanascimento);
-                            $scope.usuario.cep = data[0].cep;
-                            $scope.usuario.codigoestado = data[0].codigoestado;
-                            $scope.listarCidades();    
-                            $scope.usuario.codigoIBGE = data[0].codigoIBGE;
-                            $scope.usuario.logradouro = data[0].logradouro;
-                            $scope.usuario.numero = data[0].numero;
-                            $scope.usuario.complemento = data[0].complemento;
-                            $scope.usuario.bairro = data[0].bairro;
-                            $scope.usuario.telefones[0].telefone = data[0].telefone;
-//                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
-                            $scope.usuario.bairro = data[0].bairro;
+                $timeout(function () {
+                    $http.get("/usuario/" + $routeParams.id)
+                            .success(function (data) {
+                                novoUsuario();
 
-                            $scope.usuario.rsenha = $scope.usuario.senha;
-                            
-                            $scope.isNovo = false;
-                        })
-                        .error(deuErro);
+                                console.log(data[0]);
+                                $scope.usuario.nome = data[0].nome;
+                                $scope.usuario.cpf.cpf = data[0].cpf;
+                                $scope.usuario.genero = data[0].genero;
+                                $scope.usuario.email.email = data[0].email;
+                                var d = new Date(data[0].datanascimento);
+                                $scope.usuario.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                                $scope.usuario.cep = data[0].cep;
+                                $scope.usuario.idfuncao = data[0].funcao_idfuncao;
+                                $scope.usuario.codigoestado = data[0].codigoestado;
+                                $scope.listarCidades();
+                                $scope.usuario.codigoIBGE = data[0].codigoIBGE;
+                                $scope.usuario.logradouro = data[0].logradouro;
+                                $scope.usuario.numero = data[0].numero;
+                                $scope.usuario.complemento = data[0].complemento;
+                                $scope.usuario.bairro = data[0].bairro;
+                                $scope.usuario.telefones[0].telefone = data[0].telefone;
+//                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
+                                $scope.usuario.bairro = data[0].bairro;
+
+                                $scope.usuario.rsenha = $scope.usuario.senha;
+
+                                $scope.isNovo = false;
+                            }).error(deuErro);
+                }, 100);
             }
         };
 
+        $scope.callateinteval = function (){
+            console.log("intervalo");
+        };
+        
         $scope.reset = function (form) {
             if (form) {
                 form.$setPristine();
@@ -180,7 +186,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.listarCidades = function () {
-            if ($scope.usuario.codigoestado != ""){
+            if ($scope.usuario.codigoestado != "") {
                 console.log($scope.usuario.codigoestado);
                 $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
                     $scope.cidades = data;
