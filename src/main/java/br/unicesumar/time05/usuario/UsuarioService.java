@@ -37,8 +37,6 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     private FuncaoRepository funcaoRepo;
     @Autowired
     private CidadeRepository cidadeRepo;
-    
-    
 
     private final String SQLConsultaUsuarios
             = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
@@ -88,25 +86,29 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
-    
+
     @Override
     public void salvar(CriarUsuario aUsuario) {
         Usuario usuario;
         if (repository.count() == 0) {
-            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(),new HashSet<PerfilDeAcesso>(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Funcao(), new Date(1L));
+            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), new HashSet<PerfilDeAcesso>(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Date(1L));
             usuario.setPerfil(perfilRepo.findAll());
-        }else{
+        } else {
             Cidade cidade = cidadeRepo.findOne(aUsuario.getCodigoIBGE());
             Endereco end = new Endereco(aUsuario.getLogradouro(), aUsuario.getNumero(), aUsuario.getBairro(), aUsuario.getComplemento(), aUsuario.getCep(), cidade);
-            usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
-            List<PerfilDeAcesso> perfis = new ArrayList<>();
-            for (Long id : aUsuario.getPerfis()) {
-                perfis.add(perfilRepo.findOne(id));
+            if (aUsuario.getLogin()==null) {
+                usuario = new Usuario(aUsuario.getCpf(), aUsuario.getGenero(), aUsuario.getNome(), aUsuario.getTelefones(), aUsuario.getEmail(), end, aUsuario.getTipoPessoa(), funcaoRepo.findOne(aUsuario.getIdfuncao()), aUsuario.getDatanasc());
+            } else {
+                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+                List<PerfilDeAcesso> perfis = new ArrayList<>();
+                for (Long id : aUsuario.getPerfis()) {
+                    perfis.add(perfilRepo.findOne(id));
+                }
+                usuario.setPerfil(perfis);
             }
-            usuario.setPerfil(perfis);
             usuario.setTipoPessoa(TipoPessoa.USUÁRIO);
         }
-        
+
         try {
             repository.save(usuario);
             repository.flush();
