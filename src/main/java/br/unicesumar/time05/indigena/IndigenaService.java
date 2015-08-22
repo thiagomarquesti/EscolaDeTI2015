@@ -32,8 +32,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     private EtniaService etniaService;
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLConsultaIndigena = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+    private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
             + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
@@ -41,11 +41,11 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "LEFT JOIN telefone t "
             + "ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
-            + "ON i.terra_indigena_idterraindigena = ti.idterraindigena";
+            + "ON i.terraindigena_idterraindigena = ti.idterraindigena";
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
             + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
@@ -53,8 +53,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "LEFT JOIN telefone t "
             + " ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
-            + " ON i.terra_indigena_idterraindigena = ti.idterraindigena "
-            + "WHERE i.codigo_assindi = :idIndigena";
+            + " ON i.terraindigena_idterraindigena = ti.idterraindigena "
+            + "WHERE i.codigoassindi = :idIndigena";
 
     @Override
     public void salvar(CriarIndigena aCIndigena) {
