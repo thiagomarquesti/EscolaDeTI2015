@@ -196,18 +196,14 @@
                     <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label" for="perfis">Adicionar perfis: </label>
-                    <div class="col-md-10"><input type="input" ng-model="usuario.perfis" id="perfis" name="perfis" class="form-control"></div>
-                </div>
                 <div class="form-group" ng-init="carregaPerfis()">
                     <label for="perfis" class="col-md-2 control-label">Adicionar Perfis:</label>
-                    <multiselect class="input-lg" 
+                    <multiselect id="perfis" name="perfis" class="input-lg" 
                                  ng-model="usuario.perfis" 
                                  multiple="true" 
-                                 ms-selected ="{{usuario.perfis.selected.length}}" 
+                                 ms-selected ="{{perfis.selected.length}}" 
                                  ms-header="Selecione os Perfis"
-                                 options="perfil.nome for perfil in usuario.perfis" 
+                                 options="perfil.nome for perfil in perfis" 
                                  scroll-after-rows="8">
                     </multiselect>
                 </div>

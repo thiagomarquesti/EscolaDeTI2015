@@ -224,8 +224,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     $scope.carregaPerfis = function(){
         $http.get("/perfildeacesso")
                 .success(function(data){
-                    $scope.usuario.perfis = data;
-                }).error(deuErro());
+                    $scope.perfis = data;
+                }).error(deuErro);
     };    
     
 //-----------------AKI-------------------------------
