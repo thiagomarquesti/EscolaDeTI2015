@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueryPersonalizada {
 
-    final int NUM_REGISTROS_PAGINA = 10;
-
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
     @Autowired
@@ -38,10 +36,10 @@ public class QueryPersonalizada {
     public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL aConstrutorDeSQL, ParametrosConsulta aParametrosConsulta) {
         String SQL;
         SQL = aConstrutorDeSQL.getSQL(aParametrosConsulta);
-        return executeComPaginacao(SQL, aParametrosConsulta);
+        return executeComPaginacao(SQL, aConstrutorDeSQL.getCampoOrdenacaoPadrao(), aParametrosConsulta);
     }
 
-    public RetornoConsultaPaginada executeComPaginacao(String aSQL, ParametrosConsulta aParametrosConsulta){
+    public RetornoConsultaPaginada executeComPaginacao(String aSQL, String aCampoOrdenacaoPadrao, ParametrosConsulta aParametrosConsulta){
         
         MapSqlParameterSource params = new MapSqlParameterSource();
         if ((aParametrosConsulta != null) && (aParametrosConsulta.getPalavraChave() != null) && (!aParametrosConsulta.getPalavraChave().isEmpty())) {
@@ -55,19 +53,24 @@ public class QueryPersonalizada {
         List<Map<String, Object>> result = jdbcTemplate.query(aSQL, params, rowMapper);
         retornoConsulta.setTotalDeRegistros(result.size());
 
-        Double paginas = (double) result.size() / NUM_REGISTROS_PAGINA;
+        Double paginas = (double) result.size() / aParametrosConsulta.getRegistrosPorPagina();
         retornoConsulta.setQuantidadeDePaginas((int)Math.ceil(paginas));
         retornoConsulta.setPaginaAtual(aParametrosConsulta.getPagina());
-        
+
         if ((aParametrosConsulta != null) && (aParametrosConsulta.getOrdenarPor() != null) && (!aParametrosConsulta.getOrdenarPor().isEmpty())) {
             aSQL += (OperadoresSQL.ORDER_BY + aParametrosConsulta.getOrdenarPor());
-            if ((!aParametrosConsulta.getSentidoOrdenacao().isEmpty()) && (aParametrosConsulta.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC.trim()))){
+            if ((!aParametrosConsulta.getSentidoOrdenacao().isEmpty()) && (aParametrosConsulta.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC.trim()))) {
                 aSQL += OperadoresSQL.DESC;
             }
+        } else {            
+            if (aCampoOrdenacaoPadrao.isEmpty()) {
+                aCampoOrdenacaoPadrao = "1";
+            }            
+            aSQL += OperadoresSQL.ORDER_BY + aCampoOrdenacaoPadrao;
         }
 
         if ((aParametrosConsulta != null) && (aParametrosConsulta.getPagina() > 0)) {
-            aSQL += OperadoresSQL.LIMIT + NUM_REGISTROS_PAGINA + OperadoresSQL.OFFSET + ((aParametrosConsulta.getPagina() * NUM_REGISTROS_PAGINA) - NUM_REGISTROS_PAGINA);
+            aSQL += OperadoresSQL.LIMIT + aParametrosConsulta.getRegistrosPorPagina() + OperadoresSQL.OFFSET + ((aParametrosConsulta.getPagina() * aParametrosConsulta.getRegistrosPorPagina()) - aParametrosConsulta.getRegistrosPorPagina());
         }
         
         System.out.println(aSQL);

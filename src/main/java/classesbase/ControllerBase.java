@@ -1,4 +1,4 @@
-package classesBase;
+package classesbase;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
@@ -51,19 +51,25 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
     }
 
     @RequestMapping(value = "/listar", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getEntidadesPaginada() {
+    public RetornoConsultaPaginada getEntidadesPaginadaSimples() {
         return service.listar();
     }
-
-    @RequestMapping(value = "/listar/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao) {
-        ParametrosConsulta parametros = new ParametrosConsulta(aPagina, aOrdenarPor, aSentidoOrdenacao);
+    
+    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}", method = RequestMethod.GET)
+    public RetornoConsultaPaginada getEntidadesPaginada(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina) {
+        ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina);
+        return service.listar(parametros);
+    }
+    
+    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
+    public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao) {
+        ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina, aOrdenarPor, aSentidoOrdenacao);
         return service.listar(parametros);
     }
 
-    @RequestMapping(value = "/listar/{pagina}/{ordenarPor}/{sentidoOrdenacao}/{palavraChave}", method = RequestMethod.GET)
-    public RetornoConsultaPaginada getEntidadesOrdenadasEComBusca(@PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao, @PathVariable String aPalavraChave) {
-        ParametrosConsulta parametros = new ParametrosConsulta(aPagina, aOrdenarPor, aSentidoOrdenacao, aPalavraChave);
+    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}/{ordenarPor}/{sentidoOrdenacao}/{palavraChave}", method = RequestMethod.GET)
+    public RetornoConsultaPaginada getEntidadesOrdenadasEComBusca(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao, @PathVariable String aPalavraChave) {
+        ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina, aOrdenarPor, aSentidoOrdenacao, aPalavraChave);
         return service.listar(parametros);
     }
 }

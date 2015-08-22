@@ -108,6 +108,10 @@ public class ConstrutorDeSQL {
             if (campo.isAnnotationPresent(CampoConsulta.class)) {
                 CampoConsulta campoConsulta = campo.getAnnotation(CampoConsulta.class);
                 dadosParaConsulta.addCampo(new CampoParaScriptSQL(this.getNomeCampo(campo), campoConsulta.tipoComparacao()));
+                
+                if (campoConsulta.campoOrdenacaoPadrao() && dadosParaConsulta.getCampoOrdenacaoPadrao().isEmpty()){
+                    dadosParaConsulta.setCampoOrdenacaoPadrao(this.getNomeCampo(campo));
+                }
             }
 
             if (campo.isAnnotationPresent(Id.class)) {
@@ -132,5 +136,14 @@ public class ConstrutorDeSQL {
         }
 
         return nomeCampo;
+    }
+    
+    public String getCampoOrdenacaoPadrao(){
+        
+        if ((this.dadosParaConsulta != null) && (!this.dadosParaConsulta.getCampoOrdenacaoPadrao().isEmpty())){            
+            return this.dadosParaConsulta.getCampoOrdenacaoPadrao();
+        } else {
+            return "";
+        }        
     }
 }

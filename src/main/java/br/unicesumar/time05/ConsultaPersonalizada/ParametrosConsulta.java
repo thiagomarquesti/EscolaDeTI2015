@@ -5,29 +5,45 @@ import java.io.Serializable;
 public class ParametrosConsulta implements Serializable {
 
     private final int pagina;
+    private final int registrosPorPagina;
     private final String ordenarPor;
     private final String sentidoOrdenacao;
     private final String palavraChave;
 
     public ParametrosConsulta() {
+        this.registrosPorPagina = 0;
         this.pagina = 0;
         this.ordenarPor = "";
         this.sentidoOrdenacao = "";
         this.palavraChave = "";
     }
-    
-    public ParametrosConsulta(int aPagina, String aOrdenarPor, String aSentidoOrdenacao, String aPalavraChave) {
+
+    public ParametrosConsulta(int aPagina, int aRegistrosPorPagina) {
+        this.pagina = aPagina;
+        this.registrosPorPagina = aRegistrosPorPagina;
+        this.ordenarPor = "";
+        this.sentidoOrdenacao = "";
+        this.palavraChave = "";
+    }
+
+    public ParametrosConsulta(int aRegistrosPorPagina, int aPagina, String aOrdenarPor, String aSentidoOrdenacao, String aPalavraChave) {
+        this.registrosPorPagina = aRegistrosPorPagina;
         this.pagina = aPagina;
         this.ordenarPor = aOrdenarPor;
         this.sentidoOrdenacao = aSentidoOrdenacao;
         this.palavraChave = aPalavraChave;
     }
 
-    public ParametrosConsulta(int aPagina, String aOrdenarPor, String aSentidoOrdenacao) {
+    public ParametrosConsulta(int aRegistrosPorPagina, int aPagina, String aOrdenarPor, String aSentidoOrdenacao) {
+        this.registrosPorPagina = aRegistrosPorPagina;
         this.pagina = aPagina;
         this.ordenarPor = aOrdenarPor;
         this.sentidoOrdenacao = aSentidoOrdenacao;
         this.palavraChave = "";
+    }
+
+    public int getRegistrosPorPagina() {
+        return registrosPorPagina;
     }
 
     public int getPagina() {
