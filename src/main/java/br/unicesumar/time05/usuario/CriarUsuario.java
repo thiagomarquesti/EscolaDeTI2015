@@ -36,7 +36,7 @@ public class CriarUsuario implements Serializable{
 
     public CriarUsuario() {
     }
-
+    
     public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha) {
         this.idpessoa = idpessoa;
         this.nome = nome;

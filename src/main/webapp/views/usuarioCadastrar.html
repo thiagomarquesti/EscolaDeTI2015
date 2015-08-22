@@ -86,7 +86,7 @@
               
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2"  ng-init="listarEstados()" ng-click="listarCidades()">
-                    <select ng-model="codigoestado" id="uf" name="uf" required="" class="form-control">
+                    <select ng-model="usuario.codigoestado" id="uf" name="uf" required="" class="form-control">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>

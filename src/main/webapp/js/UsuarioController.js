@@ -16,7 +16,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 complemento: "",
                 cep: "",
                 codigoIBGE: "",
-//                codigoestado: "",
+                codigoestado: "",
                 datanasc: "",
                 cpf: {
                     cpf: ""
@@ -30,7 +30,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 tipo: "USUÁRIO",
                 status: "ATIVO"
             };
-            $scope.codigoestado = "";
             $scope.isNovo = true;
         }
 
@@ -135,11 +134,29 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             else {
                 $http.get("/usuario/" + $routeParams.id)
                         .success(function (data) {                           
-                            $scope.usuario = data[];
-//                            $scope.usuario.cpf.cpf = data[0].cpf;
-//                            $scope.usuario = data[0];
+                            novoUsuario();
+                            
+                            console.log(data[0]);
+                            $scope.auxUsuario.nome = data[0].nome;
+                            $scope.auxUsuario.cpf.cpf = data[0].cpf;
+                            $scope.auxUsuario.genero = data[0].genero;
+                            $scope.auxUsuario.email.email = data[0].email;
+                            $scope.auxUsuario.idfuncao = data[0].idfuncao;
+                            $scope.auxUsuario.datanasc = data[0].datanasc;
+                            $scope.auxUsuario.cep = data[0].cep;
+                            $scope.auxUsuario.codigoestado = data[0].codigoestado;
+                            $scope.auxUsuario.codigoIBGE = data[0].codigoIBGE;
+                            $scope.auxUsuario.logradouro = data[0].logradouro;
+                            $scope.auxUsuario.numero = data[0].numero;
+                            $scope.auxUsuario.complemento = data[0].complemento;
+                            $scope.auxUsuario.bairro = data[0].bairro;
+                            $scope.auxUsuario.telefones[0].telefone = data[0].telefone;
+//                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
+                            $scope.auxUsuario.bairro = data[0].bairro;
+
+                            $scope.usuario = $scope.auxUsuario;
                             $scope.usuario.rsenha = $scope.usuario.senha;
-                            //console.log(data[0]);
+                            console.log($scope.usuario.cpf.cpf);
                             $scope.isNovo = false;
                         })
                         .error(deuErro);
@@ -163,9 +180,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.listarCidades = function () {
-            if ($scope.codigoestado !== ""){
-                console.log($scope.codigoestado);
-                $http.get("/cidade/cidadePorEstado/" + $scope.codigoestado).success(function (data) {
+            if ($scope.usuario.codigoestado != ""){
+                console.log($scope.usuario.codigoestado);
+                $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
                     $scope.cidades = data;
                     console.log(data);
                 }).error(deuErro);
