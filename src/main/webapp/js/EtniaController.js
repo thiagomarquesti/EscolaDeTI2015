@@ -1,5 +1,7 @@
 module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$location", function($scope, $http, $routeParams, $location) {
 
+    $scope.placeHolder = "Buscar etnia";
+    
     function deuErro() {
         toastr.error("Algo deu errado. Tente novamente.");
     }

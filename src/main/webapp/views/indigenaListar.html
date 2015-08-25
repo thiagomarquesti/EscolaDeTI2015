@@ -8,18 +8,8 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="buscaIndigena">
-        <div class="input-group">
-            
-            <input type="text" ng-model="busca.descricao" placeholder="Buscar indígena" class="form-control">
-            <span class="input-group-btn">
-                <button ng-click="atualizarListagens(qtdePorPag, '','','asc',busca.descricao, '', '');" class="btn btn-info"><i class="fa fa-search"></i></button>
-            </span>
-            
-            
-        </div>  
-            </form>   
-        <br>
+        <ng-include src="'views/busca.html'"></ng-include>
+        
         <div class="panel panel-default">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>

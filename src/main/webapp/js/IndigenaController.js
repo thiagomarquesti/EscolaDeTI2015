@@ -1,6 +1,8 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao) {
 
-    function novoIndio() {
+        $scope.placeHolder = "Buscar indígena";
+        
+        function novoIndio() {
         $scope.indio = {
             nome: "",
             cpf: "",
@@ -23,6 +25,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         entidade = 'indigena';
         ServicePaginacao.atualizarListagens(qtdePorPag, pag,campo,order,string, paro, entidade);
     };
+    
+    $scope.trocaOrdem = function(qtdePorPag, campo, string, entidade){
+        ServicePaginacao.trocaOrdem(qtdePorPag, campo, string, entidade);
+    };
+    
+    
     
     $scope.carregarIndio = function () {
         if ($location.path() === "/Indigena/novo") {
