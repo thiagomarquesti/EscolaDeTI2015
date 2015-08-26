@@ -11,7 +11,6 @@ import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.funcao.Funcao;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.genero.Genero;
-import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;

@@ -1,5 +1,6 @@
 package br.unicesumar.time05.indigena;
 
+import br.unicesumar.time05.terraIndigena.TerraIndigena;
 import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
@@ -11,6 +12,7 @@ import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,12 +26,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Indigena implements Serializable {
+public class Indigena implements Serializable{
 
     @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long codigoAssindi;
+    private Long codigoassindi;
    
     @CampoConsulta
     private String nome;
@@ -39,7 +41,7 @@ public class Indigena implements Serializable {
     private CPF cpf;
     
     @CampoConsulta
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Etnia etnia;
     
     @CampoConsulta
@@ -47,7 +49,7 @@ public class Indigena implements Serializable {
     private Genero genero;
     
     @CampoConsulta
-    private Date dataNascimento;
+    private Date datanascimento;
 
     @ManyToMany
     @JoinTable(name = "indigena_convenio",
@@ -61,39 +63,40 @@ public class Indigena implements Serializable {
     private Telefone telefone;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private TerraIndigena terraIndigena;
+    private TerraIndigena terraindigena;
     
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
     
     @Enumerated(EnumType.STRING)
-    private EstadoCivil estadoCivil;
+    private EstadoCivil estadocivil;
     
-    private Long codigoSUS;
+    private Long codigosus;
 
     public Indigena() {
     }
-
-    public Indigena(String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+    
+    public Indigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+        this.codigoassindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
         this.etnia = etnia;
         this.genero = genero;
-        this.dataNascimento = dataNascimento;
+        this.datanascimento = dataNascimento;
         this.convenio = convenio;
         this.telefone = telefone;
-        this.terraIndigena = terraIndigena;
+        this.terraindigena = terraIndigena;
         this.escolaridade = escolaridade;
-        this.estadoCivil = estadoCivil;
-        this.codigoSUS = codigoSUS;
+        this.estadocivil = estadoCivil;
+        this.codigosus = codigoSUS;
     }
 
     public Long getCodigoAssindi() {
-        return codigoAssindi;
+        return codigoassindi;
     }
 
     public void setCodigoAssindi(Long codigoAssindi) {
-        this.codigoAssindi = codigoAssindi;
+        this.codigoassindi = codigoAssindi;
     }
 
     public String getNome() {
@@ -129,11 +132,11 @@ public class Indigena implements Serializable {
     }
 
     public Date getDataNascimento() {
-        return dataNascimento;
+        return datanascimento;
     }
 
     public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.datanascimento = dataNascimento;
     }
 
     public Set<Convenio> getConvenio() {
@@ -153,11 +156,11 @@ public class Indigena implements Serializable {
     }
 
     public TerraIndigena getTerraIndigena() {
-        return terraIndigena;
+        return terraindigena;
     }
 
     public void setTerraIndigena(TerraIndigena terraIndigena) {
-        this.terraIndigena = terraIndigena;
+        this.terraindigena = terraIndigena;
     }
 
     public Escolaridade getEscolaridade() {
@@ -169,25 +172,25 @@ public class Indigena implements Serializable {
     }
 
     public EstadoCivil getEstadoCivil() {
-        return estadoCivil;
+        return estadocivil;
     }
 
     public void setEstadoCivil(EstadoCivil estadoCivil) {
-        this.estadoCivil = estadoCivil;
+        this.estadocivil = estadoCivil;
     }
 
     public Long getCodigoSUS() {
-        return codigoSUS;
+        return codigosus;
     }
 
     public void setCodigoSUS(Long codigoSUS) {
-        this.codigoSUS = codigoSUS;
+        this.codigosus = codigoSUS;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.codigoAssindi);
+        hash = 89 * hash + Objects.hashCode(this.codigoassindi);
         return hash;
     }
 
@@ -200,7 +203,7 @@ public class Indigena implements Serializable {
             return false;
         }
         final Indigena other = (Indigena) obj;
-        if (!Objects.equals(this.codigoAssindi, other.codigoAssindi)) {
+        if (!Objects.equals(this.codigoassindi, other.codigoassindi)) {
             return false;
         }
         return true;

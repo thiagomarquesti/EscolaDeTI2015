@@ -12,21 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/usuario")
-public class UsuarioController extends ControllerBase<CriarUsuario, Long, UsuarioService>{
-    
+public class UsuarioController extends ControllerBase<CriarUsuario, Long, UsuarioService> {
+
     @RequestMapping(value = "/obj", method = RequestMethod.GET)
-    public CriarUsuario getObj(){
+    public CriarUsuario getObj() {
         CriarUsuario u = new CriarUsuario();
         return u;
     }
-    
-    @RequestMapping(value = "/verificarSenha/{aSenha:.+}" ,method = RequestMethod.GET)
-    public boolean verifcarSenha(@PathVariable Senha aSenha){
+
+    @RequestMapping(method = RequestMethod.PUT)
+    @Override
+    public void editar(@RequestBody CriarUsuario aEntidade) {
+        service.salvar(aEntidade);
+    }
+
+    @RequestMapping(value = "/verificarSenha/{aSenha:.+}", method = RequestMethod.GET)
+    public boolean verifcarSenha(@PathVariable Senha aSenha) {
         return service.verificarSenha(aSenha);
     }
 
-    @RequestMapping(value = "/trocarStatusUsuario/{aUsuarioId}" ,method = RequestMethod.PUT)
-    public void alterarStatus(@PathVariable Long aUsuarioId){
+    @RequestMapping(value = "/trocarStatusUsuario/{aUsuarioId}", method = RequestMethod.PUT)
+    public void alterarStatus(@PathVariable Long aUsuarioId) {
         service.trocarStatusUsuario(aUsuarioId);
     }
 
@@ -34,7 +40,7 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
     public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId) {
         return service.verificarEmail(aEmail, aUsuarioId);
     }
-    
+
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}", method = RequestMethod.GET)
     public boolean verifcarEmail(@PathVariable String aEmail) {
         return service.verificarEmail(new Email(aEmail));
@@ -44,7 +50,7 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
     public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId) {
         return service.verificarLogin(aLogin, aUsuarioId);
     }
-    
+
     @RequestMapping(value = "/verificarLogin/{aLogin:.+}", method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin) {
         return service.verificarLogin(aLogin);

@@ -106,7 +106,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             if ($scope.isNovo) {
 //                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
 //                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
-//                $scope.usuario.telefones[0].telefone = removerMascara($scope.usuario.telefones[0].telefone);
+//                $scope.usuario.telefones.telefone = removerMascara($scope.usuario.telefones.telefone);
 //                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
@@ -161,32 +161,32 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
             else {
                 $timeout(function () {
-                    $http.get("/usuario/" + $routeParams.id)
+                    $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
                                 criarUsuarioParaEditar();
 
-                                console.log(data[0]);
-                                $scope.usuario.nome = data[0].nome;
-                                $scope.usuario.cpf.cpf = data[0].cpf;
-                                $scope.usuario.genero = data[0].genero;
-                                $scope.usuario.email.email = data[0].email;
-                                var d = new Date(data[0].datanascimento);
+                                console.log(data);
+                                $scope.usuario.nome = data.nome;
+                                $scope.usuario.cpf.cpf = data.cpf.cpf;
+                                $scope.usuario.genero = data.genero;
+                                $scope.usuario.email.email = data.email.email;
+                                var d = new Date(data.datanascimento);
                                 $scope.usuario.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                                $scope.usuario.cep = data[0].cep;
-                                $scope.usuario.idfuncao = data[0].funcao_idfuncao;
-                                $scope.usuario.codigoestado = data[0].codigoestado;
+                                $scope.usuario.cep = data.endereco.cep;
+                                $scope.usuario.idfuncao = data.funcao.idfuncao;
+                                $scope.usuario.codigoestado = data.endereco.cidade.estado.codigoestado;
                                 $scope.listarCidades();
-                                $scope.usuario.codigoibge = data[0].codigoibge;
-                                $scope.usuario.logradouro = data[0].logradouro;
-                                $scope.usuario.numero = data[0].numero;
-                                $scope.usuario.complemento = data[0].complemento;
-                                $scope.usuario.bairro = data[0].bairro;
-                                $scope.usuario.telefones[0].telefone = data[0].telefone;
-//                            $scope.auxUsuario.telefones[1].telefone = data[0].telefone;
-                                $scope.usuario.bairro = data[0].bairro;
-                                $scope.usuario.status = data[0].status;
-                                $scope.usuario.tipo = data[0].tipo_pessoa;
-                                
+                                $scope.usuario.codigoibge = data.endereco.cidade.codigoIBGE;
+                                $scope.usuario.logradouro = data.endereco.logradouro;
+                                $scope.usuario.numero = data.endereco.numero;
+                                $scope.usuario.complemento = data.endereco.complemento;
+                                $scope.usuario.bairro = data.endereco.bairro;
+                                $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
+                                if (data.telefones[1].telefone != "")
+                                    $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
+                                $scope.usuario.status = data.status;
+                                $scope.usuario.tipo = data.tipo;
+
 
 //                                $scope.usuario.rsenha = $scope.usuario.senha;
 
@@ -219,12 +219,18 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         $scope.listarCidades = function () {
             if ($scope.usuario.codigoestado !== "" && $scope.usuario.codigoestado !== undefined) {
                 console.log($scope.usuario.codigoestado);
-                $http.get("/cidade/cidadePorEstado/" + $scope.usuario.codigoestado).success(function (data) {
+                $http.get("/cidade/listarPorCodigoEstado/" + $scope.usuario.codigoestado).success(function (data) {
                     $scope.cidades = data;
-                    console.log(data);
                 }).error(deuErro);
             }
         };
+
+//        function getCidadeCadastrada(codigoIbge) {
+//            $http.get("/cidade/" + codigoIbge).success(function (data) {
+//                return data;
+//
+//            }).error(deuErro());
+//        }
 
         $scope.logout = function () {
             $http.get("/login/usuariologado")

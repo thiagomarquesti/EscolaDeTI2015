@@ -1,113 +1,201 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function($scope, $http, $routeParams, $location, $timeout){
-         
-    function novoIndio(){
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
+
+    function novoIndio() {
         $scope.indio = {
-            nome : "",
-            status : "ATIVO"
+            nome: "",
+            cpf: "",
+            etnia: "",
+            genero: "",
+            dataNascimento: "",
+            conveniosselecionados:[],
+            telefone: "",
+            terraIndigena: "",
+            escolaridade: "",
+            estadoCivil: "",
+            codigoSUS: ""
         };
         $scope.isNovoIndio = true;
     }
-    
-    $scope.salvarIndio = function(){
-        if($scope.isNovo){
-            $http.post("/indigena", $scope.indio)
-               .success(function(){
-                   toastr.success("Indígena cadastrado com sucesso!");
-                       $location.path("/Indigena/listar"); 
-               })
-               .error(deuErro);
-        }
-        else {
-            $http.put("/indigena/", $scope.indio)
-               .success(function(){
-                   toastr.success("Indígena atualizado com sucesso!");
-                   $location.path("/Indigena/listar");
-               })
-               .error(deuErro);
-        }
 
-    };
-
-    $scope.atualizarIndio = function(){
-       $http.get("/indigena")
-           .success(function(data){
-               $scope.indio = data;
-           })
-           .error(deuErro);
-    };
-
-    $scope.editarIndio = function(indio) {
-        $location.path("/Indigena/editar/" + indio.id);
-    };
-    
-    $scope.carregarIndios = function(){
-        $scope.convenios();
-        if($location.path() === "/Indigena/novo"){
+    $scope.carregarIndio = function () {
+        if ($location.path() === "/Indigena/novo") {
             novoIndio();
         }
         else {
-            $http.get("/indigena/" + $routeParams.id)
-                    .success(function(data){
-                        $scope.indio = data[0];
+            $timeout(function () {
+                $http.get("/indigena/obj/" + $routeParams.id)
+                    .success(function(data) {
+                        var dados = data;
+                        var d = new Date(data.dataNascimento);
+                        dados.cpf = data.cpf.cpf;
+                        dados.telefone = data.telefone.telefone;
+                        dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                        dados.etnia = data.etnia.idetnia;
+                        dados.terraIndigena = data.terraIndigena.idterraindigena;
+                        dados.conveniosselecionados = data.convenio;
+                        $scope.indio = dados;
                         $scope.isNovoIndio = false;
                     })
                     .error(deuErro);
+            }, 100);
+            
         }
     };
+    
+    $scope.salvarIndio = function () {
+//        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
+//        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
+        var dataNasc = dataToDate($scope.indio.dataNascimento);
+        var indioCompleto = {
+            nome: $scope.indio.nome ,
+            cpf: {
+                cpf: $scope.indio.cpf
+            },
+            etnia: $scope.indio.etnia ,
+            genero: $scope.indio.genero,
+            dataNascimento: dataNasc + "T00:00:00-03",
+            convenio: $scope.indio.conveniosselecionados ,
+            telefone: {
+                telefone: $scope.indio.telefone
+            },
+            terraIndigena: $scope.indio.terraIndigena ,
+            escolaridade: $scope.indio.escolaridade ,
+            estadoCivil: $scope.indio.estadoCivil ,
+            codigoSUS: $scope.indio.codigoSUS
+        };
+        
+        
+        if ($scope.isNovoIndio) {
+            $http.post("/indigena", indioCompleto)
+                    .success(function () {
+                        toastr.success("Indígena cadastrado com sucesso!");
+                        $location.path("/Indigena/listar");
+                    })
+                    .error(erroCadastraIndio);
+        }
+        else {
+            indioCompleto.codigoAssindi = $routeParams.id;
+            console.log(indioCompleto);
+            $http.put("/indigena", indioCompleto)
+                .success(function () {
+                    toastr.success("Indígena atualizado com sucesso!");
+                    $location.path("/Indigena/listar");
+                })
+                .error(deuErro);
+        }
 
-    $scope.reset = function(form) {
-        if(form) {
-          form.$setPristine();
-          form.$setUntouched();
+    };
+
+    $scope.atualizarIndigenas = function (pag,campo,order,string, paro) {
+        if(pag == null || pag == ""){ pag = 1; }
+        if(campo == null || campo == ""){ campo = "nome"; }
+        if(order != "asc" && order != "desc"){ order = "asc"; }
+        if(string == null){ string = ""; }
+//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
+        $http.get("/indigena/listar/"+pag+"/"+campo+"/"+order+"/"+string)
+            .success(function (data) {
+                $scope.indigenas = data;
+                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
+            })
+            .error(deuErro);
+    };
+
+    $scope.trocaOrdem = function(campo, string){
+        if($scope.tipoOrdem == true){
+            $scope.tipoOrdem = false;
+            var ordem = "asc";
+        }
+        else {
+            $scope.tipoOrdem = true;
+            var ordem = "desc";
+        }
+        $scope.campoAtual = campo;
+        $scope.atualizarIndigenas("",campo, ordem ,string, true);
+    };
+    
+    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
+        $('#paginacao').bootpag({
+            total: qtde,
+            page: pag,
+            maxVisible:5
+        }).on('page', function(event, num){
+            paro = true;
+            $scope.atualizarIndigenas(num, campo, order, string, paro);
+        });
+    }
+
+    function tiraCaracter(campo, oque) {
+        var str = campo.split(oque).join("");
+        return str;
+    }
+
+    function dataToDate(valor) {
+        var date = new Date(valor);
+        var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+        return data;
+    }
+    
+    $scope.editarIndio = function (indio) {
+        $location.path("/Indigena/editar/" + indio.codigoassindi);
+    };
+    
+    $scope.reset = function (form) {
+        if (form) {
+            form.$setPristine();
+            form.$setUntouched();
         }
         novoIndio();
     };
-    
-    
-    $scope.logout = function(){
-        $http.get("/login/usuariologado")
-           .success(function(data){
-               console.log(data.login);
-               var dadosLogin = {"login": data.login, "senha" : data.senha };
-               $http.post("/login/efetuarlogout", dadosLogin)
-                .success(function() {
-                    window.location.href="/login.html";
-                }
-                )
-                .error(deuErro);
-           })
-           .error(deuErro);
-    };
-    
-    function deuErro(){
+
+    function deuErro() {
         toastr.error("Algo deu errado. Tente novamente.");
     }
     
-    $scope.carregaScript = function(nScript){
-        $timeout(function(){
-            var script = document.createElement('script');
-            script.src = nScript+".js";
-            document.getElementsByTagName('head')[0].appendChild(script);
-        },100);
+    function erroCadastraIndio() {
+        toastr.error("Não foi possível cadastrar o indígena. ","Erro");
+    }
+    
+    $scope.ehMeninoMenina = {
+         "MASCULINO" : {
+             "icone" : "fa fa-male",
+             "cor" : "#9CC7FF"
+         },
+         "FEMININO" : {
+             "icone" : "fa fa-female",
+             "cor" : "#FFC4C4"
+         }
     };
     
-    $scope.convenios = function () {
-            $http.get("/convenio")
-                    .success(function (data) {
-//                        console.log(data) 
-                        $scope.itens = data;
-                    })
-                    .error(deuErro);
-//            if ($scope.isNovo == false) {
-//                $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
-//                        .success(function (data) {
-//                            //console.log(data) 
-//                            $scope.itensDoPerfil = data;
-//                        })
-//                        .error(function () {
-//                            toastr.error("TESTE");
-//                        });
-//                //.error(deuErro);
-//            }
-        };
+    $scope.calculaIdade = function(data){
+        
+        var ano_aniversario = data.substring(0, 4);
+        var mes_aniversario = data.substring(5,7);
+        var dia_aniversario = data.substring(8,10);
+        
+        var d = new Date,
+        ano_atual = d.getFullYear(),
+        mes_atual = d.getMonth() + 1,
+        dia_atual = d.getDate(),
+
+        ano_aniversario = +ano_aniversario,
+        mes_aniversario = +mes_aniversario,
+        dia_aniversario = +dia_aniversario,
+
+        quantos_anos = ano_atual - ano_aniversario;
+
+        if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
+            quantos_anos--;
+        }
+
+        return quantos_anos < 0 ? 0 : quantos_anos;
+    };
+    
+    $scope.carregaScript = function (nScript) {
+        $timeout(function () {
+            var script = document.createElement('script');
+            script.src = nScript + ".js";
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }, 100);
+    };
+
 }]);

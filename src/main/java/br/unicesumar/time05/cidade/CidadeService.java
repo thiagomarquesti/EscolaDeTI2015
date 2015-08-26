@@ -1,30 +1,58 @@
 package br.unicesumar.time05.cidade;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import classesBase.ServiceBase;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import javax.transaction.Transactional;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
-@Transactional
-public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository>{
+public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
+
+    private final String sqlCidade
+            = "SELECT c.codigoibge,"
+            + "       c.descricao as nomecidade,"
+            + "       uf.codigoestado,"
+            + "       uf.descricao,"
+            + "       uf.sigla"
+            + "  FROM cidade c"
+            + "  JOIN uf on c.estado_codigoestado = uf.codigoestado";
 
     public CidadeService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Cidade.class));
     }
     
-    private String SQLConsultaCidadePorEstado = "SELECT codigoibge, descricao, estado_codigoestado "
-            + " FROM cidade"
-            + " WHERE estado_codigoestado = :aEstadoId";
+    @Override
+    public List<Map<String, Object>> findByID(Long id) {
+        return query.execute(sqlCidade+" WHERE c.codigoibge = "+ id+"  ORDER BY c.descricao ASC ");
+    }
+
+    @Override
+    public Cidade getObjeto(Long aId) {
+        return (Cidade)repository.findOne(aId);
+    }
+
+    @Override
+    public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
+        return query.executeComPaginacao(sqlCidade, parametrosConsulta);
+    }
+
+    @Override
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(sqlCidade, new ParametrosConsulta());
+    }
+
+    @Override
+    public List<Map<String, Object>> listarSemPaginacao() {
+        return query.execute(sqlCidade);
+    }
     
-    public List<Map<String, Object>> cidadePorEstado(Long aEstadoId){
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aEstadoId", aEstadoId);
-        List<Map<String, Object>> cidades = query.execute(this.SQLConsultaCidadePorEstado, params);
-        return Collections.unmodifiableList(cidades);
+    public List<Map<String, Object>> listarCidadesPorUF(int aCodigoEstado){
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("codigoestado", aCodigoEstado);
+        return query.execute(sqlCidade + " WHERE uf.codigoestado = :codigoestado ORDER BY c.descricao ASC ", params);
     }
 }

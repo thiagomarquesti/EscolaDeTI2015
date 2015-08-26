@@ -76,6 +76,14 @@ public class PessoaFisica extends Pessoa implements Serializable{
         this.genero = genero;
     }
 
+    public Date getDatanascimento() {
+        return datanascimento;
+    }
+
+    public void setDatanascimento(Date datanascimento) {
+        this.datanascimento = datanascimento;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

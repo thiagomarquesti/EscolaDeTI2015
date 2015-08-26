@@ -85,21 +85,24 @@
                 <div class="col-md-2"><input type="text" ng-model="usuario.cep" id="cep" name="cep" required="" class="form-control cep requerido"></div>
 
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
-                <div class="col-md-2"  ng-init="listarEstados()" ng-click="listarCidades()">
+                <div class="col-md-2"  ng-init="listarEstados()">
                     <select ng-model="usuario.codigoestado" id="uf" name="uf" required="" class="form-control requerido">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
                     </select>
+                    {{usuario.codigoestado}}
                 </div>
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
-                <div class="col-md-3">
-                    <select ng-model="usuario.codigoibge" id="cidade" name="cidade" required="" class="form-control requerido">
-                        <option value="">Aguardando estado...</option>
+                <div class="col-md-3" ng-init="listarCidades()">
+                    <select ng-model="usuario.codigoibge" id="cidade" name="cidade"  required="" class="form-control requerido">
+                        <option value="" ng-if="usuario.codigoestado==undefined">Aguardando estado...</option>
+                        <option value="" ng-if="usuario.codigoestado!=undefined">Selecione uma cidade</option>
                         <!-- FAZER BUSCA POR CIDADES -->
-                        <option ng-repeat="c in cidades" value="{{c.codigoibge}}">{{c.descricao}}</option>
+                        <option ng-repeat="c in cidades" value="{{c.codigoibge}}">{{c.nomecidade}}</option>
                     </select>
                 </div>
+                {{usuario.codigoibge}}
             </div>
 
             <div ng-show="(formCad.cep.$dirty && formCad.cep.$invalid) || (formCad.uf.$dirty && formCad.uf.$invalid) || (formCad.cidade.$dirty && formCad.cidade.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
