@@ -22,8 +22,8 @@ public class CriarUsuario implements Serializable{
     private String bairro;
     private String complemento;
     private String cep;
-    private Long codigoIBGE;
-    private Long codigoUF;
+    private Long codigoibge;
+    private Long codigouf;
     private Long idfuncao;
     private Date datanasc;
     private TipoPessoa tipo;
@@ -47,7 +47,7 @@ public class CriarUsuario implements Serializable{
         this.bairro = bairro;
         this.complemento = complemento;
         this.cep = cep;
-        this.codigoIBGE = codigoIBGE;
+        this.codigoibge = codigoIBGE;
 //        this.codigoUF = codigoUF;
         this.idfuncao = idfuncao;
         this.datanasc = datanasc;
@@ -130,12 +130,12 @@ public class CriarUsuario implements Serializable{
         this.cep = cep;
     }
 
-    public Long getCodigoIBGE() {
-        return codigoIBGE;
+    public Long getCodigoibge() {
+        return codigoibge;
     }
 
-    public void setCodigoIBGE(Long codigoIBGE) {
-        this.codigoIBGE = codigoIBGE;
+    public void setCodigoibge(Long codigoibge) {
+        this.codigoibge = codigoibge;
     }
 
     public Long getIdfuncao() {
@@ -208,6 +208,14 @@ public class CriarUsuario implements Serializable{
 
     public void setPerfis(Set<Long> perfis) {
         this.perfis = perfis;
+    }
+
+    public TipoPessoa getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoPessoa tipo) {
+        this.tipo = tipo;
     }
     
 }

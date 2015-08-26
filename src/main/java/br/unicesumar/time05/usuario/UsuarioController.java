@@ -20,12 +20,6 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
         return u;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @Override
-    public void editar(@RequestBody CriarUsuario aEntidade) {
-        service.salvar(aEntidade);
-    }
-
     @RequestMapping(value = "/verificarSenha/{aSenha:.+}", method = RequestMethod.GET)
     public boolean verifcarSenha(@PathVariable Senha aSenha) {
         return service.verificarSenha(aSenha);

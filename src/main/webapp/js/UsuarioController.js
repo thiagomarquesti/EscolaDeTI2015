@@ -109,6 +109,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 //                $scope.usuario.telefones.telefone = removerMascara($scope.usuario.telefones.telefone);
 //                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 console.log($scope.usuario);
+                console.log($scope.usuario.email.email);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -122,8 +123,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         .error(deuErro);
             }
             else {
+                $scope.usuario.idpessoa = $routeParams.id;
                 console.log($scope.usuario);
-                $http.put("/usuario/", $scope.usuario)
+                $http.put("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário atualizado com sucesso!");
                             $location.path("/Usuario/listar");
@@ -182,8 +184,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
                                 $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
-                                if (data.telefones[1].telefone != "")
-                                    $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
+//                                if (data.telefones[0].telefone != "")
+//                                    $scope.usuario.telefones[1].telefone = data.telefones[0].telefone;
                                 $scope.usuario.status = data.status;
                                 $scope.usuario.tipo = data.tipo;
 
@@ -225,12 +227,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
-//        function getCidadeCadastrada(codigoIbge) {
-//            $http.get("/cidade/" + codigoIbge).success(function (data) {
-//                return data;
-//
-//            }).error(deuErro());
-//        }
+        $scope.cidadeSelecionada = function (codigo) {
+            if(codigo == $scope.usuario.codigoibge){
+                return true;
+            }else{
+                return false;
+            }
+        };
 
         $scope.logout = function () {
             $http.get("/login/usuariologado")

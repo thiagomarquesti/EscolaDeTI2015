@@ -14,9 +14,9 @@ public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
 
     private final String sqlCidade
             = "SELECT c.codigoibge,"
-            + "       c.descricao as nomecidade,"
+            + "       c.descricao,"
             + "       uf.codigoestado,"
-            + "       uf.descricao,"
+            + "       uf.descricao as estados,"
             + "       uf.sigla"
             + "  FROM cidade c"
             + "  JOIN uf on c.estado_codigoestado = uf.codigoestado";

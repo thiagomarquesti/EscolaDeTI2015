@@ -30,8 +30,6 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"login"}, name = "uk_login")})
 public class Usuario extends PessoaFisica implements Serializable {
 
     @CampoConsulta
