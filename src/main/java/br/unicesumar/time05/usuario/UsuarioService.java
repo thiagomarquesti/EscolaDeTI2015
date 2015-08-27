@@ -98,10 +98,12 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             if (aUsuario.getLogin() == null) {
                 usuario = new Usuario(aUsuario.getCpf(), aUsuario.getGenero(), aUsuario.getNome(), aUsuario.getTelefones(), aUsuario.getEmail(), end, aUsuario.getTipoPessoa(), funcaoRepo.findOne(aUsuario.getIdfuncao()), aUsuario.getDatanasc());
             } else {
+                if(!verificarLogin(aUsuario.getLogin()))
+                    throw new RuntimeException("Login já existe no sistema");
                 usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
                 List<PerfilDeAcesso> perfis = new ArrayList<>();
-                for (Long id : aUsuario.getPerfis()) {
-                    perfis.add(perfilRepo.findOne(id));
+                for (PerfilDeAcesso p : aUsuario.getPerfis()) {
+                    perfis.add(perfilRepo.findOne(p.getIdPerfilDeAcesso()));
                 }
                 usuario.setPerfil(perfis);
             }

@@ -32,7 +32,7 @@ public class CriarUsuario implements Serializable{
     private String login;
     private Senha senha;
     private Status status = Status.ATIVO;
-    private Set<Long> perfis = new HashSet<>();
+    private Set<PerfilDeAcesso> perfis = new HashSet<>();
 
     public CriarUsuario() {
     }
@@ -202,11 +202,11 @@ public class CriarUsuario implements Serializable{
         this.status = status;
     }
 
-    public Set<Long> getPerfis() {
+    public Set<PerfilDeAcesso> getPerfis() {
         return perfis;
     }
 
-    public void setPerfis(Set<Long> perfis) {
+    public void setPerfis(Set<PerfilDeAcesso> perfis) {
         this.perfis = perfis;
     }
 
