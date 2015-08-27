@@ -109,7 +109,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 //                $scope.usuario.telefones.telefone = removerMascara($scope.usuario.telefones.telefone);
 //                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 console.log($scope.usuario);
-                console.log($scope.usuario.email.email);
+                console.log($scope.usuario.email.email);                
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");

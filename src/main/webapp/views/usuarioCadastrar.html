@@ -48,7 +48,7 @@
             <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formCad.email.$error.required">Preencha seu e-mail. </span>
                 <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
-                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.   </span>
+                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
             </div>
 
             <div class="form-group">
@@ -90,8 +90,7 @@
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
-                    </select>
-                    {{usuario.codigoestado}}
+                    </select>                   
                 </div>
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
                 <div class="col-md-3">
@@ -102,8 +101,7 @@
                         <option ng-repeat="c in cidades" ng-selected="cidadeSelecionada(c.codigoibge)" value="{{c.codigoibge}}">{{c.descricao}}</option>
                         <!--<option ng-repeat="c in cidades" ng-if="usuario.codigoibge == c.codigoibge" selected="true" value="{{c.codigoibge}}">{{c.descricao}}</option>-->
                     </select>
-                </div>
-                {{usuario.codigoibge}}
+                </div>              
             </div>
 
             <div ng-show="(formCad.cep.$dirty && formCad.cep.$invalid) || (formCad.uf.$dirty && formCad.uf.$invalid) || (formCad.cidade.$dirty && formCad.cidade.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
