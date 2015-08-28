@@ -71,7 +71,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             };
             $scope.isNovo = true;
         }
-
+ 
         $scope.novoAdmin = function () {
             novoUsuarioAdmin();
         };
@@ -104,12 +104,14 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-//                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
-//                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
-//                $scope.usuario.telefones.telefone = removerMascara($scope.usuario.telefones.telefone);
-//                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
+                if($scope.usuario.login.length > 0 &&  $scope.usuario.senha.senha === ""){
+                    toastr.error("Atenção, informe a senha do usuário!");
+                    $scope.usuario.senha.senha.focus();
+                }else if($scope.usuario.senha.senha !== "" && $scope.usuario.login.length === 0){
+                    toastr.error("Atenção, informe o login do usuário!");
+                    $scope.usuario.login.focus();
+                }
                 console.log($scope.usuario);
-                console.log($scope.usuario.email.email);                
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
