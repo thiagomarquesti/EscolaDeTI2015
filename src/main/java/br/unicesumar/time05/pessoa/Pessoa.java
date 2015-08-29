@@ -139,9 +139,6 @@ public abstract class Pessoa implements Serializable {
         return tipoPessoa;
     }
 
-    public void setTipo(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
 
     @Override
     public int hashCode() {

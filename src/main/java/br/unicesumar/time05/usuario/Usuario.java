@@ -36,7 +36,7 @@ public class Usuario extends PessoaFisica implements Serializable {
     @ManyToOne(optional = true)
     private Funcao funcao;
 
-    private String login="";
+    private String login = "";
 
     @Embedded
     private Senha senha;
@@ -85,6 +85,22 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.funcao = funcao;
         this.login = u.getLogin();
         this.senha = u.getSenha();
+    }
+
+    public void alterar(CriarUsuario aUsuario) {
+        this.setNome(aUsuario.getNome());
+        this.setTelefones(aUsuario.getTelefones());
+        this.setEmail(aUsuario.getEmail());
+        this.setDatanascimento(aUsuario.getDatanasc());
+        this.setTipoPessoa(TipoPessoa.USUÁRIO);
+        this.setCpf(aUsuario.getCpf());
+        this.setGenero(aUsuario.getGenero());
+        this.setStatus(aUsuario.getStatus());
+        this.getEndereco().setLogradouro(aUsuario.getLogradouro());
+        this.getEndereco().setNumero(aUsuario.getNumero());
+        this.getEndereco().setBairro(aUsuario.getBairro());
+        this.getEndereco().setComplemento(aUsuario.getComplemento());
+        this.getEndereco().setCep(aUsuario.getCep());
     }
 
     public Long getIdUsuario() {

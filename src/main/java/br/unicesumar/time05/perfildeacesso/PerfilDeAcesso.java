@@ -18,20 +18,22 @@ import javax.persistence.ManyToMany;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity(name = "perfildeacesso")
-public class PerfilDeAcesso implements Serializable{
-    
+public class PerfilDeAcesso implements Serializable {
+
     @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-        private Long idperfildeacesso;
+    private Long idperfildeacesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
     @CampoConsulta
     private String nome;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfildeacesso_itemacesso",
-            joinColumns = {@JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idperfildeacesso")},
-            inverseJoinColumns = {@JoinColumn(name = "itemacesso_id", referencedColumnName = "iditemacesso")})
+            joinColumns = {
+                @JoinColumn(name = "perfildeacesso_id", referencedColumnName = "idperfildeacesso")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "itemacesso_id", referencedColumnName = "iditemacesso")})
 //    @CampoConsulta
     private Set<ItemAcesso> itens = new HashSet<>();
 
@@ -43,7 +45,7 @@ public class PerfilDeAcesso implements Serializable{
         this.itens = itens;
     }
 
-    public Long getIdPerfilDeAcesso() {
+    public Long getIdperfildeacesso() {
         return idperfildeacesso;
     }
 
@@ -62,7 +64,7 @@ public class PerfilDeAcesso implements Serializable{
     public void setItens(Set<ItemAcesso> itens) {
         this.itens = itens;
     }
-    
+
     public void addItens(Set<ItemAcesso> itens) {
         this.itens.addAll(itens);
     }
@@ -93,6 +95,5 @@ public class PerfilDeAcesso implements Serializable{
     public String toString() {
         return "PerfilDeAcesso{" + "idperfildeacesso=" + idperfildeacesso + ", nome=" + nome + ", itens=" + itens + '}';
     }
-    
-    
+
 }

@@ -8,7 +8,6 @@ import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.endereco.Endereco;
-import br.unicesumar.time05.funcao.Funcao;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
@@ -22,7 +21,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -103,15 +101,13 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
                 usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
                 List<PerfilDeAcesso> perfis = new ArrayList<>();
                 for (PerfilDeAcesso p : aUsuario.getPerfis()) {
-                    perfis.add(perfilRepo.findOne(p.getIdPerfilDeAcesso()));
+                    perfis.add(perfilRepo.findOne(p.getIdperfildeacesso()));
                 }
                 usuario.setPerfil(perfis);
             }
             usuario.setTipoPessoa(TipoPessoa.USUÁRIO);
         }
         
-        if(aUsuario.getIdpessoa()!=null)
-            usuario.setIdpessoa(aUsuario.getIdpessoa());
         try {
             repository.save(usuario);
             repository.flush();
@@ -147,7 +143,10 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
 
     @Override
     public void alterar(CriarUsuario aUsuario) {
-        salvar(aUsuario);
+        Usuario usuario = repository.findOne(aUsuario.getIdpessoa());
+        usuario.alterar(aUsuario);
+        usuario.getEndereco().setCidade(cidadeRepo.findOne(aUsuario.getCodigoibge()));
+        usuario.setFuncao(funcaoRepo.findOne(aUsuario.getIdfuncao()));
     }
 
     public boolean verificarLogin(String aLogin) {
