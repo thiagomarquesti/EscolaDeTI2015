@@ -38,6 +38,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 nome: "",
                 telefones: [{
                         telefone: ""
+                    }, {
+                        telefone: ""
                     }],
                 email: {
                     email: ""
@@ -71,7 +73,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             };
             $scope.isNovo = true;
         }
-
+ 
         $scope.novoAdmin = function () {
             novoUsuarioAdmin();
         };
@@ -104,12 +106,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-//                $scope.usuario.cpf = removerMascara($scope.usuario.cpf.cpf);
-//                $scope.usuario.endereco.cep = removerMascara($scope.usuario.endereco.cep);
-//                $scope.usuario.telefones.telefone = removerMascara($scope.usuario.telefones.telefone);
-//                $scope.usuario.telefones[1].telefone = removerMascara($scope.usuario.telefones[1].telefone);
                 console.log($scope.usuario);
-                console.log($scope.usuario.email.email);                
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -184,6 +181,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
                                 $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
+                                console.log(data.telefones[1].telefone);
+                                $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
 //                                if (data.telefones[0].telefone != "")
 //                                    $scope.usuario.telefones[1].telefone = data.telefones[0].telefone;
                                 $scope.usuario.status = data.status;
