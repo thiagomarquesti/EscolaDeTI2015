@@ -157,6 +157,7 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         usuario.alterar(aUsuario);
         usuario.getEndereco().setCidade(cidadeRepo.findOne(aUsuario.getCodigoibge()));
         usuario.setFuncao(funcaoRepo.findOne(aUsuario.getIdfuncao()));
+        repository.save(usuario);
     }
 
     public boolean verificarLogin(String aLogin) {
