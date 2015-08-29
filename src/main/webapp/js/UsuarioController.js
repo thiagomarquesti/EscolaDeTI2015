@@ -38,6 +38,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 nome: "",
                 telefones: [{
                         telefone: ""
+                    }, {
+                        telefone: ""
                     }],
                 email: {
                     email: ""
@@ -104,13 +106,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                if($scope.usuario.login.length > 0 &&  $scope.usuario.senha.senha === ""){
-                    toastr.error("Atenção, informe a senha do usuário!");
-                    $scope.usuario.senha.senha.focus();
-                }else if($scope.usuario.senha.senha !== "" && $scope.usuario.login.length === 0){
-                    toastr.error("Atenção, informe o login do usuário!");
-                    $scope.usuario.login.focus();
-                }
                 console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
@@ -186,6 +181,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
                                 $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
+                                console.log(data.telefones[1].telefone);
+                                $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
 //                                if (data.telefones[0].telefone != "")
 //                                    $scope.usuario.telefones[1].telefone = data.telefones[0].telefone;
                                 $scope.usuario.status = data.status;
