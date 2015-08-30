@@ -6,7 +6,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
 
     function novaTerra() {
         $scope.terra = {
-            nomeTerra: "",
+            nometerra: "",
             cidade: ""
         };
         $scope.isNovaTerra = true;
@@ -61,7 +61,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.deletarTerra = function (terra) {
         $http.delete("/terraIndigena/" + terra.idterraindigena)
-                .success(function (status) {
+                .success(function () {
                     toastr.success("Terra indígena "+ terra.nometerra +" deletada com sucesso.");
                     $scope.atualizarTerras();
                 })
@@ -75,7 +75,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         else{
             console.log($scope.terra.cidade);
             var terraCompleta = {
-                nomeTerra: $scope.terra.nomeTerra,
+                nometerra: $scope.terra.nometerra,
                 cidade: {
                     codigoIBGE: $scope.terra.cidade.codigoibge,
                     descricao: $scope.terra.cidade.nomecidade,
@@ -96,7 +96,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                         .error(deuErro);
             }
             else {
-                terraCompleta.idTerraIndigena = $scope.terra.idTerraIndigena;
+                terraCompleta.idterraindigena = $scope.terra.idterraindigena;
                 $http.put("/terraIndigena", terraCompleta)
                         .success(function () {
                             $location.path("/TerraIndigena/listar");
@@ -109,7 +109,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     
     $scope.atualizarTerras = function (pag,campo,order,string, paro) {
         if(pag == null || pag == ""){ pag = 1; }
-        if(campo == null || campo == ""){ campo = "nomeTerra"; }
+        if(campo == null || campo == ""){ campo = "nometerra"; }
         if(order != "asc" && order != "desc"){ order = "asc"; }
         if(string == null){ string = ""; }
 //      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }

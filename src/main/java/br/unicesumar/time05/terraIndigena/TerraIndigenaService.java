@@ -3,12 +3,10 @@ package br.unicesumar.time05.terraIndigena;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
-import classesBase.ServiceBase;
-import java.util.Collections;
+import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -44,12 +42,12 @@ public class TerraIndigenaService extends ServiceBase<TerraIndigena, Long, Terra
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(SQLConsultaTerraIndigena, parametrosConsulta);
+        return query.executeComPaginacao(SQLConsultaTerraIndigena,"t.nometerra", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(SQLConsultaTerraIndigena, new ParametrosConsulta());
+        return query.executeComPaginacao(SQLConsultaTerraIndigena,"t.nometerra", new ParametrosConsulta());
     }
 
     @Override

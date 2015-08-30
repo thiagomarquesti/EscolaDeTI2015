@@ -5,7 +5,6 @@ import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,25 +12,49 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "terraindigena")
-public class TerraIndigena implements Serializable{
-   @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-   @CampoConsulta
-   @Column(name = "idterraindigena")
-   private Long idTerraIndigena;
-   @CampoConsulta
-   @Column(name = "nometerra")
-   private String nomeTerra;
-   @ManyToOne
-   private Cidade cidade;
+public class TerraIndigena implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @CampoConsulta
+    private Long idterraindigena;
+    @CampoConsulta(campoOrdenacaoPadrao = true)
+    private String nometerra;
+    @ManyToOne
+    private Cidade cidade;
 
     public TerraIndigena() {
     }
 
+    public TerraIndigena(String nometerra, UF estado, Cidade cidade) {
+        this.nometerra = nometerra;
+        this.cidade = cidade;
+    }
+
+    public Long getIdterraindigena() {
+        return idterraindigena;
+    }
+
+    public String getNometerra() {
+        return nometerra;
+    }
+
+    public void setNometerra(String nometerra) {
+        this.nometerra = nometerra;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.idTerraIndigena);
+        hash = 37 * hash + Objects.hashCode(this.idterraindigena);
         return hash;
     }
 
@@ -44,37 +67,10 @@ public class TerraIndigena implements Serializable{
             return false;
         }
         final TerraIndigena other = (TerraIndigena) obj;
-        if (!Objects.equals(this.idTerraIndigena, other.idTerraIndigena)) {
+        if (!Objects.equals(this.idterraindigena, other.idterraindigena)) {
             return false;
         }
         return true;
     }
-   
-    public TerraIndigena(String nomeTerra, UF estado, Cidade cidade) {
-        this.nomeTerra = nomeTerra;
-        this.cidade = cidade;
-    }
 
-    public Long getIdTerraIndigena() {
-        return idTerraIndigena;
-    }
-
-    public String getNomeTerra() {
-        return nomeTerra;
-    }
-
-    public void setNomeTerra(String nomeTerra) {
-        this.nomeTerra = nomeTerra;
-    }
-
-
-
-    public Cidade getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-   
 }

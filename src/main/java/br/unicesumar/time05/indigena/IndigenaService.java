@@ -4,12 +4,10 @@ import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.etnia.Etnia;
-import br.unicesumar.time05.etnia.EtniaRepository;
 import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.terraIndigena.TerraIndigenaRepository;
 import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +30,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     private EtniaService etniaService;
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLConsultaIndigena = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+    private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
             + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
@@ -41,11 +39,11 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "LEFT JOIN telefone t "
             + "ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
-            + "ON i.terra_indigena_idterraindigena = ti.idterraindigena";
+            + "ON i.terraindigena_idterraindigena = ti.idterraindigena";
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
+    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
             + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
@@ -53,8 +51,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "LEFT JOIN telefone t "
             + " ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
-            + " ON i.terra_indigena_idterraindigena = ti.idterraindigena "
-            + "WHERE i.codigo_assindi = :idIndigena";
+            + " ON i.terraindigena_idterraindigena = ti.idterraindigena "
+            + "WHERE i.codigoassindi = :idIndigena";
 
     @Override
     public void salvar(CriarIndigena aCIndigena) {
@@ -67,7 +65,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     @Override
     public void alterar(CriarIndigena aCIndigena) {
         Indigena i = new Indigena(aCIndigena.getCodigoAssindi(), aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
-        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aCIndigena.getTerraIndigena()));
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto((Long)aCIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
         repository.save(i);
     }
@@ -84,12 +82,12 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(SQLConsultaIndigena, parametrosConsulta);
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(SQLConsultaIndigena, new ParametrosConsulta());
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", new ParametrosConsulta());
     }
 
     @Override

@@ -3,7 +3,7 @@ package br.unicesumar.time05.cidade;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -37,12 +37,12 @@ public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(sqlCidade, parametrosConsulta);
+        return query.executeComPaginacao(sqlCidade,"c.descricao", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(sqlCidade, new ParametrosConsulta());
+        return query.executeComPaginacao(sqlCidade,"c.descricao", new ParametrosConsulta());
     }
 
     @Override

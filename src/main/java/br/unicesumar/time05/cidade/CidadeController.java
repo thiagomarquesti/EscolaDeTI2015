@@ -1,6 +1,6 @@
 package br.unicesumar.time05.cidade;
 
-import classesBase.ControllerBase;
+import classesbase.ControllerBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
