@@ -15,72 +15,72 @@ public class QueryPersonalizada {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
     @Autowired
-    private MapRowMapper RowMapper;
+    private MapRowMapper rowMapper;
     @Autowired
     private RetornoConsultaPaginada retornoConsulta;
 
-    public List<Map<String, Object>> execute(String SQL) {
-        return this.execute(SQL, new MapSqlParameterSource());
+    public List<Map<String, Object>> execute(String aSQL) {
+        return this.execute(aSQL, new MapSqlParameterSource());
     }
 
-    public List<Map<String, Object>> execute(String SQL, MapSqlParameterSource params) {
-        return Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper));
+    public List<Map<String, Object>> execute(String aSQL, MapSqlParameterSource aParams) {
+        return Collections.unmodifiableList(jdbcTemplate.query(aSQL, aParams, rowMapper));
     }
-
-    public List<Map<String, Object>> executePorID(String SQL, Object ID) {
+    
+    public List<Map<String, Object>> executePorID(String aSQL, Object aID){
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, ID);
-        return Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper));
+        params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, aID);
+        return Collections.unmodifiableList(jdbcTemplate.query(aSQL, params, rowMapper));
     }
-
-    public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL construtorDeSQL, ParametrosConsulta parametrosConsulta) {
+    
+    public RetornoConsultaPaginada executeComPaginacao(ConstrutorDeSQL aConstrutorDeSQL, ParametrosConsulta aParametrosConsulta) {
         String SQL;
-        SQL = construtorDeSQL.getSQL(parametrosConsulta);
-        return executeComPaginacao(SQL, construtorDeSQL.getCampoOrdenacaoPadrao(), parametrosConsulta);
+        SQL = aConstrutorDeSQL.getSQL(aParametrosConsulta);
+        return executeComPaginacao(SQL, aConstrutorDeSQL.getCampoOrdenacaoPadrao(), aParametrosConsulta);
     }
 
-    public RetornoConsultaPaginada executeComPaginacao(String SQL, String CampoOrdenacaoPadrao, ParametrosConsulta parametrosConsulta){
+    public RetornoConsultaPaginada executeComPaginacao(String aSQL, String aCampoOrdenacaoPadrao, ParametrosConsulta aParametrosConsulta){
         
         MapSqlParameterSource params = new MapSqlParameterSource();
-        if ((parametrosConsulta != null) && (parametrosConsulta.getPalavraChave() != null) && (!parametrosConsulta.getPalavraChave().isEmpty())) {
-            if (!SQL.contains(OperadoresSQL.WHERE.trim())) {
-                SQL += this.adicionaWhereEmSQL(SQL);
+        if ((aParametrosConsulta != null) && (aParametrosConsulta.getPalavraChave() != null) && (!aParametrosConsulta.getPalavraChave().isEmpty())) {
+            if (!aSQL.contains(OperadoresSQL.WHERE.trim())){
+                aSQL += this.adicionaWhereEmSQL(aSQL);
             }
-            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, "%" + parametrosConsulta.getPalavraChave() + "%");
-            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, parametrosConsulta.getPalavraChave());
+            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_LIKE, "%" + aParametrosConsulta.getPalavraChave() + "%");
+            params.addValue(OperadoresSQL.NOME_PARAMETRO_PARA_IGUAL, aParametrosConsulta.getPalavraChave());
         }
-
-        List<Map<String, Object>> result = jdbcTemplate.query(SQL, params, RowMapper);
+        
+        List<Map<String, Object>> result = jdbcTemplate.query(aSQL, params, rowMapper);
         retornoConsulta.setTotalDeRegistros(result.size());
 
-        Double paginas = (double) result.size() / parametrosConsulta.getRegistrosPorPagina();
+        Double paginas = (double) result.size() / aParametrosConsulta.getRegistrosPorPagina();
         retornoConsulta.setQuantidadeDePaginas((int)Math.ceil(paginas));
-        retornoConsulta.setPaginaAtual(parametrosConsulta.getPagina());
+        retornoConsulta.setPaginaAtual(aParametrosConsulta.getPagina());
 
-        if ((parametrosConsulta != null) && (parametrosConsulta.getOrdenarPor() != null) && (!parametrosConsulta.getOrdenarPor().isEmpty())) {
-            SQL += (OperadoresSQL.ORDER_BY + parametrosConsulta.getOrdenarPor());
-            if ((!parametrosConsulta.getSentidoOrdenacao().isEmpty()) && (parametrosConsulta.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC.trim()))) {
-                SQL += OperadoresSQL.DESC;
+        if ((aParametrosConsulta != null) && (aParametrosConsulta.getOrdenarPor() != null) && (!aParametrosConsulta.getOrdenarPor().isEmpty())) {
+            aSQL += (OperadoresSQL.ORDER_BY + aParametrosConsulta.getOrdenarPor());
+            if ((!aParametrosConsulta.getSentidoOrdenacao().isEmpty()) && (aParametrosConsulta.getSentidoOrdenacao().equalsIgnoreCase(OperadoresSQL.DESC.trim()))) {
+                aSQL += OperadoresSQL.DESC;
             }
         } else {            
-            if (CampoOrdenacaoPadrao.isEmpty()) {
-                CampoOrdenacaoPadrao = "1";
+            if (aCampoOrdenacaoPadrao.isEmpty()) {
+                aCampoOrdenacaoPadrao = "1";
             }            
-            SQL += OperadoresSQL.ORDER_BY + CampoOrdenacaoPadrao;
+            aSQL += OperadoresSQL.ORDER_BY + aCampoOrdenacaoPadrao;
         }
 
-        if ((parametrosConsulta != null) && (parametrosConsulta.getPagina() > 0)) {
-            SQL += OperadoresSQL.LIMIT + parametrosConsulta.getRegistrosPorPagina() + OperadoresSQL.OFFSET + ((parametrosConsulta.getPagina() * parametrosConsulta.getRegistrosPorPagina()) - parametrosConsulta.getRegistrosPorPagina());
+        if ((aParametrosConsulta != null) && (aParametrosConsulta.getPagina() > 0)) {
+            aSQL += OperadoresSQL.LIMIT + aParametrosConsulta.getRegistrosPorPagina() + OperadoresSQL.OFFSET + ((aParametrosConsulta.getPagina() * aParametrosConsulta.getRegistrosPorPagina()) - aParametrosConsulta.getRegistrosPorPagina());
         }
-
-        System.out.println(SQL);
-        retornoConsulta.setListaDeRegistros(Collections.unmodifiableList(jdbcTemplate.query(SQL, params, RowMapper)));
+        
+        System.out.println(aSQL);
+        retornoConsulta.setListaDeRegistros(Collections.unmodifiableList(jdbcTemplate.query(aSQL, params, rowMapper)));
         return retornoConsulta;
     }
 
-    private String adicionaWhereEmSQL(String SQL) {
-
-        String StringComOsCampos = SQL.substring(SQL.indexOf(OperadoresSQL.SELECT.trim()) + OperadoresSQL.SELECT.trim().length(), SQL.indexOf(OperadoresSQL.FROM.trim()));
+    private String adicionaWhereEmSQL(String aSQL){
+        
+        String StringComOsCampos = aSQL.substring(aSQL.indexOf(OperadoresSQL.SELECT.trim()) + OperadoresSQL.SELECT.trim().length(), aSQL.indexOf(OperadoresSQL.FROM.trim()));
         String[] campos = StringComOsCampos.split(",");
         String campoSemFormatacao;
         for (int i = 0; i < campos.length; i++) {

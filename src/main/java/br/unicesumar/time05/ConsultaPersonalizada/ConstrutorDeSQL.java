@@ -12,16 +12,16 @@ public class ConstrutorDeSQL {
     private DadosParaConsultaSQL dadosParaConsulta;
     private String SQL;
 
-    public ConstrutorDeSQL(Class entidade) {
-        this.entidade = entidade;
+    public ConstrutorDeSQL(Class aEntidade) {
+        this.entidade = aEntidade;
     }
 
-    public String getSQL(ParametrosConsulta parametros) {
+    public String getSQL(ParametrosConsulta aParametros) {
         this.SQL = "";
         this.extrairDadosDaEntidade();
         this.preparaSelect();
         this.preparaFrom();
-        this.preparaWhere(parametros);
+        this.preparaWhere(aParametros);
         return this.SQL;
     }
 
@@ -59,9 +59,9 @@ public class ConstrutorDeSQL {
         this.SQL += OperadoresSQL.WHERE + this.dadosParaConsulta.getIdTabela() + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL;
     }
 
-    private void preparaWhere(ParametrosConsulta parametros) {
+    private void preparaWhere(ParametrosConsulta aParametros) {
 
-        if ((parametros != null) && (parametros.getPalavraChave() != null) && (!parametros.getPalavraChave().isEmpty())) {
+        if ((aParametros != null) && (aParametros.getPalavraChave() != null) && (!aParametros.getPalavraChave().isEmpty())) {
 
             this.SQL += OperadoresSQL.WHERE;
             String campos = "";
@@ -78,12 +78,12 @@ public class ConstrutorDeSQL {
         }
     }
 
-    private String montaCondicao(CampoParaScriptSQL campo) {
+    private String montaCondicao(CampoParaScriptSQL aCampo) {
         String resultado;
-        if (campo.getComparacao() == TipoComparacao.CONTEM) {
-            resultado = "(" + campo.getCampo().trim() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
+        if (aCampo.getComparacao() == TipoComparacao.CONTEM) {
+            resultado = "(" + aCampo.getCampo().trim() + "::varchar " + OperadoresSQL.ILIKE + OperadoresSQL.PARAMETRO_PARA_LIKE + ")";
         } else {
-            resultado = "(" + campo.getCampo().trim() + "::varchar " + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL + ")";
+            resultado = "(" + aCampo.getCampo().trim() + "::varchar " + OperadoresSQL.IGUAL + OperadoresSQL.PARAMETRO_PARA_IGUAL + ")";
         }
         return resultado;
     }
@@ -120,19 +120,19 @@ public class ConstrutorDeSQL {
         }
     }
 
-    private String getNomeCampo(Field campo) {
+    private String getNomeCampo(Field aCampo) {
 
         String nomeCampo = "";
-        if (campo.isAnnotationPresent(Column.class)) {
-            nomeCampo = campo.getAnnotation(Column.class).name();
+        if (aCampo.isAnnotationPresent(Column.class)) {
+            nomeCampo = aCampo.getAnnotation(Column.class).name();
         }
 
-        if (nomeCampo.isEmpty() && campo.isAnnotationPresent(JoinColumn.class)) {
-            nomeCampo = campo.getAnnotation(JoinColumn.class).name();
+        if (nomeCampo.isEmpty() && aCampo.isAnnotationPresent(JoinColumn.class)) {
+            nomeCampo = aCampo.getAnnotation(JoinColumn.class).name();
         }
 
         if (nomeCampo.isEmpty()) {
-            nomeCampo = campo.getName();
+            nomeCampo = aCampo.getName();
         }
 
         return nomeCampo;
