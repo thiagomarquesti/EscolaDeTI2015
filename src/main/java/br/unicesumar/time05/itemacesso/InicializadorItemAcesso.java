@@ -58,6 +58,8 @@ public class InicializadorItemAcesso {
     public void inicializar() throws IOException {
         carregarUF();
         carregarEstados();
+        carregarConvenios();
+        carregarTerraIndigena();
             
         List<ItemAcesso> itensAcesso = new ArrayList<>();
 
@@ -264,6 +266,50 @@ public class InicializadorItemAcesso {
         final String FILE_NAME_CIDADES = "src\\main\\java\\SCRIPTS\\cidades.txt";
         
         File file = new File(FILE_NAME_CIDADES);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        String linha;
+        while ((linha = bufferedReader.readLine()) != null) {
+            try {
+                query.execute(linha);
+            } catch (Exception e) {
+            }
+        }
+        
+        bufferedReader.close();
+        inputStreamReader.close();
+        fileInputStream.close();
+    }
+    
+    public void carregarConvenios() throws IOException{
+        final String FILE_NAME_CONVENIO = "src\\main\\java\\SCRIPTS\\convenio.txt";
+        
+        File file = new File(FILE_NAME_CONVENIO);
+        FileInputStream fileInputStream = new FileInputStream(file);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        String linha;
+        while ((linha = bufferedReader.readLine()) != null) {
+            try {
+                query.execute(linha);
+            } catch (Exception e) {
+            }
+        }
+        
+        bufferedReader.close();
+        inputStreamReader.close();
+        fileInputStream.close();
+    }
+    
+    public void carregarTerraIndigena() throws IOException{
+        final String FILE_NAME_TERRA = "src\\main\\java\\SCRIPTS\\terraindigena.txt";
+        
+        File file = new File(FILE_NAME_TERRA);
         FileInputStream fileInputStream = new FileInputStream(file);
         InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
