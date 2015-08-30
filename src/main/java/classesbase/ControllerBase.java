@@ -55,19 +55,19 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
         return service.listar();
     }
     
-    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listar/{aRegistrosPorPagina}/{aPagina}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesPaginada(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina) {
         ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina);
         return service.listar(parametros);
     }
     
-    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}/{ordenarPor}/{sentidoOrdenacao}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listar/{aRegistrosPorPagina}/{aPagina}/{aOrdenarPor}/{aSentidoOrdenacao}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao) {
         ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina, aOrdenarPor, aSentidoOrdenacao);
         return service.listar(parametros);
     }
 
-    @RequestMapping(value = "/listar/{registrosPorPagina}/{pagina}/{ordenarPor}/{sentidoOrdenacao}/{palavraChave}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listar/{aRegistrosPorPagina}/{aPagina}/{aOrdenarPor}/{aSentidoOrdenacao}/{aPalavraChave}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesOrdenadasEComBusca(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao, @PathVariable String aPalavraChave) {
         ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina, aOrdenarPor, aSentidoOrdenacao, aPalavraChave);
         return service.listar(parametros);
