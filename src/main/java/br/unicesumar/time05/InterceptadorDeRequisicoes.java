@@ -23,12 +23,10 @@ public class InterceptadorDeRequisicoes extends HandlerInterceptorAdapter{
         String uri = request.getRequestURI();
         String url = request.getRequestURL().toString();
         
-        System.out.println("Req...." + url);
-
         CharSequence cadusuario = "/usuario";
         CharSequence login = "/login/";
         
-        if (url.contains(login) || url.endsWith("/usuario")){
+        if (url.contains(login) || url.endsWith("/usuario") || uri.equals("/")){
             return true;
         } else if (url.contains(cadusuario) && usuarioService.listarSemPaginacao().isEmpty()) {
             return true;
@@ -36,6 +34,7 @@ public class InterceptadorDeRequisicoes extends HandlerInterceptorAdapter{
             return true;
         }
         
+        System.out.println("Req...." + url);
         return false;
     }
 }
