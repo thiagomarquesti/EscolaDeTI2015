@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <ng-include src="'views/busca.html'"></ng-include>
+        <ng-include src="'views/busca.html'" ng-init="registrosPadrao()"></ng-include>
         
         <div class="panel panel-default">
             <table id="tabelaGrid" class="table table-striped datatable">
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody ng-init="atualizarListagens()">
-                    <tr ng-repeat='i in indigenas.listaDeRegistros' >
+                    <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{i.codigoassindi}}</td>
                         <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
                         <td>{{calculaIdade(i.datanascimento)}} anos</td>

@@ -25,13 +25,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 $scope.busca.numregistros = 10;
             }
             alert($scope.busca);
-        },1000);
+        },100);
     };
     
     
     $scope.atualizarListagens = function(qtdePorPag, pag,campo,order,string, paro, entidade){
         entidade = 'indigena';
-        ServicePaginacao.atualizarListagens(qtdePorPag, pag,campo,order,string, paro, entidade);
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag,campo,order,string, paro, entidade);
+        //console.log($scope.indigenas);
     };
     
     $scope.trocaOrdem = function(qtdePorPag, campo, string, entidade){
