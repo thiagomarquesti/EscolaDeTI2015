@@ -18,9 +18,9 @@ public class ParametrosConsulta implements Serializable {
         this.palavraChave = "";
     }
 
-    public ParametrosConsulta(int aPagina, int aRegistrosPorPagina) {
-        this.pagina = aPagina;
-        this.registrosPorPagina = aRegistrosPorPagina;
+    public ParametrosConsulta(int registrosPorPagina, int pagina) {
+        this.pagina = pagina;
+        this.registrosPorPagina = registrosPorPagina;
         this.ordenarPor = "";
         this.sentidoOrdenacao = "";
         this.palavraChave = "";
