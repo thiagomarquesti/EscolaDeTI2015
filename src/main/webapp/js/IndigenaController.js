@@ -18,8 +18,16 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
         $scope.isNovoIndio = true;
     }
-
-    $scope.qtdePorPag = 10;
+    
+    $scope.registrosPadrao = function() {
+        $timeout( function(){ 
+            if($scope.busca.numregistros === "") { 
+                $scope.busca.numregistros = 10;
+            }
+            alert($scope.busca);
+        },1000);
+    };
+    
     
     $scope.atualizarListagens = function(qtdePorPag, pag,campo,order,string, paro, entidade){
         entidade = 'indigena';
