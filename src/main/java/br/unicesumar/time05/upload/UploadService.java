@@ -5,9 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.transaction.Transactional;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.stereotype.Component;
 
 @Transactional
-public class UploadController {
+@Component
+public class UploadService {
 
     public void upload(String baseedString, Long nomeArquivo) throws IOException {
         String stringCerta = baseedString.substring(baseedString.indexOf(",") + 1);

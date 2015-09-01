@@ -3,47 +3,84 @@ package br.unicesumar.time05.indigena;
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.etnia.Etnia;
+import br.unicesumar.time05.etnia.EtniaService;
+import br.unicesumar.time05.terraIndigena.TerraIndigena;
+import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
+import br.unicesumar.time05.upload.UploadService;
 import classesBase.ServiceBase;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
 @Transactional
-public class IndigenaService extends ServiceBase<Indigena, Long, IndigenaRepository> {
+public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRepository> {
 
     public IndigenaService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Indigena.class));
     }
 
+    @Autowired
+    private TerraIndigenaService terraService;
+    @Autowired
+    private EtniaService etniaService;
+    @Autowired
+    private UploadService uploadService;
+
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLConsultaIndigena = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
-            + "i.genero, i.nome, t.telefone, ti.nome_terra "
+    private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
+            + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
             + "LEFT JOIN telefone t "
             + "ON i.telefone_idtelefone = t.idtelefone "
-            + "LEFT JOIN terra_indigena ti "
-            + "ON i.terra_indigena_idterraindigena = ti.id_terra_indigena";
-    
+            + "LEFT JOIN terraindigena ti "
+            + "ON i.terraindigena_idterraindigena = ti.idterraindigena";
+
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigo_assindi,  i.codigoSUS, "
-            + "i.cpf, i.data_nascimento, e.descricao, i.escolaridade,i.estado_civil, "
-            + "i.genero, i.nome, t.telefone, ti.nome_terra "
+    private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
+            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
+            + "i.genero, i.nome, t.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
             + "LEFT JOIN telefone t "
             + " ON i.telefone_idtelefone = t.idtelefone "
-            + "LEFT JOIN terra_indigena ti "
-            + " ON i.terra_indigena_idterraindigena = ti.id_terra_indigena "
-            + "WHERE i.codigo_assindi = :idIndigena";
+            + "LEFT JOIN terraindigena ti "
+            + " ON i.terraindigena_idterraindigena = ti.idterraindigena "
+            + "WHERE i.codigoassindi = :idIndigena";
 
+    @Override
+    public void salvar(CriarIndigena aIndigena) {
+        Indigena i = new Indigena(null, aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
+        repository.save(i);
+        repository.flush();
+        try {
+            uploadService.upload(aIndigena.getImgSrc(), i.getCodigoAssindi());
+        } catch (IOException ex) {
+            throw new RuntimeException("Falha ao salvar imagem");
+        }
+    }
+
+    @Override
+    public void alterar(CriarIndigena aIndigena) {
+        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
+        repository.save(i);
+    }
 
     @Override
     public List<Map<String, Object>> findByID(Long aCodigoAssindi) {
@@ -69,4 +106,5 @@ public class IndigenaService extends ServiceBase<Indigena, Long, IndigenaReposit
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(SQLConsultaIndigena);
     }
+
 }
