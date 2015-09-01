@@ -54,10 +54,10 @@ valida.directive('emailUnique', ['$http', function ($http) {
                     scope.$apply(function () {
                         if (scope.usuario.email) {
                             if (scope.usuario.idusuario) {
-                                var dados = scope.usuario.email + "/" + scope.usuario.idusuario;
+                                var dados = scope.usuario.email.email + "/" + scope.usuario.idusuario;
                             }
                             else {
-                                var dados = scope.usuario.email;
+                                var dados = scope.usuario.email.email;
                             }
                             $http.get('/usuario/verificarEmail/' + dados)
                                     .success(function (data) {

@@ -28,7 +28,15 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
                     .error(deuErro);
         }
     };
-
+    
+    $scope.todasFuncoes = function(){
+        $http.get("/funcao")
+            .success(function (data) {
+                $scope.funcoes = data;
+            })
+            .error(deuErro);
+    };
+    
     $scope.atualizarFuncoes = function () {
         $http.get("/funcao")
                 .success(function (data) {

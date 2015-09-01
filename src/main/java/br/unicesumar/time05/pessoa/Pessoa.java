@@ -83,6 +83,18 @@ public abstract class Pessoa implements Serializable {
         this.email = email;
     }
 
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setIdpessoa(Long idpessoa) {
+        this.idpessoa = idpessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
     public Long getIdpessoa() {
         return idpessoa;
     }
@@ -127,9 +139,6 @@ public abstract class Pessoa implements Serializable {
         return tipoPessoa;
     }
 
-    public void setTipo(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
 
     @Override
     public int hashCode() {

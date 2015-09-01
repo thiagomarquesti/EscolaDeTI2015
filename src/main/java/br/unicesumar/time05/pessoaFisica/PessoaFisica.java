@@ -9,6 +9,7 @@ import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -34,6 +35,9 @@ public class PessoaFisica extends Pessoa implements Serializable{
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
+    
+    @CampoConsulta
+    private Date datanascimento;
 
     public PessoaFisica() {
     }
@@ -42,10 +46,11 @@ public class PessoaFisica extends Pessoa implements Serializable{
         super(nome, email);
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
         super(nome, telefones, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
+        this.datanascimento = datanasc;
     }
 
     public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email) {
@@ -69,6 +74,14 @@ public class PessoaFisica extends Pessoa implements Serializable{
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public Date getDatanascimento() {
+        return datanascimento;
+    }
+
+    public void setDatanascimento(Date datanascimento) {
+        this.datanascimento = datanascimento;
     }
 
     @Override

@@ -173,9 +173,9 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuPerfil);
             UF uf = new UF(41l, "PARANÁ", "PR");
             UfRepo.save(uf);
-            cidRepo.save(new Cidade(4105904, "COLORADO", uf));
-            cidRepo.save(new Cidade(4115200, "MARINGÁ", uf));
-            cidRepo.save(new Cidade(4114807, "MARIALVA", uf));
+            cidRepo.save(new Cidade(4105904L, "COLORADO", uf));
+            cidRepo.save(new Cidade(4115200L, "MARINGÁ", uf));
+            cidRepo.save(new Cidade(4114807L, "MARIALVA", uf));
         }
 
         ItemAcesso menuPerfilListar;
