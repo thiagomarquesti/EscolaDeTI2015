@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UploadService {
 
-    public void upload(String baseedString, Long nomeArquivo) throws IOException {
+    public void upload(String baseedString, Long nomeArquivo, String pasta) throws IOException {
         String stringCerta = baseedString.substring(baseedString.indexOf(",") + 1);
         byte[] decode = Base64.decodeBase64(stringCerta);
-        File f = new File("imagens/" + nomeArquivo + ".jpg");
+        File f = new File("src/main/webapp/fotos/"+pasta+"/"+ nomeArquivo + ".jpg");
         
         FileOutputStream out = new FileOutputStream(f);
         out.write(decode);

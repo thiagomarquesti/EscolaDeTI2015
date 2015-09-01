@@ -14,6 +14,7 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
+import br.unicesumar.time05.upload.UploadService;
 import classesBase.ServiceBase;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     private FuncaoRepository funcaoRepo;
     @Autowired
     private CidadeRepository cidadeRepo;
+    @Autowired
+    private UploadService uploadService;
 
     private final String SQLConsultaUsuarios
             =  "SELECT p.idpessoa,"
@@ -121,6 +124,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         try {
             repository.save(usuario);
             repository.flush();
+            if(repository.count()>1)
+            uploadService.upload(aUsuario.getImgSrc(), usuario.getIdpessoa(), "users");
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException(e);

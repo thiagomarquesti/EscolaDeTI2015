@@ -68,7 +68,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         repository.save(i);
         repository.flush();
         try {
-            uploadService.upload(aIndigena.getImgSrc(), i.getCodigoAssindi());
+            uploadService.upload(aIndigena.getImgSrc(), i.getCodigoAssindi(),"indios");
         } catch (IOException ex) {
             throw new RuntimeException("Falha ao salvar imagem");
         }

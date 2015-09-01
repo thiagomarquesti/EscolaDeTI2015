@@ -150,9 +150,51 @@
 
             <div class="form-group">
                 <label for="tfoto" class="col-md-2 control-label">Foto: </label>
-                <div class="col-md-2"><button  id="tfoto" name="tfoto" class="form-control btn btn-info"><i class="fa fa-camera"></i> Tirar foto</button></div>
+                <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+            
+                <div class="modal fade" id="fotoModal" data-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                    <h4 class="modal-title">Tire a foto</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="ng-camera" ng-controller="CameraController as vm">
+                                        <div>    
+                                            <ng-camera
+                                                output-height="360"
+                                                output-width="480"
+                                                viewer-height="360"
+                                                viewer-width="480"
+                                                image-format="jpeg"
+                                                jpeg-quality="100"
+                                                action-message="Tirar foto"
+                                                snapshot="vm.picture"
+                                                flash-fallback-url="img/webcam.swf"
+                                                overlay-url="img/overlay.png"
+                                                shutter-url="sound/shutter.mp3"
+                                            ></ng-camera>
+                                        </div>
+                                        <div ng-model="canvasFoto">
+                                            <img ng-if="vm.picture" ng-src="{{vm.picture}}" id="imgCanvas" alt="Foto">
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="col-md-12" ng-controller="CameraController as vm">
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>  
     </div>

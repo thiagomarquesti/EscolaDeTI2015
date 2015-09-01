@@ -73,7 +73,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             };
             $scope.isNovo = true;
         }
- 
+
         $scope.novoAdmin = function () {
             novoUsuarioAdmin();
         };
@@ -105,6 +105,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         ;
 
         $scope.salvar = function () {
+//            $scope.usuario.imgSrc = $scope.webcamFoto();
             if ($scope.isNovo) {
                 console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
@@ -227,9 +228,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.cidadeSelecionada = function (codigo) {
-            if(codigo == $scope.usuario.codigoibge){
+            if (codigo == $scope.usuario.codigoibge) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         };
@@ -265,6 +266,22 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .success(function (data) {
                         $scope.perfis = data;
                     }).error(deuErro);
+        };
+
+        $scope.webcamFoto = function () {
+            var img;
+            if (!$scope.isNovo) {
+            console.log("a:"+$scope.usuario.imgSrc);
+                if ($scope.usuario.imgSrc != "" && $scope.usuario.imgSrc!=undefined){
+                    return $scope.usuario.imgSrc;
+                console.log("passo aqui");}
+            }
+            $(document).ready(function () {
+                canvas = document.getElementById('imgCanvas');
+                img = canvas.src;
+                console.log("passo aqui tb");
+            });
+            return img;
         };
 
 //-----------------AKI-------------------------------

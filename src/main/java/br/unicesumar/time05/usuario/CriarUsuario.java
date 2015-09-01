@@ -33,11 +33,12 @@ public class CriarUsuario implements Serializable{
     private Senha senha;
     private Status status = Status.ATIVO;
     private Set<PerfilDeAcesso> perfis = new HashSet<>();
+    private String imgSrc;
 
     public CriarUsuario() {
     }
     
-    public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha) {
+    public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
         this.idpessoa = idpessoa;
         this.nome = nome;
         this.telefones = telefones;
@@ -56,6 +57,7 @@ public class CriarUsuario implements Serializable{
         this.genero = genero;
         this.login = login;
         this.senha = senha;
+        this.imgSrc = imgSrc;
     }
     
     public Long getIdpessoa() {
@@ -216,6 +218,14 @@ public class CriarUsuario implements Serializable{
 
     public void setTipo(TipoPessoa tipo) {
         this.tipo = tipo;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
     
 }
