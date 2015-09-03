@@ -50,7 +50,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         $http.get("/terraIndigena")
             .success(function (data) {
                 $scope.terras = data;
-                console.log($scope.terras);
+                //console.log($scope.terras);
             })
             .error(deuErro);
     };

@@ -2,6 +2,21 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.placeHolder = "Buscar indígena";
     
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, order, string, paro, entidade, troca){
+        if (entidade == "") { entidade = "indigena"; }
+        if (campo == "" || campo == null ) { campoAtual = "nome"; }
+        
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campoAtual, order, string, paro, entidade, troca);
+        $scope.tipoOrdem = $scope.dadosRecebidos.variaveis.tipoOrdem;
+        $scope.campoAtual = $scope.dadosRecebidos.variaveis.campoAtual;
+        console.log($scope.campoAtual);
+        $scope.pagina = pag;
+    };
+    
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+    };
+    
     function novoIndio() {
         $scope.indio = {
             nome: "",
@@ -20,39 +35,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
     
     $scope.busca = {};
-    
-    $scope.registrosPadrao = function() {
-        if($scope.busca.numregistros == null || $scope.busca.numregistros == "") { 
-            $scope.busca.numregistros = 10;
-        }
-    };
-    
-    $scope.atualizarListagens = function(qtdePorPag, pag,campo,order,string, paro, entidade, troca){
-        if (entidade == "") { entidade = "indigena"; }
-        if (campo == "") { campo = "nome"; }
-        if(troca){
-           if(order == 'asc') { order = 'desc'; }
-           else { order = 'asc'; }
-        }
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade);
-        $scope.tipoOrdem = order;
-        $scope.campoAtual = campo;
-        $scope.pagina = pag;
-    };
-    
-//    $scope.trocaOrdem = function(campo){
-//        if($scope.ordem === 'asc'){
-//            $scope.ordem = "desc";
-//        }
-//        else {
-//            $.ordem = "asc";
-//        }
-//        atualizarListagens(qtdePorPag, pag, campo, order, string, paro, 'indigena');
-///       $scope.campoAtual = $scope.dadosRecebidos.variaveis.campoAtual;
-//        $scope.tipoOrdem = $scope.dadosRecebidos.variaveis.tipoOrdem;
-//        console.log($scope.campoAtual);
-//        console.log($scope.tipoOrdem);
-//    };
     
     $scope.carregarIndio = function () {
         if ($location.path() === "/Indigena/novo") {
