@@ -7,7 +7,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         telefone: ""
                     },{
                         telefone: ""
-                    }],
+                    }], 
                 email: {
                     email: ""
                 },
