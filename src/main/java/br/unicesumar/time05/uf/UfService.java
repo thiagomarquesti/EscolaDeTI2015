@@ -1,7 +1,7 @@
 package br.unicesumar.time05.uf;
 
 import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 

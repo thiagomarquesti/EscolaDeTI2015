@@ -16,7 +16,7 @@ public class ItemAcesso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long iditemacesso;
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nome;
     @CampoConsulta
     private String rota;

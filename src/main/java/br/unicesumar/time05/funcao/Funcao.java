@@ -18,7 +18,7 @@ public class Funcao implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     Long idfuncao;
     
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     @NotBlank(message = "Campo descrição não pode estar vazio")
     @Column(unique = true, nullable = false)
     String descricao;

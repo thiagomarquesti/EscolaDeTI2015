@@ -4,12 +4,10 @@ import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.etnia.Etnia;
-import br.unicesumar.time05.etnia.EtniaRepository;
 import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.terraIndigena.TerraIndigenaRepository;
 import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +65,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     @Override
     public void alterar(CriarIndigena aCIndigena) {
         Indigena i = new Indigena(aCIndigena.getCodigoAssindi(), aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
-        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aCIndigena.getTerraIndigena()));
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto((Long)aCIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
         repository.save(i);
     }
@@ -84,12 +82,12 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(SQLConsultaIndigena, parametrosConsulta);
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(SQLConsultaIndigena, new ParametrosConsulta());
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", new ParametrosConsulta());
     }
 
     @Override

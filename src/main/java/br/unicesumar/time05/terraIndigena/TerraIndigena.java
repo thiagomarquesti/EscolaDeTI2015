@@ -18,7 +18,7 @@ public class TerraIndigena implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @CampoConsulta
     private Long idterraindigena;
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nometerra;
     @ManyToOne
     private Cidade cidade;

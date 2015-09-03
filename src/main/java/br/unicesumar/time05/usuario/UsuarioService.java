@@ -14,8 +14,8 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
-import classesBase.ServiceBase;
 import java.sql.Date;
+import classesbase.ServiceBase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -89,6 +89,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             + " LEFT JOIN usuario us"
             + "    ON us.idpessoa = p.idpessoa"
             + " WHERE p.idpessoa = :aUsuarioId";
+    
+    private final String ordenar = "p.nome";
 
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
@@ -137,12 +139,12 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(this.SQLConsultaUsuarios, parametrosConsulta);
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(this.SQLConsultaUsuarios, new ParametrosConsulta());
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, new ParametrosConsulta());
     }
 
     @Override

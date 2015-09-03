@@ -5,6 +5,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 nome: "",
                 telefones: [{
                         telefone: ""
+                    },{
+                        telefone: ""
                     }],
                 email: {
                     email: ""

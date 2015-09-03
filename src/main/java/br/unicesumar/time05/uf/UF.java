@@ -12,7 +12,7 @@ public class UF {
     @Id
     private Long codigoestado;
     
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String descricao;
     
     @CampoConsulta
