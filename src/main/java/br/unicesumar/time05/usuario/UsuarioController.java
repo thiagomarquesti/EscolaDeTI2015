@@ -2,6 +2,7 @@ package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.email.Email;
 import classesBase.ControllerBase;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/usuario")
 public class UsuarioController extends ControllerBase<CriarUsuario, Long, UsuarioService> {
 
-    @RequestMapping(value = "/obj", method = RequestMethod.GET)
-    public CriarUsuario getObj() {
-        CriarUsuario u = new CriarUsuario();
+    @Override
+    public Usuario getObjeto(@PathVariable Long aId) {
+        Usuario u = (Usuario) service.getObjeto(aId);
+        if(new File("src/main/webapp/fotos/users/"+u.getIdpessoa()+".jpg").exists())
+            u.setImgSrc("src/main/webapp/fotos/users/"+u.getIdpessoa()+".jpg");
         return u;
     }
 

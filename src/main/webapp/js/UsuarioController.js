@@ -5,6 +5,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 nome: "",
                 telefones: [{
                         telefone: ""
+                    }, {
+                        telefone: ""
                     }],
                 email: {
                     email: ""
@@ -28,7 +30,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 },
                 perfis: [],
                 tipo: "USUÁRIO",
-                status: "ATIVO"
+                status: "ATIVO",
+                imgSrc: ""
             };
             $scope.isNovo = true;
         }
@@ -58,7 +61,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 },
                 genero: "",
                 tipo: "USUÁRIO",
-                status: ""
+                status: "",
+                imgSrc: ""
             };
         }
 
@@ -94,18 +98,17 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     });
         };
 
-        function removerMascara(aCampo) {
-            console.log(aCampo);
-            if (aCampo !== "" && aCampo !== null) {
-                words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
-                aCampo = aCampo.replace(words, "");
-            }
-            return aCampo;
-        }
-        ;
+//        function removerMascara(aCampo) {
+//            console.log(aCampo);
+//            if (aCampo !== "" && aCampo !== null) {
+//                words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
+//                aCampo = aCampo.replace(words, "");
+//            }
+//            return aCampo;
+//        };
 
         $scope.salvar = function () {
-//            $scope.usuario.imgSrc = $scope.webcamFoto();
+            $scope.usuario.imgSrc = $scope.webcamFoto();
             if ($scope.isNovo) {
                 console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
@@ -182,14 +185,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
                                 $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
-                                console.log(data.telefones[1].telefone);
-                                $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
-//                                if (data.telefones[0].telefone != "")
-//                                    $scope.usuario.telefones[1].telefone = data.telefones[0].telefone;
+                                if (data.telefones[1]!=undefined) {
+                                    console.log(data.telefones[1].telefone);
+                                    $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
+                                }
                                 $scope.usuario.status = data.status;
                                 $scope.usuario.tipo = data.tipo;
-
-
+                                $scope.usuario.imgSrc = data.imgSrc;
 //                                $scope.usuario.rsenha = $scope.usuario.senha;
 
                                 $scope.isNovo = false;
@@ -271,10 +273,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         $scope.webcamFoto = function () {
             var img;
             if (!$scope.isNovo) {
-            console.log("a:"+$scope.usuario.imgSrc);
-                if ($scope.usuario.imgSrc != "" && $scope.usuario.imgSrc!=undefined){
+                console.log("a:" + $scope.usuario.imgSrc);
+                if ($scope.usuario.imgSrc !== "" && $scope.usuario.imgSrc !== undefined) {
                     return $scope.usuario.imgSrc;
-                console.log("passo aqui");}
+                    console.log("passo aqui");
+                }
             }
             $(document).ready(function () {
                 canvas = document.getElementById('imgCanvas');

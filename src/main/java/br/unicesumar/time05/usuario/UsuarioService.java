@@ -101,13 +101,13 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     public void salvar(CriarUsuario aUsuario) {
         Usuario usuario;
         if (repository.count() == 0) {
-            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), new HashSet<PerfilDeAcesso>(), new CPF(), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Date(1L));
+            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), new HashSet<PerfilDeAcesso>(), new CPF(""), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Date());
             usuario.setPerfil(perfilRepo.findAll());
         } else {
             Cidade cidade = cidadeRepo.findOne(aUsuario.getCodigoibge());
             Endereco end = new Endereco(aUsuario.getLogradouro(), aUsuario.getNumero(), aUsuario.getBairro(), aUsuario.getComplemento(), aUsuario.getCep(), cidade);
             if (aUsuario.getLogin() == null) {
-                usuario = new Usuario(aUsuario.getCpf(), aUsuario.getGenero(), aUsuario.getNome(), aUsuario.getTelefones(), aUsuario.getEmail(), end, aUsuario.getTipoPessoa(), funcaoRepo.findOne(aUsuario.getIdfuncao()), aUsuario.getDatanasc());
+                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
             } else {
                 if(!verificarLogin(aUsuario.getLogin()))
                     throw new RuntimeException("Login já existe no sistema");

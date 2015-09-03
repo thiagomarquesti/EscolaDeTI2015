@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,6 +27,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -46,9 +48,11 @@ public class Usuario extends PessoaFisica implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<PerfilDeAcesso> perfis = new HashSet<>();
+    
+    @Transient
+    private String imgSrc;
 
     public Usuario() {
-        //setClass(this.getClass());
     }
 
     public Usuario(String login, Senha senha, String nome, Email email) {
@@ -57,20 +61,20 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.senha = senha;
     }
 
-    public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
-            Email email, Endereco endereco, TipoPessoa tipoPessoa, Funcao funcao, Date datanasc) {
-        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
-        this.login = login;
-        this.senha = senha;
-        this.perfis = perfis;
-        this.funcao = funcao;
-    }
+//    public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
+//            Email email, Endereco endereco, TipoPessoa tipoPessoa, Funcao funcao, Date datanasc) {
+//        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
+//        this.login = login;
+//        this.senha = senha;
+//        this.perfis = perfis;
+//        this.funcao = funcao;
+//    }
 
-    public Usuario(CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
-            Email email, Endereco endereco, TipoPessoa tipoPessoa, Funcao funcao, Date datanasc) {
-        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
-        this.funcao = funcao;
-    }
+//    public Usuario(CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
+//            Email email, Endereco endereco, TipoPessoa tipoPessoa, Funcao funcao, Date datanasc) {
+//        super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
+//        this.funcao = funcao;
+//    }
 
     public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
             Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
@@ -120,9 +124,9 @@ public class Usuario extends PessoaFisica implements Serializable {
         super.setEmail(email);
     }
 
-    public Senha getSenha() {
-        return this.senha;
-    }
+//    public Senha getSenha() {
+//        return this.senha;
+//    }
 
     public void setSenha(Senha senha) {
         this.senha = senha;
@@ -140,6 +144,9 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.perfis = new HashSet<>(perfis);
     }
 
+    public boolean verificaSenha(String senha) {
+        return this.senha.equals(senha);
+    }
 //    public void setPerfil(PerfilDeAcesso perfil){
 //        this.perfis.add(perfil);
 //    }
@@ -159,9 +166,18 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.funcao = funcao;
     }
 
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
     @Override
     public String toString() {
         return "Usuario{ nome=" + super.getNome() + ", login=" + login + ", email=" + super.getEmail() + '}';
     }
+
 
 }
