@@ -8,41 +8,41 @@
         </div>
     </div>
     <div class="panel-body">
-        <ng-include src="'views/busca.html'" ng-init="registrosPadrao()"></ng-include>
+        <ng-include src="'views/busca.html'"></ng-include>
         
         <div class="panel panel-default">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='codigoassindi'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='codigoassindi'"></i>
-                            <a ng-click="trocaOrdem(qtdePorPag,'codigoassindi', busca.descricao, 'indigena')">COD Assindi</a>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='codigoassindi'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='codigoassindi'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros,'', 'codigoassindi',tipoOrdem , busca.descricao, true, '', 1)">COD Assindi</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='nome'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='nome'"></i>
-                            <a ng-click="trocaOrdem(qtdePorPag,'nome', busca.descricao, 'indigena')">Nome</a>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='nome'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros,'', 'nome',tipoOrdem , busca.descricao, true, '', 1)">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='datanascimento'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='datanascimento'"></i>
-                            <a ng-click="trocaOrdem(qtdePorPag,'datanascimento', busca.descricao,'indigena')">Idade</a>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='datanascimento'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='datanascimento'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros,'', 'datanascimento',tipoOrdem , busca.descricao, true, '', 1)">Idade</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='descricao'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='descricao'"></i>
-                            <a ng-click="trocaOrdem(qtdePorPag,'descricao', busca.descricao, 'indigena')">Etnia e terra indígena</a>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='descricao'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros,'', 'descricao',tipoOrdem , busca.descricao, true, '', 1)">Etnia e terra indígena</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='telefone'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='telefone'"></i>
-                            <a ng-click="trocaOrdem(qtdePorPag,'telefone', busca.descricao,'indigena')">Telefone</a>
+                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='telefone'"></i>
+                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros,'', 'telefone',tipoOrdem , busca.descricao, true, '', 1)">Telefone</a>
                         </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens()">
+                <tbody ng-init="atualizarListagens('', '','','','', '', 'indigena', 0)">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{i.codigoassindi}}</td>
                         <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
@@ -63,7 +63,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="panel-footer">Registros encontrados: {{indigenas.totalDeRegistros}}</div>
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
             
         </div>
         <div id="paginacao"></div>
@@ -71,3 +71,5 @@
         
     </div>
 </div>
+
+<div ng-init="registrosPadrao()"></div>
