@@ -15,34 +15,29 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='codigoassindi'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='codigoassindi'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros,'', 'codigoassindi',tipoOrdem , busca.descricao, true, '', 1)">COD Assindi</a>
+                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='codigoassindi'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'codigoassindi',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">COD Assindi</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='nome'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='nome'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros,'', 'nome',tipoOrdem , busca.descricao, true, '', 1)">Nome</a>
+                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='datanascimento'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='datanascimento'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros,'', 'datanascimento',tipoOrdem , busca.descricao, true, '', 1)">Idade</a>
+                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='datanascimento'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datanascimento',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Idade</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='descricao'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='descricao'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros,'', 'descricao',tipoOrdem , busca.descricao, true, '', 1)">Etnia e terra indígena</a>
+                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Etnia e terra indígena</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="tipoOrdem=='asc' && campoAtual=='telefone'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem=='desc' && campoAtual=='telefone'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros,'', 'telefone',tipoOrdem , busca.descricao, true, '', 1)">Telefone</a>
+                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Telefone</a>
                         </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens('', '','','','', '', 'indigena', 0)">
+                <tbody ng-init="atualizarListagens('', '','','asc','', '', 'indigena', '')">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{i.codigoassindi}}</td>
                         <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>

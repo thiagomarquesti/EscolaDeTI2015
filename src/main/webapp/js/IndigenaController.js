@@ -4,14 +4,18 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, order, string, paro, entidade, troca){
         if (entidade == "") { entidade = "indigena"; }
-        if (campo == "" || campo == null ) { campoAtual = "nome"; }
-        
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campoAtual, order, string, paro, entidade, troca);
-        $scope.tipoOrdem = $scope.dadosRecebidos.variaveis.tipoOrdem;
-        $scope.campoAtual = $scope.dadosRecebidos.variaveis.campoAtual;
-        console.log($scope.campoAtual);
-        $scope.pagina = pag;
+        if (campo == "" || campo == null ) { campo = "nome"; }
+        else { campo = campo; }
+        if(troca === 'ok') { $scope.trocaOrdem; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade, troca);
+        console.log($scope.dadosRecebidos);
+        $scope.pagina = $scope.dadosRecebidos.itens.paginaAtual;
     };
+    
+    $scope.trocaOrdem = function(order, troca){
+        var ordem = ServicePaginacao.trocaOrdem(order, troca);
+        return ordem;
+    }
     
     $scope.registrosPadrao = function() {
         $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
