@@ -156,6 +156,34 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         $scope.statusArray = {"ATIVO": "Acesso Liberado", "INATIVO": "Acesso Bloqueado", "": "Sem acesso"};
         $scope.corStatus = {"ATIVO": "success", "INATIVO": "danger", "": "info"};
 
+        $scope.validarLogin = function (){
+            $scope.erroNoLogin = false;
+            if($scope.usuario.login.length !== 0){
+                $http.get('/usuario/verificarLogin/' + $scope.login).success(function (){
+                    $scope.existeLogin = false;
+                }).error(function(){
+                    $scope.existeLogin = true;
+                });
+                
+                if($scope.usuario.login.length > 20){
+                   $scope.maxLogin = true;                  
+                }else{
+                   $scope.maxLogin = false; 
+                }
+
+                if($scope.usuario.login.length < 3){
+                   $scope.minLogin = true;                  
+                }else{
+                   $scope.minLogin = false; 
+                }
+                $scope.erroNoLogin = ($scope.maxLogin || $scope.existeLogin || $scope.minLogin); 
+                $scope.formCad.$valid = !($scope.maxLogin || $scope.existeLogin || $scope.minLogin);
+            }else{
+                $scope.formCad.$valid = true;
+            }   
+            
+        };
+        
         $scope.carregar = function () {
             if ($location.path() === "/Usuario/novo") {
                 novoUsuario();
