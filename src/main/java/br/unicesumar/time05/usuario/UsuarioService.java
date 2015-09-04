@@ -16,9 +16,10 @@ import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.upload.UploadService;
 import classesBase.ServiceBase;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     private CidadeRepository cidadeRepo;
     @Autowired
     private UploadService uploadService;
+    
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private final String SQLConsultaUsuarios
             =  "SELECT p.idpessoa,"
@@ -125,7 +128,7 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             repository.save(usuario);
             repository.flush();
             if(repository.count()>1)
-            uploadService.upload(aUsuario.getImgSrc(), usuario.getIdpessoa(), "users");
+                uploadService.uploadWebcam(aUsuario.getImgSrc(), usuario.getIdpessoa(), "users");
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException(e);
@@ -162,6 +165,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         usuario.alterar(aUsuario);
         usuario.getEndereco().setCidade(cidadeRepo.findOne(aUsuario.getCodigoibge()));
         usuario.setFuncao(funcaoRepo.findOne(aUsuario.getIdfuncao()));
+        if(aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
+            uploadService.uploadWebcam(aUsuario.getImgSrc(), aUsuario.getIdpessoa(), "users");
         repository.save(usuario);
     }
 

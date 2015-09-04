@@ -9,12 +9,9 @@ import br.unicesumar.time05.terraIndigena.TerraIndigena;
 import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
 import classesBase.ServiceBase;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -67,11 +64,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         repository.save(i);
         repository.flush();
-        try {
-            uploadService.upload(aIndigena.getImgSrc(), i.getCodigoAssindi(),"indios");
-        } catch (IOException ex) {
-            throw new RuntimeException("Falha ao salvar imagem");
-        }
+        uploadService.uploadWebcam(aIndigena.getImgSrc(), i.getCodigoAssindi(), "indios");
     }
 
     @Override
@@ -79,6 +72,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
         i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
+        if(aIndigena.getImgSrc().startsWith("data:image/jpeg;base64"))
+            uploadService.uploadWebcam(aIndigena.getImgSrc(), aIndigena.getCodigoAssindi(), "users");
         repository.save(i);
     }
 

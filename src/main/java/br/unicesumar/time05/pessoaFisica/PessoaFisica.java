@@ -9,7 +9,7 @@ import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -20,6 +20,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -37,6 +39,7 @@ public class PessoaFisica extends Pessoa implements Serializable{
     private Genero genero;
     
     @CampoConsulta
+    @Temporal(TemporalType.DATE)
     private Date datanascimento;
 
     public PessoaFisica() {

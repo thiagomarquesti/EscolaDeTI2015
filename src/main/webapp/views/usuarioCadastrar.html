@@ -95,8 +95,8 @@
                 <label for="cidade" class="col-md-1 control-label">Cidade: </label>
                 <div class="col-md-3">
                     <select ng-model="usuario.codigoibge" id="cidade" name="cidade"  required="" class="form-control requerido">
-                        <option value="" ng-if="usuario.codigoestado==''">Aguardando estado...</option>
-                        <option value="" ng-if="usuario.codigoestado!=''" >Selecione uma cidade</option>
+                        <option value="" ng-if="usuario.codigoestado == ''">Aguardando estado...</option>
+                        <option value="" ng-if="usuario.codigoestado != ''" >Selecione uma cidade</option>
                         <!-- FAZER BUSCA POR CIDADES -->
                         <option ng-repeat="c in cidades" ng-selected="cidadeSelecionada(c.codigoibge)" value="{{c.codigoibge}}">{{c.descricao}}</option>
                         <!--<option ng-repeat="c in cidades" ng-if="usuario.codigoibge == c.codigoibge" selected="true" value="{{c.codigoibge}}">{{c.descricao}}</option>-->
@@ -153,13 +153,13 @@
                 <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
-            
+
                 <div class="modal fade" id="fotoModal" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                    <h4 class="modal-title">Tire a foto</h4>
+                                <h4 class="modal-title">Tire a foto</h4>
                             </div>
 
                             <div class="modal-body">
@@ -171,6 +171,8 @@
                                                 output-width="480"
                                                 viewer-height="360"
                                                 viewer-width="480"
+                                                cropHeight="360"
+                                                cropWidth="360"
                                                 image-format="jpeg"
                                                 jpeg-quality="100"
                                                 action-message="Tirar foto"
@@ -178,7 +180,7 @@
                                                 flash-fallback-url="img/webcam.swf"
                                                 overlay-url="img/overlay.png"
                                                 shutter-url="sound/shutter.mp3"
-                                            ></ng-camera>
+                                                ></ng-camera>
                                         </div>
                                         <div ng-model="canvasFoto">
                                             <img ng-if="vm.picture" ng-src="{{vm.picture}}" id="imgCanvas" alt="Foto">

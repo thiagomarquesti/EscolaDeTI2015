@@ -91,6 +91,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         else {
                             $scope.nomeUsuario = data.nome;
                             $scope.idUsuario = data.idusuario;
+                            foto(data.idusuario);
                         }
                     })
                     .error(function () {
@@ -108,7 +109,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 //        };
 
         $scope.salvar = function () {
-            $scope.usuario.imgSrc = $scope.webcamFoto();
             if ($scope.isNovo) {
                 console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
@@ -185,7 +185,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
                                 $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
-                                if (data.telefones[1]!=undefined) {
+                                if (data.telefones[1] != undefined) {
                                     console.log(data.telefones[1].telefone);
                                     $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
                                 }
@@ -270,21 +270,27 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     }).error(deuErro);
         };
 
+        function foto(id) {
+            $http.get("/fotoUsuario/" + id)
+                    .success(function (data) {
+                        $scope.urlFoto = data.foto;
+                    }).error(deuErro);
+        };
+
         $scope.webcamFoto = function () {
-            var img;
-            if (!$scope.isNovo) {
-                console.log("a:" + $scope.usuario.imgSrc);
-                if ($scope.usuario.imgSrc !== "" && $scope.usuario.imgSrc !== undefined) {
-                    return $scope.usuario.imgSrc;
-                    console.log("passo aqui");
-                }
-            }
+//            var img;
+//            if (!$scope.isNovo) {
+//                if ($scope.usuario.imgSrc !== "" && $scope.usuario.imgSrc !== undefined) {
+//                    return $scope.usuario.imgSrc;
+//                    console.log("passo aqui");
+//                }
+//            }
             $(document).ready(function () {
                 canvas = document.getElementById('imgCanvas');
-                img = canvas.src;
-                console.log("passo aqui tb");
+                $scope.usuario.imgSrc = canvas.src;
+//                img = canvas.src;
             });
-            return img;
+//            return img;
         };
 
 //-----------------AKI-------------------------------
