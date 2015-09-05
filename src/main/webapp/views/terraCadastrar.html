@@ -27,7 +27,7 @@
                     <multiselect id="cidade" name="cidade" class="input-lg" 
                              ng-model="terra.cidade" 
                              ms-header="Selecione a cidade"
-                             options='c.codigoibge as (c.nomecidade + " - " + c.sigla) for c in cidades' 
+                             options='c.codigoibge as (c.descricao + " - " + c.sigla) for c in cidades' 
                              scroll-after-rows="8"
                              >
                     </multiselect>
