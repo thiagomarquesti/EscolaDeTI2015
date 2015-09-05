@@ -172,34 +172,35 @@
 
                 <div class="form-group"> 
                     <label for="login" class="col-md-2 control-label">Login:</label>
-                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" login-unique class="form-control" ng-change="validarLogin()"></div>
+                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" class="form-control" ng-change="validarLogin()"></div>
                 </div>
 
                 <div ng-show="erroNoLogin" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                     <!--<span ng-show="formCad.login.$error.required">Preecher login. </span>-->
-                    <span ng-show="existeLogin">Login já cadastrado. </span>
+                    <span ng-show="!existeLogin">Login já cadastrado. </span>
                     <span ng-show="minLogin">Login deve ter mais de 3 caracteres. </span>
                     <span ng-show="maxLogin">Login não pode ter mais de 20 caracteres. </span>
                 </div>
 
                 <div class="form-group">
                     <label for="senha" class="col-md-2 control-label">Senha: </label>
-                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" class="form-control"></div>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" class="form-control" ng-change="validarSenha()"></div>
                 </div>      
 
-                <div ng-show="" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <!--<span ng-show="formCad.senha.$error.required">Preencher senha. </span>-->
-                    <span ng-show="">Senha não pode ter mais de 10 caracteres. </span>
-                    <span ng-show="">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
+                <div ng-show="erroNaSenha" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <!--<span ng-show="">Preencher senha. </span>-->
+                    <span ng-show="minSenha">Senha deve ter mais de 6 caracteres. </span>
+                    <span ng-show="maxSenha">Senha não pode ter mais de 10 caracteres. </span>
+                    <span ng-show="!senhaInvalida">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
                 </div>
 
                 <div class="form-group">
                     <label for="rsenha" class="col-md-2 control-label">Confirmar senha: </label>
-                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" password-match="usuario.senha.senha" class="form-control"></div>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" class="form-control" ng-change="validarSenhaConferem()"></div>
                 </div>
 
-                <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+                <div ng-show="erroSenhaDiferente" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <span ng-show="senhaConfere">Senhas não conferem.</span>
                 </div>
 
                 <div class="form-group" ng-init="carregaPerfis()">

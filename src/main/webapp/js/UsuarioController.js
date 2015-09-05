@@ -5,9 +5,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 nome: "",
                 telefones: [{
                         telefone: ""
-                    },{
+                    }, {
                         telefone: ""
-                    }], 
+                    }],
                 email: {
                     email: ""
                 },
@@ -75,7 +75,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             };
             $scope.isNovo = true;
         }
- 
+
         $scope.novoAdmin = function () {
             novoUsuarioAdmin();
         };
@@ -156,34 +156,78 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         $scope.statusArray = {"ATIVO": "Acesso Liberado", "INATIVO": "Acesso Bloqueado", "": "Sem acesso"};
         $scope.corStatus = {"ATIVO": "success", "INATIVO": "danger", "": "info"};
 
-        $scope.validarLogin = function (){
+        $scope.validarLogin = function () {
             $scope.erroNoLogin = false;
-            if($scope.usuario.login.length !== 0){
-                $http.get('/usuario/verificarLogin/' + $scope.login).success(function (){
-                    $scope.existeLogin = false;
-                }).error(function(){
-                    $scope.existeLogin = true;
+            if ($scope.usuario.login.length !== 0) {
+                $http.get('/usuario/verificarLogin/' + $scope.usuario.login).success(function (data) {
+                    $scope.existeLogin = data;
                 });
-                
-                if($scope.usuario.login.length > 20){
-                   $scope.maxLogin = true;                  
-                }else{
-                   $scope.maxLogin = false; 
+
+                if ($scope.usuario.login.length > 20) {
+                    $scope.maxLogin = true;
+                } else {
+                    $scope.maxLogin = false;
                 }
 
-                if($scope.usuario.login.length < 3){
-                   $scope.minLogin = true;                  
-                }else{
-                   $scope.minLogin = false; 
+                if ($scope.usuario.login.length < 3) {
+                    $scope.minLogin = true;
+                } else {
+                    $scope.minLogin = false;
                 }
-                $scope.erroNoLogin = ($scope.maxLogin || $scope.existeLogin || $scope.minLogin); 
-                $scope.formCad.$valid = !($scope.maxLogin || $scope.existeLogin || $scope.minLogin);
-            }else{
+                $scope.erroNoLogin = ($scope.maxLogin || !$scope.existeLogin || $scope.minLogin);
+                $scope.formCad.$valid = !($scope.erroNoLogin || !($scope.senha.senha.length !== 0));
+            } else {
+                $scope.usuario.senha.senha = "";
+                $scope.usuario.rsenha = "";
+
                 $scope.formCad.$valid = true;
-            }   
-            
+            }
+
         };
-        
+
+        $scope.validarSenha = function () {
+            $scope.erroNaSenha = false;
+            if ($scope.usuario.senha.senha.length !== 0) {
+                $http.get('/usuario/verificarSenha/' + $scope.usuario.senha.senha).success(function (data) {
+                    $scope.senhaInvalida = data;
+                    if ($scope.usuario.senha.senha.length > 20) {
+                        $scope.maxSenha = true;
+                    } else {
+                        $scope.maxSenha = false;
+                    }
+
+                    if ($scope.usuario.senha.senha.length < 6) {
+                        $scope.minSenha = true;
+                    } else {
+                        $scope.minSenha = false;
+                    }
+                    $scope.erroNaSenha = ($scope.maxSenha || !$scope.senhaInvalida || $scope.minSenha);
+                    $scope.formCad.$valid = !($scope.erroNaSenha || $scope.erroNoLogin || !($scope.usuario.rsenha.length !== 0) || !($scope.usuario.login.length !== 0));
+                    $scope.validarSenhaConferem();
+                });
+
+            } else {
+                $scope.formCad.$valid = ($scope.usuario.login.length === 0 && $scope.usuario.rsenha.length === 0);
+            }
+        };
+
+        $scope.validarSenhaConferem = function () {
+            $scope.erroSenhaDiferente = false;
+            if ($scope.usuario.rsenha.length !== 0) {
+                if ($scope.usuario.senha.senha === $scope.usuario.rsenha) {
+                    $scope.senhaConfere = false;
+                } else {
+                    $scope.senhaConfere = true;
+                }
+
+                $scope.erroSenhaDiferente = $scope.senhaConfere;
+                $scope.formCad.$valid = !($scope.erroSenhaDiferente || $scope.erroNoLogin || $scope.erroNaSenha || !($scope.usuario.login.length !== 0));
+            } else {
+                $scope.formCad.$valid = ($scope.usuario.login.length === 0 && $scope.usuario.senha.senha.length === 0);
+                ;
+            }
+        };
+
         $scope.carregar = function () {
             if ($location.path() === "/Usuario/novo") {
                 novoUsuario();
@@ -257,9 +301,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.cidadeSelecionada = function (codigo) {
-            if(codigo == $scope.usuario.codigoibge){
+            if (codigo == $scope.usuario.codigoibge) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         };
