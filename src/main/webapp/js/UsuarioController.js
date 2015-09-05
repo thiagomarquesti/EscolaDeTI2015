@@ -99,15 +99,6 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     });
         };
 
-//        function removerMascara(aCampo) {
-//            console.log(aCampo);
-//            if (aCampo !== "" && aCampo !== null) {
-//                words = /\^|~|\?|,|\*|\.|\-|\(|\)/g;
-//                aCampo = aCampo.replace(words, "");
-//            }
-//            return aCampo;
-//        };
-
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 console.log($scope.usuario);
@@ -124,6 +115,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         .error(deuErro);
             }
             else {
+                console.log($scope.usuario);
                 $scope.usuario.idpessoa = $routeParams.id;
                 console.log($scope.usuario);
                 $http.put("/usuario", $scope.usuario)
@@ -170,23 +162,27 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
                                 console.log(data);
                                 $scope.usuario.nome = data.nome;
-                                $scope.usuario.cpf.cpf = data.cpf.cpf;
+                                $scope.usuario.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
                                 $scope.usuario.genero = data.genero;
                                 $scope.usuario.email.email = data.email.email;
                                 var d = new Date(data.datanascimento);
                                 $scope.usuario.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                                 $scope.usuario.cep = data.endereco.cep;
-                                $scope.usuario.idfuncao = data.funcao.idfuncao;
-                                $scope.usuario.codigoestado = data.endereco.cidade.estado.codigoestado;
+                                $scope.usuario.idfuncao = (data.funcao != null) ? data.funcao.idfuncao : "";
+                                if (data.endereco != null && data.endereco.cidade != null && data.endereco.cidade.estado != null) {
+                                    $scope.usuario.codigoestado = data.endereco.cidade.estado.codigoestado;
+                                    $scope.usuario.codigoibge = data.endereco.cidade.codigoIBGE;
+                                } else {
+                                    $scope.usuario.codigoestado = "";
+                                    $scope.usuario.codigoibge = "";
+                                }
                                 $scope.listarCidades();
-                                $scope.usuario.codigoibge = data.endereco.cidade.codigoIBGE;
                                 $scope.usuario.logradouro = data.endereco.logradouro;
                                 $scope.usuario.numero = data.endereco.numero;
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
-                                $scope.usuario.telefones[0].telefone = data.telefones[0].telefone;
+                                $scope.usuario.telefones[0].telefone = (data.telefones[0]!=undefined)?data.telefones[0].telefone:"";
                                 if (data.telefones[1] != undefined) {
-                                    console.log(data.telefones[1].telefone);
                                     $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
                                 }
                                 $scope.usuario.status = data.status;
@@ -275,22 +271,15 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .success(function (data) {
                         $scope.urlFoto = data.foto;
                     }).error(deuErro);
-        };
+        }
+        ;
 
         $scope.webcamFoto = function () {
-//            var img;
-//            if (!$scope.isNovo) {
-//                if ($scope.usuario.imgSrc !== "" && $scope.usuario.imgSrc !== undefined) {
-//                    return $scope.usuario.imgSrc;
-//                    console.log("passo aqui");
-//                }
-//            }
             $(document).ready(function () {
                 canvas = document.getElementById('imgCanvas');
                 $scope.usuario.imgSrc = canvas.src;
-//                img = canvas.src;
             });
-//            return img;
+            console.log($scope.usuario.imgSrc);
         };
 
 //-----------------AKI-------------------------------

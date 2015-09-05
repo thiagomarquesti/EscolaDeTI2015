@@ -9,13 +9,14 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CriarUsuario implements Serializable{
 
     private Long idpessoa;
     private String nome;
-    private Set<Telefone> telefones;
+    private List<Telefone> telefones;
     private Email email;
     private String logradouro;
     private String numero;
@@ -38,7 +39,7 @@ public class CriarUsuario implements Serializable{
     public CriarUsuario() {
     }
     
-    public CriarUsuario(Long idpessoa, String nome, Set<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
+    public CriarUsuario(Long idpessoa, String nome, List<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
         this.idpessoa = idpessoa;
         this.nome = nome;
         this.telefones = telefones;
@@ -76,11 +77,11 @@ public class CriarUsuario implements Serializable{
         this.nome = nome;
     }
 
-    public Set<Telefone> getTelefones() {
+    public List<Telefone> getTelefones() {
         return telefones;
     }
 
-    public void setTelefones(Set<Telefone> telefones) {
+    public void setTelefones(List<Telefone> telefones) {
         this.telefones = telefones;
     }
 

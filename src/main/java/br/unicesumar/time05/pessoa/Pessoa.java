@@ -5,6 +5,8 @@ import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -113,6 +115,10 @@ public abstract class Pessoa implements Serializable {
 
     public void setTelefones(Set<Telefone> telefones) {
         this.telefones = telefones;
+    }
+    
+    public void setTelefones(List<Telefone> telefones) {
+        this.telefones = new HashSet<>(telefones);
     }
 
     public void setTelefone(Telefone telefone) {

@@ -127,7 +127,7 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         try {
             repository.save(usuario);
             repository.flush();
-            if(repository.count()>1)
+            if(repository.count()>1 && aUsuario.getImgSrc()!= null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
                 uploadService.uploadWebcam(aUsuario.getImgSrc(), usuario.getIdpessoa(), "users");
         } catch (Exception e) {
             System.out.println(e);
@@ -165,7 +165,7 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         usuario.alterar(aUsuario);
         usuario.getEndereco().setCidade(cidadeRepo.findOne(aUsuario.getCodigoibge()));
         usuario.setFuncao(funcaoRepo.findOne(aUsuario.getIdfuncao()));
-        if(aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
+        if(aUsuario.getImgSrc()!= null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
             uploadService.uploadWebcam(aUsuario.getImgSrc(), aUsuario.getIdpessoa(), "users");
         repository.save(usuario);
     }
