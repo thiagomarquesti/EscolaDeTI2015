@@ -161,6 +161,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             if ($scope.usuario.login.length !== 0) {
                 $http.get('/usuario/verificarLogin/' + $scope.usuario.login).success(function (data) {
                     $scope.existeLogin = data;
+                    $scope.erroNoLogin = ($scope.maxLogin || !$scope.existeLogin || $scope.minLogin);
+                    $scope.validarSenha();
+                    $scope.formCad.$valid = ((!$scope.erroNoLogin && !$scope.erroNaSenha));
                 });
 
                 if ($scope.usuario.login.length > 20) {
@@ -175,7 +178,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     $scope.minLogin = false;
                 }
                 $scope.erroNoLogin = ($scope.maxLogin || !$scope.existeLogin || $scope.minLogin);
-                $scope.formCad.$valid = !($scope.erroNoLogin || !($scope.senha.senha.length !== 0));
+                $scope.formCad.$valid = ((!$scope.erroNoLogin && !$scope.erroNaSenha));
+//                        (!$scope.erroNoLogin || !($scope.senha.senha.length !== 0));
             } else {
                 $scope.usuario.senha.senha = "";
                 $scope.usuario.rsenha = "";
