@@ -64,7 +64,9 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         repository.save(i);
         repository.flush();
-        uploadService.uploadWebcam(aIndigena.getImgSrc(), i.getCodigoAssindi(), "indios");
+        if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {
+            uploadService.uploadWebcam(aIndigena.getImgSrc(), i.getCodigoAssindi(), "indios");
+        }
     }
 
     @Override
@@ -72,8 +74,9 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
         i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
-        if(aIndigena.getImgSrc().startsWith("data:image/jpeg;base64"))
-            uploadService.uploadWebcam(aIndigena.getImgSrc(), aIndigena.getCodigoAssindi(), "users");
+        if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {
+            uploadService.uploadWebcam(aIndigena.getImgSrc(), aIndigena.getCodigoAssindi(), "indios");
+        }
         repository.save(i);
     }
 

@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -33,6 +35,16 @@ public class UploadService {
             System.out.println(ex);
             throw  new RuntimeException("Falha ao salvar a imagem");
         }
+    }
+    
+    public Map<String, String> getUrlFoto(Long id, String path){
+        Map<String, String> result = new HashMap<>();
+        if(new File("src/main/webapp/fotos/"+path+"/"+id+".jpg").exists())
+            result.put("foto", "fotos/users/"+id+".jpg");
+        else
+            result.put("foto", "fotos/default.png");
+        
+        return result;
     }
 
 }

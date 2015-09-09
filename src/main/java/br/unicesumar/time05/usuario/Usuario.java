@@ -81,8 +81,8 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.perfis = perfis;
     }
 
-    public Usuario(CriarUsuario u, Endereco endereco, Funcao funcao) {
-        super(u.getCpf(), u.getGenero(), u.getNome(), new HashSet<Telefone>(u.getTelefones()), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
+    public Usuario(CriarUsuario u, Set<Telefone> telefones, Endereco endereco, Funcao funcao) {
+        super(u.getCpf(), u.getGenero(), u.getNome(), telefones, u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
         this.funcao = funcao;
         this.login = u.getLogin();
         this.senha = u.getSenha();

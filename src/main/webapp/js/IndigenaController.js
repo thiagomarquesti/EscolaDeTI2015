@@ -12,7 +12,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             terraIndigena: "",
             escolaridade: "",
             estadoCivil: "",
-            codigoSUS: ""
+            codigoSUS: "",
+            imgSrc:""
         };
         $scope.isNovoIndio = true;
     }
@@ -33,7 +34,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         dados.etnia = data.etnia.idetnia;
                         dados.terraIndigena = data.terraIndigena.idterraindigena;
                         dados.conveniosselecionados = data.convenio;
-                        dados.imgSrc = "/imagens/"+$routeParams.id+".jpg";
+                        dados.imgSrc = data.imgSrc;
                         $scope.indio = dados;
                         $scope.isNovoIndio = false;
                     })
@@ -63,7 +64,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             escolaridade: $scope.indio.escolaridade ,
             estadoCivil: $scope.indio.estadoCivil ,
             codigoSUS: $scope.indio.codigoSUS,
-            imgSrc : $scope.webcamFoto()
+            imgSrc : $scope.indio.imgSrc
         };
         
         if ($scope.isNovoIndio) {
@@ -179,18 +180,20 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
          }
     };
 
-    $scope.webcamFoto = function () {
-        var img;
-        if(!$scope.isNovoIndio){
-            if($scope.indio.imgSrc!="")
-                return $scope.indio.imgSrc;
-        }
-        $(document).ready(function () {
-            canvas = document.getElementById('imgCanvas');
-            img = canvas.src;
-        });
-        return img;
-    };
+        function foto(id) {
+            $http.get("/foto/indio/" + id)
+                    .success(function (data) {
+                        $scope.urlFoto = data.foto;
+                    }).error(deuErro);
+        };
+
+        $scope.webcamFoto = function () {
+            $(document).ready(function () {
+                canvas = document.getElementById('imgCanvas');
+                $scope.indio.imgSrc = canvas.src;
+            });
+            console.log($scope.indio.imgSrc);
+        };
     
     $scope.calculaIdade = function(data){
         

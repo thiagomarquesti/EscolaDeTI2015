@@ -267,12 +267,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         function foto(id) {
-            $http.get("/fotoUsuario/" + id)
+            $http.get("/foto/user/" + id)
                     .success(function (data) {
                         $scope.urlFoto = data.foto;
                     }).error(deuErro);
-        }
-        ;
+        };
 
         $scope.webcamFoto = function () {
             $(document).ready(function () {

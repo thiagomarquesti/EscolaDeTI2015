@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -109,12 +110,14 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         } else {
             Cidade cidade = cidadeRepo.findOne(aUsuario.getCodigoibge());
             Endereco end = new Endereco(aUsuario.getLogradouro(), aUsuario.getNumero(), aUsuario.getBairro(), aUsuario.getComplemento(), aUsuario.getCep(), cidade);
-            if (aUsuario.getLogin() == null) {
-                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+            Set<Telefone> telefones = new HashSet<Telefone>();
+            telefones.addAll(aUsuario.getTelefones());
+            if (aUsuario.getLogin() == null || aUsuario.getLogin() == "") {
+                usuario = new Usuario(aUsuario, telefones, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
             } else {
                 if(!verificarLogin(aUsuario.getLogin()))
                     throw new RuntimeException("Login já existe no sistema");
-                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+                usuario = new Usuario(aUsuario,telefones, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
                 List<PerfilDeAcesso> perfis = new ArrayList<>();
                 for (PerfilDeAcesso p : aUsuario.getPerfis()) {
                     perfis.add(perfilRepo.findOne(p.getIdperfildeacesso()));

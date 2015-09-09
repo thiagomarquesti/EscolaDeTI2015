@@ -118,7 +118,8 @@ public abstract class Pessoa implements Serializable {
     }
     
     public void setTelefones(List<Telefone> telefones) {
-        this.telefones = new HashSet<>(telefones);
+        this.telefones.clear();
+        this.telefones.addAll(telefones);
     }
 
     public void setTelefone(Telefone telefone) {

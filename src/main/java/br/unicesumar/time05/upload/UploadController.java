@@ -3,23 +3,26 @@ package br.unicesumar.time05.upload;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/fotoUsuario")
+@RequestMapping("/foto")
 public class UploadController {
-
-    @RequestMapping(value = "/{idUsuario}", method = RequestMethod.GET)
+    
+    @Autowired
+    UploadService service;
+    
+    @RequestMapping(value = "/user/{idUsuario}", method = RequestMethod.GET)
     public Map<String, String> getUrlFotoUsuario(@PathVariable Long idUsuario){
-        Map<String, String> result = new HashMap<>();
-        if(new File("src/main/webapp/fotos/users/"+idUsuario+".jpg").exists())
-            result.put("foto", "fotos/users/"+idUsuario+".jpg");
-        else
-            result.put("foto", "fotos/default.png");
-        
-        return result;
+        return service.getUrlFoto(idUsuario, "users");
+    }
+    
+    @RequestMapping(value = "/indio/{idIndio}", method = RequestMethod.GET)
+    public Map<String, String> getUrlFotoIndio(@PathVariable Long idIndio){
+        return service.getUrlFoto(idIndio, "indios");
     }
 }
