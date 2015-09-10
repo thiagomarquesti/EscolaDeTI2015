@@ -29,7 +29,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     };
     
     $scope.fazPesquisa = function(registros, string){
-        $scope.atualizarListagens(registros, $scope.pagina, $scope.campoAtual, string, $rootScope.ent, 0, false);
+        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
     
     function novoIndio() {
