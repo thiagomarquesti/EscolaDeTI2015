@@ -52,16 +52,56 @@ valida.directive('emailUnique', ['$http', function ($http) {
             link: function (scope, elem, attrs, ctrl) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
-                        if (scope.usuario.email) {
+                        if (scope.usuario.email && scope.usuario.email.email !== undefined && scope.usuario.email.email !== "") {
                             if (scope.usuario.idusuario) {
                                 var dados = scope.usuario.email.email + "/" + scope.usuario.idusuario;
                             }
                             else {
-                                var dados = scope.usuario.email.email;
+                                var dados = scope.usuario.email.email + "/-1";
                             }
                             $http.get('/usuario/verificarEmail/' + dados)
                                     .success(function (data) {
                                         ctrl.$setValidity('unemail', data);
+                                    });
+                        }
+                    });
+                });
+            }
+        };
+    }]);
+
+valida.directive('cpfUnique', ['$http', function ($http) {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                elem.on('blur', function () {
+                    scope.$apply(function () {
+                        if (scope.usuario.cpf.cpf) {
+                            if (scope.usuario.idusuario) {
+                                var dados = scope.usuario.cpf.cpf + "/" + scope.usuario.idusuario;
+                            }
+                            else {
+                                var dados = scope.usuario.cpf.cpf + "/-1";
+                            }
+                            console.log(dados);
+                            $http.get('/usuario/verificarCpf/' + dados)
+                                    .success(function (data) {
+                                        console.log(data.retorno);
+                                        if (data.retorno == "existe") {
+                                        console.log("ex");
+                                            ctrl.$setValidity('uncpf', false);
+                                            ctrl.$setValidity('cpf', true);
+                                        }
+                                        if (data.retorno == "invalido") {
+                                        console.log("inv");
+                                            ctrl.$setValidity('cpf', false);
+                                            ctrl.$setValidity('uncpf', true);
+                                        }
+                                        if(data.retorno == "valido"){
+                                        console.log("va");
+                                            ctrl.$setValidity('cpf', true);
+                                            ctrl.$setValidity('uncpf', true); 
+                                        }
                                     });
                         }
                     });
@@ -77,7 +117,9 @@ valida.directive('verifSenha', [function () {
             require: 'ngModel',
             link: function (scope, elem, attrs, control) {
                 var SENHA_REGEXP = RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.])");
-                if(!scope.isNovo){ SENHA_REGEXP = RegExp(""); }
+                if (!scope.isNovo) {
+                    SENHA_REGEXP = RegExp("");
+                }
                 var checker = function () {
                     var char = scope.$eval(attrs.ngModel);
                     return SENHA_REGEXP.test(char);
@@ -91,8 +133,8 @@ valida.directive('verifSenha', [function () {
 
 camera = angular.module('cameraWeb', []);
 
-camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
-       return {
+camera.directive('ngCamera', ['$q', '$timeout', function ($q, $timeout) {
+        return {
             'restrict': 'E',
             'scope': {
                 'actionMessage': '@',
@@ -124,16 +166,16 @@ camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
             /**
              * Set dimensions
              */
-            if(scope.viewerHeight === undefined) {
+            if (scope.viewerHeight === undefined) {
                 scope.viewerHeight = 'auto';
             }
-            if(scope.viewerWidth === undefined) {
+            if (scope.viewerWidth === undefined) {
                 scope.viewerWidth = 'auto';
             }
-            if(scope.outputHeight === undefined) {
+            if (scope.outputHeight === undefined) {
                 scope.outputHeight = scope.viewerHeight;
             }
-            if(scope.outputWidth === undefined) {
+            if (scope.outputWidth === undefined) {
                 scope.outputWidth = scope.viewerWidth;
             }
 
@@ -150,7 +192,7 @@ camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
                 jpeg_quality: scope.jpegQuality,
                 force_flash: false
             });
-            if(scope.flashFallbackUrl !== 'undefined') {
+            if (scope.flashFallbackUrl !== 'undefined') {
                 Webcam.setSWFLocation(scope.flashFallbackUrl);
             }
             Webcam.attach('#ng-camera-feed');
@@ -158,29 +200,29 @@ camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
             /**
              * Register WebcamJS events
              */
-            Webcam.on('load', function() {
+            Webcam.on('load', function () {
                 console.info('library loaded');
-                scope.$apply(function() {
+                scope.$apply(function () {
                     scope.libraryLoaded = true;
                 });
             });
-            Webcam.on('live', function() {
+            Webcam.on('live', function () {
                 console.info('camera live');
-                scope.$apply(function() {
+                scope.$apply(function () {
                     scope.cameraLive = true;
                 });
             });
-            Webcam.on('error', function(error) {
+            Webcam.on('error', function (error) {
                 console.error('WebcameJS directive ERROR: ', error);
             });
 
             /**
              * Preload the shutter sound
              */
-            if(scope.shutterUrl !== undefined) {
+            if (scope.shutterUrl !== undefined) {
                 scope.shutter = new Audio();
                 scope.shutter.autoplay = false;
-                if(navigator.userAgent.match(/Firefox/)) {
+                if (navigator.userAgent.match(/Firefox/)) {
                     scope.shutter.src = scope.shutterUrl.split('.')[0] + '.ogg';
                 } else {
                     scope.shutter.src = scope.shutterUrl;
@@ -190,22 +232,22 @@ camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
             /**
              * Set countdown
              */
-            if(scope.countdown !== undefined) {
+            if (scope.countdown !== undefined) {
                 scope.countdownTime = parseInt(scope.countdown) * 1000;
                 scope.countdownText = parseInt(scope.countdown);
             }
-            scope.countdownStart = function() {
+            scope.countdownStart = function () {
                 scope.activeCountdown = true;
                 scope.countdownPromise = $q.defer();
-                scope.countdownTick = setInterval(function() {
-                    return scope.$apply(function() {
+                scope.countdownTick = setInterval(function () {
+                    return scope.$apply(function () {
                         var nextTick;
                         nextTick = parseInt(scope.countdownText) - 1;
-                        if(nextTick === 0) {
+                        if (nextTick === 0) {
                             scope.countdownText = scope.captureMessage != null ? scope.captureMessage : 'GO!';
                             clearInterval(scope.countdownTick);
                             scope.countdownPromise.resolve();
-                        }else{
+                        } else {
                             scope.countdownText = nextTick;
                         }
                     });
@@ -215,34 +257,34 @@ camera.directive('ngCamera', ['$q','$timeout', function($q, $timeout){
             /**
              * Get snapshot
              */
-            scope.getSnapshot = function() {
-                if(scope.countdown !== undefined) {
+            scope.getSnapshot = function () {
+                if (scope.countdown !== undefined) {
                     scope.countdownStart();
-                    scope.countdownPromise.promise.then(function() {
-                        $timeout(function() {
+                    scope.countdownPromise.promise.then(function () {
+                        $timeout(function () {
                             scope.activeCountdown = false;
                             scope.countdownText = parseInt(scope.countdown);
                         }, 2000);
 
-                        if(scope.shutterUrl !== undefined) {
+                        if (scope.shutterUrl !== undefined) {
                             scope.shutter.play();
                         }
 
-                        Webcam.snap(function(data_uri) {
+                        Webcam.snap(function (data_uri) {
                             scope.snapshot = data_uri;
                         });
                     });
                 } else {
-                    if(scope.shutterUrl !== undefined) {
+                    if (scope.shutterUrl !== undefined) {
                         scope.shutter.play();
                     }
 
-                    Webcam.snap(function(data_uri) {
+                    Webcam.snap(function (data_uri) {
                         scope.snapshot = data_uri;
                     });
                 }
             };
         }
-}]);
+    }]);
 
 
