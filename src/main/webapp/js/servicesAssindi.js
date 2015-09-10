@@ -10,9 +10,7 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
     
     return {
         
-        atualizarListagens : function(qtdePorPag, pag, campo, order, string, paro, entidade, troca) {
-            if(qtdePorPag === null || qtdePorPag === ""){ qtdePorPag = 10; }
-            if(campo == "" || campo == null ) { campo = "nome"; }
+        atualizarListagens : function(qtdePorPag, pag, campo, string, paro, entidade, troca) {
             if(pag == null || pag == ""){ pag = 1; }
             if($rootScope.tipoOrdem == null || $rootScope.tipoOrdem == ""){ $rootScope.tipoOrdem = "asc"; }
             if(troca === 'ok') { $rootScope.tipoOrdem = this.trocaOrdem($rootScope.tipoOrdem, troca); }
@@ -21,20 +19,17 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
             console.log(busca);
             $http.get(busca)
                 .success(function (data) {
-                    if (paro == false) { atualizarPaginacao(data.quantidadeDePaginas, qtdePorPag, pag, campo, $rootScope.tipoOrdem, string, false, entidade); }
-                    
                     todosDados.itens = data;
                     $rootScope.pagina = data.paginaAtual;
                     $rootScope.campoAtual = campo;
-                    //console.log(todosDados);
-                    
+                    if (!paro) { atualizarPaginacao(data.quantidadeDePaginas, qtdePorPag, pag, campo, string, false, entidade); }
                 })
                 .error(deuErro);
             return todosDados;
         },
         
         registrosPadrao : function(numregistros) {
-            if(numregistros == null || numregistros == "") { 
+            if(!numregistros) { 
                 numregistros = 10;
             }
             return numregistros;
@@ -52,17 +47,16 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
         }
     };
     
-    function atualizarPaginacao(qtde, qtdePorPag, pag, campo, order, string, paro, entidade){
+    function atualizarPaginacao(qtde, qtdePorPag, pag, campo, string, paro, entidade){
         $('#paginacao').bootpag({
             total: qtde,
             page: pag,
             maxVisible:5
         }).on('page', function(event, pag){
             paro = true;
-            $rootScope.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade,0);
+            $rootScope.atualizarListagens(qtdePorPag, pag, campo, string, paro, entidade,0);
         });
     }
-    
     
     function deuErro() {
         toastr.error("Erro na listagem", "Erro");

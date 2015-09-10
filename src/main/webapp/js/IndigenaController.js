@@ -2,11 +2,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.placeHolder = "Buscar indígena";
     
-    $scope.atualizarListagens = function(qtdePorPag, pag, campo, order, string, paro, entidade, troca){
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+    };
+        
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, paro, entidade, troca){
         entidade = "indigena";
-        console.log(qtdePorPag+"/"+pag+"/"+campo+"/"+order+"/"+string+"/"+paro+"/"+entidade+"/"+troca);
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade, troca);
-        //console.log($scope.dadosRecebidos);
+        if (campo == null || campo == "") { campo = "nome"; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, paro, entidade, troca);
         atualizaScope;
     };
     
