@@ -6,8 +6,9 @@ import java.util.List;
 
 public class DadosParaConsultaSQL {
 
-    String nomeTabela;
-    String idTabela;
+    String nomeTabela = "";
+    String idTabela = "";
+    String campoOrdenacaoPadrao = "";
 
     List<CampoParaScriptSQL> campos;
 
@@ -19,16 +20,20 @@ public class DadosParaConsultaSQL {
         return idTabela;
     }
 
-    public void setIdTabela(String idTabela) {
-        this.idTabela = idTabela;
+    public void setIdTabela(String aIdTabela) {
+        this.idTabela = aIdTabela;
     }
 
-    public void setNomeTabela(String nomeTabela) {
-        this.nomeTabela = nomeTabela;
+    public void setNomeTabela(String aNomeTabela) {
+        this.nomeTabela = aNomeTabela;
     }
 
-    public void addCampo(CampoParaScriptSQL campo) {
-        this.campos.add(campo);
+    public void setCampoOrdenacaoPadrao(String aCampoOrdenacaoPadrao) {
+        this.campoOrdenacaoPadrao = campoOrdenacaoPadrao;
+    }
+
+    public void addCampo(CampoParaScriptSQL aCampo) {
+        this.campos.add(aCampo);
     }
 
     public String getNomeTabela() {
@@ -37,5 +42,9 @@ public class DadosParaConsultaSQL {
 
     public List<CampoParaScriptSQL> getCampos() {
         return Collections.unmodifiableList(campos);
+    }
+
+    public String getCampoOrdenacaoPadrao() {
+        return campoOrdenacaoPadrao;
     }
 }

@@ -1,6 +1,6 @@
 package br.unicesumar.time05.indigena;
 
-import classesBase.ControllerBase;
+import classesbase.ControllerBase;
 import java.io.File;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

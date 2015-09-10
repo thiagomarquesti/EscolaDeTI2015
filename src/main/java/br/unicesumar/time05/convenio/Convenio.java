@@ -18,7 +18,7 @@ public class Convenio implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     Long idconvenio;
     
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     @NotBlank(message = "Campo descrição não pode ser vazio!")
     @Column(unique = true, nullable = false)        
     String descricao;

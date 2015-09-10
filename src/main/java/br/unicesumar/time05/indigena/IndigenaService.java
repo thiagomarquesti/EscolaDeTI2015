@@ -8,7 +8,7 @@ import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.terraIndigena.TerraIndigena;
 import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -92,12 +92,12 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(SQLConsultaIndigena, parametrosConsulta);
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(SQLConsultaIndigena, new ParametrosConsulta());
+        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", new ParametrosConsulta());
     }
 
     @Override

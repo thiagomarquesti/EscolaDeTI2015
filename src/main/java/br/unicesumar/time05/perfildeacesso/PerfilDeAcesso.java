@@ -26,7 +26,7 @@ public class PerfilDeAcesso implements Serializable {
     private Long idperfildeacesso;
     @Column(nullable = false, unique = true)
     @NotBlank(message = "o nome não pode ser vazio!")
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nome;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "perfildeacesso_itemacesso",

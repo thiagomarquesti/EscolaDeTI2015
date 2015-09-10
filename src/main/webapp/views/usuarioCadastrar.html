@@ -86,7 +86,8 @@
 
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2" ng-init="listarEstados()">
-                    <select ng-model="usuario.codigoestado" ng-change="listarCidades(); usuario.codigoibge = ''" id="uf" name="uf" required="" class="form-control requerido">
+                    <select ng-model="usuario.codigoestado" ng-change="listarCidades();
+                                    usuario.codigoibge = ''" id="uf" name="uf" required="" class="form-control requerido">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
@@ -153,7 +154,6 @@
                 <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="usuario.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
-
                 <div class="modal fade" id="fotoModal" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -215,31 +215,35 @@
 
                 <div class="form-group"> 
                     <label for="login" class="col-md-2 control-label">Login:</label>
-                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" login-unique class="form-control" ng-maxlength=20></div>
+                    <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" class="form-control" ng-change="validarLogin()"></div>
                 </div>
 
-                <div ng-show="formCad.login.$dirty && formCad.login.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.login.$error.unlogin">Login já cadastrado. </span>
-                    <span ng-show="formCad.login.$error.maxlength">Login não pode ter mais de 20 caracteres. </span>
+                <div ng-show="erroNoLogin" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <!--<span ng-show="formCad.login.$error.required">Preecher login. </span>-->
+                    <span ng-show="!existeLogin">Login já cadastrado. </span>
+                    <span ng-show="minLogin">Login deve ter mais de 3 caracteres. </span>
+                    <span ng-show="maxLogin">Login não pode ter mais de 20 caracteres. </span>
                 </div>
 
                 <div class="form-group">
                     <label for="senha" class="col-md-2 control-label">Senha: </label>
-                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" ng-maxlength=10 class="form-control"></div>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" class="form-control" ng-change="validarSenha()"></div>
                 </div>      
 
-                <div ng-show="formCad.senha.$dirty && formCad.senha.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.senha.$error.maxlength">Senha não pode ter mais de 10 caracteres. </span>
-                    <span ng-show="formCad.senha.$error.chsenha">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
+                <div ng-show="erroNaSenha" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <!--<span ng-show="">Preencher senha. </span>-->
+                    <span ng-show="minSenha">Senha deve ter mais de 6 caracteres. </span>
+                    <span ng-show="maxSenha">Senha não pode ter mais de 10 caracteres. </span>
+                    <span ng-show="!senhaInvalida">Senha deve ter pelo menos uma letra minúscula, uma maiúscula, um número e um caracter especial. </span>
                 </div>
 
                 <div class="form-group">
                     <label for="rsenha" class="col-md-2 control-label">Confirmar senha: </label>
-                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" password-match="usuario.senha.senha" class="form-control"></div>
+                    <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" class="form-control" ng-change="validarSenhaConferem()"></div>
                 </div>
 
-                <div ng-show="formCad.rsenha.$dirty && formCad.rsenha.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.rsenha.$error.pwmatch">Senhas não conferem.</span>
+                <div ng-show="erroSenhaDiferente" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <span ng-show="senhaConfere">Senhas não conferem.</span>
                 </div>
 
                 <div class="form-group" ng-init="carregaPerfis()">
@@ -257,6 +261,7 @@
         </div>
     </div>
 </div>
+
 <div>
     <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>

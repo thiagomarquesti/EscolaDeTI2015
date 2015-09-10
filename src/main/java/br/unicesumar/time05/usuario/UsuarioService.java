@@ -15,7 +15,7 @@ import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.upload.UploadService;
-import classesBase.ServiceBase;
+import classesbase.ServiceBase;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -97,6 +96,8 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             + "    ON us.idpessoa = p.idpessoa"
             + " WHERE p.idpessoa = :aUsuarioId";
 
+    private final String ordenar = "p.nome";
+
     public UsuarioService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
     }
@@ -124,14 +125,14 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
                 usuario.setPerfil(perfis);
             }
             usuario.setTipoPessoa(TipoPessoa.USUÁRIO);
+            List<Telefone> telefones = usuario.getTelefones();
+            if (telefones.get(0).equals(telefones.get(1))) {
+                telefones.remove(1);
+            }
+            telefones.remove("");
+            usuario.setTelefones(telefones);
         }
 
-        List<Telefone> telefones = usuario.getTelefones();
-        if (telefones.get(0).equals(telefones.get(1))) {
-            telefones.remove(1);
-        }
-        telefones.remove("");
-        usuario.setTelefones(telefones);
         try {
             repository.saveAndFlush(usuario);
             if (repository.count() > 1 && aUsuario.getImgSrc() != null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64")) {
@@ -153,12 +154,12 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(this.SQLConsultaUsuarios, parametrosConsulta);
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(this.SQLConsultaUsuarios, new ParametrosConsulta());
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, new ParametrosConsulta());
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Indigena implements Serializable{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigoassindi;
    
-    @CampoConsulta
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nome;
     
     @CampoConsulta
