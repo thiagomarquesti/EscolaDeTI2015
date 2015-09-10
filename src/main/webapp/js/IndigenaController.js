@@ -1,21 +1,22 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao) {
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
     $scope.placeHolder = "Buscar indígena";
     
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, order, string, paro, entidade, troca){
-        if (entidade == "") { entidade = "indigena"; }
-        if (campo == "" || campo == null ) { campo = "nome"; }
-        else { campo = campo; }
-        if(troca === 'ok') { $scope.trocaOrdem; }
+        entidade = "indigena";
+        console.log(qtdePorPag+"/"+pag+"/"+campo+"/"+order+"/"+string+"/"+paro+"/"+entidade+"/"+troca);
         $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade, troca);
-        console.log($scope.dadosRecebidos);
-        $scope.pagina = $scope.dadosRecebidos.itens.paginaAtual;
+        //console.log($scope.dadosRecebidos);
+        atualizaScope;
     };
     
-    $scope.trocaOrdem = function(order, troca){
-        var ordem = ServicePaginacao.trocaOrdem(order, troca);
-        return ordem;
+    function atualizaScope() {
+        $scope.pagina = $rootScope.pagina;
+        $scope.tipoOrdem = $rootScope.tipoOrdem;
+        $scope.campoAtual = $rootScope.campoAtual;
     }
+    
+    $rootScope.atualizarListagens = $scope.atualizarListagens;
     
     $scope.registrosPadrao = function() {
         $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);

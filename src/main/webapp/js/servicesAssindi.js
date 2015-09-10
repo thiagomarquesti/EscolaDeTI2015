@@ -1,27 +1,31 @@
-module.service('ServicePaginacao', ['$http', function ($http) {
+module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $rootScope) {
     
     var todosDados = { 
-        itens: [],
-        campoAtual : "",
-        tipoOrdem : ""
+        itens: []
+//        campoAtual : "",
+//        tipoOrdem : ""
     };
+    
+    var ordenacao;
     
     return {
         
-        atualizarListagens : function(qtdePorPag, pag, campo, order, string, paro, entidade) {
-            if(qtdePorPag == null || qtdePorPag == ""){ qtdePorPag = 10; }
+        atualizarListagens : function(qtdePorPag, pag, campo, order, string, paro, entidade, troca) {
+            if(qtdePorPag === null || qtdePorPag === ""){ qtdePorPag = 10; }
+            if(campo == "" || campo == null ) { campo = "nome"; }
             if(pag == null || pag == ""){ pag = 1; }
-            if(order == null || order == ""){ order = "asc"; }
+            if($rootScope.tipoOrdem == null || $rootScope.tipoOrdem == ""){ $rootScope.tipoOrdem = "asc"; }
+            if(troca === 'ok') { $rootScope.tipoOrdem = this.trocaOrdem($rootScope.tipoOrdem, troca); }
             if(string == null){ string = ""; }
-            todosDados.campoAtual = campo;
-            todosDados.tipoOrdem = order;
-            var busca = "/"+entidade+"/listar/"+qtdePorPag+"/"+pag+"/"+campo+"/"+order+"/"+string;
+            var busca = "/"+entidade+"/listar/"+qtdePorPag+"/"+pag+"/"+campo+"/"+$rootScope.tipoOrdem+"/"+string;
             console.log(busca);
             $http.get(busca)
                 .success(function (data) {
-                    if (!paro) { atualizarPaginacao(data.quantidadeDePaginas, qtdePorPag, pag, campo, order, string, false, entidade); }
-                    todosDados.itens = data;
+                    if (paro == false) { atualizarPaginacao(data.quantidadeDePaginas, qtdePorPag, pag, campo, $rootScope.tipoOrdem, string, false, entidade); }
                     
+                    todosDados.itens = data;
+                    $rootScope.pagina = data.paginaAtual;
+                    $rootScope.campoAtual = campo;
                     //console.log(todosDados);
                     
                 })
@@ -36,19 +40,16 @@ module.service('ServicePaginacao', ['$http', function ($http) {
             return numregistros;
         },
         
-         trocaOrdem : function(ordem, troca) {
-            if(troca == 'ok'){
-                if(ordem == 'asc'){
-                    ordem = 'desc';
-
-                }
-                else {
-                    ordem = 'asc';
-                }
+        trocaOrdem : function(ordem, troca) {
+            var ordenacao;
+            if(ordem == 'asc'){
+                ordenacao = 'desc';
             }
-            return ordem;
+            else {
+                ordenacao = 'asc';
+            }
+            return ordenacao;
         }
-        
     };
     
     function atualizarPaginacao(qtde, qtdePorPag, pag, campo, order, string, paro, entidade){
@@ -58,7 +59,7 @@ module.service('ServicePaginacao', ['$http', function ($http) {
             maxVisible:5
         }).on('page', function(event, pag){
             paro = true;
-            return atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade, 0);
+            $rootScope.atualizarListagens(qtdePorPag, pag, campo, order, string, paro, entidade,0);
         });
     }
     

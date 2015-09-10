@@ -9,30 +9,30 @@
     </div>
     <div class="panel-body">
         <ng-include src="'views/busca.html'"></ng-include>
-        
+        {{tipoOrdem}}
         <div class="panel panel-default">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='codigoassindi'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'codigoassindi',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">COD Assindi</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='codigoassindi'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'codigoassindi',tipoOrdem , busca.descricao, true, '', 'ok')">COD Assindi</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='nome'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Nome</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome',tipoOrdem , busca.descricao, true, '', 'ok')">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='datanascimento'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datanascimento',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Idade</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datanascimento'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datanascimento',tipoOrdem , busca.descricao, true, '', 'ok')">Idade</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='descricao'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Etnia e terra indígena</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao',tipoOrdem , busca.descricao, true, '', 'ok')">Etnia e terra indígena</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-{{dadosRecebidos.tipoOrdem}}" ng-show="dadosRecebidos.campoAtual=='telefone'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone',dadosRecebidos.tipoOrdem , busca.descricao, true, '', 'ok')">Telefone</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone',tipoOrdem , busca.descricao, true, '', 'ok')">Telefone</a>
                         </th>
                         <th>Ações</th>
                     </tr>
