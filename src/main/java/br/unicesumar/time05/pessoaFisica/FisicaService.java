@@ -110,13 +110,13 @@ public class FisicaService {
         PessoaFisica pessoa = fisicaRepo.getOne(aPessoaId);
         switch (tipo) {
             case "USUÁRIO":
-                pessoa.setTipo(TipoPessoa.USUÁRIO);
+                pessoa.setTipoPessoa(TipoPessoa.USUÁRIO);
                 break;
             case "VISITANTE":
-                pessoa.setTipo(TipoPessoa.VISITANTE);
+                pessoa.setTipoPessoa(TipoPessoa.VISITANTE);
                 break;
             case "ÍNDIO":
-                pessoa.setTipo(TipoPessoa.ÍNDIO);
+                pessoa.setTipoPessoa(TipoPessoa.ÍNDIO);
                 break;
         }
         fisicaRepo.save(pessoa);

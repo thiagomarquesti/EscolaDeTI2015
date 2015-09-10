@@ -26,16 +26,16 @@
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>
                         <td class="hidden-sm hidden-xs">{{u.email}}</td>
-                        <td class="hidden-xs">{{u.telefone}}</td>                        
+                        <td class="hidden-xs">{{u.telefone1}}</td>                        
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editar(u)">Editar</a></li>
-                                    <li ng-show="u.status == 0"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Bloquear acesso</a></li>
-                                    <li ng-show="u.status == 1"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Liberar acesso</a></li>
+                                    <li><a ng-click="editar(u.idpessoa)">Editar</a></li>
+                                    <li ng-show="u.status === 'ATIVO'"><a data="{{u.idpessoa}}" ng-click="alteraStatus(u.idpessoa)">Bloquear acesso</a></li>
+                                    <li ng-show="u.status === 'INATIVO'"><a data="{{u.idpessoa}}" ng-click="alteraStatus(u.idpessoa)">Liberar acesso</a></li>
                                 </ul>
                             </div>
                         </td>

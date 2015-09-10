@@ -1,26 +1,21 @@
 package br.unicesumar.time05.itemacesso;
 
-
 import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
-import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
-import br.unicesumar.time05.uf.UF;
 import br.unicesumar.time05.uf.UFRepository;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +35,7 @@ public class InicializadorItemAcesso {
     private UFRepository UfRepo;
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
-    
+
     @Autowired
     protected QueryPersonalizada query;
 
@@ -55,12 +50,12 @@ public class InicializadorItemAcesso {
     }
 
     @PostConstruct
-    public void inicializar() throws IOException {
+    public void inicializar() {
         carregarUF();
         carregarEstados();
         carregarConvenios();
         carregarTerraIndigena();
-            
+
         List<ItemAcesso> itensAcesso = new ArrayList<>();
 
         itensAcesso = repo.findAll();
@@ -94,7 +89,7 @@ public class InicializadorItemAcesso {
             menuEtniaNovo = new ItemAcesso("Cadastrar Etnia", "#/Etnia/nova", "fa-plus", menuEtnia);
             itensAcesso.add(menuEtniaNovo);
         }
-                
+
         //TERRA INDIGENA
         ItemAcesso menuTerraIndigena;
         menuTerraIndigena = this.getItemAcesso(itensAcesso, "Gerenciar Terra Indígena", "");
@@ -226,8 +221,7 @@ public class InicializadorItemAcesso {
             menuFuncaoNovo = new ItemAcesso("Cadastrar Função", "#/Funcao/nova", "fa-plus", menuFuncao);
             itensAcesso.add(menuFuncaoNovo);
         }
-        
-        
+
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
@@ -236,95 +230,50 @@ public class InicializadorItemAcesso {
             PerfilDeAcesso perfilAdm = new PerfilDeAcesso("Administrador", new HashSet<>(repo.findAll()));
             perfilRepo.save(perfilAdm);
         }
-        
-        
+
     }
-    
-    public void carregarUF() throws IOException{
-        final String FILE_NAME_UF = "src\\main\\java\\SCRIPTS\\uf.txt";
-        
-        File file = new File(FILE_NAME_UF);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        
-        StringBuilder stringBuilder = new StringBuilder();
-        String linha;
-        while ((linha = bufferedReader.readLine()) != null) {
-            try {
-                query.execute(linha);
-            } catch (Exception e) {
-            }
-        }
-        
-        bufferedReader.close();
-        inputStreamReader.close();
-        fileInputStream.close();
+
+    public void carregarUF() {
+        final String FILE_NAME_UF = "src/main/java/SCRIPTS/uf.txt";
+
+        carregarScript(new File(FILE_NAME_UF));
     }
-    
-    public void carregarEstados() throws IOException{
-        final String FILE_NAME_CIDADES = "src\\main\\java\\SCRIPTS\\cidades.txt";
-        
-        File file = new File(FILE_NAME_CIDADES);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        
-        StringBuilder stringBuilder = new StringBuilder();
-        String linha;
-        while ((linha = bufferedReader.readLine()) != null) {
-            try {
-                query.execute(linha);
-            } catch (Exception e) {
-            }
-        }
-        
-        bufferedReader.close();
-        inputStreamReader.close();
-        fileInputStream.close();
+
+    public void carregarEstados() {
+        final String FILE_NAME_CIDADES = "src/main/java/SCRIPTS/cidades.txt";
+
+        carregarScript(new File(FILE_NAME_CIDADES));
     }
-    
-    public void carregarConvenios() throws IOException{
-        final String FILE_NAME_CONVENIO = "src\\main\\java\\SCRIPTS\\convenio.txt";
-        
-        File file = new File(FILE_NAME_CONVENIO);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        
-        StringBuilder stringBuilder = new StringBuilder();
-        String linha;
-        while ((linha = bufferedReader.readLine()) != null) {
-            try {
-                query.execute(linha);
-            } catch (Exception e) {
-            }
-        }
-        
-        bufferedReader.close();
-        inputStreamReader.close();
-        fileInputStream.close();
+
+    public void carregarConvenios() {
+        final String FILE_NAME_CONVENIO = "src/main/java/SCRIPTS/convenio.txt";
+        carregarScript(new File(FILE_NAME_CONVENIO));
     }
-    
-    public void carregarTerraIndigena() throws IOException{
-        final String FILE_NAME_TERRA = "src\\main\\java\\SCRIPTS\\terraindigena.txt";
-        
-        File file = new File(FILE_NAME_TERRA);
-        FileInputStream fileInputStream = new FileInputStream(file);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        
-        StringBuilder stringBuilder = new StringBuilder();
-        String linha;
-        while ((linha = bufferedReader.readLine()) != null) {
-            try {
-                query.execute(linha);
-            } catch (Exception e) {
+
+    public void carregarTerraIndigena() {
+        final String FILE_NAME_TERRA = "src/main/java/SCRIPTS/terraindigena.txt";
+        carregarScript(new File(FILE_NAME_TERRA));
+    }
+
+    public void carregarScript(File arquivo) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(arquivo);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            String linha;
+            while ((linha = bufferedReader.readLine()) != null) {
+                try {
+                    query.execute(linha);
+                } catch (Exception e) {
+                }
             }
+
+            bufferedReader.close();
+            inputStreamReader.close();
+            fileInputStream.close();
+        } catch (Exception ex) {
+            throw new RuntimeException("Falha ao carregar script");
         }
-        
-        bufferedReader.close();
-        inputStreamReader.close();
-        fileInputStream.close();
     }
 }

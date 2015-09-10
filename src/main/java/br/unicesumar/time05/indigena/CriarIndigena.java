@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 
-public class CriarIndigena implements Serializable{
+public class CriarIndigena implements Serializable {
+
     private Long codigoAssindi;
     private String nome;
     private CPF cpf;
@@ -22,11 +23,12 @@ public class CriarIndigena implements Serializable{
     private Escolaridade escolaridade;
     private EstadoCivil estadoCivil;
     private Long codigoSUS;
+    private String imgSrc;
 
     public CriarIndigena() {
     }
 
-    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS, String imgSrc) {
         this.codigoAssindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
@@ -39,8 +41,9 @@ public class CriarIndigena implements Serializable{
         this.escolaridade = escolaridade;
         this.estadoCivil = estadoCivil;
         this.codigoSUS = codigoSUS;
+        this.imgSrc = imgSrc;
     }
-    
+
     public Long getCodigoAssindi() {
         return codigoAssindi;
     }
@@ -136,6 +139,13 @@ public class CriarIndigena implements Serializable{
     public void setCodigoSUS(Long codigoSUS) {
         this.codigoSUS = codigoSUS;
     }
-    
-    
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
 }

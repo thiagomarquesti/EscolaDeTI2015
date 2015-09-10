@@ -9,6 +9,8 @@ import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -19,6 +21,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -34,6 +38,10 @@ public class PessoaFisica extends Pessoa implements Serializable{
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
+    
+    @CampoConsulta
+    @Temporal(TemporalType.DATE)
+    private Date datanascimento;
 
     public PessoaFisica() {
     }
@@ -42,13 +50,14 @@ public class PessoaFisica extends Pessoa implements Serializable{
         super(nome, email);
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
         super(nome, telefones, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
+        this.datanascimento = datanasc;
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email) {
+    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email) {
         super(nome, telefones, email);
         this.cpf = cpf;
         this.genero = genero;
@@ -69,6 +78,14 @@ public class PessoaFisica extends Pessoa implements Serializable{
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public Date getDatanascimento() {
+        return datanascimento;
+    }
+
+    public void setDatanascimento(Date datanascimento) {
+        this.datanascimento = datanascimento;
     }
 
     @Override

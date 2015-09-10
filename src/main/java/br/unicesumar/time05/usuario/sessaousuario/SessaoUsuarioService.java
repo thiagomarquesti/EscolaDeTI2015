@@ -74,7 +74,7 @@ public class SessaoUsuarioService {
         boolean logado = false;
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
             if (sessaoUsuario.getUsuario().getLogin().equals(aDadosLogin.getLogin())
-                    && sessaoUsuario.getUsuario().getSenha().equals(aDadosLogin.getSenha())) {
+                    && sessaoUsuario.getUsuario().verificaSenha(aDadosLogin.getSenha())) {
                 logado = true;
             }
         }

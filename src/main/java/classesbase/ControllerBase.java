@@ -21,6 +21,7 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
         try {
             service.salvar(aEntidade);
         } catch (Exception e) {
+            System.out.println(e);
             throw new RuntimeException("Erro ao salvar entidade, verifique os dados fornecidos!");
         }
     }
@@ -36,8 +37,8 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
     }
 
     @RequestMapping(value = "/{aId}", method = RequestMethod.GET)
-    public List<Map<String, Object>> getEntidadePorId(@PathVariable ID aId) {
-        return service.findByID(aId);
+    public Map<String, Object> getEntidadePorId(@PathVariable ID aId) {
+        return (Map<String, Object>) service.findByID(aId).get(0);
     }
 
     @RequestMapping(value = "/obj/{aId}", method = RequestMethod.GET)

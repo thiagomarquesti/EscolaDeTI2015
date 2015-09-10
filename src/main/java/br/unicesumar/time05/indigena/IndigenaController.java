@@ -1,10 +1,9 @@
 package br.unicesumar.time05.indigena;
 
 import classesbase.ControllerBase;
+import java.io.File;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,6 +12,10 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
 
     @Override
     public Indigena getObjeto(@PathVariable Long aId) {
-        return (Indigena) service.getObjeto(aId);
+        Indigena i = (Indigena) service.getObjeto(aId);
+        if (new File("src/main/webapp/fotos/users/" + i.getCodigoAssindi()+ ".jpg").exists()) 
+            i.setImgSrc("src/main/webapp/fotos/users/" + i.getCodigoAssindi()+ ".jpg");
+        return i;
     }
+
 }
