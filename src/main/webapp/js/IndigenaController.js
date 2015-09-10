@@ -6,16 +6,16 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, entidade, troca, paro){
         entidade = $rootScope.ent;
         if (campo == null || campo == "") { campo = "nome"; }
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, entidade, troca);
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, entidade, troca, paro);
         atualizaScope;
-        if(!paro) { $scope.atualizaPaginacao(); }
+        //if(!paro) { $scope.atualizaPaginacao(); }
     };
     
-    $scope.atualizaPaginacao = function(){
-        $timeout(function(){
-                ServicePaginacao.criaPaginacao($scope.dadosRecebidos.itens.quantidadeDePaginas, $scope.pagina, $scope.busca.descricao);
-        },100);
-    };
+//    $scope.atualizaPaginacao = function(){
+//        $timeout(function(){
+//                ServicePaginacao.criaPaginacao($scope.dadosRecebidos.itens.quantidadeDePaginas, $scope.pagina, $scope.busca.descricao);
+//        },100);
+//    };
     
     function atualizaScope() {
         $scope = $rootScope;
@@ -29,6 +29,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     };
     
     $scope.fazPesquisa = function(registros, string){
+        $rootScope.string = string;
         $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
     
