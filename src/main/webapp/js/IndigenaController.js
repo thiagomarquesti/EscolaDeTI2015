@@ -1,28 +1,35 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
     $scope.placeHolder = "Buscar indígena";
-    
-    $scope.registrosPadrao = function() {
-        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
-    };
+    $rootScope.ent = "indigena";
         
-    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, paro, entidade, troca){
-        entidade = "indigena";
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, entidade, troca, paro){
+        entidade = $rootScope.ent;
         if (campo == null || campo == "") { campo = "nome"; }
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, paro, entidade, troca);
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, entidade, troca);
         atualizaScope;
+        if(!paro) { $scope.atualizaPaginacao(); }
+    };
+    
+    $scope.atualizaPaginacao = function(){
+        $timeout(function(){
+                ServicePaginacao.criaPaginacao($scope.dadosRecebidos.itens.quantidadeDePaginas, $scope.pagina, $scope.busca.descricao);
+        },100);
     };
     
     function atualizaScope() {
-        $scope.pagina = $rootScope.pagina;
-        $scope.tipoOrdem = $rootScope.tipoOrdem;
-        $scope.campoAtual = $rootScope.campoAtual;
+        $scope = $rootScope;
     }
     
     $rootScope.atualizarListagens = $scope.atualizarListagens;
     
     $scope.registrosPadrao = function() {
         $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+        $rootScope.numregistros = $scope.busca.numregistros;
+    };
+    
+    $scope.fazPesquisa = function(registros, string){
+        $scope.atualizarListagens(registros, $scope.pagina, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
     
     function novoIndio() {
