@@ -73,7 +73,7 @@ public class Usuario extends PessoaFisica implements Serializable {
 //        this.funcao = funcao;
 //    }
 
-    public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, Set<Telefone> telefones,
+    public Usuario(String login, Senha senha, Set<PerfilDeAcesso> perfis, CPF cpf, Genero genero, String nome, List<Telefone> telefones,
             Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
         super(cpf, genero, nome, telefones, email, endereco, tipoPessoa, datanasc);
         this.login = login;
@@ -81,8 +81,8 @@ public class Usuario extends PessoaFisica implements Serializable {
         this.perfis = perfis;
     }
 
-    public Usuario(CriarUsuario u, Set<Telefone> telefones, Endereco endereco, Funcao funcao) {
-        super(u.getCpf(), u.getGenero(), u.getNome(), telefones, u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
+    public Usuario(CriarUsuario u, Endereco endereco, Funcao funcao) {
+        super(u.getCpf(), u.getGenero(), u.getNome(), u.getTelefones(), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
         this.funcao = funcao;
         this.login = u.getLogin();
         this.senha = u.getSenha();

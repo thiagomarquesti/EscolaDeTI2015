@@ -39,40 +39,40 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     private CidadeRepository cidadeRepo;
     @Autowired
     private UploadService uploadService;
-    
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private final String SQLConsultaUsuarios
-            =  "SELECT p.idpessoa,"
-               + "       p.nome,"
-               + "       p.email,"
-               + "       p.tipo_pessoa,"
-               + "       us.login,"
-               + "       us.status,"
-               + "       pf.genero,"
-               + "       pf.cpf,"
-               + "       pf.datanascimento,"
-               + "       tl.array_telefone[1] as telefone1,"
-               + "       tl.array_telefone[2] as telefone2,"
-               + "       ende.bairro,"
-               + "       ende.cep,"
-               + "       ende.complemento,"
-               + "       ende.logradouro,"
-               + "       ende.numero,"
-               + "       c.codigoibge,"
-               + "       u.codigoestado,"
-               + "       us.funcao_idfuncao "
-               + "FROM pessoa p "
-               + "LEFT JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa "
-               + "LEFT JOIN (SELECT pt.pessoa_id, array_agg(t.telefone) array_telefone"
-               + "           FROM pessoa_telefone pt"
-               + "           LEFT JOIN telefone t ON pt.telefone_id = t.idtelefone"
-               + "           GROUP BY pt.pessoa_id) as tl ON p.idpessoa = tl.pessoa_id "
-               + "LEFT JOIN endereco ende ON p.endereco_id = ende.idendereco "
-               + "LEFT JOIN endereco_cidade ec ON ende.idendereco = ec.endereco_id "
-               + "LEFT JOIN cidade c ON ec.cidade_id = c.codigoibge "
-               + "LEFT JOIN uf u ON c.estado_codigoestado = u.codigoestado "
-               + "LEFT JOIN usuario us ON us.idpessoa = p.idpessoa";
+            = "SELECT p.idpessoa,"
+            + "       p.nome,"
+            + "       p.email,"
+            + "       p.tipo_pessoa,"
+            + "       us.login,"
+            + "       us.status,"
+            + "       pf.genero,"
+            + "       pf.cpf,"
+            + "       pf.datanascimento,"
+            + "       tl.array_telefone[1] as telefone1,"
+            + "       tl.array_telefone[2] as telefone2,"
+            + "       ende.bairro,"
+            + "       ende.cep,"
+            + "       ende.complemento,"
+            + "       ende.logradouro,"
+            + "       ende.numero,"
+            + "       c.codigoibge,"
+            + "       u.codigoestado,"
+            + "       us.funcao_idfuncao "
+            + "FROM pessoa p "
+            + "LEFT JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa "
+            + "LEFT JOIN (SELECT pt.pessoa_id, array_agg(t.telefone) array_telefone"
+            + "           FROM pessoa_telefone pt"
+            + "           LEFT JOIN telefone t ON pt.telefone_id = t.idtelefone"
+            + "           GROUP BY pt.pessoa_id) as tl ON p.idpessoa = tl.pessoa_id "
+            + "LEFT JOIN endereco ende ON p.endereco_id = ende.idendereco "
+            + "LEFT JOIN endereco_cidade ec ON ende.idendereco = ec.endereco_id "
+            + "LEFT JOIN cidade c ON ec.cidade_id = c.codigoibge "
+            + "LEFT JOIN uf u ON c.estado_codigoestado = u.codigoestado "
+            + "LEFT JOIN usuario us ON us.idpessoa = p.idpessoa";
 
     private final String SQLConsultaUsuarioPorID
             = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
@@ -105,19 +105,18 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
     public void salvar(CriarUsuario aUsuario) {
         Usuario usuario;
         if (repository.count() == 0) {
-            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), new HashSet<PerfilDeAcesso>(), new CPF(""), Genero.MASCULINO, aUsuario.getNome(), new HashSet<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Date());
+            usuario = new Usuario(aUsuario.getLogin(), aUsuario.getSenha(), new HashSet<PerfilDeAcesso>(), new CPF(""), Genero.MASCULINO, aUsuario.getNome(), new ArrayList<Telefone>(), aUsuario.getEmail(), new Endereco(), TipoPessoa.USUÁRIO, new Date());
             usuario.setPerfil(perfilRepo.findAll());
         } else {
             Cidade cidade = cidadeRepo.findOne(aUsuario.getCodigoibge());
             Endereco end = new Endereco(aUsuario.getLogradouro(), aUsuario.getNumero(), aUsuario.getBairro(), aUsuario.getComplemento(), aUsuario.getCep(), cidade);
-            Set<Telefone> telefones = new HashSet<Telefone>();
-            telefones.addAll(aUsuario.getTelefones());
             if (aUsuario.getLogin() == null || aUsuario.getLogin() == "") {
-                usuario = new Usuario(aUsuario, telefones, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
             } else {
-                if(!verificarLogin(aUsuario.getLogin()))
+                if (!verificarLogin(aUsuario.getLogin())) {
                     throw new RuntimeException("Login já existe no sistema");
-                usuario = new Usuario(aUsuario,telefones, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
+                }
+                usuario = new Usuario(aUsuario, end, funcaoRepo.findOne(aUsuario.getIdfuncao()));
                 List<PerfilDeAcesso> perfis = new ArrayList<>();
                 for (PerfilDeAcesso p : aUsuario.getPerfis()) {
                     perfis.add(perfilRepo.findOne(p.getIdperfildeacesso()));
@@ -126,12 +125,18 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             }
             usuario.setTipoPessoa(TipoPessoa.USUÁRIO);
         }
-        
+
+        List<Telefone> telefones = usuario.getTelefones();
+        if (telefones.get(0).equals(telefones.get(1))) {
+            telefones.remove(1);
+        }
+        telefones.remove("");
+        usuario.setTelefones(telefones);
         try {
-            repository.save(usuario);
-            repository.flush();
-            if(repository.count()>1 && aUsuario.getImgSrc()!= null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
+            repository.saveAndFlush(usuario);
+            if (repository.count() > 1 && aUsuario.getImgSrc() != null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64")) {
                 uploadService.uploadWebcam(aUsuario.getImgSrc(), usuario.getIdpessoa(), "users");
+            }
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException(e);
@@ -168,8 +173,9 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         usuario.alterar(aUsuario);
         usuario.getEndereco().setCidade(cidadeRepo.findOne(aUsuario.getCodigoibge()));
         usuario.setFuncao(funcaoRepo.findOne(aUsuario.getIdfuncao()));
-        if(aUsuario.getImgSrc()!= null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64"))
+        if (aUsuario.getImgSrc() != null && aUsuario.getImgSrc().startsWith("data:image/jpeg;base64")) {
             uploadService.uploadWebcam(aUsuario.getImgSrc(), aUsuario.getIdpessoa(), "users");
+        }
         repository.save(usuario);
     }
 

@@ -10,6 +10,7 @@ import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -49,14 +50,14 @@ public class PessoaFisica extends Pessoa implements Serializable{
         super(nome, email);
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
+    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
         super(nome, telefones, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
         this.datanascimento = datanasc;
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, Set<Telefone> telefones, Email email) {
+    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email) {
         super(nome, telefones, email);
         this.cpf = cpf;
         this.genero = genero;

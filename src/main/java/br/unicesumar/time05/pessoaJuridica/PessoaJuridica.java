@@ -8,6 +8,7 @@ import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -31,12 +32,12 @@ public class PessoaJuridica extends Pessoa implements Serializable{
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         super(nome, telefones, email, endereco, tipoPessoa);
         this.cnpj = cnpj;
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, Set<Telefone> telefones, Email email) {
+    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email) {
         super(nome, telefones, email);
         this.cnpj = cnpj;
     }
