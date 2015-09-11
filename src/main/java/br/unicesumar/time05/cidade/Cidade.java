@@ -1,7 +1,6 @@
 package br.unicesumar.time05.cidade;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
-import br.unicesumar.time05.itemacesso.InicializadorItemAcesso;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.uf.UF;
 import java.util.Objects;
 import javax.persistence.Entity;

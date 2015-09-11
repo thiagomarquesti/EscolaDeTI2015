@@ -15,7 +15,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             else {
                 $http.get("/perfildeacesso/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.perfil = data[0];
+                            $scope.perfil = data;
                             $scope.isNovo = false;
                             $scope.itensAcesso();
                             //console.log(data);

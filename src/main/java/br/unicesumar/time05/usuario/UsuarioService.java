@@ -1,9 +1,9 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.email.Email;
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.cpf.CPF;
@@ -219,8 +219,9 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, cpf FROM pessoa_fisica WHERE cpf = :aCpf AND idpessoa <> :aId", params);
             if (!usuario.isEmpty()) {
                 retorno.put("retorno", "existe");
+            } else {
+                retorno.put("retorno", "valido");
             }
-            retorno.put("retorno", "valido");
         } else {
             retorno.put("retorno", "invalido");
         }

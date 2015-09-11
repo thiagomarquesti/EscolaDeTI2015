@@ -1,8 +1,8 @@
 package br.unicesumar.time05.cidade;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;

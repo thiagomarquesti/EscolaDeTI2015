@@ -1,6 +1,5 @@
-package br.unicesumar.time05.pessoaFisica;
+package br.unicesumar.time05.pessoafisica;
 
-import br.unicesumar.time05.pessoa.TipoPessoa;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

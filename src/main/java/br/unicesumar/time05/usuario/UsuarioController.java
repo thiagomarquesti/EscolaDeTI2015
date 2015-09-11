@@ -4,7 +4,6 @@ import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;

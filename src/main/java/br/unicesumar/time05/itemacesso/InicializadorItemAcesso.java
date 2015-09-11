@@ -1,6 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
-import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
+import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
@@ -8,14 +8,10 @@ import br.unicesumar.time05.uf.UFRepository;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

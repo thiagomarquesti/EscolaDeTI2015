@@ -1,4 +1,4 @@
-package br.unicesumar.time05.terraIndigena;
+package br.unicesumar.time05.terraindigena;
 
 import classesbase.ControllerBase;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -2,7 +2,6 @@ package br.unicesumar.time05.indigena;
 
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
-import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;

@@ -22,7 +22,8 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         else {
             $http.get("/etnia/" + $routeParams.id)
                     .success(function(data){
-                        $scope.etnia = data[0];
+                        console.log(data);
+                        $scope.etnia = data;
                         $scope.isNovaEtnia = false;
                     })
                     .error(deuErro);
@@ -33,7 +34,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $http.get("/etnia")
             .success(function (data) {
                 $scope.etnias = data;
-                //console.log($scope.etnias);
+//                console.log($scope.etnias);
             })
             .error(deuErro);
     };

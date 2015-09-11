@@ -1,4 +1,4 @@
-package br.unicesumar.time05.ConsultaPersonalizada;
+package br.unicesumar.time05.consultapersonalizada;
 
 import java.util.ArrayList;
 import java.util.Collections;

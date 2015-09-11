@@ -1,6 +1,6 @@
 package br.unicesumar.time05.endereco;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.cidade.Cidade;
 import java.io.Serializable;
 import java.util.Objects;

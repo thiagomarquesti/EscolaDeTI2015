@@ -1,8 +1,8 @@
-package br.unicesumar.time05.pessoaFisica;
+package br.unicesumar.time05.pessoajuridica;
 
 import br.unicesumar.time05.email.Email;
-import br.unicesumar.time05.rowMapper.MapRowMapper;
 import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.rowmapper.MapRowMapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -12,40 +12,39 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
-@Transactional
 @Component
-public class FisicaService {
+@Transactional
+public class JuridicaService {
 
     @Autowired
-    private FisicaRepository fisicaRepo;
+    private JuridicaRepository juridicaRepo;
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public void salvarFisica(PessoaFisica aPessoa) {
+    public void salvarJuridica(PessoaJuridica aPessoa) {
         try {
-            fisicaRepo.save(aPessoa);
-            fisicaRepo.flush();
+            juridicaRepo.save(aPessoa);
+            juridicaRepo.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void removerFisica(Long aPessoaId) {
+    public void removerJuridica(Long aPessoaId) {
         try {
-            fisicaRepo.delete(aPessoaId);
+            juridicaRepo.delete(aPessoaId);
         } catch (Exception e) {
             throw new RuntimeException("Pessoa não encontrada");
         }
     }
 
-    public List<Map<String, Object>> getFisica() {
-//    public PessoaFisica getFisica() {
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
+    public List<Map<String, Object>> getJuridica() {
+        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.cnpj, t.telefone,"
                 + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
                 + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_juridica pj "
+                + "    ON pj.idpessoa = p.idpessoa"
                 + " INNER JOIN pessoa_telefone pt "
                 + "    ON pt.pessoa_id = p.idpessoa"
                 + " INNER JOIN telefone t "
@@ -59,18 +58,17 @@ public class FisicaService {
                 + " INNER JOIN uf u"
                 + "    ON c.estado_codigoestado = u.codigoestado",
                 new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(fisica);
-//        return fisicaRepo.findOne(1l);
+        return Collections.unmodifiableList(juridica);
     }
 
-    public Map<String, Object> getFisicaById(Long aPessoaId) {
+    public Map<String, Object> getJuridicaById(Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
+        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.genero, pj.cnpj, t.telefone,"
                 + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
                 + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
+                + " INNER JOIN pessoa_juridica pj "
+                + "    ON pj.idpessoa = p.idpessoa"
                 + " INNER JOIN pessoa_telefone pt "
                 + "    ON pt.pessoa_id = p.idpessoa"
                 + " INNER JOIN telefone t "
@@ -82,11 +80,11 @@ public class FisicaService {
                 + " INNER JOIN cidade c"
                 + "    ON ec.cidade_id = c.codigoibge"
                 + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado "
-                + "WHERE p.idpessoa = :aPessoaId",
+                + "    ON c.estado_codigoestado = u.codigoestado"
+                + " WHERE p.idpessoa = :aPessoaId",
                 params, new MapRowMapper());
         try {
-            return fisica.get(0);
+            return juridica.get(0);
         } catch (Exception e) {
             throw new RuntimeException("Nenhum resultado encontrado!");
         }
@@ -106,8 +104,8 @@ public class FisicaService {
         }
     }
 
-    public void trocarTipoPessoa(Long aPessoaId, String tipo) {
-        PessoaFisica pessoa = fisicaRepo.getOne(aPessoaId);
+    public void trocarTipoJuridica(Long aPessoaId, String tipo) {
+        PessoaJuridica pessoa = juridicaRepo.getOne(aPessoaId);
         switch (tipo) {
             case "USUÁRIO":
                 pessoa.setTipoPessoa(TipoPessoa.USUÁRIO);
@@ -119,15 +117,15 @@ public class FisicaService {
                 pessoa.setTipoPessoa(TipoPessoa.ÍNDIO);
                 break;
         }
-        fisicaRepo.save(pessoa);
+        juridicaRepo.save(pessoa);
     }
 
     boolean verificarEmail(String aEmail, Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aEmail", aEmail);
         params.addValue("aId", aPessoaId);
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
-        if (!fisica.isEmpty()) {
+        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+        if (!pessoa.isEmpty()) {
             return false;
         }
         return true;
