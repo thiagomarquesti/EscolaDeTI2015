@@ -22,7 +22,8 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         else {
             $http.get("/etnia/" + $routeParams.id)
                     .success(function(data){
-                        $scope.etnia = data[0];
+                        console.log(data);
+                        $scope.etnia = data;
                         $scope.isNovaEtnia = false;
                     })
                     .error(deuErro);
@@ -33,18 +34,19 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $http.get("/etnia")
             .success(function (data) {
                 $scope.etnias = data;
-                //console.log($scope.etnias);
+//                console.log($scope.etnias);
             })
             .error(deuErro);
     };
     
-    $scope.atualizarEtnias = function (pag,campo,order,string, paro) {
+    $scope.atualizarEtnias = function (reg,pag,campo,order,string, paro) {
+        if(reg == null || reg == ""){ reg = 10; }
         if(pag == null || pag == ""){ pag = 1; }
         if(campo == null || campo == ""){ campo = "descricao"; }
         if(order != "asc" && order != "desc"){ order = "asc"; }
         if(string == null){ string = ""; }
 //      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
-        $http.get("/etnia/listar/"+pag+"/"+campo+"/"+order+"/"+string)
+        $http.get("/etnia/listar/"+reg+"/"+pag+"/"+campo+"/"+order+"/"+string)
             .success(function (data) {
                 $scope.etnias = data;
                 console.log(data);
@@ -75,7 +77,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             maxVisible:5
         }).on('page', function(event, num){
             paro = true;
-            $scope.atualizarEtnias(num, campo, order, string, paro);
+            $scope.atualizarEtnias(10,num, campo, order, string, paro);
             
         });
     }

@@ -55,6 +55,12 @@
             <artifactId>spring-session</artifactId>
             <version>1.0.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.6</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
 

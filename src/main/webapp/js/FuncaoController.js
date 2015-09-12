@@ -22,13 +22,21 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
         else {
             $http.get("/funcao/" + $routeParams.id)
                     .success(function (data) {
-                        $scope.funcao = data[0];
+                        $scope.funcao = data;
                         $scope.isNovaFuncao = false;
                     })
                     .error(deuErro);
         }
     };
-
+    
+    $scope.todasFuncoes = function(){
+        $http.get("/funcao")
+            .success(function (data) {
+                $scope.funcoes = data;
+            })
+            .error(deuErro);
+    };
+    
     $scope.atualizarFuncoes = function () {
         $http.get("/funcao")
                 .success(function (data) {
@@ -54,7 +62,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
     $scope.salvarFuncao = function () {
 
 
-        $http.get("/funcao//verificarDescricao/" + $scope.funcao.descricao)
+        $http.get("/funcao/verificarDescricao/" + $scope.funcao.descricao)
                 .success(function (data) {
                     console.log(data);
                     if (data == false) {

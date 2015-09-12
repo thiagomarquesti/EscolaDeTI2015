@@ -1,7 +1,7 @@
 package br.unicesumar.time05.indigena;
 
-import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.terraindigena.TerraIndigena;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.etnia.Etnia;
@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Indigena implements Serializable{
@@ -72,6 +72,9 @@ public class Indigena implements Serializable{
     private EstadoCivil estadocivil;
     
     private Long codigosus;
+    
+    @Transient
+    private String imgSrc;
 
     public Indigena() {
     }
@@ -185,6 +188,50 @@ public class Indigena implements Serializable{
 
     public void setCodigoSUS(Long codigoSUS) {
         this.codigosus = codigoSUS;
+    }
+
+    public Long getCodigoassindi() {
+        return codigoassindi;
+    }
+
+    public Date getDatanascimento() {
+        return datanascimento;
+    }
+
+    public void setDatanascimento(Date datanascimento) {
+        this.datanascimento = datanascimento;
+    }
+
+    public TerraIndigena getTerraindigena() {
+        return terraindigena;
+    }
+
+    public void setTerraindigena(TerraIndigena terraindigena) {
+        this.terraindigena = terraindigena;
+    }
+
+    public EstadoCivil getEstadocivil() {
+        return estadocivil;
+    }
+
+    public void setEstadocivil(EstadoCivil estadocivil) {
+        this.estadocivil = estadocivil;
+    }
+
+    public Long getCodigosus() {
+        return codigosus;
+    }
+
+    public void setCodigosus(Long codigosus) {
+        this.codigosus = codigosus;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 
     @Override

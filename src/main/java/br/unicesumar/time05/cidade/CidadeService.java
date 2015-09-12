@@ -1,8 +1,8 @@
 package br.unicesumar.time05.cidade;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,9 @@ public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
 
     private final String sqlCidade
             = "SELECT c.codigoibge,"
-            + "       c.descricao nomecidade,"
+            + "       c.descricao,"
             + "       uf.codigoestado,"
-            + "       uf.descricao,"
+            + "       uf.descricao as estados,"
             + "       uf.sigla"
             + "  FROM cidade c"
             + "  JOIN uf on c.estado_codigoestado = uf.codigoestado";
@@ -27,12 +27,12 @@ public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
     
     @Override
     public List<Map<String, Object>> findByID(Long id) {
-        return query.executePorID(sqlCidade, id);
+        return query.execute(sqlCidade+" WHERE c.codigoibge = "+ id+"  ORDER BY c.descricao ASC ");
     }
 
     @Override
-    public Object getObjeto(Long aId) {
-        return repository.findOne(aId);
+    public Cidade getObjeto(Long aId) {
+        return (Cidade)repository.findOne(aId);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class CidadeService extends ServiceBase<Cidade, Long, CidadeRepository> {
     public List<Map<String, Object>> listarCidadesPorUF(int aCodigoEstado){
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("codigoestado", aCodigoEstado);
-        return query.execute(sqlCidade + " WHERE uf.codigoestado = :codigoestado", params);
+        return query.execute(sqlCidade + " WHERE uf.codigoestado = :codigoestado ORDER BY c.descricao ASC ", params);
     }
 }

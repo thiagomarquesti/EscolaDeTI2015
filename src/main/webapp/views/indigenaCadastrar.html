@@ -103,7 +103,7 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" name="telefone" required="" class="form-control requerido sp_celphones" placeholder="(99) 9999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="indio.telefone" id="telefone" min="10" name="telefone" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
             </div>
             
             <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -158,7 +158,7 @@
                                             ></ng-camera>
                                         </div>
                                         <div ng-model="canvasFoto">
-                                            <img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="Foto">
+                                            <img ng-if="vm.picture" ng-src="{{vm.picture}}" id="imgCanvas" alt="Foto">
                                         </div>
                                     </div>  
                                 </div>
@@ -166,7 +166,7 @@
 
                             <div class="modal-footer">
                                 <div class="col-md-12" ng-controller="CameraController as vm">
-                                    <button ng-click="teste();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
                                 </div>
                             </div>
                         </div>

@@ -1,12 +1,13 @@
 package br.unicesumar.time05.indigena;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.etnia.EtniaService;
-import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
+import br.unicesumar.time05.terraindigena.TerraIndigena;
+import br.unicesumar.time05.terraindigena.TerraIndigenaService;
+import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +29,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     private TerraIndigenaService terraService;
     @Autowired
     private EtniaService etniaService;
+    @Autowired
+    private UploadService uploadService;
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
@@ -55,18 +58,25 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "WHERE i.codigoassindi = :idIndigena";
 
     @Override
-    public void salvar(CriarIndigena aCIndigena) {
-        Indigena i = new Indigena(null, aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
-        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aCIndigena.getTerraIndigena()));
-        i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
+    public void salvar(CriarIndigena aIndigena) {
+        Indigena i = new Indigena(null, aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         repository.save(i);
+        repository.flush();
+        if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {
+            uploadService.uploadWebcam(aIndigena.getImgSrc(), i.getCodigoAssindi(), "indios");
+        }
     }
 
     @Override
-    public void alterar(CriarIndigena aCIndigena) {
-        Indigena i = new Indigena(aCIndigena.getCodigoAssindi(), aCIndigena.getNome(), aCIndigena.getCpf(), null, aCIndigena.getGenero(), aCIndigena.getDataNascimento(), aCIndigena.getConvenio(), aCIndigena.getTelefone(), null, aCIndigena.getEscolaridade(), aCIndigena.getEstadoCivil(), aCIndigena.getCodigoSUS());
-        i.setTerraIndigena((TerraIndigena) terraService.getObjeto((Long)aCIndigena.getTerraIndigena()));
-        i.setEtnia((Etnia) etniaService.getObjeto(aCIndigena.getEtnia()));
+    public void alterar(CriarIndigena aIndigena) {
+        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS());
+        i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
+        i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
+        if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {
+            uploadService.uploadWebcam(aIndigena.getImgSrc(), aIndigena.getCodigoAssindi(), "indios");
+        }
         repository.save(i);
     }
 

@@ -1,6 +1,6 @@
 package br.unicesumar.time05.funcao;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
