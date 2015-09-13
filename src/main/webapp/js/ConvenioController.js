@@ -34,7 +34,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
             else {
                 $http.get("/convenio/" + $routeParams.id)
                         .success(function (data) {
-                            $scope.convenio = data[0];
+                            $scope.convenio = data;
                             $scope.isNovoConvenio = false;
                         })
                         .error(deuErro);

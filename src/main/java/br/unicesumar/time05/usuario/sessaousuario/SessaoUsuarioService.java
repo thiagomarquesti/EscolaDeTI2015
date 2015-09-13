@@ -1,7 +1,7 @@
 package br.unicesumar.time05.usuario.sessaousuario;
 
 import br.unicesumar.time05.itemacesso.ItemAcessoUsuarioInMemory;
-import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
+import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.usuario.Status;
 import br.unicesumar.time05.usuario.Usuario;
 import br.unicesumar.time05.usuario.UsuarioRepository;

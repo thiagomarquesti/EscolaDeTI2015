@@ -1,7 +1,5 @@
 package br.unicesumar.time05.upload;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
 package br.unicesumar.time05.uf;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;

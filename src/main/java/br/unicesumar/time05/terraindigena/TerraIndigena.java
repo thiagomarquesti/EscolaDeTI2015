@@ -1,6 +1,6 @@
-package br.unicesumar.time05.terraIndigena;
+package br.unicesumar.time05.terraindigena;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;

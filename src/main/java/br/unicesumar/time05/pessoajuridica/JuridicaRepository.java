@@ -1,4 +1,4 @@
-package br.unicesumar.time05.pessoaJuridica;
+package br.unicesumar.time05.pessoajuridica;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

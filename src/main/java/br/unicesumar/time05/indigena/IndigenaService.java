@@ -1,12 +1,12 @@
 package br.unicesumar.time05.indigena;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.etnia.EtniaService;
-import br.unicesumar.time05.terraIndigena.TerraIndigena;
-import br.unicesumar.time05.terraIndigena.TerraIndigenaService;
+import br.unicesumar.time05.terraindigena.TerraIndigena;
+import br.unicesumar.time05.terraindigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package br.unicesumar.time05.perfildeacesso;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import java.io.Serializable;
 import java.util.HashSet;

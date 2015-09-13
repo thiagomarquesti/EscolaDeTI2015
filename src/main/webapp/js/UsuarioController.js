@@ -234,7 +234,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 $timeout(function () {
                     $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
-                                criarUsuarioParaEditar();                             
+                                criarUsuarioParaEditar();     
+                                $scope.usuario.idusuario = $routeParams.id;
                                 $scope.usuario.nome = data.nome;
                                 $scope.usuario.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
                                 $scope.usuario.genero = data.genero;

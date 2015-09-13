@@ -21,11 +21,12 @@
 
             <div class="form-group"> 
                 <label for="cpf" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf requerido"></div>
+                <div class="col-md-10"><input type="" ng-model="usuario.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf requerido"></div>
             </div>
 
             <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
+                <span ng-show="formCad.cpf.$error.cpf">CPF invalido. </span>
                 <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
             </div>
 

@@ -1,6 +1,6 @@
 package br.unicesumar.time05.itemacesso;
 
-import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
+import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;

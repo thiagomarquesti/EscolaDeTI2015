@@ -1,5 +1,6 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
 import java.io.File;
@@ -18,14 +19,27 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
     @Override
     public Usuario getObjeto(@PathVariable Long aId) {
         Usuario u = (Usuario) service.getObjeto(aId);
-        if(new File("src/main/webapp/fotos/users/"+u.getIdpessoa()+".jpg").exists())
-            u.setImgSrc("src/main/webapp/fotos/users/"+u.getIdpessoa()+".jpg");
+        if (new File("src/main/webapp/fotos/users/" + u.getIdpessoa() + ".jpg").exists()) {
+            u.setImgSrc("src/main/webapp/fotos/users/" + u.getIdpessoa() + ".jpg");
+        }
         return u;
     }
 
     @RequestMapping(value = "/verificarSenha/{aSenha:.+}", method = RequestMethod.GET)
     public boolean verifcarSenha(@PathVariable Senha aSenha) {
         return service.verificarSenha(aSenha);
+    }
+
+    @RequestMapping(value = "/verificarCpf/{aCpf:.+}/{aUsuarioId}", method = RequestMethod.GET)
+    public Map<String, String> verifcarCpf(@PathVariable CPF aCpf, @PathVariable Long aUsuarioId) {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("retorno", "valido");
+//        return map;
+        if (aUsuarioId != -1) {
+            return service.verificarCpf(aCpf, aUsuarioId);
+        } else {
+            return service.verificarCpf(aCpf);
+        }
     }
 
     @RequestMapping(value = "/trocarStatusUsuario/{aUsuarioId}", method = RequestMethod.PUT)
@@ -35,14 +49,17 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
 
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)
     public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId) {
-        return service.verificarEmail(aEmail, aUsuarioId);
+        if (aUsuarioId != -1) {
+            return service.verificarEmail(new Email(aEmail), aUsuarioId);
+        } else {
+            return service.verificarEmail(new Email(aEmail));
+        }
     }
 
-    @RequestMapping(value = "/verificarEmail/{aEmail:.+}", method = RequestMethod.GET)
-    public boolean verifcarEmail(@PathVariable String aEmail) {
-        return service.verificarEmail(new Email(aEmail));
-    }
-
+//    @RequestMapping(value = "/verificarEmail/{aEmail:.+}", method = RequestMethod.GET)
+//    public boolean verifcarEmail(@PathVariable String aEmail) {
+//        return service.verificarEmail(new Email(aEmail));
+//    }
     @RequestMapping(value = "/verificarLogin/{aLogin:.+}/{aUsuarioId}", method = RequestMethod.GET)
     public boolean verifcarLogin(@PathVariable String aLogin, @PathVariable Long aUsuarioId) {
         return service.verificarLogin(aLogin, aUsuarioId);

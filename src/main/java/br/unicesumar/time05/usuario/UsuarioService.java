@@ -1,9 +1,9 @@
 package br.unicesumar.time05.usuario;
 
 import br.unicesumar.time05.email.Email;
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.cpf.CPF;
@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -188,23 +189,43 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         return usuario.isEmpty();
     }
 
-    public boolean verificarEmail(Email aEmail) {
-        if (aEmail.verificarValido()) {
-
-            final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail.getEmail());
-            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
-            if (!usuario.isEmpty()) {
-                return false;
-            }
-            return true;
-        } else {
-            throw new RuntimeException("Campo email vazio!");
-        }
-    }
-
     public boolean verificarSenha(Senha aSenha) {
         return aSenha.senhaValida();
+    }
+
+    public Map<String, String> verificarCpf(CPF aCpf) {
+        Map<String, String> retorno = new HashMap<>();
+        if (aCpf.valido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aCpf", aCpf.getCpf());
+            List<Map<String, Object>> usuario = query.execute("SELECT cpf FROM pessoa_fisica WHERE cpf = :aCpf", params);
+            if (!usuario.isEmpty()) {
+                retorno.put("retorno", "existe");
+            } else {
+                retorno.put("retorno", "valido");
+            }
+        } else {
+            retorno.put("retorno", "invalido");
+        }
+        return retorno;
+    }
+
+    public Map<String, String> verificarCpf(CPF aCpf, Long aUsuarioId) {
+        Map<String, String> retorno = new HashMap<>();
+        if (aCpf.valido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aCpf", aCpf.getCpf());
+            params.addValue("aId", aUsuarioId);
+            List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, cpf FROM pessoa_fisica WHERE cpf = :aCpf AND idpessoa <> :aId", params);
+            if (!usuario.isEmpty()) {
+                retorno.put("retorno", "existe");
+            } else {
+                retorno.put("retorno", "valido");
+            }
+        } else {
+            retorno.put("retorno", "invalido");
+        }
+        return retorno;
     }
 
     public void trocarStatusUsuario(Long aUsuarioId) {
@@ -221,18 +242,37 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
         }
     }
 
-    boolean verificarEmail(String aEmail, Long aUsuarioId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aEmail", aEmail);
-        params.addValue("aId", aUsuarioId);
-        List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, email FROM pessoa WHERE email = :aEmail AND idpessoa <> :aId", params);
-        if (!usuario.isEmpty()) {
+    public boolean verificarEmail(Email aEmail, Long aUsuarioId) {
+        if (aEmail.verificarValido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail.getEmail());
+            params.addValue("aId", aUsuarioId);
+            List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, email FROM pessoa WHERE email = :aEmail AND idpessoa <> :aId", params);
+            if (!usuario.isEmpty()) {
+                return false;
+            }
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
-    boolean verificarLogin(String aLogin, Long aUsuarioId) {
+    public boolean verificarEmail(Email aEmail) {
+        if (aEmail.verificarValido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail.getEmail());
+            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            if (!usuario.isEmpty()) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new RuntimeException("Campo email vazio!");
+        }
+    }
+
+    public boolean verificarLogin(String aLogin, Long aUsuarioId
+    ) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         params.addValue("aId", aUsuarioId);
@@ -270,4 +310,5 @@ public class UsuarioService extends ServiceBase<CriarUsuario, Long, UsuarioRepos
             usuario.removerPerfil(perfilRepo.findOne(perfil));
         }
     }
+
 }

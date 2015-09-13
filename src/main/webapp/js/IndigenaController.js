@@ -100,13 +100,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
 
     $scope.atualizarIndigenas = function (reg,pag,campo,order,string, paro) {
-//        if(reg == null || reg == ""){ reg = 10; }
-//        if(pag == null || pag == ""){ pag = 1; }
-//        if(campo == null || campo == ""){ campo = "nome"; }
-//        if(order != "asc" && order != "desc"){ order = "asc"; }
-//        if(string == null){ string = ""; }
-////      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
-        $http.get(consulta(reg,pag,campo,order,string, paro,"indigena"))
+        if(reg == null || reg == ""){ reg = 10; }
+        if(pag == null || pag == ""){ pag = 1; }
+        if(campo == null || campo == ""){ campo = "nome"; }
+        if(order != "asc" && order != "desc"){ order = "asc"; }
+        if(string == null){ string = ""; }
+//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
+        $http.get("/indigena/listar/"+reg+"/"+pag+"/"+campo+"/"+order+"/"+string)
             .success(function (data) {
                 $scope.indigenas = data;
                 if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }

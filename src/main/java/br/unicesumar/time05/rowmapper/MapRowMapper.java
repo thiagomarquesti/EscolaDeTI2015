@@ -1,4 +1,4 @@
-package br.unicesumar.time05.rowMapper;
+package br.unicesumar.time05.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

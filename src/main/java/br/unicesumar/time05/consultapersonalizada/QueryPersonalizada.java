@@ -1,6 +1,6 @@
-package br.unicesumar.time05.ConsultaPersonalizada;
+package br.unicesumar.time05.consultapersonalizada;
 
-import br.unicesumar.time05.rowMapper.MapRowMapper;
+import br.unicesumar.time05.rowmapper.MapRowMapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

@@ -1,9 +1,9 @@
 package classesbase;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.QueryPersonalizada;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

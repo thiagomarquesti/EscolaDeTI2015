@@ -1,6 +1,6 @@
-package br.unicesumar.time05.pessoaFisica;
+package br.unicesumar.time05.pessoafisica;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

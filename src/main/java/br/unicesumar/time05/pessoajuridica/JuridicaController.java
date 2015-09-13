@@ -1,8 +1,7 @@
-package br.unicesumar.time05.pessoaJuridica;
+package br.unicesumar.time05.pessoajuridica;
 
 import java.util.List;
 import java.util.Map;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

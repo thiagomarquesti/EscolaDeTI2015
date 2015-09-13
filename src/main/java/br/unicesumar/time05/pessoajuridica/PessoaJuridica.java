@@ -1,6 +1,6 @@
-package br.unicesumar.time05.pessoaJuridica;
+package br.unicesumar.time05.pessoajuridica;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.cnpj.Cnpj;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
@@ -10,7 +10,6 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
