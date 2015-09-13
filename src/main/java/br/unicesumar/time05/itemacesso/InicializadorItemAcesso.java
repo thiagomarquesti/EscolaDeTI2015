@@ -231,13 +231,11 @@ public class InicializadorItemAcesso {
 
     public void carregarUF() {
         final String FILE_NAME_UF = "src/main/java/SCRIPTS/uf.txt";
-
         carregarScript(new File(FILE_NAME_UF));
     }
 
     public void carregarEstados() {
         final String FILE_NAME_CIDADES = "src/main/java/SCRIPTS/cidades.txt";
-
         carregarScript(new File(FILE_NAME_CIDADES));
     }
 
