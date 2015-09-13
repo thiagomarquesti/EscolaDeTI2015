@@ -6,9 +6,11 @@ import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.genero.Genero;
+import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -16,6 +18,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,31 +26,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class Indigena implements Serializable{
+public class Indigena implements Serializable {
 
     @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigoassindi;
-   
+
     @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nome;
-    
+
     @CampoConsulta
     @Embedded
     private CPF cpf;
-    
+
     @CampoConsulta
     @ManyToOne
     private Etnia etnia;
-    
+
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
-    
+
     @CampoConsulta
     private Date datanascimento;
 
@@ -58,28 +62,36 @@ public class Indigena implements Serializable{
             inverseJoinColumns = {
                 @JoinColumn(name = "convenio_id", referencedColumnName = "idconvenio")})
     private Set<Convenio> convenio;
-   
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Telefone telefone;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private TerraIndigena terraindigena;
-    
+
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
-    
+
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadocivil;
-    
+
     private Long codigosus;
-    
+
     @Transient
     private String imgSrc;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "indigena_ocorrencias",
+            joinColumns = {
+                @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoAssindi")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "idocorrencia", referencedColumnName = "idocorrencia")})
+    private List<Ocorrencia> ocorrencias;
+
     public Indigena() {
     }
-    
-    public Indigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS) {
+
+    public Indigena(Long codigoAssindi, String nome, CPF cpf, Etnia etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, TerraIndigena terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS, List<Ocorrencia> ocorrencia) {
         this.codigoassindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
@@ -92,6 +104,7 @@ public class Indigena implements Serializable{
         this.escolaridade = escolaridade;
         this.estadocivil = estadoCivil;
         this.codigosus = codigoSUS;
+        this.ocorrencias = ocorrencia;
     }
 
     public Long getCodigoAssindi() {
@@ -100,6 +113,14 @@ public class Indigena implements Serializable{
 
     public void setCodigoAssindi(Long codigoAssindi) {
         this.codigoassindi = codigoAssindi;
+    }
+
+    public List<Ocorrencia> getOcorrencia() {
+        return ocorrencias;
+    }
+
+    public void setOcorrencia(List<Ocorrencia> ocorrencia) {
+        this.ocorrencias = ocorrencia;
     }
 
     public String getNome() {
