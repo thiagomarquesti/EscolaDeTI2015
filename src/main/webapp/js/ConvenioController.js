@@ -4,6 +4,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
     $scope.placeHolder = "Buscar convênio";
     $scope.ent = $rootScope.ent = "convenio";
     $scope.campoPrincipal = 'descricao';
+    $rootScope.tipoOrdem = 'asc';
 
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }

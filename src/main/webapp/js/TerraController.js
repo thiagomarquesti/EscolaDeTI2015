@@ -4,6 +4,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     $scope.placeHolder = "Buscar terra indígena";
     $scope.ent = $rootScope.ent = "terraIndigena";
     $scope.campoPrincipal = 'nomeTerra';
+    $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }

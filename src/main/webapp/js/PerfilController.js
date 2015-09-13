@@ -4,6 +4,7 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
     $scope.placeHolder = "Buscar perfil";
     $scope.ent = $rootScope.ent = "perfildeacesso";
     $scope.campoPrincipal = 'nome';
+    $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }

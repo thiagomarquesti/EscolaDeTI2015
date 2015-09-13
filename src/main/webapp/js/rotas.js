@@ -5,7 +5,7 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/home.html',
         controller: 'HomeController'
     }).when('/Usuario/listar', {
-        templateUrl: 'views/usuariosListar.html',
+        templateUrl: 'views/usuarioListar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
         templateUrl: 'views/usuarioCadastrar.html',

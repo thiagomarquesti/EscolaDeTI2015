@@ -34,7 +34,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', ent, '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', '')">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{i.codigoassindi}}</td>
                         <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>

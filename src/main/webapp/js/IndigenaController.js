@@ -4,6 +4,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     $scope.placeHolder = "Buscar indígena";
     $scope.ent = $rootScope.ent = "indigena";
     $scope.campoPrincipal = 'nome';
+    $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
@@ -103,7 +104,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
         else {
             indioCompleto.codigoAssindi = $routeParams.id;
-            console.log(indioCompleto);
             $http.put("/indigena", indioCompleto)
                 .success(function () {
                     toastr.success("Indígena atualizado com sucesso!");
@@ -113,13 +113,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
     };
     
-    
-
-    function tiraCaracter(campo, oque) {
-        var str = campo.split(oque).join("");
-        return str;
-    }
-
     function dataToDate(valor) {
         var date = new Date(valor);
         var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
@@ -157,20 +150,20 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
          }
     };
 
-        function foto(id) {
-            $http.get("/foto/indio/" + id)
-                    .success(function (data) {
-                        $scope.urlFoto = data.foto;
-                    }).error(deuErro);
-        };
+    function foto(id) {
+        $http.get("/foto/indio/" + id)
+                .success(function (data) {
+                    $scope.urlFoto = data.foto;
+                }).error(deuErro);
+    };
 
-        $scope.webcamFoto = function () {
-            $(document).ready(function () {
-                canvas = document.getElementById('imgCanvas');
-                $scope.indio.imgSrc = canvas.src;
-            });
-            console.log($scope.indio.imgSrc);
-        };
+    $scope.webcamFoto = function () {
+        $(document).ready(function () {
+            canvas = document.getElementById('imgCanvas');
+            $scope.indio.imgSrc = canvas.src;
+        });
+        console.log($scope.indio.imgSrc);
+    };
     
     $scope.calculaIdade = function(data){
         

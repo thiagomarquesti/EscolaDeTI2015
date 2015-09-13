@@ -4,6 +4,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
     $scope.placeHolder = "Buscar etnia";
     $scope.ent = $rootScope.ent = "etnia";
     $scope.campoPrincipal = 'descricao';
+    $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
