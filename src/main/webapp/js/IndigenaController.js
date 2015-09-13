@@ -1,5 +1,32 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http, $routeParams, $location, $timeout) {
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
+    $scope.busca = {};
+    $scope.placeHolder = "Buscar indígena";
+    $scope.ent = $rootScope.ent = "indigena";
+    $scope.campoPrincipal = 'nome';
+        
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
+        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
+        atualizaScope;
+    };
+    
+    function atualizaScope() {
+        $scope = $rootScope;
+    }
+    
+    $rootScope.atualizarListagens = $scope.atualizarListagens;
+    
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+        $rootScope.numregistros = $scope.busca.numregistros;
+    };
+    
+    $scope.fazPesquisa = function(registros, string){
+        $rootScope.string = string;
+        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+    };
+    
     function novoIndio() {
         $scope.indio = {
             nome: "",
@@ -17,7 +44,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
         $scope.isNovoIndio = true;
     }
-
+    
     $scope.carregarIndio = function () {
         if ($location.path() === "/Indigena/novo") {
             novoIndio();
@@ -40,7 +67,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
             }, 100);
-            
         }
     };
     
@@ -68,7 +94,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
         
         if ($scope.isNovoIndio) {
-            console.log(indioCompleto);
                 $http.post("/indigena", indioCompleto)
                     .success(function () {
                         toastr.success("Indígena cadastrado com sucesso!");
@@ -86,58 +111,9 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 })
                 .error(deuErro);
         }
-    }
-        $scope.trocaOrdem = function (string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-            else {
-                $scope.tipoOrdem = true;
-                var ordem = "desc";
-            }
-            $scope.atualizarIndigenas("", "", ordem, string, true);
-        };
-
-    $scope.atualizarIndigenas = function (reg,pag,campo,order,string, paro) {
-        if(reg == null || reg == ""){ reg = 10; }
-        if(pag == null || pag == ""){ pag = 1; }
-        if(campo == null || campo == ""){ campo = "nome"; }
-        if(order != "asc" && order != "desc"){ order = "asc"; }
-        if(string == null){ string = ""; }
-//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
-        $http.get("/indigena/listar/"+reg+"/"+pag+"/"+campo+"/"+order+"/"+string)
-            .success(function (data) {
-                $scope.indigenas = data;
-                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
-            })
-            .error(deuErro);
-    };
-
-    $scope.trocaOrdem = function(campo, string){
-        if($scope.tipoOrdem == true){
-            $scope.tipoOrdem = false;
-            var ordem = "asc";
-        }
-
-        function tiraCaracter(campo, oque) {
-            var str = campo.split(oque).join("");
-            return str;
-        }
-        $scope.campoAtual = campo;
-        $scope.atualizarIndigenas("",campo, ordem ,string, true);
     };
     
-    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
-        $('#paginacao').bootpag({
-            total: qtde,
-            page: pag,
-            maxVisible:5
-        }).on('page', function(event, num){
-            paro = true;
-            $scope.atualizarIndigenas(reg,num, campo, order, string, paro);
-        });
-    }
+    
 
     function tiraCaracter(campo, oque) {
         var str = campo.split(oque).join("");
