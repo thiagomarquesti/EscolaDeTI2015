@@ -1,4 +1,3 @@
-
 <div class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title">Etnias cadastradas</div>
@@ -7,34 +6,22 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="buscaEtnia">
-        <div class="input-group">
-            
-            <input type="text" ng-model="busca.descricao" placeholder="Buscar etnia (digite o nome)" class="form-control">
-            <span class="input-group-btn">
-                <button ng-click="atualizarEtnias('','','asc',busca.descricao);" class="btn btn-info"><i class="fa fa-search"></i></button>
-            </span>
-            
-            
-        </div>  
-            </form>
-        <br>
-        <div class="panel panel-default">
+        <ng-include src="'views/busca.html'"></ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem"></i>
-                            <a ng-click="trocaOrdem(busca.descricao)">Etnia</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='descricao'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Etnia</a>
                         </th>
                         <th>
                             Ações
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarEtnias()">
-                    <tr ng-repeat='e in etnias.listaDeRegistros' >
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal,'', '', '')">
+                    <tr ng-repeat='e in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{e.descricao}}</td>
                         <td>
                             <div class="btn-group">
@@ -52,21 +39,12 @@
             </table>
 
             <div class="panel-footer">
-                <span> Registros encontrados: {{etnias.totalDeRegistros}} </span>
+                <span> Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}} </span>
             </div>
         </div>
-        <div id="paginacao"></div>
-<!--        <script>
-            $('#paginacao').bootpag({
-                total: etnias.quantidadeDePaginas,
-                page: etnias.paginaAtual,
-                maxVisible:5
-            }).on('page', function(event, num){
-                atualizarEtnias(num,campo, order, string);
-                //console.log(event);
-            });
-        </script>-->
-        
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
         <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>
