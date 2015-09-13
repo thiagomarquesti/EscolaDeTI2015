@@ -1,4 +1,3 @@
-
 <div class="panel panel-info">
 <div class="panel-heading"> 
         <div class="panel-title">Terras indígenas cadastradas</div>
@@ -8,25 +7,23 @@
     </div>
     <div class="panel-body">
         <ng-include src="'views/busca.html'"></ng-include>
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-init="registrosPadrao()">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
                     <tr>
                        <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='nomeTerra'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='nomeTerra'"></i>
-                            <a ng-click="trocaOrdem('nomeTerra', busca.descricao)">Terra indígena</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='nomeTerra'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomeTerra', busca.descricao, 'ok', true)">Terra indígena</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual=='cidade'"></i>
-                            <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual=='cidade'"></i>
-                            <a ng-click="trocaOrdem('cidade', busca.descricao)">Cidade</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='cidade'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'cidade', busca.descricao, 'ok', true)">Cidade</a>
                         </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarTerras()">
-                    <tr ng-repeat='t in terras.listaDeRegistros' >
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal,'', '', '')">
+                    <tr ng-repeat='t in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{t.nometerra}}</td>
                         <td>{{t.cidade}} - {{t.sigla}}</td>
                         <td>
@@ -44,9 +41,11 @@
                 </tbody>
             </table>
             
-            <div class="panel-footer">Registros encontrados: {{terras.totalDeRegistros}}</div>
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
         </div>
-        <div id="paginacao"></div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
         <a ng-href="#/TerraIndigena/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>

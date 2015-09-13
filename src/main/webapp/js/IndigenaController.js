@@ -1,21 +1,15 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
+    $scope.busca = {};
     $scope.placeHolder = "Buscar indígena";
-    $rootScope.ent = "indigena";
+    $scope.ent = $rootScope.ent = "indigena";
+    $scope.campoPrincipal = 'nome';
         
-    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, entidade, troca, paro){
-        entidade = $rootScope.ent;
-        if (campo == null || campo == "") { campo = "nome"; }
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, entidade, troca, paro);
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
+        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
         atualizaScope;
-        //if(!paro) { $scope.atualizaPaginacao(); }
     };
-    
-//    $scope.atualizaPaginacao = function(){
-//        $timeout(function(){
-//                ServicePaginacao.criaPaginacao($scope.dadosRecebidos.itens.quantidadeDePaginas, $scope.pagina, $scope.busca.descricao);
-//        },100);
-//    };
     
     function atualizaScope() {
         $scope = $rootScope;
@@ -49,8 +43,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
         $scope.isNovoIndio = true;
     }
-    
-    $scope.busca = {};
     
     $scope.carregarIndio = function () {
         if ($location.path() === "/Indigena/novo") {

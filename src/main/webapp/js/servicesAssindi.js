@@ -2,13 +2,9 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
     
     var todosDados = { 
         itens: []
-//        campoAtual : "",
-//        tipoOrdem : ""
     };
     
-    
     return {
-        
         atualizarListagens : function(qtdePorPag, pag, campo, string, entidade, troca, paro) {
             if(pag == null || pag == ""){ pag = 1; }
             if($rootScope.tipoOrdem == null || $rootScope.tipoOrdem == ""){ $rootScope.tipoOrdem = "asc"; }
@@ -46,18 +42,11 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
             return ordenacao;
         }
         
-//        criaPaginacao : function(qtde, pag, string){
-//            $('#paginacao').bootpag({
-//                total: qtde,
-//                page: pag,
-//                maxVisible:5
-//            }).on('page', function( event, pag){
-//                $rootScope.atualizarListagens($rootScope.numregistros, pag, $rootScope.campoAtual, string, $rootScope.ent,0, true);
-//            });
-//        }
     };
         
     function atualizarPaginacao(qtde, pag, string){
+        $('#paginacao').remove();
+        $('#blocoPaginacao').append("<div id='paginacao'></div>");
         $('#paginacao').bootpag({
             total: qtde,
             page: pag,
