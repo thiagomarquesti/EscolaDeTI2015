@@ -36,7 +36,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.novoConvenio = function(){
         novoConvenio();
-    }
+    };
 
     $scope.carregarConvenio = function () {
         if ($location.path() === "/Convenio/novo") {
@@ -62,7 +62,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
 
     $scope.editarConvenio = function (convenio) {
         $location.path("/Convenio/editar/" + convenio.idconvenio);
-    }
+    };
 
     $scope.deletarConvenio = function (convenio) {
         $http.delete("/convenio/" + convenio.idconvenio)
@@ -70,7 +70,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
                     toastr.success("Convênio " + convenio.descricao + " excluído com sucesso.");
                     $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina,$scope.campoPrincipal, '', '', $rootScope.ent, false);
                 }).error(deuErroDeletar);
-    }
+    };
 
     $scope.salvarConvenio = function () {
         if ($scope.isNovoConvenio) {

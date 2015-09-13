@@ -55,7 +55,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     $scope.todasCidades = function(){
         $http.get("/cidade")
             .success(function(data){
-                //console.log(data);
+                console.log(data);
                 $scope.cidades = data;
             })
             .error(deuErro);

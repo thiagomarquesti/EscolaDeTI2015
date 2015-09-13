@@ -12,7 +12,7 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
             if(string == null){ string = ""; }
             $rootScope.numregistros = qtdePorPag;
             var busca = "/"+entidade+"/listar/"+qtdePorPag+"/"+pag+"/"+campo+"/"+$rootScope.tipoOrdem+"/"+string;
-            console.log(busca);
+            //console.log(busca);
             $http.get(busca)
                 .success(function (data) {
                     todosDados.itens = data;

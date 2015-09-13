@@ -1,12 +1,12 @@
 package br.unicesumar.time05.pessoa;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -45,7 +45,7 @@ public abstract class Pessoa implements Serializable {
                 @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
             inverseJoinColumns = {
                 @JoinColumn(name = "telefone_id", referencedColumnName = "idtelefone")})
-    private Set<Telefone> telefones;
+    private List<Telefone> telefones;
 
     @CampoConsulta
     @NotNull(message = "Email não pode estar vazio!")
@@ -69,7 +69,7 @@ public abstract class Pessoa implements Serializable {
         this.email = email;
     }
 
-    public Pessoa(String nome, Set<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+    public Pessoa(String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         this.nome = nome;
         this.telefones = telefones;
         this.email = email;
@@ -77,10 +77,22 @@ public abstract class Pessoa implements Serializable {
         this.tipoPessoa = tipoPessoa;
     }
 
-    public Pessoa(String nome, Set<Telefone> telefones, Email email) {
+    public Pessoa(String nome, List<Telefone> telefones, Email email) {
         this.nome = nome;
         this.telefones = telefones;
         this.email = email;
+    }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setIdpessoa(Long idpessoa) {
+        this.idpessoa = idpessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
     public Long getIdpessoa() {
@@ -95,14 +107,14 @@ public abstract class Pessoa implements Serializable {
         this.nome = nome;
     }
 
-    public Set<Telefone> getTelefones() {
+    public List<Telefone> getTelefones() {
         return telefones;
     }
 
-    public void setTelefones(Set<Telefone> telefones) {
+    public void setTelefones(List<Telefone> telefones) {
         this.telefones = telefones;
     }
-
+    
     public void setTelefone(Telefone telefone) {
         this.telefones.add(telefone);
     }
@@ -127,9 +139,6 @@ public abstract class Pessoa implements Serializable {
         return tipoPessoa;
     }
 
-    public void setTipo(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
 
     @Override
     public int hashCode() {

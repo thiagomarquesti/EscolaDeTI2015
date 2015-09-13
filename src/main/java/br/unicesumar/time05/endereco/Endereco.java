@@ -1,11 +1,9 @@
 package br.unicesumar.time05.endereco;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import br.unicesumar.time05.cidade.Cidade;
-import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco implements Serializable {
