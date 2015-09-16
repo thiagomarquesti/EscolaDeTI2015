@@ -15,7 +15,7 @@ public class Convenio implements Serializable {
 
     @CampoConsulta
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long idconvenio;
     
     @CampoConsulta(campoOrdenacaoPadrao = true)

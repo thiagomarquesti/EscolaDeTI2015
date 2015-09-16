@@ -61,6 +61,11 @@
                         <option ng-repeat="f in funcoes" value="{{f.idfuncao}}">{{f.descricao}}</option>
                     </select>
                 </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: -45%;" onclick="jQuery('#funcaoModal').modal('show', {backdrop: 'static'});">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
 
             <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -88,7 +93,7 @@
                 <label for="uf" class="col-md-1 control-label">Estado: </label>
                 <div class="col-md-2" ng-init="listarEstados()">
                     <select ng-model="usuario.codigoestado" ng-change="listarCidades();
-                                    usuario.codigoibge = ''" id="uf" name="uf" required="" class="form-control requerido">
+                                        usuario.codigoibge = ''" id="uf" name="uf" required="" class="form-control requerido">
                         <option value="">Selecione um estado</option>
                         <!-- FAZER BUSCA POR ESTADOS -->
                         <option ng-repeat="e in estados" value="{{e.codigoestado}}">{{e.descricao}}</option>
@@ -257,12 +262,85 @@
                                  options="perfil.nome for perfil in perfis" 
                                  scroll-after-rows="8">
                     </multiselect>
+                <div class="col-md-4">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: +19%; margin-top: 2%;" onclick="jQuery('#perfilModal').modal('show', {backdrop: 'static'});">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<div class="modal fade" id="funcaoModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Função</h4>
+            </div>
+            <div class="modal-body" ng-controller="FuncaoController">
+                <form name="formFunc" novalidate class="form-horizontal">
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-1 control-label">Nome:</label>
+                        <div class="col-md-11"><input type="text" ng-model="funcao.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+                    </div>
 
+                    <div ng-show="formFunc.descricao.$dirty && formFunc.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
+                        <span ng-show="formFunc.descricao.$error.required">Preencha o nome da função. </span>
+                        <span ng-show="formFunc.descricao.$error.minlength">Função deve ter mais de 3 caracteres. </span>
+                        <span ng-show="formFunc.descricao.$error.maxlength">Função não pode ter mais de 30 caracteres. </span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" data-dismiss="modal" class="btn btn-success col-md-2">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="perfilModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Perfil</h4>
+            </div>
+            <div class="modal-body" ng-controller="PerfilController">
+                <form name="formPerfil" novalidate class="form-horizontal">
+                    <div class="form-group">    
+                        <label for="nome" class="col-md-2 control-label">Nome Perfil:</label>
+                        <div class="col-md-10"><input type="text" ng-model="perfil.nome" id="nome" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+                    </div>
+                    <div ng-show="formPerfil.nome.$dirty && formPerfil.nome.$invalid" class="alert alert-danger" role="alert" class="col-md-12">
+                        <span ng-show="formPerfil.nome.$error.required">Preencha com o nome do Perfil.</span>
+                        <span ng-show="formPerfil.nome.$error.minlength">Nome deve ter mais de 3 caracteres.</span>
+                        <span ng-show="formPerfil.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres.</span>
+                    </div>
+
+                    <div class="form-group" ng-init="itensAcesso()">
+                        <label for="nome" class="col-md-2 control-label">Adicionar Itens:</label>
+                        <multiselect class="input-lg" 
+                                     ng-model="perfil.itensselecionados" 
+                                     multiple="true" 
+                                     ms-selected ="{{itens.selected.length}}" 
+                                     ms-header="Selecione os Itens"
+                                     options="item.nome for item in itens" 
+                                     scroll-after-rows="8">
+                        </multiselect>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button ng-click="salvar('modal')" ng-disabled="!formPerfil.$valid" data-dismiss="modal" class="btn btn-success"> Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>

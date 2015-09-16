@@ -24,12 +24,17 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             }
         };
 
-        $scope.salvar = function () {
+        $scope.salvar = function (flag) {
+            if (flag == "modal")
+                $scope.isNovo = true;
             if ($scope.isNovo) {
                 $http.post("/perfildeacesso/salvar", createJsonPerfil($scope.isNovo))
                         .success(function () {
                             toastr.success("Perfil cadastrado com sucesso!");
-                            $location.path("/Perfil/listar");
+                            if (flag == "cad")
+                                $location.path("/Perfil/listar");
+                            else
+                                novoPerfil();
                         })
                         .error(deuErro);
             }
@@ -43,49 +48,59 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             }
         };
 
-    $scope.atualizarPerfis = function (pag,campo,order,string, paro) {
-        if(pag == null || pag == ""){ pag = 1; }
-        if(campo == null || campo == ""){ campo = "nome"; }
-        if(order != "asc" && order != "desc"){ order = "asc"; }
-        if(string == null){ string = ""; }
+        $scope.atualizarPerfis = function (pag, campo, order, string, paro) {
+            if (pag == null || pag == "") {
+                pag = 1;
+            }
+            if (campo == null || campo == "") {
+                campo = "nome";
+            }
+            if (order != "asc" && order != "desc") {
+                order = "asc";
+            }
+            if (string == null) {
+                string = "";
+            }
 
-        $http.get("/perfildeacesso/listar/"+pag+"/"+campo+"/"+order+"/"+string)
-            .success(function (data) {
-                $scope.perfis = data;
-                console.log(data);
-                console.log("/perfildeacesso/listar/"+pag+"/"+campo+"/"+order+"/"+string);
+            $http.get("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string)
+                    .success(function (data) {
+                        $scope.perfis = data;
+                        console.log(data);
+                        console.log("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string);
 
-                if (!paro) { atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false); }
-                
-            })
-            .error(deuErro);
-    };
-    
-    $scope.trocaOrdem = function(string){
-        if($scope.tipoOrdem == true){
-            $scope.tipoOrdem = false;
-            var ordem = "asc";
+                        if (!paro) {
+                            atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
+                        }
+
+                    })
+                    .error(deuErro);
+        };
+
+        $scope.trocaOrdem = function (string) {
+            if ($scope.tipoOrdem == true) {
+                $scope.tipoOrdem = false;
+                var ordem = "asc";
+            }
+            else {
+                $scope.tipoOrdem = true;
+                var ordem = "desc";
+            }
+            $scope.atualizarPerfis("", "", ordem, string, true);
+        };
+
+        function atualizaPaginacao(qtde, pag, campo, order, string, paro) {
+            $('#paginacao').bootpag({
+                total: qtde,
+                page: pag,
+                maxVisible: 5
+            }).on('page', function (event, num) {
+                paro = true;
+                $scope.atualizarPerfis(num, campo, order, string, paro);
+
+            });
         }
-        else {
-            $scope.tipoOrdem = true;
-            var ordem = "desc";
-        }
-        $scope.atualizarPerfis("","", ordem ,string, true);
-    };
-    
-    function atualizaPaginacao(qtde, pag, campo, order, string, paro){
-        $('#paginacao').bootpag({
-            total: qtde,
-            page: pag,
-            maxVisible:5
-        }).on('page', function(event, num){
-            paro = true;
-            $scope.atualizarPerfis(num, campo, order, string, paro);
-            
-        });
-    }
-        
-        
+
+
         $scope.itensAcesso = function () {
             $http.get("/itemacesso")
                     .success(function (data) {

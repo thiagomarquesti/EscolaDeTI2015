@@ -44,6 +44,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
         $scope.atualizarConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
+                        console.log(data);
                         $scope.convenios = data;
                     })
                     .error(deuErro);
@@ -61,11 +62,16 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
                     }).error(deuErroDeletar);
         }
 
-        $scope.salvarConvenio = function () {
+        $scope.salvarConvenio = function (flag) {
+            if (flag == "modal")
+                $scope.isNovoConvenio = true;
             if ($scope.isNovoConvenio) {
                 $http.post("/convenio", $scope.convenio)
                         .success(function () {
-                            $location.path("/Convenio/listar");
+                            if (flag == "cad")
+                                $location.path("/Convenio/listar");
+                            else
+                                novoConvenio();
                             toastr.success("Convênio inserido com sucesso!");
                         })
                         .error(deuErroSalvar);
