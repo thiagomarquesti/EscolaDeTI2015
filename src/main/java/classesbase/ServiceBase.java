@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,26 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     protected QueryPersonalizada query;
 
     private ConstrutorDeSQL ConstrutorDeSQL;
+
+    private String sqlPadrao;
+    private String sqlPadraoPorID;
+    private String nomeParametroPadrao;
+    private String campoOrdenacaoPadrao;
+
+    protected void setSqlPadrao(String sqlPadrao, String campoOrdenacaoPadrao) {
+        this.sqlPadrao = sqlPadrao;
+        this.campoOrdenacaoPadrao = campoOrdenacaoPadrao;
+    }
+
+    protected void setSqlPadraoPorID(String sqlPadraoPorID, String campoOrdenacaoPadrao, String nomeParametroPadrao) {
+        this.sqlPadraoPorID = sqlPadraoPorID;
+        this.campoOrdenacaoPadrao = campoOrdenacaoPadrao;
+        this.nomeParametroPadrao = nomeParametroPadrao;
+    }
+
+    protected void setNomeParametroPadrao(String nomeParametroPadrao) {
+        this.nomeParametroPadrao = nomeParametroPadrao;
+    }
 
     protected void setConstrutorDeSQL(ConstrutorDeSQL aConstrutorDeSQL) {
         this.ConstrutorDeSQL = aConstrutorDeSQL;
@@ -41,11 +62,19 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     }
 
     public List<Map<String, Object>> findByID(ID aID) {
-        return query.executePorID(ConstrutorDeSQL.getSQLComWherePorID(), aID);
+        if (this.temSqlPadraoPorIdSetado()) {
+            return query.execute(sqlPadraoPorID, new MapSqlParameterSource(nomeParametroPadrao, aID));
+        } else {
+            return query.executePorID(ConstrutorDeSQL.getSQLComWherePorID(), aID);
+        }
     }
 
     public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
-        return query.executeComPaginacao(ConstrutorDeSQL, aParametrosConsulta);
+        if (this.temSqlPadraoSetado()) {
+            return query.executeComPaginacao(sqlPadrao, campoOrdenacaoPadrao, aParametrosConsulta);
+        } else {
+            return query.executeComPaginacao(ConstrutorDeSQL, aParametrosConsulta);
+        }
     }
 
     public Object getObjeto(ID aId) {
@@ -53,10 +82,29 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     }
 
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(ConstrutorDeSQL, new ParametrosConsulta());
+        if (this.temSqlPadraoSetado()) {
+            return query.executeComPaginacao(sqlPadrao, campoOrdenacaoPadrao, new ParametrosConsulta());
+        } else {
+            return query.executeComPaginacao(ConstrutorDeSQL, new ParametrosConsulta());
+        }
     }
 
     public List<Map<String, Object>> listarSemPaginacao() {
-        return query.execute(ConstrutorDeSQL.getSQL(new ParametrosConsulta()));
+        if (this.temSqlPadraoSetado()) {
+            return query.execute(sqlPadrao);
+        } else {
+            return query.execute(ConstrutorDeSQL.getSQL(new ParametrosConsulta()));
+        }
+    }
+
+    private boolean temSqlPadraoSetado() {
+        return this.sqlPadrao != null && !sqlPadrao.isEmpty()
+                && this.campoOrdenacaoPadrao != null && !this.campoOrdenacaoPadrao.isEmpty();
+    }
+
+    private boolean temSqlPadraoPorIdSetado() {
+        return this.sqlPadraoPorID != null && !this.sqlPadraoPorID.isEmpty()
+                && this.nomeParametroPadrao != null && !this.nomeParametroPadrao.isEmpty()
+                && this.campoOrdenacaoPadrao != null && !this.campoOrdenacaoPadrao.isEmpty();
     }
 }
