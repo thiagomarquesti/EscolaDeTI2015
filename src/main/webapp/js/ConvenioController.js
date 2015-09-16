@@ -70,8 +70,10 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
                         .success(function () {
                             if (flag == "cad")
                                 $location.path("/Convenio/listar");
-                            else
+                            else{
                                 novoConvenio();
+                                $scope.getConvenios();
+                            }
                             toastr.success("Convênio inserido com sucesso!");
                         })
                         .error(deuErroSalvar);

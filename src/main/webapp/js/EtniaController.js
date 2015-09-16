@@ -1,5 +1,8 @@
 module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
 
+
+        $scope.etnias = [];
+
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");
         }
@@ -115,8 +118,10 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
                             console.log(flag);
                             if (flag == "cad")
                                 $location.path("/Etnia/listar");
-                            else
+                            else {
                                 novaEtnia();
+                                $scope.getEtnias();
+                            }
                             toastr.success("Etnia inserida com sucesso!");
                         })
                         .error(deuErro);

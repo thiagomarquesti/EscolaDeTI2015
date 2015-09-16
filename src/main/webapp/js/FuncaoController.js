@@ -81,8 +81,10 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
                                         .success(function () {
                                             if (flag == "cad")
                                                 $location.path("/Funcao/listar");
-                                            else
+                                            else{
                                                 novaFuncao();
+                                                $scope.getFuncoes();
+                                            }
                                             toastr.success("Funcao inserida com sucesso!");
                                         })
                                         .error(deuErro);

@@ -43,10 +43,9 @@
 
             <div class="form-group">
                 <label for="etnia" class="col-md-2 control-label">Etnia: </label>
-                <div class="col-md-3" ng-controller="EtniaController" onchange="location.reload();" ng-init="todasEtnias();">
-                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido">
-                        <option value="">Selecione a etnia</option>
-                        <option value="i" ng-repeat="i in etnias">{{i.descricao}}</option>
+                <div class="col-md-3" ng-init="getEtnias();">
+                    <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido"
+                            ng-options="etnia.idetnia as etnia.descricao for etnia in etnias">
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -55,7 +54,7 @@
                     </button>
                 </div>
                 <label for="terraIndigena" class="col-md-2 control-label">Terra indígena: </label>
-                <div class="col-md-3" ng-controller="TerraController" ng-init="todasTerras();">
+                <div class="col-md-3" ng-init="getTerras();">
                     <select ng-model="indio.terraIndigena" ng-options="terra.idterraindigena as terra.nometerra for terra in terras" id="terraIndigena" name="terraIndigena" required="" class="form-control requerido">
                         <option value="">Selecione a terra indígena</option>
 
@@ -119,7 +118,7 @@
                 <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
 
-            <div class="form-group" ng-controller="ConvenioController" ng-init="atualizarConvenios()">
+            <div class="form-group" ng-init="getConvenios()">
                 <label for="nome" class="col-md-2 control-label">Convênios:</label>
                 <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
                              ng-model="indio.conveniosselecionados" 

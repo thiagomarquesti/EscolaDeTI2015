@@ -94,8 +94,10 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                             .success(function () {
                                 if (flag == "cad")
                                     $location.path("/TerraIndigena/listar");
-                                else
+                                else{
                                     novaTerra();
+                                    $scope.getTerras();
+                                }
                                 toastr.success("Terra indígena inserida com sucesso!");
                             })
                             .error(deuErro);

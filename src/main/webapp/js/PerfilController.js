@@ -33,8 +33,10 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                             toastr.success("Perfil cadastrado com sucesso!");
                             if (flag == "cad")
                                 $location.path("/Perfil/listar");
-                            else
+                            else{
                                 novoPerfil();
+                                $scope.carregaPerfis();
+                            }
                         })
                         .error(deuErro);
             }
