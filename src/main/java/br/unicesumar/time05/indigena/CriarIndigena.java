@@ -7,6 +7,7 @@ import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class CriarIndigena implements Serializable {
     private EstadoCivil estadoCivil;
     private Long codigoSUS;
     private String imgSrc;
-    private List<Ocorrencia> ocorrencias;
+    private List<Ocorrencia> ocorrencias = new ArrayList<Ocorrencia>();
 
     public CriarIndigena() {
     }
@@ -151,12 +152,12 @@ public class CriarIndigena implements Serializable {
         this.imgSrc = imgSrc;
     }
 
-    public List<Ocorrencia> getOcorrencia() {
+    public List<Ocorrencia> getOcorrencias() {
         return ocorrencias;
     }
 
-    public void setOcorrencia(List<Ocorrencia> ocorrencia) {
-        this.ocorrencias = ocorrencia;
-    }    
+    public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+        this.ocorrencias.addAll(ocorrencias);// = ocorrencias;
+    }
 
 }

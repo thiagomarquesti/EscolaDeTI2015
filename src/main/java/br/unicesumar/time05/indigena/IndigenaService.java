@@ -42,8 +42,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
             + "LEFT JOIN telefone t "
             + "ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
-            + "ON i.terraindigena_idterraindigena = ti.idterraindigena";
-
+            + "ON i.terraindigena_idterraindigena = ti.idterraindigena ";
+    
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
             + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
@@ -59,7 +59,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public void salvar(CriarIndigena aIndigena) {
-        Indigena i = new Indigena(null, aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), aIndigena.getOcorrencia());
+        Indigena i = new Indigena(null, aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), aIndigena.getOcorrencias());
         i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         repository.save(i);
@@ -71,12 +71,13 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public void alterar(CriarIndigena aIndigena) {
-        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), aIndigena.getOcorrencia());
+        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), aIndigena.getOcorrencias());
         i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {
             uploadService.uploadWebcam(aIndigena.getImgSrc(), aIndigena.getCodigoAssindi(), "indios");
         }
+
         repository.save(i);
     }
 
@@ -92,12 +93,12 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", parametrosConsulta);
+        return query.executeComPaginacao(SQLConsultaIndigena, "i.nome", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(SQLConsultaIndigena,"i.nome", new ParametrosConsulta());
+        return query.executeComPaginacao(SQLConsultaIndigena, "i.nome", new ParametrosConsulta());
     }
 
     @Override

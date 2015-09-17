@@ -10,6 +10,7 @@ import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -86,7 +87,7 @@ public class Indigena implements Serializable {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoAssindi")},
             inverseJoinColumns = {
                 @JoinColumn(name = "idocorrencia", referencedColumnName = "idocorrencia")})
-    private List<Ocorrencia> ocorrencias;
+    private List<Ocorrencia> ocorrencias = new ArrayList();
 
     public Indigena() {
     }
@@ -120,7 +121,7 @@ public class Indigena implements Serializable {
     }
 
     public void setOcorrencia(List<Ocorrencia> ocorrencia) {
-        this.ocorrencias = ocorrencia;
+        this.ocorrencias.addAll(ocorrencia); // = ocorrencia;
     }
 
     public String getNome() {
