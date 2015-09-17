@@ -3,13 +3,14 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
     $scope.busca = {};
     $scope.placeHolder = "Buscar família";
     $scope.ent = $rootScope.ent = "familia";
-    $scope.campoPrincipal = 'nome';
+    $scope.campoPrincipal = 'nomefamilia';
     $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
         $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
         atualizaScope;
+        //console.log($scope.dadosRecebidos);
     };
     
     function atualizaScope() {
@@ -47,10 +48,8 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                 $http.get("/familia/obj/" + $routeParams.id)
                     .success(function(data) {
                         var dados = data;
-                        dados.nomefamilia = data.nome;
-                        dados.representante = data.representante.codigoassindi;
+                        console.log(data);
                         dados.telefone = data.telefone.telefone;
-                        dados.membros = data.membros;
                         
                         $scope.familia = dados;
                         $scope.isNovaFamilia = false;
@@ -87,6 +86,10 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                 })
                 .error(deuErro);
         }
+    };
+    
+    $scope.editarFamilia = function (familia) {
+        $location.path("/Familia/editar/" + familia.idfamilia);
     };
     
     function deuErro() {
