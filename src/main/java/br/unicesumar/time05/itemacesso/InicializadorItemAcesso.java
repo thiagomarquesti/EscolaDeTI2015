@@ -129,6 +129,28 @@ public class InicializadorItemAcesso {
             menuIndigenaNovo = new ItemAcesso("Cadastrar Indígena", "#/Indigena/novo", "fa-plus", menuIndigena);
             itensAcesso.add(menuIndigenaNovo);
         }
+        
+        //FAMILIA
+        ItemAcesso menuFamilia;
+        menuFamilia = this.getItemAcesso(itensAcesso, "Gerenciar Família", "");
+        if (menuFamilia == null) {
+            menuFamilia = new ItemAcesso("Gerenciar Família", "", "fa-sitemap", menu);
+            itensAcesso.add(menuFamilia);
+        }
+
+        ItemAcesso menuFamiliaListar;
+        menuFamiliaListar = this.getItemAcesso(itensAcesso, "Listar Família", "#/Familia/listar");
+        if (menuFamiliaListar == null) {
+            menuFamiliaListar = new ItemAcesso("Listar Família", "#/Familia/listar", "fa-list-alt", menuFamilia);
+            itensAcesso.add(menuFamiliaListar);
+        }
+
+        ItemAcesso menuFamiliaNova;
+        menuFamiliaNova = this.getItemAcesso(itensAcesso, "Nova Família", "#/Familia/nova");
+        if (menuFamiliaNova == null) {
+            menuFamiliaNova = new ItemAcesso("Cadastrar Família", "#/Familia/nova", "fa-plus", menuFamilia);
+            itensAcesso.add(menuFamiliaNova);
+        }
 
         //CONVENIO
         ItemAcesso menuConvenio;

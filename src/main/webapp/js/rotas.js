@@ -74,6 +74,17 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/terraCadastrar.html',
         controller: 'TerraController'
     })
+    //------- Rotas da Familia --------   
+    .when('/Familia/nova', {
+        templateUrl: 'views/familiaCadastrar.html',
+        controller: 'FamiliaController'
+    }).when('/Familia/listar', {
+        templateUrl: 'views/familiaListar.html',
+        controller: 'FamiliaController'
+    }).when('/Familia/editar/:id', {
+        templateUrl: 'views/familiaCadastrar.html',
+        controller: 'FamiliaController'
+    })
     //------- Rotas do Indigena --------   
     .when('/Indigena/novo', {
         templateUrl: 'views/indigenaCadastrar.html',
