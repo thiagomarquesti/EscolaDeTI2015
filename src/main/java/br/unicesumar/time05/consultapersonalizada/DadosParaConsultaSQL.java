@@ -29,7 +29,7 @@ public class DadosParaConsultaSQL {
     }
 
     public void setCampoOrdenacaoPadrao(String aCampoOrdenacaoPadrao) {
-        this.campoOrdenacaoPadrao = campoOrdenacaoPadrao;
+        this.campoOrdenacaoPadrao = aCampoOrdenacaoPadrao;
     }
 
     public void addCampo(CampoParaScriptSQL aCampo) {

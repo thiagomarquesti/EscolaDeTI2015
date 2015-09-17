@@ -301,7 +301,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     $scope.listarEstados = function () {
-        $http.get("/uf").success(function (data) {
+        $http.get("/uf/listar").success(function (data) {
             $scope.estados = data;
 //                console.log(data);
 //                console.log($scope.estados.codigoestado);
