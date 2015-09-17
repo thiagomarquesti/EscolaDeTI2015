@@ -28,6 +28,15 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
     
+    $scope.todosIndigenas = function(){
+        $http.get("/indigena")
+            .success(function(data){
+                console.log(data);
+                $scope.indigenas = data;
+            })
+            .error(deuErro);
+    };
+    
     function novoIndio() {
         $scope.indio = {
             nome: "",
