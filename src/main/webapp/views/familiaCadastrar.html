@@ -10,7 +10,7 @@
         <form name="formFamilia" novalidate="" class="form-horizontal">
             <div class="form-group">    
                 <label for="nomefamilia" class="col-md-2 control-label">Nome:</label>
-                <div class="col-md-10"><input type="text" ng-model="familia.nomefamilia" id="nomefamilia" name="nomefamilia" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
+                <div class="col-md-10"><input type="text" ng-model="familia.nomefamilia" id="nomefamilia" name="nomefamilia" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=30></div>
             </div>
             <div ng-show="formFamilia.nomefamilia.$dirty && formFamilia.nomefamilia.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
                 <span ng-show="formFamilia.nomefamilia.$error.required">Preencha o nome da família. </span>
@@ -31,7 +31,7 @@
             
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="familia.telefone" id="telefone" min="10" name="telefone" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="familia.telefone" id="telefone" min="10" name="telefone" required="" class="form-control sp_celphones requerido" placeholder="(99) 9999-9999"></div>
             </div>
             
             <div ng-show="formInd.telefone.$dirty && formInd.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
