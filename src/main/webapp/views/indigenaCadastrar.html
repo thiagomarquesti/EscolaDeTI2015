@@ -227,7 +227,7 @@
 
                     <div class="form-group">    
                         <label for="nome" class="col-md-1 col-sm-2 control-label">Nome:</label>
-                        <div class="col-md-5 col-sm-10"><input type="text" ng-model="terra.nometerra" id="nomeTerra" name="nomeTerra" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
+                        <div class="col-sm-11"><input type="text" ng-model="terra.nometerra" id="nomeTerra" name="nomeTerra" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
                     </div>
 
                     <div ng-show="formTerra.nomeTerra.$dirty && formTerra.nomeTerra.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
@@ -239,7 +239,7 @@
                     <div class="form-group" ng-init="todasCidades()">    
                         <label for="nome" class="col-md-1 col-sm-2 control-label">Cidade:</label>
 
-                        <multiselect id="cidade" name="cidade" class="input-prepend" 
+                        <multiselect id="cidade" name="cidade" class="input-lg" 
                                      ng-model="terra.cidade" 
                                      ms-header="Selecione a cidade"
                                      options='c.codigoibge as (c.descricao + " - " + c.sigla) for c in cidades' 

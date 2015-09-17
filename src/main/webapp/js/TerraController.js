@@ -10,6 +10,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                 cidade: ""
             };
             $scope.isNovaTerra = true;
+            $scope.tamanhoSelect = 10;
         }
 
         $scope.novaTerra = function () {
