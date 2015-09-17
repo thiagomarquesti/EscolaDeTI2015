@@ -218,6 +218,27 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuFuncaoNovo);
         }
 
+        ItemAcesso menuEstadia;
+        menuEstadia = this.getItemAcesso(itensAcesso, "Gerenciar Estadia", "");
+        if (menuEstadia == null) {
+            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-sitemap", menu);
+            itensAcesso.add(menuEstadia);
+        }
+
+        ItemAcesso menuEstadiaListar;
+        menuEstadiaListar = this.getItemAcesso(itensAcesso, "Listar Estadia", "#/Estadia/listar");
+        if (menuEstadiaListar == null) {
+            menuEstadiaListar = new ItemAcesso("Listar Estadia", "#/Estadia/listar", "fa-list-alt", menuEstadia);
+            itensAcesso.add(menuEstadiaListar);
+        }
+
+        ItemAcesso menuEstadiaNovo;
+        menuEstadiaNovo = this.getItemAcesso(itensAcesso, "Novo Função", "#/Estadia/novo");
+        if (menuEstadiaNovo == null) {
+            menuEstadiaNovo = new ItemAcesso("Cadastrar Estadia", "#/Estadia/nova", "fa-plus", menuEstadia);
+            itensAcesso.add(menuEstadiaNovo);
+        }
+
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
