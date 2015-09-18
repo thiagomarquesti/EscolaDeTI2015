@@ -92,12 +92,25 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
         $location.path("/Familia/editar/" + familia.idfamilia);
     };
     
+    $scope.deletarFamilia = function (familia) {
+        $http.delete("/Familia/" + familia.idfamilia)
+            .success(function () {
+                toastr.success("Família "+ familia.nomefamilia +" deletada com sucesso.");
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
+            })
+            .error(erroExcluiFamilia);
+    };
+    
     function deuErro() {
         toastr.error("Algo deu errado. Tente novamente.");
     }
     
     function erroCadastraFamilia() {
         toastr.error("Não foi possível cadastrar a família, verifique os dados fornecidos. ","Erro");
+    }
+    
+    function erroExcluiFamilia() {
+        toastr.error("Não foi possível excluir a família, verifique se a mesma não foi inserida em alguma estadia.","Erro");
     }
     
 }]);
