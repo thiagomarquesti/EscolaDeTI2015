@@ -233,7 +233,7 @@ public class InicializadorItemAcesso {
         }
 
         ItemAcesso menuEstadiaNovo;
-        menuEstadiaNovo = this.getItemAcesso(itensAcesso, "Novo Função", "#/Estadia/novo");
+        menuEstadiaNovo = this.getItemAcesso(itensAcesso, "Nova Estadia", "#/Estadia/novo");
         if (menuEstadiaNovo == null) {
             menuEstadiaNovo = new ItemAcesso("Cadastrar Estadia", "#/Estadia/nova", "fa-plus", menuEstadia);
             itensAcesso.add(menuEstadiaNovo);

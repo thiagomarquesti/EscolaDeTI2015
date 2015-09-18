@@ -1,0 +1,72 @@
+<div class="panel panel-info">    
+    <div class="panel-heading"> 
+        <div class="panel-title" ng-show="isNovaEstadia">Cadastrar Estadia</div>
+        <div class="panel-title" ng-show="!isNovaEstadia">Alterar Estadia</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formEstadia" novalidate class="form-horizontal form-groups-bordered">
+            <div class="form-group">
+                <label for="dataentrada" class="col-md-2 control-label"> Data de Entrada:</label>
+                <div class="col-md-2"><input type="date" ng-model="estadia.dataentrada" id="dataentrada" name="dataentrada" required="" class="form-control requerido"></div>
+            </div>
+
+            <div ng-show="formEstadia.dataentrada.$dirty && formEstadia.dataentrada.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formEstadia.dataentrada.$error.required">Preencha data de entrada. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="familia" class="col-md-2 control-label">Familia: </label>
+                <div class="col-md-3" ng-controller="FamiliaController">
+                    <select ng-model="estadia.familia" id="familia" name="familia" required="" class="form-control requerido">
+                        <option value="">Selecione uma familia</option>
+                        <!-- FAZER BUSCA POR FAMILIA -->
+                        <option ng-repeat="f in familia" value="{{f.idfamilia}}">{{f.nomefamilia}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-show="formEstadia.familia.$dirty && formEstadia.familia.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formEstadia.familia.$error.required">Selecione uma familia. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Tel. do Representante: </label>
+                <div class="col-md-2"><input type="text" ng-model="estadia.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
+            </div>
+
+            <div ng-show="formEstadia.contato.$dirty && formEstadia.contato.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formEstadia.contato.$error.required">Preencha o telefone do representante. </span>
+            </div>
+
+            <div class="form-group">    
+                <label for="quantidademembro" class="col-md-2 control-label">Qtde de Acompanhantes:</label>
+                <div class="col-md-2"><input type="text" ng-model="estadia.quantidademembro" id="quantidademembro" name="quantidademembro" required="" class="form-control requerido"></div>
+            </div>
+
+            <div ng-show="formEstadia.quantidademembro.$dirty && formEstadia.quantidademembro.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formEstadia.quantidademembro.$error.required">Preencha a quantidade de acompanhantes. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">Selecionar os Acompanhantes: </label>
+                <div class="col-md-3">
+                    <select ng-model="" id="familia" name="" required="" class="form-control requerido">
+                        <option value="">Selecione os acompanhantes</option>
+                        <!-- FAZER BUSCA POR ACOMPANHANTES -->
+                        <option ng-repeat="" value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-show="" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="">Selecione um acompanhantes. </span>
+            </div>
+
+
+        </form> 
+    </div>
+
+</div>

@@ -3,6 +3,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         $scope.placeHolder = "Buscar estadia";
         $scope.ent = $rootScope.ent = "estadia";
         $scope.campoPrincipal = 'familia';
+        $scope.isNovaEstadia = true;
 
         $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
             if (campo == null || campo == "") {

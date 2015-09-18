@@ -89,7 +89,10 @@ module.config(function($routeProvider, $locationProvider) {
     .when('/Estadia/listar', {
         templateUrl: 'views/estadiaListar.html',
         controller: 'EstadiaController'
-    }).otherwise ({ redirectTo: '/' });
+    }).when('/Estadia/nova', {
+        templateUrl: 'views/estadiaCadastrar.html',
+        controller: 'EstadiaController'
+    }).otherwise ({ redirectTo: '/' });    
 
     $locationProvider.html5Mode(false);
 });
