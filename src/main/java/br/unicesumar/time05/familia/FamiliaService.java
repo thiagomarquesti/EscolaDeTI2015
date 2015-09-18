@@ -1,7 +1,10 @@
 package br.unicesumar.time05.familia;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.rowmapper.MapRowMapper;
 import classesbase.ServiceBase;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -31,8 +34,8 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
         setSqlPadraoPorID(sqlPadrao + " WHERE f.idfamilia = :idfamilia", "nomefamilia", "idfamilia");
     }
     
-    public Integer getQuantidadeIntegrantesFamilia(Long aIdfamilia){
-        String sql = " SELECT count(f.idfamilia) "
+    public Map<String, Object> getQuantidadeIntegrantesFamilia(Long aIdfamilia){
+        String sql = " SELECT count(f.idfamilia) as quantidade "
                    + "   FROM familia f "
                    + "  INNER JOIN familia_indigena fi "
                    + "     ON fi.idfamilia = f.idfamilia "
@@ -42,11 +45,10 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
         
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aIdfamilia", aIdfamilia);
-        Integer quantidade = jdbcTemplate.queryForObject(sql, params, Integer.class);
-        
-                
+        List<Map<String, Object>> familia = jdbcTemplate.query(sql, params, new MapRowMapper());
+     
         try {
-            return quantidade;
+            return familia.get(0);
         } catch (Exception e) {
             throw new RuntimeException("Nenhum resultado encontrado!");
         }

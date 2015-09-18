@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FamiliaController extends ControllerBase<Familia, Long, FamiliaService>{
     
     @RequestMapping(value = "/quantidadeintegrantes/{aFamiliaId}", method = RequestMethod.GET)
-    public Integer getQuantidadeIntegrantes(@PathVariable Long aFamiliaId) {
+    public Map<String, Object> getQuantidadeIntegrantes(@PathVariable Long aFamiliaId) {
         return service.getQuantidadeIntegrantesFamilia(aFamiliaId);
     }
 }
