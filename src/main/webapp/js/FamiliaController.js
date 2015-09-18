@@ -50,6 +50,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                         var dados = data;
                         console.log(data);
                         dados.telefone = data.telefone.telefone;
+                        dados.representante.nometerra = data.representante.terraIndigena.nometerra;
                         
                         $scope.familia = dados;
                         $scope.isNovaFamilia = false;
@@ -81,7 +82,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
             familiaCompleta.idfamilia = $routeParams.id;
             $http.put("/familia", familiaCompleta)
                 .success(function () {
-                    toastr.success("Família atualizada com sucesso!");
+                    toastr.success("Família "+ familiaCompleta.nomefamilia +" atualizada com sucesso!");
                     $location.path("/Familia/listar");
                 })
                 .error(deuErro);
@@ -93,7 +94,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
     };
     
     $scope.deletarFamilia = function (familia) {
-        $http.delete("/Familia/" + familia.idfamilia)
+        $http.delete("/familia/" + familia.idfamilia)
             .success(function () {
                 toastr.success("Família "+ familia.nomefamilia +" deletada com sucesso.");
                 $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);

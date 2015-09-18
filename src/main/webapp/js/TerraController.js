@@ -56,7 +56,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     $scope.todasCidades = function(){
         $http.get("/cidade")
             .success(function(data){
-                console.log(data);
+                //console.log(data);
                 $scope.cidades = data;
             })
             .error(deuErro);
@@ -72,11 +72,11 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                         $scope.terra = data;
                         $scope.terra.cidade = {
                             codigoibge: data.cidade.codigoIBGE,
-                            nomecidade: data.cidade.descricao,
+                            descricao: data.cidade.descricao,
                             codigoestado: data.cidade.estado.codigoestado,
-                            descricao: data.cidade.estado.descricao,
-                            sigla: data.cidade.estado.sigla,
-                        }   
+                            estados: data.cidade.estado.descricao,
+                            sigla: data.cidade.estado.sigla
+                        };
                         $scope.isNovaTerra = false;
                     })
                     .error(deuErro);
@@ -105,12 +105,12 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                 nometerra: $scope.terra.nometerra,
                 cidade: {
                     codigoIBGE: $scope.terra.cidade.codigoibge,
-                    descricao: $scope.terra.cidade.nomecidade,
-                    estado: {
-                        codigoestado: $scope.terra.cidade.codigoestado,
-                        descricao: $scope.terra.cidade.descricao,
-                        sigla: $scope.terra.cidade.sigla
-                    }
+//                    descricao: $scope.terra.cidade.nomecidade,
+//                    estado: {
+//                        codigoestado: $scope.terra.cidade.codigoestado,
+//                        descricao: $scope.terra.cidade.descricao,
+//                        sigla: $scope.terra.cidade.sigla
+//                    }
                 }
             };
             if ($scope.isNovaTerra) {

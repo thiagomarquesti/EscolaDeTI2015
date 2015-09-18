@@ -35,9 +35,9 @@
                 <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal,'', '', '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{f.nomefamilia}}</td>
-                        <td>{{f.nome}}</td>
+                        <td>{{f.nome}} <br> </td>
                         <td>{{f.telefone}}</td>
-                        <td class="hidden-sm hidden-xs">{{f.nummembros}} membros</td>
+                        <td class="hidden-sm hidden-xs">{{f.quantidade}} membros</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
