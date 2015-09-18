@@ -21,7 +21,14 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
             + "       f.telefone, "
             + "       f.nomefamilia, "
             + "       f.idrepresentante, "
-            + "       ir.nome "
+            + "       ir.nome, "
+            + " (SELECT count(ff.idfamilia) as quantidade "
+                   + "   FROM familia ff "
+                   + "  INNER JOIN familia_indigena fi "
+                   + "     ON fi.idfamilia = ff.idfamilia "
+                   + "  INNER JOIN indigena i "
+                   + "     ON i.codigoassindi = fi.codigoassindi "
+                   + "  WHERE ff.idfamilia = f.idfamilia) "
             + "  FROM familia f "
             + "  LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi";
 
