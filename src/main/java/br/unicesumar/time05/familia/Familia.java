@@ -27,7 +27,7 @@ public class Familia implements Serializable {
     @CampoConsulta
     private String nomefamilia;
     @CampoConsulta
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "idrepresentante")
     private Indigena representante;
     @Embedded
