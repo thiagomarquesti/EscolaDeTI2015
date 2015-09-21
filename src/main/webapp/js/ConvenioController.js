@@ -25,7 +25,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
 
         $scope.novoConvenio = function(){
             novoConvenio();
-        }
+        };
         
         $scope.carregarConvenio = function () {
             if ($location.path() === "/Convenio/novo") {
