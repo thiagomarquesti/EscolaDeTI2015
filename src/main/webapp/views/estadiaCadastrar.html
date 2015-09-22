@@ -1,7 +1,7 @@
 <div class="panel panel-info">    
     <div class="panel-heading"> 
-        <div class="panel-title" ng-show="isNovaEstadia">Cadastrar Estadia</div>
-        <div class="panel-title" ng-show="!isNovaEstadia">Alterar Estadia</div>
+        <div class="panel-title" ng-show="isNovaEstadia">Estadia Entrada</div>
+        <div class="panel-title" ng-show="!isNovaEstadia">Estadia Entrada</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -10,7 +10,7 @@
         <form name="formEstadia" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">
                 <label for="dataentrada" class="col-md-2 control-label"> Data de Entrada:</label>
-                <div class="col-md-2"><input type="date" ng-model="estadia.dataentrada" id="dataentrada" name="dataentrada" required="" class="form-control requerido"></div>
+                <div class="col-md-3"><input type="date" ng-model="estadia.dataentrada" id="dataentrada" name="dataentrada" required="" class="form-control requerido"></div>
             </div>
 
             <div ng-show="formEstadia.dataentrada.$dirty && formEstadia.dataentrada.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -51,7 +51,7 @@
             </div>
 
             <div class="form-group">
-                <label for="" class="col-md-2 control-label">Selecionar os Acompanhantes: </label>
+                <label class="col-md-2 control-label">Selecionar os Acompanhantes: </label>
                 <div class="col-md-3">
                     <select ng-model="" id="familia" name="" required="" class="form-control requerido">
                         <option value="">Selecione os acompanhantes</option>
@@ -65,8 +65,41 @@
                 <span ng-show="">Selecione um acompanhantes. </span>
             </div>
 
-
+            <div>
+                <label class="col-md-2 control-label">Observações: </label>                
+                <textarea name="" rows=5 class="col-md-7"></textarea>
+            </div>
         </form> 
     </div>
+</div>
 
+<div class="panel panel-info">    
+    <div class="panel-heading"> 
+        <div class="panel-title">Saída</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formSaidaEstadia" novalidate class="form-horizontal form-groups-bordered">
+            <div class="form-group">
+                <label for="datasaida" class="col-md-2 control-label"> Data de Saída:</label>
+                <div class="col-md-3"><input type="date" ng-model="estadia.datasaida" id="dataentrada" name="datasaida" required="" class="form-control requerido"></div>
+            </div>
+
+            <div ng-show="formSaidaEstadia.datasaida.$dirty && formSaidaEstadia.datasaida.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formSaidaEstadia.datasaida.$error.required">Preencha data de saída. </span>
+            </div>
+            <div>
+                <label class="col-md-2 control-label">Observações: </label>                
+                <textarea name="" rows=5 class="col-md-7"></textarea>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <button ng-show="" ng-click="salvarEstadia()" ng-disabled="!formEstadia.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovaEstadia" ng-click="salvarEstadia()" ng-disabled="!formEstadia.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovaEstadia" ng-click="reset(formEstadia)" class="btn btn-info">Limpar</button>
 </div>
