@@ -294,10 +294,10 @@ angular.module('multiselect.tpl.html', [])
         .run(['$templateCache', function ($templateCache) {
                 $templateCache.put('multiselect.tpl.html',
                         "<div class=\"btn-group col-md-2 control-label \">\n" +
-                        "  <button style=\"background-color: white; width:220px;\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
+                        "  <button style=\"background-color: white; width:MAX;\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
                         "    {{header}} <span class=\"caret\"></span>\n" +
                         "  </button>\n" +
-                        "  <ul class=\"dropdown-menu\" style=\" margin-left:15px;margin-bottom:30px;padding-top:5px;padding-left:10px;padding-right:5px;white; width:250px;\" ng-style=\"ulStyle\">\n" +
+                        "  <ul class=\"dropdown-menu\" style=\" margin-left:15px;margin-bottom:30px;padding-top:5px;padding-left:10px;padding-right:5px;white; width:MAX;\" ng-style=\"ulStyle\">\n" +
                         "    <li>\n" +
                         "      <input class=\"form-control input-sm\" type=\"text\" ng-model=\"searchText.label\" autofocus=\"autofocus\" placeholder=\"Filtro\" />\n" +
                         "    </li>\n" +

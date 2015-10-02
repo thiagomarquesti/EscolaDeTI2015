@@ -263,5 +263,46 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 document.getElementsByTagName('head')[0].appendChild(script);
             }, 100);
         };
-
+        
+        function novaOcorrencia() {
+            $scope.ocorrencia = {
+                dataOcorrencia: "",
+                dataBloqueio:"",
+                descricao:""
+            };
+        }
+        
+        $scope.carregarOcorrencia = function (){
+            novaOcorrencia();
+        };
+        
+        $scope.getOcorrencias = function (){
+            $http.get("/ocorrencia").success(function (data){
+                $scope.ocorrencias = data;
+//                console.log(data);
+            }).error(deuErro);
+        };
+        
+        $scope.deletarOcorrencia = function (idOcorrencia){
+          $http.delete("/ocorrencia/"+idOcorrencia).success(function (){
+              $scope.getOcorrencias();
+          }).error(deuErro());  
+        };
+        
+        $scope.salvarOcorrencia = function (){
+            var dataOcorrencia = dataToDate($scope.ocorrencia.dataOcorrencia);
+            var dataBloqueio = dataToDate($scope.ocorrencia.dataBloqueio);
+            var OcorrenciaCompleta = {
+                dataocorrencia: dataOcorrencia + "T00:00:00-03",
+                databloqueio: dataBloqueio + "T00:00:00-03",
+                descricao:$scope.ocorrencia.descricao,
+                idIndigena:$routeParams.id
+            };
+            
+            $http.post("/ocorrencia",OcorrenciaCompleta).success(function (){
+                $scope.getOcorrencias();
+            }).error(deuErro());
+            
+        };
+        
     }]);

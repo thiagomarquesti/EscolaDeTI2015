@@ -123,6 +123,10 @@ public class Indigena implements Serializable {
     public void setOcorrencia(List<Ocorrencia> ocorrencia) {
         this.ocorrencias.addAll(ocorrencia); // = ocorrencia;
     }
+    
+    public void setOcorrencia(Ocorrencia ocorrencia) {
+        this.ocorrencias.add(ocorrencia); // = ocorrencia;
+    }
 
     public String getNome() {
         return nome;
