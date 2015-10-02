@@ -272,10 +272,10 @@
                     <div class="form-group">
                         <label for="descricao" class="col-md-4 control-label">Motivo: *</label>
                         <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
-                        <div class="col-md-6"><textarea rows="4" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control " ></textarea></div>
+                        <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control " ></textarea></div>
                     </div>
                     <div class="col-md-offset-1 col-md-11">
-                        <button ng-click="salvarOcorrencia()" ng-disabled="valido" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
                         <button ng-click="carregarOcorrencia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
                     </div>
                     <div class="row">

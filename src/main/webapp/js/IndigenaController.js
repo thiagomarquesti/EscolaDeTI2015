@@ -264,6 +264,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }, 100);
         };
         
+        
         function novaOcorrencia() {
             $scope.ocorrencia = {
                 dataOcorrencia: "",
@@ -277,27 +278,28 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
         
         $scope.getOcorrencias = function (){
-            $http.get("/ocorrencia").success(function (data){
+            var url = ($routeParams.id==undefined)?"":"/ocorrencias/"+$routeParams.id;
+            $http.get("/ocorrencia"+url).success(function (data){
                 $scope.ocorrencias = data;
 //                console.log(data);
             }).error(deuErro);
         };
         
         $scope.deletarOcorrencia = function (idOcorrencia){
-          $http.delete("/ocorrencia/"+idOcorrencia).success(function (){
+          $http.delete("/ocorrencia/"+idOcorrencia+"/"+$routeParams.id).success(function (){
               $scope.getOcorrencias();
           }).error(deuErro());  
         };
         
         $scope.salvarOcorrencia = function (){
             var dataOcorrencia = dataToDate($scope.ocorrencia.dataOcorrencia);
-            var dataBloqueio = dataToDate($scope.ocorrencia.dataBloqueio);
+            var dataBloqueio = ($scope.ocorrencia.dataBloqueio!="")?dataToDate($scope.ocorrencia.dataBloqueio):"";
             var OcorrenciaCompleta = {
                 dataocorrencia: dataOcorrencia + "T00:00:00-03",
-                databloqueio: dataBloqueio + "T00:00:00-03",
+                databloqueio: (dataBloqueio!="")? dataBloqueio + "T00:00:00-03" : null,
                 descricao:$scope.ocorrencia.descricao,
-                idIndigena:$routeParams.id
-            };
+                idIndigena:$routeParams.id 
+           };
             
             $http.post("/ocorrencia",OcorrenciaCompleta).success(function (){
                 $scope.getOcorrencias();

@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Entity(name = "ocorrencia")
 public class Ocorrencia implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idocorrencia;
     
     @CampoConsulta(tipoComparacao = TipoComparacao.IGUAL)
@@ -26,6 +26,7 @@ public class Ocorrencia implements Serializable{
     @CampoConsulta(tipoComparacao = TipoComparacao.CONTEM)
     private String descricao;
     
+    @Transient
     private Long idIndigena;
 
     public Ocorrencia() {

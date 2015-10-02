@@ -127,6 +127,10 @@ public class Indigena implements Serializable {
     public void setOcorrencia(Ocorrencia ocorrencia) {
         this.ocorrencias.add(ocorrencia); // = ocorrencia;
     }
+    
+    public void removerOcorrencia(Ocorrencia ocorrencia) {
+        this.ocorrencias.remove(ocorrencia); // = ocorrencia;
+    }
 
     public String getNome() {
         return nome;
