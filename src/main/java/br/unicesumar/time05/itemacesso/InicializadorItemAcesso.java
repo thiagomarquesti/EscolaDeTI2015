@@ -200,7 +200,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuEventos;
         menuEventos = this.getItemAcesso(itensAcesso, "Gerenciar Eventos", "");
         if (menuEventos == null) {
-            menuEventos = new ItemAcesso("Gerenciar Eventos", "", "fa-leaf", menu);
+            menuEventos = new ItemAcesso("Gerenciar Eventos", "", "fa-calendar", menu);
             itensAcesso.add(menuEventos);
         }
 
