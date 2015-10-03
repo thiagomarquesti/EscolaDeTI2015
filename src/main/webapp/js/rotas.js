@@ -84,6 +84,17 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
         controller: 'IndigenaController'
+    })
+    //------- Rotas do Evento -------- 
+    .when('/Eventos/novo', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/listar', {
+        templateUrl: 'views/eventosListar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/editar/:id', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);

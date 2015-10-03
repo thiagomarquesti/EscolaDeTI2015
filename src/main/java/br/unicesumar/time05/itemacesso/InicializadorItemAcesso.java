@@ -195,6 +195,28 @@ public class InicializadorItemAcesso {
             menuPerfilNovo = new ItemAcesso("Cadastrar Perfil", "#/Perfil/novo", "fa-plus", menuPerfil);
             itensAcesso.add(menuPerfilNovo);
         }
+        
+        //EVENTOS
+        ItemAcesso menuEventos;
+        menuEventos = this.getItemAcesso(itensAcesso, "Gerenciar Eventos", "");
+        if (menuEventos == null) {
+            menuEventos = new ItemAcesso("Gerenciar Eventos", "", "fa-leaf", menu);
+            itensAcesso.add(menuEventos);
+        }
+
+        ItemAcesso menuEventosListar;
+        menuEventosListar = this.getItemAcesso(itensAcesso, "Listar Eventos", "#/Eventos/listar");
+        if (menuEventosListar == null) {
+            menuEventosListar = new ItemAcesso("Listar Eventos", "#/Eventos/listar", "fa-list-alt", menuEventos);
+            itensAcesso.add(menuEventosListar);
+        }
+
+        ItemAcesso menuEventosNovo;
+        menuEventosNovo = this.getItemAcesso(itensAcesso, "Novo Eventos", "#/Evento/novo");
+        if (menuEventosNovo == null) {
+            menuEventosNovo = new ItemAcesso("Cadastrar Eventos", "#/Eventos/novo", "fa-plus", menuEventos);
+            itensAcesso.add(menuEventosNovo);
+        }
 
         //FUNCAO
         ItemAcesso menuFuncao;
