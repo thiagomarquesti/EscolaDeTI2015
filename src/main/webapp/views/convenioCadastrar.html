@@ -19,8 +19,8 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-11">
-                    <button ng-show="isNovoConvenio" ng-click="salvarConvenio()" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Cadastrar</button>
-                    <button ng-show="!isNovoConvenio" ng-click="salvarConvenio()" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Alterar</button>
+                    <button ng-show="isNovoConvenio" ng-click="salvarConvenio('cad')" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+                    <button ng-show="!isNovoConvenio" ng-click="salvarConvenio('cad')" ng-disabled="!formConvenio.$valid" class="btn btn-success col-md-2">Alterar</button>
                 </div>
             </div>
         </form>                

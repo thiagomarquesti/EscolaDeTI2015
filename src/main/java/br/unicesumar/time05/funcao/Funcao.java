@@ -15,7 +15,7 @@ public class Funcao implements Serializable {
 
     @CampoConsulta
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long idfuncao;
     
     @CampoConsulta(campoOrdenacaoPadrao = true)

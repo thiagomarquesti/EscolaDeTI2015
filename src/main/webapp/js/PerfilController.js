@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
         
     $scope.busca = {};
@@ -40,10 +41,63 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         $scope.perfil = {
             nome: "",
             itens: []
+=======
+module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location, $element, $attrs) {
+        function novoPerfil() {
+            $scope.perfil = {
+                nome: "",
+                itens: []
+            };
+            $scope.isNovo = true;
+        }
+
+        $scope.carregar = function () {
+            //$scope.itensAcesso();
+            if ($location.path() === "/Perfil/novo") {
+                novoPerfil();
+            }
+            else {
+                $http.get("/perfildeacesso/" + $routeParams.id)
+                        .success(function (data) {
+                            $scope.perfil = data;
+                            $scope.isNovo = false;
+                            $scope.itensAcesso();
+                            //console.log(data);
+                        })
+                        .error(deuErro);
+            }
+        };
+
+        $scope.salvar = function (flag) {
+            if (flag == "modal")
+                $scope.isNovo = true;
+            if ($scope.isNovo) {
+                $http.post("/perfildeacesso/salvar", createJsonPerfil($scope.isNovo))
+                        .success(function () {
+                            toastr.success("Perfil cadastrado com sucesso!");
+                            if (flag == "cad")
+                                $location.path("/Perfil/listar");
+                            else{
+                                novoPerfil();
+                                $scope.carregaPerfis();
+                            }
+                        })
+                        .error(deuErro);
+            }
+            else {
+                $http.put("/perfildeacesso/alterar", createJsonPerfil($scope.isNovo))
+                        .success(function () {
+                            toastr.success("Perfil atualizado com sucesso!");
+                            $location.path("/Perfil/listar");
+                        })
+                        .error(deuErro);
+            }
+>>>>>>> origin/issue#6752
         };
         $scope.isNovo = true;
     }
 
+<<<<<<< HEAD
     $scope.carregar = function () {
         //$scope.itensAcesso();
         if ($location.path() === "/Perfil/novo") {
@@ -91,6 +145,63 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                 .error(deuErro);
         if ($scope.isNovo === false) {
             $http.get("/perfildeacesso/itensdeacesso/" + $routeParams.id)
+=======
+        $scope.atualizarPerfis = function (pag, campo, order, string, paro) {
+            if (pag == null || pag == "") {
+                pag = 1;
+            }
+            if (campo == null || campo == "") {
+                campo = "nome";
+            }
+            if (order != "asc" && order != "desc") {
+                order = "asc";
+            }
+            if (string == null) {
+                string = "";
+            }
+
+            $http.get("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string)
+                    .success(function (data) {
+                        $scope.perfis = data;
+                        console.log(data);
+                        console.log("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string);
+
+                        if (!paro) {
+                            atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
+                        }
+
+                    })
+                    .error(deuErro);
+        };
+
+        $scope.trocaOrdem = function (string) {
+            if ($scope.tipoOrdem == true) {
+                $scope.tipoOrdem = false;
+                var ordem = "asc";
+            }
+            else {
+                $scope.tipoOrdem = true;
+                var ordem = "desc";
+            }
+            $scope.atualizarPerfis("", "", ordem, string, true);
+        };
+
+        function atualizaPaginacao(qtde, pag, campo, order, string, paro) {
+            $('#paginacao').bootpag({
+                total: qtde,
+                page: pag,
+                maxVisible: 5
+            }).on('page', function (event, num) {
+                paro = true;
+                $scope.atualizarPerfis(num, campo, order, string, paro);
+
+            });
+        }
+
+
+        $scope.itensAcesso = function () {
+            $http.get("/itemacesso")
+>>>>>>> origin/issue#6752
                     .success(function (data) {
                         $scope.perfil.itensselecionados = data; //carrega itens gravados
                         //console.log(data);

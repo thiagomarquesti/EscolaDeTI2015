@@ -234,7 +234,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 $timeout(function () {
                     $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
-                                criarUsuarioParaEditar();     
+                                criarUsuarioParaEditar();
                                 $scope.usuario.idusuario = $routeParams.id;
                                 $scope.usuario.nome = data.nome;
                                 $scope.usuario.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
@@ -256,7 +256,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.numero = data.endereco.numero;
                                 $scope.usuario.complemento = data.endereco.complemento;
                                 $scope.usuario.bairro = data.endereco.bairro;
-                                $scope.usuario.telefones[0].telefone = (data.telefones[0]!=undefined)?data.telefones[0].telefone:"";
+                                $scope.usuario.telefones[0].telefone = (data.telefones[0] != undefined) ? data.telefones[0].telefone : "";
                                 if (data.telefones[1] != undefined) {
                                     $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
                                 }
@@ -346,7 +346,8 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     .success(function (data) {
                         $scope.urlFoto = data.foto;
                     }).error(deuErro);
-        };
+        }
+        ;
 
         $scope.webcamFoto = function () {
             $(document).ready(function () {
@@ -356,6 +357,15 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             console.log($scope.usuario.imgSrc);
         };
 
+/*   SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS    */
+        $scope.getFuncoes = function () {
+            $http.get("/funcao")
+                    .success(function (data) {
+                        $scope.funcoes = data;
+                    })
+                    .error(deuErro);
+        };
+/*   FIM DOS SCRIPST   */
 //-----------------AKI-------------------------------
         function erroListarItensAcessoDoMenu() {
             alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");

@@ -294,10 +294,10 @@ angular.module('multiselect.tpl.html', [])
         .run(['$templateCache', function ($templateCache) {
                 $templateCache.put('multiselect.tpl.html',
                         "<div class=\"btn-group col-md-2 control-label \">\n" +
-                        "  <button style=\"background-color: white; width:160%;\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
+                        "  <button style=\"background-color: white; width:220px;\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
                         "    {{header}} <span class=\"caret\"></span>\n" +
                         "  </button>\n" +
-                        "  <ul class=\"dropdown-menu\" style=\" margin-left:15px;margin-bottom:30px;padding-top:5px;padding-left:10px;padding-right:5px;white; width:140%;\" ng-style=\"ulStyle\">\n" +
+                        "  <ul class=\"dropdown-menu\" style=\" margin-left:15px;margin-bottom:30px;padding-top:5px;padding-left:10px;padding-right:5px;white; width:250px;\" ng-style=\"ulStyle\">\n" +
                         "    <li>\n" +
                         "      <input class=\"form-control input-sm\" type=\"text\" ng-model=\"searchText.label\" autofocus=\"autofocus\" placeholder=\"Filtro\" />\n" +
                         "    </li>\n" +
@@ -305,7 +305,7 @@ angular.module('multiselect.tpl.html', [])
                         "      <button class=\"btn btn-link btn-xs\" ng-click=\"checkAll()\" type=\"button\"><i class=\"glyphicon glyphicon-ok\"></i> Todos</button>\n" +
                         "      <button class=\"btn btn-link btn-xs\" style=\"padding-left:25px;\" ng-click=\"uncheckAll()\" type=\"button\"><i class=\"glyphicon glyphicon-remove\"></i> Nenhum</button>\n" +
                         "    </li>\n" +
-                        "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:searchText | limitTo: 10\">\n" +
+                        "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:searchText | limitTo: 50\">\n" +
                         "      <a ng-click=\"select(i)\" style=\"padding:3px 10px;cursor:pointer; focus()\">\n" +
                         "        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
                         "    </li>\n" +
