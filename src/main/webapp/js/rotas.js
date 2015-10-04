@@ -1,4 +1,4 @@
-module.config(function($routeProvider, $locationProvider) {
+module.config(function($routeProvider, $locationProvider) {  
 //------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
@@ -95,7 +95,15 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
         controller: 'IndigenaController'
-    }).otherwise ({ redirectTo: '/' });
+    })
+    //------- Rotas de Estadia de familia
+    .when('/Estadia/listar', {
+        templateUrl: 'views/estadiaListar.html',
+        controller: 'EstadiaController'
+    }).when('/Estadia/nova', {
+        templateUrl: 'views/estadiaCadastrar.html',
+        controller: 'EstadiaController'
+    }).otherwise ({ redirectTo: '/' });    
 
     $locationProvider.html5Mode(false);
 });

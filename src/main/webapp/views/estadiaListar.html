@@ -1,0 +1,64 @@
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Estadias Cadastradas</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <ng-include src="'views/busca.html'"> </ng-include>
+        <div class="panel panel-default" ng-init="registrosPadrao()">
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='familia'"></i> 
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'familia', busca.descricao, 'ok', true)">Familia</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='dataentrada'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.descricao, 'ok', true)">Data de Entrada</a>
+                        </th>   
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datasaida'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datasaida', busca.descricao, 'ok', true)">Data de Saída</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='quantidademembros'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidademembros', busca.descricao, 'ok', true)">Qtde de Acompanhantes</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='representante'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'representante', busca.descricao, 'ok', true)">Representante</a>
+                        </th>   
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', ent, '')">
+                    <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
+                        <td>{{f.familia}}</td>
+                        <td>{{f.dataentrada}}</td>
+                        <td>{{f.datasaida}}</td>
+                        <td>{{f.quantidademembros}}</td>
+                        <td>{{f.representante}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-h"> </i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a ng-click="editarEstadia(f)">Editar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>            
+        </div>
+        <div id="blocoPaginacao">
+            <div id="paginacao"></div>
+        </div>
+        <a ng-href="#/Estadia/nova" class="btn btn-success">Cadastrar nova</a>        
+    </div>
+</div>
