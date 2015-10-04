@@ -103,7 +103,21 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Estadia/nova', {
         templateUrl: 'views/estadiaCadastrar.html',
         controller: 'EstadiaController'
-    }).otherwise ({ redirectTo: '/' });    
+    }).when('/Estadia/nova/:id', {
+        templateUrl: 'views/estadiaCadastrar.html',
+        controller: 'EstadiaController'
+    })
+    //------- Rotas do Evento -------- 
+    .when('/Eventos/novo', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/listar', {
+        templateUrl: 'views/eventosListar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/editar/:id', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
+    }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);
 });
