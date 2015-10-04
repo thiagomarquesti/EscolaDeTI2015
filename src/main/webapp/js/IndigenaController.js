@@ -204,10 +204,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             novoIndio();
         };
 
-        function deuErro() {
-            toastr.error("Algo deu errado. Tente novamente.");
-        }
-
         function erroCadastraIndio() {
             toastr.error("Não foi possível cadastrar o indígena. ", "Erro");
         }
@@ -223,12 +219,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
         };
 
-    function foto(id) {
-        $http.get("/foto/indio/" + id)
-                .success(function (data) {
-                    $scope.urlFoto = data.foto;
-                }).error(deuErro);
-    };
+        function foto(id) {
+            $http.get("/foto/indio/" + id)
+                    .success(function (data) {
+                        $scope.urlFoto = data.foto;
+                    }).error(deuErro);
+        };
 
     $scope.webcamFoto = function () {
         $(document).ready(function () {
@@ -269,6 +265,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
         };
+        
         $scope.getTerras = function () {
             $http.get("/terraIndigena")
                     .success(function (data) {
@@ -277,6 +274,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
         };
+        
         $scope.getConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
@@ -293,5 +291,59 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 document.getElementsByTagName('head')[0].appendChild(script);
             }, 100);
         };
+        
+        function novaOcorrencia() {
+            $scope.ocorrencia = {
+                dataOcorrencia: "",
+                dataBloqueio: "",
+                descricao: ""
+            };
+        }
 
+        $scope.carregarOcorrencia = function () {
+            novaOcorrencia();
+        };
+
+        $scope.getOcorrencias = function () {
+            var url = ($routeParams.id == undefined) ? "" : "/ocorrencias/" + $routeParams.id;
+            $http.get("/ocorrencia" + url).success(function (data) {
+                $scope.ocorrencias = data;
+                console.log("pego");
+            }).error(deuErro);
+        };
+
+        $scope.getIdIndigena = function (indigena){
+            $routeParams.id = indigena.codigoassindi;
+        };
+
+        $scope.deletarOcorrencia = function (idOcorrencia) {
+            $http.delete("/ocorrencia/" + idOcorrencia + "/" + $routeParams.id)
+            .success(function () {
+                toastr.success("Ocorrência deletada com sucesso.", "Apagado");
+                $scope.getOcorrencias();
+            })
+            .error(deuErro);
+        };
+
+        $scope.salvarOcorrencia = function () {
+            var dataOcorrencia = dataToDate($scope.ocorrencia.dataOcorrencia);
+            var dataBloqueio = ($scope.ocorrencia.dataBloqueio != "") ? dataToDate($scope.ocorrencia.dataBloqueio) : "";
+            var OcorrenciaCompleta = {
+                dataocorrencia: dataOcorrencia + "T00:00:00-03",
+                databloqueio: (dataBloqueio != "") ? dataBloqueio + "T00:00:00-03" : null,
+                descricao: $scope.ocorrencia.descricao,
+                idIndigena: $routeParams.id
+            };
+
+            $http.post("/ocorrencia", OcorrenciaCompleta)
+                    .success(function () {
+                        toastr.success("Ocorrência salva com sucesso.", "Salvo");
+                        $scope.getOcorrencias();
+                    })
+                    .error(deuErro);
+        };
+        
+        function deuErro() {
+            toastr.error("Algo deu errado. Tente novamente.");
+        }
     }]);

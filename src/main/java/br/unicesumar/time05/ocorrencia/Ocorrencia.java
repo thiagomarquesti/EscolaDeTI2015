@@ -9,11 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity(name = "ocorrencia")
 public class Ocorrencia implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idocorrencia;
     
     @CampoConsulta(tipoComparacao = TipoComparacao.IGUAL)
@@ -24,6 +25,9 @@ public class Ocorrencia implements Serializable{
     
     @CampoConsulta(tipoComparacao = TipoComparacao.CONTEM)
     private String descricao;
+    
+    @Transient
+    private Long idIndigena;
 
     public Ocorrencia() {
     }    
@@ -60,6 +64,14 @@ public class Ocorrencia implements Serializable{
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Long getIdIndigena() {
+        return idIndigena;
+    }
+
+    public void setIdIndigena(Long idIndigena) {
+        this.idIndigena = idIndigena;
     }
 
     @Override
