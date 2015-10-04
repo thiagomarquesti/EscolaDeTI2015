@@ -6,7 +6,7 @@ import br.unicesumar.time05.telefone.TelefoneEmbutido;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
+import java.util.Set;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,18 +32,18 @@ public class Familia implements Serializable {
     private Indigena representante;
     @Embedded
     private TelefoneEmbutido telefone;
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "familia_indigena",
             joinColumns = {
                 @JoinColumn(name = "idfamilia", referencedColumnName = "idfamilia")},
             inverseJoinColumns = {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
-    private List<Indigena> membros;
+    private Set<Indigena> membros;
 
     public Familia() {
     }
 
-    public Familia(String nomefamilia, Indigena representante, TelefoneEmbutido telefone, List<Indigena> membros) {
+    public Familia(String nomefamilia, Indigena representante, TelefoneEmbutido telefone, Set<Indigena> membros) {
         this.nomefamilia = nomefamilia;
         this.representante = representante;
         this.telefone = telefone;
@@ -66,7 +66,7 @@ public class Familia implements Serializable {
         return telefone;
     }
 
-    public List<Indigena> getMembros() {
+    public Set<Indigena> getMembros() {
         return membros;
     }
 
@@ -82,7 +82,7 @@ public class Familia implements Serializable {
         this.telefone = telefone;
     }
 
-    public void setMembros(List<Indigena> membros) {
+    public void setMembros(Set<Indigena> membros) {
         this.membros = membros;
     }
 
