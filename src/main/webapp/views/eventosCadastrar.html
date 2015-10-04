@@ -1,8 +1,8 @@
 <div class="panel panel-info">
 
     <div class="panel-heading"> 
-        <div class="panel-title" ng-show="isNovoEvento">Cadastrar novo Evento</div>
-        <!--<div class="panel-title" ng-show="!isNovoEvento">Alterar Evento</div>-->
+        <div class="panel-title" >Cadastrar Evento</div>
+       
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -48,12 +48,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-11">
-                    <button ng-show="isNovoEvento" ng-click="salvarEvento()" ng-disabled="!formEvento.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+                    <button ng-click="salvarEvento()" ng-disabled="!formEvento.$valid" class="btn btn-success col-md-2">Cadastrar</button>
                     
                 </div>
             </div>
-           
-            
         </form>
     </div>
 </div>
