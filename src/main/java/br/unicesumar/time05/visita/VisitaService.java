@@ -1,9 +1,9 @@
 package br.unicesumar.time05.visita;
 
-import br.unicesumar.time05.ConsultaPersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.ConsultaPersonalizada.ParametrosConsulta;
-import br.unicesumar.time05.ConsultaPersonalizada.RetornoConsultaPaginada;
-import classesBase.ServiceBase;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
+import classesbase.ServiceBase;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -23,13 +23,9 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
             + " v.horaentrada, "
             + " v.horasaida, "
             + " v.seriecurso, "
-            + " v.pessoaresponsavel, "
-            + " v.entidade "
+            + " v.idpessoaresponsavel, "
+            + " v.identidade "
             + " FROM visita v ");
-            //+ " LEFT JOIN pessoa e "
-    //+ " ON v.descricao_identidade = p.identidade "
-    //+ " LEFT JOIN pessoa p "
-    //+ " ON v.pessoaresponsavel_idpessoa = p.idpessoa ");
 
     public VisitaService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Visita.class));
@@ -45,12 +41,12 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
 
     @Override
     public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
-        return query.executeComPaginacao(this.SQLConsultaVisita, parametrosConsulta);
+        return query.executeComPaginacao(this.SQLConsultaVisita, "", parametrosConsulta);
     }
 
     @Override
     public RetornoConsultaPaginada listar() {
-        return query.executeComPaginacao(this.SQLConsultaVisita, new ParametrosConsulta());
+        return query.executeComPaginacao(this.SQLConsultaVisita, "", new ParametrosConsulta());
     }
 
     @Override

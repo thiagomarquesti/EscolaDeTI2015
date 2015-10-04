@@ -1,8 +1,8 @@
 package br.unicesumar.time05.visita;
 
-import br.unicesumar.time05.ConsultaPersonalizada.CampoConsulta;
-import br.unicesumar.time05.pessoaFisica.PessoaFisica;
-import br.unicesumar.time05.pessoaJuridica.PessoaJuridica;
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
+import br.unicesumar.time05.pessoafisica.PessoaFisica;
+import br.unicesumar.time05.pessoajuridica.PessoaJuridica;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
@@ -23,7 +23,6 @@ public class Visita implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @CampoConsulta
     private Long idvisita;
-
     @CampoConsulta
     private Date datavisita;
     @CampoConsulta
@@ -46,13 +45,10 @@ public class Visita implements Serializable {
     @CampoConsulta
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idpessoaresponsavel")
-
     private PessoaFisica pessoaresponsavel;
 
-    @CampoConsulta
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "identidade")
-
     private PessoaJuridica entidade;
 
     public Visita(Long idvisita, Date datavisita, Time horavisita, Integer quantidadedevisitantes, String seriecurso, Time horaentrada, Time horasaida, String observacao, boolean visitarealizada, PessoaFisica pessoaresponsavel, PessoaJuridica entidade) {
@@ -84,7 +80,7 @@ public class Visita implements Serializable {
     public void setEntidade(PessoaJuridica entidade) {
         this.entidade = entidade;
     }
-
+    
     public Integer getQuantidadedevisitantes() {
         return quantidadedevisitantes;
     }
