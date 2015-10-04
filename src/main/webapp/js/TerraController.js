@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module.controller("TerraController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
     $scope.busca = {};
@@ -40,13 +39,6 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     function deuErro() {
         toastr.error("Algo deu errado. Tente novamente.");
     }
-=======
-module.controller("TerraController", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
-
-        function deuErro() {
-            toastr.error("Algo deu errado. Tente novamente.");
-        }
->>>>>>> origin/issue#6752
 
         function novaTerra() {
             $scope.terra = {
@@ -68,54 +60,11 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                         $scope.cidades = data;
                     })
                     .error(deuErro);
-<<<<<<< HEAD
-        }
-    };
-    
-    $scope.todasTerras = function(){
-        $http.get("/terraIndigena")
-            .success(function (data) {
-                $scope.terras = data;
-                //console.log($scope.terras);
-            })
-            .error(deuErro);
-    };
-    
-    $scope.editarTerra = function(terra) {
-        $location.path("/TerraIndigena/editar/" + terra.idterraindigena);
-    };
-    
-    $scope.salvarTerra = function () {
-        if($scope.terra.cidade == ""){
-            toastr.error("A cidade não foi preenchida corretamente.","Atenção");
-        }
-        else{
-            var terraCompleta = {
-                nometerra: $scope.terra.nometerra,
-                cidade: {
-                    codigoIBGE: $scope.terra.cidade.codigoibge,
-                    descricao: $scope.terra.cidade.nomecidade,
-                    estado: {
-                        codigoestado: $scope.terra.cidade.codigoestado,
-                        descricao: $scope.terra.cidade.descricao,
-                        sigla: $scope.terra.cidade.sigla
-                    }
-                }
-            };
-            if ($scope.isNovaTerra) {
-                $http.post("/terraIndigena", terraCompleta)
-                        .success(function () {
-                            $location.path("/TerraIndigena/listar");
-                            toastr.success("Terra indígena inserida com sucesso!");
-                        })
-                        .error(deuErro);
-=======
         };
 
         $scope.carregarTerra = function () {
             if ($location.path() === "/TerraIndigena/nova") {
                 novaTerra();
->>>>>>> origin/issue#6752
             }
             else {
                 $http.get("/terraIndigena/obj/" + $routeParams.id)
@@ -132,13 +81,6 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                         })
                         .error(deuErro);
             }
-<<<<<<< HEAD
-        }
-    };
-    
-    
-}]);
-=======
         };
 
         $scope.todasTerras = function () {
@@ -152,15 +94,6 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
 
         $scope.editarTerra = function (terra) {
             $location.path("/TerraIndigena/editar/" + terra.idterraindigena);
-        };
-
-        $scope.deletarTerra = function (terra) {
-            $http.delete("/terraIndigena/" + terra.idterraindigena)
-                    .success(function () {
-                        toastr.success("Terra indígena " + terra.nometerra + " deletada com sucesso.");
-                        $scope.atualizarTerras();
-                    })
-                    .error(deuErro);
         };
 
         $scope.salvarTerra = function (flag) {
@@ -259,4 +192,3 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         }
 
     }]);
->>>>>>> origin/issue#6752
