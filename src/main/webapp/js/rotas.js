@@ -9,6 +9,8 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
         templateUrl: 'views/usuarioCadastrar.html',
+//        templateUrl: 'views/pessoaFisicaCadastrar.html',
+//        templateUrl: 'views/pessoaJuridicaCadastrar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/editar/:id', {
         templateUrl: 'views/usuarioCadastrar.html',
@@ -27,9 +29,23 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar/:id', {
         templateUrl: 'views/perfilCadastrar.html',
         controller: 'PerfilController'
-    }).when('/Perfil/editar', {
-        templateUrl: 'views/perfilCadastrar.html',
-        controller: 'PerfilController'
+    
+//------- Rotas do Pessoa --------
+    }).when('/Pessoa/listar', {
+        templateUrl: 'views/perfilListar.html',
+        controller: 'UsuarioController'
+    }).when('/Juridica/novo', {
+        templateUrl: 'views/pessoaJuridicaCadastrar.html',
+        controller: 'UsuarioController'
+    }).when('/Juridica/editar/:id', {
+        templateUrl: 'views/pessoaJuridicaCadastrar.html',
+        controller: 'UsuarioController'
+    }).when('/Fisica/novo', {
+        templateUrl: 'views/pessoaFisicaCadastrar.html',
+        controller: 'UsuarioController'
+    }).when('/Fisica/editar/:id', {
+        templateUrl: 'views/pessoaFisicaCadastrar.html',
+        controller: 'UsuarioController'
 //------- Convênio -------        
     }).when('/Convenio/novo', {
         templateUrl: 'views/convenioCadastrar.html',

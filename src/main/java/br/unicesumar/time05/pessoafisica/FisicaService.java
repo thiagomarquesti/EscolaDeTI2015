@@ -1,9 +1,12 @@
 package br.unicesumar.time05.pessoafisica;
 
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.rowmapper.MapRowMapper;
 import br.unicesumar.time05.pessoa.TipoPessoa;
-import java.util.Collections;
+import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
@@ -14,34 +17,15 @@ import org.springframework.stereotype.Component;
 
 @Transactional
 @Component
-public class FisicaService {
+public class FisicaService extends ServiceBase<PessoaFisica, Long, FisicaRepository>{
 
     @Autowired
     private FisicaRepository fisicaRepo;
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-
-    public void salvarFisica(PessoaFisica aPessoa) {
-        try {
-            fisicaRepo.save(aPessoa);
-            fisicaRepo.flush();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void removerFisica(Long aPessoaId) {
-        try {
-            fisicaRepo.delete(aPessoaId);
-        } catch (Exception e) {
-            throw new RuntimeException("Pessoa não encontrada");
-        }
-    }
-
-    public List<Map<String, Object>> getFisica() {
-//    public PessoaFisica getFisica() {
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
+    
+    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
                 + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
                 + "FROM pessoa p"
                 + " INNER JOIN pessoa_fisica pf "
@@ -57,39 +41,31 @@ public class FisicaService {
                 + " INNER JOIN cidade c"
                 + "    ON ec.cidade_id = c.codigoibge"
                 + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado",
-                new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(fisica);
-//        return fisicaRepo.findOne(1l);
+                + "    ON c.estado_codigoestado = u.codigoestado";
+
+    @Override
+    protected void setConstrutorDeSQL(br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL aConstrutorDeSQL) {
+        super.setConstrutorDeSQL(new ConstrutorDeSQL(PessoaFisica.class)); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Map<String, Object> getFisicaById(Long aPessoaId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado "
-                + "WHERE p.idpessoa = :aPessoaId",
-                params, new MapRowMapper());
-        try {
-            return fisica.get(0);
-        } catch (Exception e) {
-            throw new RuntimeException("Nenhum resultado encontrado!");
-        }
+    @Override
+    public List<Map<String, Object>> listarSemPaginacao() {
+        return query.execute(SQLConsultaFisica);
+    }
+    
+    @Override
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(SQLConsultaFisica, "p.nome", new ParametrosConsulta());
+    }
+
+    @Override
+    public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
+        return query.executeComPaginacao(SQLConsultaFisica, "p.nome", aParametrosConsulta); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object getObjeto(Long aId) {
+        return repository.findOne(aId);
     }
 
     public boolean verificarEmail(Email aEmail) {
@@ -115,8 +91,11 @@ public class FisicaService {
             case "VISITANTE":
                 pessoa.setTipoPessoa(TipoPessoa.VISITANTE);
                 break;
-            case "ÍNDIO":
-                pessoa.setTipoPessoa(TipoPessoa.ÍNDIO);
+            case "FÍSICA":
+                pessoa.setTipoPessoa(TipoPessoa.FÍSICA);
+                break;
+            case "JURÍDICA":
+                pessoa.setTipoPessoa(TipoPessoa.JURÍDICA);
                 break;
         }
         fisicaRepo.save(pessoa);
