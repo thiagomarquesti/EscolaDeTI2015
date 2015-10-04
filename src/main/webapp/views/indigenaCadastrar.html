@@ -1,5 +1,4 @@
 <div class="panel panel-info">
-
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovoIndio">Cadastrar indígena</div>
         <div class="panel-title" ng-show="!isNovoIndio">Alterar indígena</div>
@@ -189,7 +188,103 @@
         </form>
     </div>
 </div>
-
+<div class="panel panel-info">
+    <div class="panel-heading"> 
+        <div class="panel-title">Ocorrências</div>
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body" ng-controller="OcorrenciaController">
+        <div class="panel panel-default" >
+            <table id="tabelaGrid" class="table table-striped datatable">
+                <thead>
+                    <tr>
+                        <th>
+                            <!--                        <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual == 'ocorrência'"></i>
+                                                    <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual == 'ocorrência'"></i>-->
+                            <a ng-click="trocaOrdem('ocorrenciaId', busca.ocorrenciaId)">Ocorrência</a>
+                        </th>
+                        <th>
+                            <!--                        <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual == 'data'"></i>
+                                                    <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual == 'data'"></i>-->
+                            <a ng-click="trocaOrdem('dataOcorrencia', busca.dataOcorrencia)">Data</a>
+                        </th>
+                        <th>
+                            <!--                        <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual == 'descricao'"></i>
+                                                    <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual == 'descricao'"></i>-->
+                            <a ng-click="trocaOrdem('descricao', busca.descricao)">Descrição</a>
+                        </th>
+                        <th>
+                            <!--                        <i class="fa fa-sort-asc" ng-show="!tipoOrdem && campoAtual == 'bloqueio'"></i>
+                                                    <i class="fa fa-sort-desc" ng-show="tipoOrdem && campoAtual == 'bloqueio'"></i>-->
+                            <a ng-click="trocaOrdem('dataBloqueio', busca.dataBloqueio)">Bloqueio até</a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="getOcorrencias()">
+                    <tr ng-repeat='o in ocorrencias'>
+                        <td>{{o.ocorrenciaId}}</td>
+                        <td>{{o.dataOcorrencia}}</td>
+                        <td>{{o.descricao}}</td>
+                        <td>{{o.dataBloqueio}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-mini dropdown-toggle" ng-click="excluirOcorrencia(o)" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-remove"> </i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <button ng-show="true" ng-click="carregarOcorrencia()" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});" ng-disabled="false" class="btn btn-success">Nova Ocrrência</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ocorrenciaModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Ocorrência</h4>
+            </div>
+            <div class="modal-body" ng-controller="OcorrenciaController">
+                <form name="formOcorrencia" novalidate ng-init="carregaOcorrencia()" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="dataOcorrencia" class="col-md-4 control-label">Data da Ocorrência: *</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="date" ng-model="ocorrencia.dataOcorrencia" id="dataOcorrencia" name="dataOcorrencia" class="form-control requerido" required="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataBloqueio" class="col-md-4 control-label">Bloqueado até: </label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="date" ng-model="ocorrencia.dataBloqueio" id="dataBloqueio" name="dataBloqueio" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao" class="col-md-4 control-label">Motivo: *</label>
+                        <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
+                        <div class="col-md-6"><textarea rows="4" ng-model="ocorrencia.descricao" maxlength="160" class="form-control " ></textarea></div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-11">
+                        <button ng-click="salvarOcorrencia()" ng-disabled="valido" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="carregarOcorrencia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                    </div>
+                    <div class="row">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="etniaModal" data-backdrop="true">
     <div class="modal-dialog">
         <div class="modal-content">
