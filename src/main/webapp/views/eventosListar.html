@@ -7,8 +7,6 @@
     </div>
     <div class="panel-body">
         <ng-include src="'views/busca.html'"></ng-include>
-  
-            
         <div class="panel panel-default" ng-init="registrosPadrao()">
             <table id="tabelaGrid" class="table table-striped datatable">
                 <thead>
@@ -19,8 +17,8 @@
                         </th>
                         
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='Data Inicio'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataInicio', busca.dataInicio, 'ok', true)">Data Inicio</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datainicial'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datainicial', busca.descricao, 'ok', true)">Data Inicio</a>
                         </th>
                         
                         <th>
@@ -60,6 +58,6 @@
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-        <a ng-href="#/Eventos/novo" class="btn btn-success">Cadastrar novo</a>
+        <a ng-href="#/Evento/novo" class="btn btn-success">Cadastrar novo</a>
     </div>
 </div>     

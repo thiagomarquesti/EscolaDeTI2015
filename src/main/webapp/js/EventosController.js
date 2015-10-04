@@ -1,8 +1,9 @@
 module.controller("EventosController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
     $scope.busca = {};
     $scope.placeHolder = "Buscar Eventos";
-    $scope.ent = $rootScope.ent = "descricao";
+    $scope.ent = $rootScope.ent = "eventos";
     $scope.campoPrincipal = 'descricao';
+    
 
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
@@ -28,7 +29,12 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
 
     function novoEvento() {
         $scope.evento = {
-            descricao: ""
+            descricao: "",
+            datainicial: "",
+            datafinal: "",
+            visualizarnocalendario :""
+            
+         
         };
         $scope.isNovoEvento = true;
     }
@@ -64,34 +70,50 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     $scope.salvarEvento = function () {
-        if ($scope.isNovoEvento) {
-            $http.post("/evento", $scope.evento)
+        
+//        if ($scope.isNovoEvento) {
+            var dataInicio = dataToDate($scope.evento.datainicial);
+            var dataFinal = dataToDate($scope.evento.datafinal);
+            var eventoCorreto = {
+                descricao: $scope.evento.descricao,
+                datainicial: dataInicio + "T00:00:00-03",
+                datafinal: dataFinal + "T00:00:00-03",
+                visualizarnocalendario:$scope.evento.visualizarnocalendario
+            };
+            console.log(eventoCorreto);
+            $http.post("/eventos", eventoCorreto)
                     .success(function () {
-                        $location.path("/Eventoo/listar");
+                        $location.path("/Eventos/listar");
                         toastr.success("Evento inserido com sucesso!");
                     })
                     .error(deuErroSalvar);
-        }
-        else {
-            $http.put("/evento/", $scope.evento)
-                    .success(function () {
-                        $location.path("/Evento/listar");
-                        toastr.success("Evento atualizado com sucesso!");
-                    })
-                    .error(deuErroAtualizacao);
-        }
+//        }
+//        else {
+//            $http.put("/evento/", $scope.evento)
+//                    .success(function () {
+//                        $location.path("/Evento/listar");
+//                        toastr.success("Evento atualizado com sucesso!");
+//                    })
+//                    .error(deuErroAtualizacao);
+//        }
     };
+    
+    function dataToDate(valor) {
+        var date = new Date(valor);
+        var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+        return data;
+    }
 
     function deuErro() {
         toastr.error("Algo deu errado. Tente novamente.");
     }
 
     function deuErroAtualizacao() {
-        toastr.error("Atenção, erro ao tentar editar o convênio, verifique!");
+        toastr.error("Atenção, erro ao tentar editar o evento, verifique!");
     }
 
     function deuErroSalvar() {
-        toastr.error("Atenção, erro ao tentar salvar o convênio, verifique!");
+        toastr.error("Atenção, erro ao tentar salvar o evento, verifique!");
     }
 
 }]);
