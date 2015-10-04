@@ -4,6 +4,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
     $scope.placeHolder = "Buscar função";
     $scope.ent = $rootScope.ent = "funcao";
     $scope.campoPrincipal = 'descricao';
+    $rootScope.tipoOrdem = 'asc';
 
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
@@ -84,7 +85,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
             $http.delete("/funcao/" + funcao.idfuncao)
                     .success(function (status) {
                         toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
-                        $scope.atualizarFuncoes();
+                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
                     })
                     .error(deuErro);
         };

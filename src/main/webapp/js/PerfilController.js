@@ -1,47 +1,46 @@
 module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
-
-        $scope.busca = {};
-        $scope.placeHolder = "Buscar perfil";
-        $scope.ent = $rootScope.ent = "perfildeacesso";
-        $scope.campoPrincipal = 'nome';
-
-        $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
-            if (campo == null || campo == "") {
-                campo = $scope.campoPrincipal;
-            }
-            $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
-            atualizaScope;
-        };
-
-        function atualizaScope() {
-            $scope = $rootScope;
-        }
-
-        $rootScope.atualizarListagens = $scope.atualizarListagens;
-
-        $scope.registrosPadrao = function () {
-            $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
-            $rootScope.numregistros = $scope.busca.numregistros;
-        };
-
-        $scope.fazPesquisa = function (registros, string) {
-            $rootScope.string = string;
-            $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
-        };
-
-        $scope.excluir = function (perfil) {
-            $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
-                toastr.success("O Perfil " + perfil.nome + " foi deletado com sucesso", "Perfil Excluído");
-                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
-            }).error(function () {
-                toastr.error("Não foi possível excluir o perfil", "Houve um erro");
-            });
-        };
-
-        function novoPerfil() {
-            $scope.perfil = {
-                nome: "",
-                itens: []
+        
+    $scope.busca = {};
+    $scope.placeHolder = "Buscar perfil";
+    $scope.ent = $rootScope.ent = "perfildeacesso";
+    $scope.campoPrincipal = 'nome';
+    $rootScope.tipoOrdem = 'asc';
+        
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
+        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
+        atualizaScope;
+    };
+    
+    function atualizaScope() {
+        $scope = $rootScope;
+    }
+    
+    $rootScope.atualizarListagens = $scope.atualizarListagens;
+    
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+        $rootScope.numregistros = $scope.busca.numregistros;
+    };
+    
+    $scope.fazPesquisa = function(registros, string){
+        $rootScope.string = string;
+        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+    };
+        
+    $scope.excluir = function (perfil) {
+        $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
+            toastr.success("O Perfil " + perfil.nome + " foi deletado com sucesso", "Perfil Excluído");
+            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
+        }).error(function () {
+            toastr.error("Não foi possível excluir o perfil", "Houve um erro");
+        });
+    };    
+        
+    function novoPerfil() {
+        $scope.perfil = {
+            nome: "",
+            itens: []
             };
             $scope.isNovo = true;
         }

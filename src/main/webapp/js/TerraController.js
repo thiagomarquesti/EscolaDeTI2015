@@ -4,6 +4,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
     $scope.placeHolder = "Buscar terra indígena";
     $scope.ent = $rootScope.ent = "terraIndigena";
     $scope.campoPrincipal = 'nomeTerra';
+    $rootScope.tipoOrdem = 'asc';
         
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
@@ -40,31 +41,30 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         toastr.error("Algo deu errado. Tente novamente.");
     }
 
-        function novaTerra() {
-            $scope.terra = {
-                nometerra: "",
-                cidade: ""
-            };
-            $scope.isNovaTerra = true;
-            $scope.tamanhoSelect = 10;
-        }
-
-        $scope.novaTerra = function () {
+    function novaTerra() {
+        $scope.terra = {
+            nometerra: "",
+            cidade: ""
+        };
+        $scope.isNovaTerra = true;
+    }
+    
+    $scope.novaTerra = function() {
+        novaTerra();
+    };
+    
+    $scope.todasCidades = function(){
+        $http.get("/cidade")
+            .success(function(data){
+                //console.log(data);
+                $scope.cidades = data;
+            })
+            .error(deuErro);
+    };
+    
+    $scope.carregarTerra = function(){
+        if($location.path() === "/TerraIndigena/nova"){
             novaTerra();
-        };
-
-        $scope.todasCidades = function () {
-            $http.get("/cidade")
-                    .success(function (data) {
-//                        console.log(data);
-                        $scope.cidades = data;
-                    })
-                    .error(deuErro);
-        };
-
-        $scope.carregarTerra = function () {
-            if ($location.path() === "/TerraIndigena/nova") {
-                novaTerra();
             }
             else {
                 $http.get("/terraIndigena/obj/" + $routeParams.id)
