@@ -14,6 +14,12 @@ import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -174,7 +180,7 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuUsuarioNovo);
         }
 
-//        //PERFIL
+        //PERFIL
         ItemAcesso menuPerfil;
         menuPerfil = this.getItemAcesso(itensAcesso, "Gerenciar Perfil", "");
         if (menuPerfil == null) {
@@ -218,6 +224,27 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuFuncaoNovo);
         }
 
+        //RELATORIOS
+        ItemAcesso menuRelatorios;
+        menuRelatorios = this.getItemAcesso(itensAcesso, "Relatórios", "");
+        if (menuRelatorios == null) {
+            menuRelatorios = new ItemAcesso("Gerenciar Relatórios", "", "fa-pencil", menu);
+            itensAcesso.add(menuRelatorios);
+        }
+
+        ItemAcesso menuListarIndigenas;
+        menuListarIndigenas = this.getItemAcesso(itensAcesso, "Listar Indígenas", "#/Relatorios/ListarIndigenas");
+        if (menuListarIndigenas == null) {
+            menuListarIndigenas = new ItemAcesso("Listar Indígenas", "#/Relatorios/ListarIndigenas", "fa-table", menuRelatorios);
+            itensAcesso.add(menuListarIndigenas);
+        }
+        
+        
+        
+        //----------------------------------------------------
+        //----------------------------------------------------
+        //----------------------------------------------------
+        
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
