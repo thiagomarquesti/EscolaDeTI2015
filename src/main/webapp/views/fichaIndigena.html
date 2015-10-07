@@ -1,0 +1,18 @@
+<div class="container" ng-controller="IndigenaController" ng-init="carregarIndio(371)">
+    
+    <div id="fotoPessoa" class="col-md-3 col-xs-12">
+        <img src="" />
+    </div>
+    
+    <div id="dadosBasicosPessoa" class="col-md-9 col-xs-12">
+        <p>{{indio.codigoassindi}}</p>
+        <p>{{indio.nome}}</p>
+        <p><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i></p>
+        <p>{{indio.dataNascimento}} ({{calculaIdade(indio.datanascimento)}} anos)</p>
+    </div>
+    
+    <div id="dadosComplementaresPessoa" class="col-md-12">
+        
+    </div>
+    
+</div>

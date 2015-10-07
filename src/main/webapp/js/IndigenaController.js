@@ -56,13 +56,21 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
     }
     
 
-        $scope.carregarIndio = function () {
+        $scope.carregarIndio = function (codAssindi) {
             if ($location.path() === "/Indigena/novo") {
                 novoIndio();
             }
             else {
                 $timeout(function () {
-                    $http.get("/indigena/obj/" + $routeParams.id)
+                    var busca;
+                    if(codAssindi){
+                        busca = "/indigena/obj/" + codAssindi;
+                    }
+                    else {
+                        busca = "/indigena/obj/" + $routeParams.id;
+                    }
+                    
+                    $http.get(busca)
                             .success(function (data) {
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);

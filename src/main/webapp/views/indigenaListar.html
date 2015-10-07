@@ -37,7 +37,11 @@
                 <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', '')">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{i.codigoassindi}}</td>
-                        <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
+                        <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  
+                            <a href='views/fichaIndigena.html' data-toggle="lightbox">
+                            {{i.nome}}
+                            </a>
+                        </td>
                         <td>{{calculaIdade(i.datanascimento)}} anos</td>
                         <td>{{i.descricao}} <br> {{i.nometerra}}</td>
                         <td>{{i.telefone}}</td>
@@ -106,3 +110,4 @@
     </div>
 </div>
 </div>
+
