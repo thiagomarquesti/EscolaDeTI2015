@@ -99,7 +99,7 @@
 </div>
 
 <div>
-    <button ng-show="" ng-click="salvarEstadia()" ng-disabled="!formEstadia.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-show="isNovaEstadia" ng-click="salvarEstadia()" ng-disabled="!formEstadia.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-hide="isNovaEstadia" ng-click="salvarEstadia()" ng-disabled="!formEstadia.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovaEstadia" ng-click="reset(formEstadia)" class="btn btn-info">Limpar</button>
 </div>
