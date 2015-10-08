@@ -1,7 +1,7 @@
 module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
         $scope.busca = {};
-        $scope.placeHolder = "Buscar usuário/colaborador";
+        $scope.placeHolder = "Buscar pessoa";
         $scope.ent = $rootScope.ent = "fisica";
         $scope.campoPrincipal = 'nome';
         $rootScope.tipoOrdem = 'asc';
