@@ -90,3 +90,36 @@ table.table-striped tr th a {
   color: #fff;
 }
 
+.closeModal {
+  float: right;
+}
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+fieldset {
+    border:1px solid #ccc;
+    padding: 5px;
+}
+
+legend {
+    border:none;
+    width: auto;
+    font-size: 10pt;
+    padding: 0px;
+    margin: 0px;
+}
+
+.cantosArredondados img {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #888888
+}
+
+.cantosArredondados {
+    border:1px solid #ddd;
+    background-color: #eee;
+    padding: 4px;
+    border-radius: 10px;
+}

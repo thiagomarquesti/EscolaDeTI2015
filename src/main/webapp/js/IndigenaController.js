@@ -55,6 +55,10 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.isNovoIndio = true;
     }
     
+    $scope.indioComFoto = function(codAssindi){
+        $scope.carregarIndio(codAssindi);
+        getFoto(codAssindi);
+    };
 
         $scope.carregarIndio = function (codAssindi) {
             if ($location.path() === "/Indigena/novo") {
@@ -77,6 +81,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 dados.cpf = data.cpf.cpf;
                                 dados.telefone = data.telefone.telefone;
                                 dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                                dados.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear()   ;
                                 dados.etnia = data.etnia.idetnia;
                                 dados.terraIndigena = data.terraIndigena.idterraindigena;
                                 dados.conveniosselecionados = data.convenio;
@@ -89,6 +94,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
             }
         };
+        
+        function getFoto(id) {
+        $http.get("/foto/indio/" + id)
+                .success(function (data) {
+                    $scope.urlFoto = data.foto;
+                }).error(deuErro);
+    };
 
         $scope.salvarIndio = function () {
 //        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
@@ -134,66 +146,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
         };
         
-        $scope.trocaOrdem = function (string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-            else {
-                $scope.tipoOrdem = true;
-                var ordem = "desc";
-            }
-            $scope.atualizarIndigenas("", "", ordem, string, true);
-        };
-
-        $scope.atualizarIndigenas = function (reg, pag, campo, order, string, paro) {
-            if (reg == null || reg == "") {
-                reg = 10;
-            }
-            if (pag == null || pag == "") {
-                pag = 1;
-            }
-            if (campo == null || campo == "") {
-                campo = "nome";
-            }
-            if (order != "asc" && order != "desc") {
-                order = "asc";
-            }
-            if (string == null) {
-                string = "";
-            }
-//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
-            $http.get("/indigena/listar/" + reg + "/" + pag + "/" + campo + "/" + order + "/" + string)
-                    .success(function (data) {
-                        $scope.indigenas = data;
-                        if (!paro) {
-                            atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
-                        }
-                    })
-                    .error(deuErro);
-        };
-
-        $scope.trocaOrdem = function (campo, string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-
-            $scope.campoAtual = campo;
-            $scope.atualizarIndigenas("", campo, ordem, string, true);
-        };
-
-        function atualizaPaginacao(qtde, pag, campo, order, string, paro) {
-            $('#paginacao').bootpag({
-                total: qtde,
-                page: pag,
-                maxVisible: 5
-            }).on('page', function (event, num) {
-                paro = true;
-                $scope.atualizarIndigenas(reg, num, campo, order, string, paro);
-            });
-        }
-
         function dataToDate(valor) {
             var date = new Date(valor);
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
@@ -225,13 +177,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 "icone": "fa fa-female",
                 "cor": "#FFC4C4"
             }
-        };
-
-        function foto(id) {
-            $http.get("/foto/indio/" + id)
-                    .success(function (data) {
-                        $scope.urlFoto = data.foto;
-                    }).error(deuErro);
         };
 
     $scope.webcamFoto = function () {

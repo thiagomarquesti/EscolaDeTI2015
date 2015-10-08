@@ -1,18 +1,34 @@
-<div class="container" ng-controller="IndigenaController" ng-init="carregarIndio(371)">
-    
-    <div id="fotoPessoa" class="col-md-3 col-xs-12">
-        <img src="" />
+<div class="container">
+
+    <div id="fotoPessoa" class="col-md-3 col-xs-12 cantosArredondados">
+        <img src="{{urlFoto}}" width="100%" />
     </div>
-    
+
     <div id="dadosBasicosPessoa" class="col-md-9 col-xs-12">
-        <p>{{indio.codigoassindi}}</p>
-        <p>{{indio.nome}}</p>
-        <p><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i></p>
-        <p>{{indio.dataNascimento}} ({{calculaIdade(indio.datanascimento)}} anos)</p>
+        <div class="btn btn-info col-md-12">Código Assindi: {{indio.codigoassindi}}</div>
+        <div class="col-md-8 col-xs-12">
+            <fieldset>
+                <legend>Nome:</legend>
+                <h4>{{indio.nome}}</h4>
+            </fieldset>
+        </div>
+        <div class="col-md-4 col-xs-6"><fieldset >
+                <legend>Gênero:</legend>
+                <p><i class="{{ehMeninoMenina[indio.genero].icone}}" style="color: {{ehMeninoMenina[indio.genero].cor}};"></i> {{indio.genero}}</p>
+            </fieldset>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <fieldset >
+                <legend>Idade:</legend>
+                <p>{{indio.dataArrumada}} ({{calculaIdade(indio.datanascimento)}} anos)</p>
+            </fieldset>
+        </div>
+
+
     </div>
-    
+
     <div id="dadosComplementaresPessoa" class="col-md-12">
         
     </div>
-    
+
 </div>
