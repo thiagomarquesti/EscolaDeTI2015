@@ -1,4 +1,4 @@
-<div class="panel panel-info" >
+<div ng-init="carregar()" class="panel panel-info" >
     <div class="panel-heading"> 
         <div class="panel-title">Usuário do sistema</div>
         <div class="panel-options">
@@ -7,22 +7,22 @@
     </div>
     <div class="panel-body">
         <form name="formCadUser" novalidate class="form-horizontal form-groups-bordered">
-            
+
             <div class="form-group" ng-init="carregaColoaborador()">
                 <label for="perfis" style="margin-top: 0.5%;" class="col-md-2 control-label">Colaborador:</label>
-                <multiselect id="pessoa" name="pessoa" class="input-lg" 
+                <multiselect id="pessoa" name="pessoa" class="input-lg" required=""
                              ng-model="usuario.pessoa" 
                              multiple="false" 
                              ms-selected ="{{coloaborador.nome}}" 
-                             ms-header="Selecione o colaborador"
-                             options="coloaborador.nome for coloaborador in coloaboradores" 
+                             ms-header="*  Selecione o colaborador"
+                             options="coloaborador.nome for coloaborador in colaboradores" 
                              scroll-after-rows="8">
                 </multiselect>
             </div>
 
             <div class="form-group"> 
                 <label for="login" class="col-md-2 control-label">Login:</label>
-                <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" class="form-control" ng-change="validarLogin()"></div>
+                <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" class="form-control requerido" required="" ng-change="validarLogin()"></div>
             </div>
 
             <div ng-show="erroNoLogin" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label for="senha" class="col-md-2 control-label">Senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" class="form-control" ng-change="validarSenha()"></div>
+                <div class="col-md-10"><input type="password" ng-model="usuario.senha.senha" id="senha" name="senha" class="form-control requerido" required="" ng-change="validarSenha()"></div>
             </div>      
 
             <div ng-show="erroNaSenha" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label for="rsenha" class="col-md-2 control-label">Confirmar senha: </label>
-                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" class="form-control" ng-change="validarSenhaConferem()"></div>
+                <div class="col-md-10"><input type="password" ng-model="usuario.rsenha" id="rsenha" name="rsenha" class="form-control requerido" required="" ng-change="validarSenhaConferem()"></div>
             </div>
 
             <div ng-show="erroSenhaDiferente" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
@@ -55,11 +55,11 @@
 
             <div class="form-group" ng-init="carregaPerfis()">
                 <label for="perfis" style="margin-top: 0.5%;" class="col-md-2 control-label">Adicionar Perfis:</label>
-                <multiselect id="perfis" name="perfis" class="input-lg" 
+                <multiselect id="perfis" name="perfis" class="input-lg"
                              ng-model="usuario.perfis" 
                              multiple="true" 
                              ms-selected ="{{perfis.selected.length}}" 
-                             ms-header="Selecione os Perfis"
+                             ms-header="*  Selecione os Perfis"
                              options="perfil.nome for perfil in perfis" 
                              scroll-after-rows="8">
                 </multiselect>
@@ -71,7 +71,8 @@
             </div>
         </form>
     </div>
-    <div class="modal fade" id="perfilModal" data-backdrop="true">
+</div>
+<div class="modal fade" id="perfilModal" data-backdrop="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,4 +112,8 @@
         </div>
     </div>
 </div>
+<div>
+    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCadUser.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCadUser.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>

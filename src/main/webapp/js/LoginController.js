@@ -61,8 +61,7 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
                             $http.post("/login/efetuarlogin", $scope.login)
                                     .success(function (data) {
                                         window.location.href = "/";
-                                    }
-                                    )
+                                    })
                                     .error(erroLogin);
                         }
                         else {

@@ -215,14 +215,14 @@ public class InicializadorItemAcesso {
         ItemAcesso menuFisicaNovo;
         menuFisicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Física", "#/Fisica/novo");
         if (menuFisicaNovo == null) {
-            menuFisicaNovo = new ItemAcesso("Cadastrar Pessoa Física", "#/Fisica/novo", "fa-plus", menuPessoa);
+            menuFisicaNovo = new ItemAcesso("Cadastrar Pessoa Física", "#/Fisica/nova", "fa-plus", menuPessoa);
             itensAcesso.add(menuFisicaNovo);
         }
         // PESSOA JURIDICA
         ItemAcesso menuJuridicaNovo;
         menuJuridicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Jurídica", "#/Juridica/novo");
         if (menuJuridicaNovo == null) {
-            menuJuridicaNovo = new ItemAcesso("Cadastrar Pessoa Jurídica", "#/Juridica/novo", "fa-plus", menuPessoa);
+            menuJuridicaNovo = new ItemAcesso("Cadastrar Pessoa Jurídica", "#/Juridica/nova", "fa-plus", menuPessoa);
             itensAcesso.add(menuJuridicaNovo);
         }
 

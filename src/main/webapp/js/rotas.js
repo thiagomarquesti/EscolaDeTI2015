@@ -34,18 +34,18 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Pessoa/listar', {
         templateUrl: 'views/perfilListar.html',
         controller: 'UsuarioController'
-    }).when('/Juridica/novo', {
+    }).when('/Juridica/nova', {
         templateUrl: 'views/pessoaJuridicaCadastrar.html',
         controller: 'UsuarioController'
     }).when('/Juridica/editar/:id', {
         templateUrl: 'views/pessoaJuridicaCadastrar.html',
         controller: 'UsuarioController'
-    }).when('/Fisica/novo', {
+    }).when('/Fisica/nova', {
         templateUrl: 'views/pessoaFisicaCadastrar.html',
-        controller: 'UsuarioController'
+        controller: 'PessoaFisicaController'
     }).when('/Fisica/editar/:id', {
         templateUrl: 'views/pessoaFisicaCadastrar.html',
-        controller: 'UsuarioController'
+        controller: 'PessoaFisicaController'
 //------- Convênio -------        
     }).when('/Convenio/novo', {
         templateUrl: 'views/convenioCadastrar.html',

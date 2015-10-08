@@ -1,12 +1,27 @@
 package br.unicesumar.time05.pessoafisica;
 
+import br.unicesumar.time05.cidade.Cidade;
+import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
+import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.funcao.FuncaoRepository;
+import br.unicesumar.time05.genero.Genero;
+import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.rowmapper.MapRowMapper;
 import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.telefone.Telefone;
+import br.unicesumar.time05.upload.UploadService;
+import br.unicesumar.time05.usuario.Usuario;
 import classesbase.ServiceBase;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
@@ -17,31 +32,34 @@ import org.springframework.stereotype.Component;
 
 @Transactional
 @Component
-public class FisicaService extends ServiceBase<PessoaFisica, Long, FisicaRepository>{
+public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRepository> {
 
     @Autowired
-    private FisicaRepository fisicaRepo;
-
+    private CidadeRepository cidadeRepo;
     @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-    
+    private FuncaoRepository funcaoRepo;
+    @Autowired
+    private UploadService uploadService;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_fisica pf "
-                + "    ON pf.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado";
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " INNER JOIN pessoa_fisica pf "
+            + "    ON pf.idpessoa = p.idpessoa"
+            + " INNER JOIN pessoa_telefone pt "
+            + "    ON pt.pessoa_id = p.idpessoa"
+            + " INNER JOIN telefone t "
+            + "    ON pt.telefone_id = t.idtelefone"
+            + " INNER JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " INNER JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " INNER JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " INNER JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado";
 
     @Override
     protected void setConstrutorDeSQL(br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL aConstrutorDeSQL) {
@@ -49,10 +67,35 @@ public class FisicaService extends ServiceBase<PessoaFisica, Long, FisicaReposit
     }
 
     @Override
+    public void salvar(CriarPessoaFisica aPessoaFisica) {
+        PessoaFisica pessoaFisica;
+        Cidade cidade = cidadeRepo.findOne(aPessoaFisica.getCodigoibge());
+        Endereco end = new Endereco(aPessoaFisica.getLogradouro(), aPessoaFisica.getNumero(), aPessoaFisica.getBairro(), aPessoaFisica.getComplemento(), aPessoaFisica.getCep(), cidade);
+        pessoaFisica = new PessoaFisica(aPessoaFisica, end, funcaoRepo.findOne(aPessoaFisica.getIdfuncao()));
+        pessoaFisica.setTipoPessoa(TipoPessoa.USUÁRIO);
+        List<Telefone> telefones = pessoaFisica.getTelefones();
+        if (telefones.get(0).equals(telefones.get(1))) {
+            telefones.remove(1);
+        }
+        telefones.remove("");
+        pessoaFisica.setTelefones(telefones);
+
+        try {
+            repository.saveAndFlush(pessoaFisica);
+            if (aPessoaFisica.getImgSrc() != null && aPessoaFisica.getImgSrc().startsWith("data:image/jpeg;base64")) {
+                uploadService.uploadWebcam(aPessoaFisica.getImgSrc(), pessoaFisica.getIdpessoa(), "users");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(SQLConsultaFisica);
     }
-    
+
     @Override
     public RetornoConsultaPaginada listar() {
         return query.executeComPaginacao(SQLConsultaFisica, "p.nome", new ParametrosConsulta());
@@ -68,22 +111,8 @@ public class FisicaService extends ServiceBase<PessoaFisica, Long, FisicaReposit
         return repository.findOne(aId);
     }
 
-    public boolean verificarEmail(Email aEmail) {
-        if (aEmail != null && aEmail.verificarValido()) {
-            final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT email FROM pessoa WHERE email = :aEmail", params, new MapRowMapper());
-            if (!pessoa.isEmpty()) {
-                return false;
-            }
-            return true;
-        } else {
-            throw new RuntimeException("Campo email vazio!");
-        }
-    }
-
     public void trocarTipoPessoa(Long aPessoaId, String tipo) {
-        PessoaFisica pessoa = fisicaRepo.getOne(aPessoaId);
+        PessoaFisica pessoa = repository.getOne(aPessoaId);
         switch (tipo) {
             case "USUÁRIO":
                 pessoa.setTipoPessoa(TipoPessoa.USUÁRIO);
@@ -98,14 +127,62 @@ public class FisicaService extends ServiceBase<PessoaFisica, Long, FisicaReposit
                 pessoa.setTipoPessoa(TipoPessoa.JURÍDICA);
                 break;
         }
-        fisicaRepo.save(pessoa);
+        repository.save(pessoa);
+    }
+
+    public Map<String, String> verificarCpf(CPF aCpf, Long aUsuarioId) {
+        Map<String, String> retorno = new HashMap<>();
+        if (aCpf.valido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aCpf", aCpf.getCpf());
+            params.addValue("aId", aUsuarioId);
+            List<Map<String, Object>> usuario = query.execute("SELECT idpessoa, cpf FROM pessoa_fisica WHERE cpf = :aCpf AND idpessoa <> :aId", params);
+            if (!usuario.isEmpty()) {
+                retorno.put("retorno", "existe");
+            } else {
+                retorno.put("retorno", "valido");
+            }
+        } else {
+            retorno.put("retorno", "invalido");
+        }
+        return retorno;
+    }
+
+    public Map<String, String> verificarCpf(CPF aCpf) {
+        Map<String, String> retorno = new HashMap<>();
+        if (aCpf.valido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aCpf", aCpf.getCpf());
+            List<Map<String, Object>> usuario = query.execute("SELECT cpf FROM pessoa_fisica WHERE cpf = :aCpf", params);
+            if (!usuario.isEmpty()) {
+                retorno.put("retorno", "existe");
+            } else {
+                retorno.put("retorno", "valido");
+            }
+        } else {
+            retorno.put("retorno", "invalido");
+        }
+        return retorno;
+    }
+    public boolean verificarEmail(Email aEmail) {
+        if (aEmail!=null && aEmail.verificarValido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail.getEmail());
+            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            if (!usuario.isEmpty()) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new RuntimeException("Campo email vazio!");
+        }
     }
 
     boolean verificarEmail(String aEmail, Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aEmail", aEmail);
         params.addValue("aId", aPessoaId);
-        List<Map<String, Object>> fisica = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+        List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
         if (!fisica.isEmpty()) {
             return false;
         }

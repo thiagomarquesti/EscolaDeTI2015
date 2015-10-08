@@ -5,6 +5,7 @@ import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.funcao.Funcao;
 import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
@@ -19,28 +20,38 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
-public class PessoaFisica extends Pessoa implements Serializable{
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
+public class PessoaFisica extends Pessoa implements Serializable {
 
     @CampoConsulta
     @Embedded
     @Column(unique = true, nullable = false)
     private CPF cpf;
-    
+
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
-    
+
     @CampoConsulta
     @Temporal(TemporalType.DATE)
     private Date datanascimento;
+
+    @CampoConsulta
+    @ManyToOne(optional = true)
+    private Funcao funcao;
+
+    @Transient
+    private String imgSrc;
 
     public PessoaFisica() {
     }
@@ -60,6 +71,25 @@ public class PessoaFisica extends Pessoa implements Serializable{
         super(nome, telefones, email);
         this.cpf = cpf;
         this.genero = genero;
+    }
+    public PessoaFisica(CriarPessoaFisica u, Endereco endereco, Funcao funcao) {
+        this(u.getCpf(), u.getGenero(), u.getNome(), u.getTelefones(), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
+        this.funcao = funcao;
+    }
+
+    public void alterar(CriarPessoaFisica aUsuario) {
+        this.setNome(aUsuario.getNome());
+        this.setTelefones(aUsuario.getTelefones());
+        this.setEmail(aUsuario.getEmail());
+        this.setDatanascimento(aUsuario.getDatanasc());
+        this.setTipoPessoa(TipoPessoa.USUÁRIO);
+        this.setCpf(aUsuario.getCpf());
+        this.setGenero(aUsuario.getGenero());
+        this.getEndereco().setLogradouro(aUsuario.getLogradouro());
+        this.getEndereco().setNumero(aUsuario.getNumero());
+        this.getEndereco().setBairro(aUsuario.getBairro());
+        this.getEndereco().setComplemento(aUsuario.getComplemento());
+        this.getEndereco().setCep(aUsuario.getCep());
     }
 
     public CPF getCpf() {
@@ -85,6 +115,22 @@ public class PessoaFisica extends Pessoa implements Serializable{
 
     public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
+    }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 
     @Override
