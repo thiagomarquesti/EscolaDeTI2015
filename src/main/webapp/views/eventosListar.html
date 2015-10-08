@@ -23,12 +23,12 @@
                         
                         <th>
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='Data Termino'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataTermino', busca.dataTermino, 'ok', true)">Data Termino</a>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datafinal', busca.dataTermino, 'ok', true)">Data Termino</a>
                         </th>
                         
                         <th>
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='Esta no Calendário'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataTermino', busca.calendario, 'ok', true)">Calendário</a>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'visualizarnocalendario', busca.calendario, 'ok', true)">Calendário</a>
                         </th>
                         
                         <th>
@@ -39,13 +39,16 @@
                 <tbody ng-init="atualizarListagens(busca.numregistros, 1,campoPrincipal,'', '', '')">
                     <tr ng-repeat='c in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{c.descricao}}</td>
+                        <td> {{dateToData(c.datainicial)}}</td>
+                        <td> {{dateToData(c.datafinal)}}</td>
+                        <td>{{taNoCalendario(c.visualizarnocalendario)}}</td>
+                        
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editarEvento(c)">Editar</a></li>
                                     <li><a ng-click="deletarEvento(c)">Excluir</a></li>
                                 </ul>
                             </div>
@@ -53,11 +56,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="panel-footer">Registros encontrados: 0</div>
+            <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
         </div>
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-        <a ng-href="#/Evento/novo" class="btn btn-success">Cadastrar novo</a>
+        <a ng-href="#/Eventos/novo" class="btn btn-success">Cadastrar novo</a>
     </div>
 </div>     
