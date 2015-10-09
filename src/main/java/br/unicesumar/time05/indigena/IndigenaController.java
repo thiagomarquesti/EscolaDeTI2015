@@ -22,6 +22,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,4 +93,27 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
  // ******************************************************************      
     }
 
+    @RequestMapping(value = "/rel2", method = RequestMethod.GET)
+    public void verifcarDescricao2(HttpServletResponse response) throws JRException, SQLException, IOException {
+        // compilacao do JRXML
+        URL reportResource = getClass().getClassLoader().getResource("./relatorios/teste01.jrxml");
+        JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());  
+      
+        //JasperPrint print = JasperFillManager.fillReport(report, new HashMap<String, Object>(), dataSource.getConnection());  
+        JasperPrint print = JasperFillManager.fillReport(report, new HashMap<String, Object>(), dataSource.getConnection());  
+        
+        File pastaUsuario = new File(System.getProperty("user.dir"));
+        File pdf = new File(pastaUsuario, String.format("relatorioPessoas_%s.pdf", System.nanoTime()));
+        System.out.println("Imprimindo arquivo " + pdf);
+        JasperExportManager.exportReportToPdfFile(print, pdf.getAbsolutePath());
+        
+        response.setHeader("Content-Type", "application/pdf");
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(IOUtils.toByteArray(new FileInputStream(pdf)));
+        outputStream.flush();
+        outputStream.close();
+        
+        System.out.println("Relatório gerado.");
+    }
+    
 }
