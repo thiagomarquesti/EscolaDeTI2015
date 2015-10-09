@@ -2,7 +2,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar pessoa";
-        $scope.ent = $rootScope.ent = "fisica";
+        $scope.ent = $rootScope.ent = "pessoa/fisica";
         $scope.campoPrincipal = 'nome';
         $rootScope.tipoOrdem = 'asc';
 
@@ -33,11 +33,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         function novaPessoaFisica() {
             $scope.fisica = {
                 nome: "",
-                telefones: [{
-                        telefone: ""
-                    }, {
-                        telefone: ""
-                    }],
+                telefone: "",
+                telefonesecundario: "",
                 email: {
                     email: ""
                 },
@@ -63,11 +60,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         function criarPessoaFisicaParaEditar() {
             $scope.fisica = {
                 nome: "",
-                telefones: [{
-                        telefone: ""
-                    }, {
-                        telefone: ""
-                    }],
+                telefone: "",
+                telefonesecundario: "",
                 email: {
                     email: ""
                 },
@@ -105,7 +99,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                         .error(deuErro);
             }
             else {
-                console.log($scope.fisica);
+//                console.log($scope.fisica);
                 $scope.fisica.idpessoa = $routeParams.id;
                 console.log($scope.fisica);
                 $http.put("/pessoa/fisica", $scope.fisica)
@@ -130,6 +124,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 $timeout(function () {
                     $http.get("/pessoa/fisica/obj/" + $routeParams.id)
                             .success(function (data) {
+
                                 criarPessoaFisicaParaEditar();
                                 $scope.fisica.idpessoa = $routeParams.id;
                                 $scope.fisica.nome = data.nome;
@@ -152,10 +147,10 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                                 $scope.fisica.numero = data.endereco.numero;
                                 $scope.fisica.complemento = data.endereco.complemento;
                                 $scope.fisica.bairro = data.endereco.bairro;
-                                $scope.fisica.telefones[0].telefone = (data.telefones[0] != undefined) ? data.telefones[0].telefone : "";
-                                if (data.telefones[1] != undefined) {
-                                    $scope.fisica.telefones[1].telefone = data.telefones[1].telefone;
-                                }
+                                console.log(data.telefone.telefone);
+                                $scope.fisica.telefone = data.telefone;
+                                console.log($scope.fisica.telefone.telefone);
+                                $scope.fisica.telefonesecundario = data.telefonesecundario;
                                 $scope.fisica.tipo = data.tipo;
                                 $scope.fisica.imgSrc = data.imgSrc;
 

@@ -14,7 +14,8 @@ public class CriarPessoaFisica implements Serializable{
 
     private Long idpessoa;
     private String nome;
-    private List<Telefone> telefones;
+    private Telefone telefone;
+    private Telefone telefonesecundario;
     private Email email;
     private String logradouro;
     private String numero;
@@ -33,10 +34,11 @@ public class CriarPessoaFisica implements Serializable{
     public CriarPessoaFisica() {
     }
     
-    public CriarPessoaFisica(Long idpessoa, String nome, List<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
+    public CriarPessoaFisica(Long idpessoa, String nome, Telefone telefone, Telefone telefonesecundario, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
         this.idpessoa = idpessoa;
         this.nome = nome;
-        this.telefones = telefones;
+        this.telefone = telefone;
+        this.telefonesecundario = telefonesecundario;
         this.email = email;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -69,12 +71,20 @@ public class CriarPessoaFisica implements Serializable{
         this.nome = nome;
     }
 
-    public List<Telefone> getTelefones() {
-        return telefones;
+    public Telefone getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<Telefone> telefones) {
-        this.telefones = telefones;
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    public Telefone getTelefonesecundario() {
+        return telefonesecundario;
+    }
+
+    public void setTelefonesecundario(Telefone telefonesecundario) {
+        this.telefonesecundario = telefonesecundario;
     }
 
     public Email getEmail() {

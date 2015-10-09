@@ -11,7 +11,6 @@ import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -60,26 +59,27 @@ public class PessoaFisica extends Pessoa implements Serializable {
         super(nome, email);
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
-        super(nome, telefones, email, endereco, tipoPessoa);
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Telefone telefoneP, Telefone telefoneS, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
+        super(nome, telefoneP, telefoneS, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
         this.datanascimento = datanasc;
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email) {
-        super(nome, telefones, email);
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Telefone telefoneP, Telefone telefoneS, Email email) {
+        super(nome, telefoneP, telefoneS, email);
         this.cpf = cpf;
         this.genero = genero;
     }
-    public PessoaFisica(CriarPessoaFisica u, Endereco endereco, Funcao funcao) {
-        this(u.getCpf(), u.getGenero(), u.getNome(), u.getTelefones(), u.getEmail(), endereco, u.getTipoPessoa(), u.getDatanasc());
+    public PessoaFisica(CriarPessoaFisica p, Endereco endereco, Funcao funcao) {
+        this(p.getCpf(), p.getGenero(), p.getNome(), p.getTelefone(),p.getTelefonesecundario(), p.getEmail(), endereco, p.getTipoPessoa(), p.getDatanasc());
         this.funcao = funcao;
     }
 
     public void alterar(CriarPessoaFisica aUsuario) {
         this.setNome(aUsuario.getNome());
-        this.setTelefones(aUsuario.getTelefones());
+        this.setTelefone(aUsuario.getTelefone());
+        this.setTelefonesecundario(aUsuario.getTelefonesecundario());
         this.setEmail(aUsuario.getEmail());
         this.setDatanascimento(aUsuario.getDatanasc());
         this.setTipoPessoa(TipoPessoa.USUÁRIO);

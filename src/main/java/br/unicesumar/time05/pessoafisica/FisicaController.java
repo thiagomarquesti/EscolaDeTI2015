@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FisicaController extends ControllerBase<CriarPessoaFisica, Long, FisicaService> {
 
     @Override
-    public Object getObjeto(Long aId) {
+    public Object getObjeto(@PathVariable Long aId) {
         return (PessoaFisica) service.getObjeto(aId); //To change body of generated methods, choose Tools | Templates.
     }
 

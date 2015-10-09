@@ -10,7 +10,6 @@ import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
-import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.text.SimpleDateFormat;
@@ -35,22 +34,33 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, t.telefone,"
-            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+    final String SQLConsultaFisicaCompleta = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, p.telefone,"
+            + " p.telefonesecundario, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
             + "FROM pessoa p"
-            + " INNER JOIN pessoa_fisica pf "
+            + " LEFT JOIN pessoa_fisica pf "
             + "    ON pf.idpessoa = p.idpessoa"
-            + " INNER JOIN pessoa_telefone pt "
-            + "    ON pt.pessoa_id = p.idpessoa"
-            + " INNER JOIN telefone t "
-            + "    ON pt.telefone_id = t.idtelefone"
-            + " INNER JOIN endereco ende "
+            + " LEFT JOIN endereco ende "
             + "    ON p.endereco_id = ende.idendereco"
-            + " INNER JOIN endereco_cidade ec "
+            + " LEFT JOIN endereco_cidade ec "
             + "    ON ende.idendereco = ec.endereco_id"
-            + " INNER JOIN cidade c"
+            + " LEFT JOIN cidade c"
             + "    ON ec.cidade_id = c.codigoibge"
-            + " INNER JOIN uf u"
+            + " LEFT JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado";
+
+            //nome, telefone, email, tipo, cidade, cpf/cnpj
+    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, p.telefone,"
+            + " c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " LEFT JOIN pessoa_fisica pf "
+            + "    ON pf.idpessoa = p.idpessoa"
+            + " LEFT JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " LEFT JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " LEFT JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " LEFT JOIN uf u"
             + "    ON c.estado_codigoestado = u.codigoestado";
 
     @Override
@@ -65,12 +75,6 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         Endereco end = new Endereco(aPessoaFisica.getLogradouro(), aPessoaFisica.getNumero(), aPessoaFisica.getBairro(), aPessoaFisica.getComplemento(), aPessoaFisica.getCep(), cidade);
         pessoaFisica = new PessoaFisica(aPessoaFisica, end, funcaoRepo.findOne(aPessoaFisica.getIdfuncao()));
         pessoaFisica.setTipoPessoa(TipoPessoa.USUÁRIO);
-        List<Telefone> telefones = pessoaFisica.getTelefones();
-        if (telefones.get(0).equals(telefones.get(1))) {
-            telefones.remove(1);
-        }
-        telefones.remove("");
-        pessoaFisica.setTelefones(telefones);
 
         try {
             repository.saveAndFlush(pessoaFisica);
@@ -81,6 +85,18 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             System.out.println(e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void alterar(CriarPessoaFisica aFisica) {
+        PessoaFisica fisica = repository.findOne(aFisica.getIdpessoa());
+        fisica.alterar(aFisica);
+        fisica.getEndereco().setCidade(cidadeRepo.findOne(aFisica.getCodigoibge()));
+        fisica.setFuncao(funcaoRepo.findOne(aFisica.getIdfuncao()));
+        if (aFisica.getImgSrc() != null && aFisica.getImgSrc().startsWith("data:image/jpeg;base64")) {
+            uploadService.uploadWebcam(aFisica.getImgSrc(), aFisica.getIdpessoa(), "users");
+        }
+        repository.save(fisica);
     }
 
     @Override

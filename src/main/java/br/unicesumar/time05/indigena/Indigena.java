@@ -64,7 +64,7 @@ public class Indigena implements Serializable {
                 @JoinColumn(name = "convenio_id", referencedColumnName = "idconvenio")})
     private Set<Convenio> convenio;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Embedded
     private Telefone telefone;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -31,13 +31,13 @@ public class PessoaJuridica extends Pessoa implements Serializable{
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
-        super(nome, telefones, email, endereco, tipoPessoa);
+    public PessoaJuridica(Cnpj cnpj, String nome, Telefone telefoneP, Telefone telefoneS, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+        super(nome, telefoneP, telefoneS, email, endereco, tipoPessoa);
         this.cnpj = cnpj;
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email) {
-        super(nome, telefones, email);
+    public PessoaJuridica(Cnpj cnpj, String nome, Telefone telefoneP, Telefone telefoneS, Email email) {
+        super(nome, telefoneP, telefoneS, email);
         this.cnpj = cnpj;
     }
 

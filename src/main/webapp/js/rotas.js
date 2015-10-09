@@ -9,8 +9,6 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
         templateUrl: 'views/usuarioCadastrar.html',
-//        templateUrl: 'views/pessoaFisicaCadastrar.html',
-//        templateUrl: 'views/pessoaJuridicaCadastrar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/editar/:id', {
         templateUrl: 'views/usuarioCadastrar.html',
@@ -32,8 +30,8 @@ module.config(function($routeProvider, $locationProvider) {
     
 //------- Rotas do Pessoa --------
     }).when('/Pessoa/listar', {
-        templateUrl: 'views/perfilListar.html',
-        controller: 'UsuarioController'
+        templateUrl: 'views/pessoaListar.html',
+        controller: 'PessoaFisicaController'
     }).when('/Juridica/nova', {
         templateUrl: 'views/pessoaJuridicaCadastrar.html',
         controller: 'UsuarioController'

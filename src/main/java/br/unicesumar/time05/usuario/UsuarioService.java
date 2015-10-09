@@ -8,7 +8,6 @@ import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
-import br.unicesumar.time05.pessoafisica.PessoaFisica;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.text.SimpleDateFormat;
@@ -111,7 +110,9 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             if(repository.count()<1){
                 aEntidade.setPerfis(perfilRepo.findAll());
             }
-            aEntidade.setNome(aEntidade.getPessoa().getNome());
+            if(aEntidade.getPessoa() != null)
+                aEntidade.setNome(aEntidade.getPessoa().getNome());
+            
             repository.save(aEntidade);
         } catch (Exception e) {
             System.out.println(e);
