@@ -13,18 +13,24 @@
                 
                 <div id="dadosBasicosPessoa" class="col-md-9 col-xs-12">
                     <div class="btn btn-info col-md-12 col-xs-12">Código Assindi: {{indio.codigoassindi}}</div>
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-6 col-xs-12">
                         <fieldset>
                             <legend>Nome:</legend>
                             <p>{{indio.nome}}</p>
                         </fieldset>
                     </div>
-                    <div class="col-md-4 col-xs-6"><fieldset >
+                    <div class="col-md-3 col-xs-4"><fieldset >
                             <legend>Gênero:</legend>
                             <p><i class="{{ehMeninoMenina[indio.genero].icone}}" style="color: {{ehMeninoMenina[indio.genero].cor}};"></i> {{indio.genero}}</p>
                         </fieldset>
                     </div>
-                    <div class="col-md-3 col-xs-6">
+                    <div class="col-md-3 col-xs-4">
+                        <fieldset>
+                            <legend>CPF:</legend>
+                            <p>{{indio.cpfInformado}}</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-3 col-xs-4">
                         <fieldset >
                             <legend>Idade:</legend>
                             <p>{{indio.dataArrumada}} ({{calculaIdade(indio.datanascimento)}} anos)</p>
@@ -54,10 +60,11 @@
                             <p>{{indio.telInformado}}</p>
                         </fieldset>
                     </div>
+                    
                     <div class="col-md-3 col-xs-6">
                         <fieldset>
-                            <legend>CPF:</legend>
-                            <p>{{indio.cpfInformado}}</p>
+                            <legend>SUS:</legend>
+                            <p>{{indio.codigosus}}</p>
                         </fieldset>
                     </div>
                     <div class="col-md-3 col-xs-6">
@@ -68,10 +75,37 @@
                     </div>
 
                 </div>
-
-                <div id="dadosComplementaresPessoa" class="col-md-12">
-
-                </div>
+            <div class="col-md-12 col-xs-12"></div>
+                    <div class="col-md-4 col-xs-12">
+                        <fieldset>
+                            <legend>Convênios:</legend>
+                            <p ng-repeat="conv in indio.convenio"><i class="fa fa-check"></i> {{conv.descricao}}</p>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <fieldset>
+                            <legend>Ocorrências: </legend>
+                            <table class="table table-striped datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Data da ocorrência</th>
+                                        <th>Suspenso até</th>
+                                        <th>Descricão</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="oco in indio.ocorrencia">
+                                        <td> {{dateToData(oco.dataocorrencia)}}</td>
+                                        <td> {{dateToData(oco.databloqueio)}}</td>
+                                        <td> {{oco.descricao}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">{{indio.nenhumaOcorrencia}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
 
         </div>
 

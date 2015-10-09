@@ -1,4 +1,4 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", "ServiceFuncoes", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, ServiceFuncoes, $rootScope) {
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar indígena";
@@ -78,6 +78,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
                     $http.get(busca)
                             .success(function (data) {
+//                                console.log(data);
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
@@ -101,6 +102,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 else {
                                     dados.telInformado = dados.telefone;
                                 }
+                                if (!dados.codigosus) {
+                                    dados.codigosus = "Não informado";
+                                }
+                                
+                                if(dados.ocorrencia.length == 0){
+                                    dados.nenhumaOcorrencia = "Nenhuma ocorrência para este indígena.";
+                                }
+                                
                                 $scope.indio = dados;
                                 $scope.isNovoIndio = false;
 
@@ -177,6 +186,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
             return data;
         }
+        
+        $scope.dateToData = function(valor) {
+           var data = ServiceFuncoes.dateToData(valor);
+           return data;
+        };
 
         $scope.editarIndio = function (indio) {
             $location.path("/Indigena/editar/" + indio.codigoassindi);
