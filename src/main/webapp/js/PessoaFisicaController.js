@@ -95,7 +95,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 $http.post("/pessoa/fisica", $scope.fisica)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
-                            if ($location.path() === "/Fisica/novo") {
+                            if ($location.path() === "/Fisica/nova") {
                                 $location.path("/Pessoa/listar");
                             }
                             else {
@@ -110,7 +110,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 console.log($scope.fisica);
                 $http.put("/pessoa/fisica", $scope.fisica)
                         .success(function () {
-                            toastr.success("Usuário atualizado com sucesso!");
+                            toastr.success("Pessoa atualizado com sucesso!");
                             $location.path("/Pessoa/listar");
                         })
                         .error(deuErro);
@@ -175,7 +175,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
         $scope.listarEstados = function () {
             $http.get("/uf/listar").success(function (data) {
-                $scope.estados = data;
+                $scope.estados = data.listaDeRegistros;
 //                console.log(data);
 //                console.log($scope.estados.codigoestado);
             }).error(deuErro);
@@ -183,7 +183,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
         $scope.listarCidades = function () {
             if ($scope.fisica.codigoestado !== "" && $scope.fisica.codigoestado !== undefined) {
-                console.log($scope.fisica.codigoestado);
+//                console.log($scope.fisica.codigoestado);
                 $http.get("/cidade/listarPorCodigoEstado/" + $scope.fisica.codigoestado).success(function (data) {
                     $scope.cidades = data;
                 }).error(deuErro);

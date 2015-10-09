@@ -9,25 +9,17 @@ import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
 import br.unicesumar.time05.funcao.FuncaoRepository;
-import br.unicesumar.time05.genero.Genero;
-import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
-import br.unicesumar.time05.rowmapper.MapRowMapper;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import br.unicesumar.time05.upload.UploadService;
-import br.unicesumar.time05.usuario.Usuario;
 import classesbase.ServiceBase;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Transactional
@@ -164,8 +156,9 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         }
         return retorno;
     }
+
     public boolean verificarEmail(Email aEmail) {
-        if (aEmail!=null && aEmail.verificarValido()) {
+        if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail.getEmail());
             List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
@@ -178,15 +171,19 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         }
     }
 
-    boolean verificarEmail(String aEmail, Long aPessoaId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aEmail", aEmail);
-        params.addValue("aId", aPessoaId);
-        List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
-        if (!fisica.isEmpty()) {
-            return false;
+    public boolean verificarEmail(Email aEmail, Long aPessoaId) {
+        if (aEmail != null && aEmail.verificarValido()) {
+            final MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("aEmail", aEmail);
+            params.addValue("aId", aPessoaId);
+            List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
+            if (!fisica.isEmpty()) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new RuntimeException("Campo email vazio!");
         }
-        return true;
     }
 
 }
