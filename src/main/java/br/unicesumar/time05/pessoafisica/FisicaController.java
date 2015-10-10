@@ -3,6 +3,7 @@ package br.unicesumar.time05.pessoafisica;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
+import java.io.File;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,13 @@ public class FisicaController extends ControllerBase<CriarPessoaFisica, Long, Fi
 
     @Override
     public Object getObjeto(@PathVariable Long aId) {
-        return (PessoaFisica) service.getObjeto(aId); //To change body of generated methods, choose Tools | Templates.
+                PessoaFisica p = (PessoaFisica) service.getObjeto(aId);
+        if (new File("src/main/webapp/fotos/users/" + p.getIdpessoa()+ ".jpg").exists()) {
+            p.setImgSrc("/fotos/users/" + p.getIdpessoa()+ ".jpg");
+        }else{
+            p.setImgSrc("/fotos/default.png");
+        }
+        return p;
     }
 
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)

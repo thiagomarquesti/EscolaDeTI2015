@@ -22,21 +22,19 @@
 
             <div class="form-group"> 
                 <label for="cpf" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-10"><input type="" ng-model="fisica.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf requerido"></div>
-            </div>
+                <div class="col-md-3 col-sm-4"><input type="" ng-model="fisica.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf requerido"></div>
 
-            <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
-                <span ng-show="formCad.cpf.$error.cpf">CPF invalido. </span>
-                <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
-            </div>
+                <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
+                    <span ng-show="formCad.cpf.$error.cpf">CPF invalido. </span>
+                    <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
+                </div>
 
-            <div class="form-group">
                 <label for="genero" class="col-md-2 control-label">Gênero:</label>
                 <div class="col-md-3">
                     <label for="masculino">Masculino </label>
                     <input type="radio" ng-model="fisica.genero" id="masculino" name="masculino" value="MASCULINO" required=""> &nbsp;
-                    <i class='fa fa-male'></i><i class='fa fa-female'></i>
+                    <i class='fa fa-male'></i>&nbsp;&nbsp;<i class='fa fa-female'></i>
                     &nbsp;<input type="radio" ng-model="fisica.genero" id="feminino" name="feminino" value="FEMININO" required=""> 
                     <label for="feminino"> Feminino</label>
                 </div>
@@ -67,19 +65,15 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </div>
-            </div>
 
-            <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.funcao.$error.required">Selecione uma função. </span>
-            </div>
+                <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <span ng-show="formCad.funcao.$error.required">Selecione uma função. </span>
+                </div>
 
-            <div class="form-group">
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
-                <div class="col-md-10">
-                    <div class="col-md-3 input-group">
-                        <input type="date" ng-model="fisica.datanasc" id="datanasc" name="datanasc" required="" class="form-control requerido">
-                        <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
-                    </div>
+                <div class="col-md-3 input-group">
+                    <input type="date" ng-model="fisica.datanasc" id="datanasc" name="datanasc" required="" class="form-control requerido">
+                    <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                 </div>
             </div>
 
@@ -155,12 +149,24 @@
             <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
-
+            <div class="form-group">
+                <label for="escolaridade" class="col-md-2 control-label">Tipo de Pessoa: </label>
+                <div class="col-md-3">
+                    <select name="escolaridade" ng-model="fisica.tipo" id="escolaridade" required="" class="form-control requerido">
+                        <option value="">Selecione o tipo</option>
+                        <option value="COLABORADOR">Colaborador</option>
+                        <option value="VISITANTE">Visitante</option>
+                        <option value="DOADOR">Doador</option>
+                        <option value="FORNECEDOR">Fornecedor</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="tfoto" class="col-md-2 control-label">Foto: </label>
                 <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <label for="foto" class="col-md-1 control-label">OU: </label>
                 <div class="col-md-3"><input type="file" ng-model="fisica.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+                <div class="col-md-5"><img src="{{fisica.imgSrc}}" class="img-circle" style="width: 40px;"></div>
                 <div class="modal fade" id="fotoModal" data-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">

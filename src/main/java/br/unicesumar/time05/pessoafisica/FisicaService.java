@@ -34,7 +34,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    final String SQLConsultaFisicaCompleta = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, p.telefone,"
+    final String SQLConsultaFisicaCompleta = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf as documento, p.telefone,"
             + " p.telefonesecundario, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
             + "FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
@@ -49,7 +49,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             + "    ON c.estado_codigoestado = u.codigoestado";
 
             //nome, telefone, email, tipo, cidade, cpf/cnpj
-    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf, p.telefone,"
+    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf as documento, p.telefone,"
             + " c.descricao, u.sigla "
             + "FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
@@ -74,7 +74,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         Cidade cidade = cidadeRepo.findOne(aPessoaFisica.getCodigoibge());
         Endereco end = new Endereco(aPessoaFisica.getLogradouro(), aPessoaFisica.getNumero(), aPessoaFisica.getBairro(), aPessoaFisica.getComplemento(), aPessoaFisica.getCep(), cidade);
         pessoaFisica = new PessoaFisica(aPessoaFisica, end, funcaoRepo.findOne(aPessoaFisica.getIdfuncao()));
-        pessoaFisica.setTipoPessoa(TipoPessoa.USUÁRIO);
+        pessoaFisica.setTipoPessoa(aPessoaFisica.getTipo());
 
         try {
             repository.saveAndFlush(pessoaFisica);

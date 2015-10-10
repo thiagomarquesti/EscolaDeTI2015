@@ -51,8 +51,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     cpf: ""
                 },
                 genero: "",
-                tipo: "USUÁRIO",
-                imgSrc: ""
+                tipo: "",
+                imgSrc: "/fotos/default.png"
             };
             $scope.isNovo = true;
         }
@@ -78,8 +78,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     cpf: ""
                 },
                 genero: "",
-                tipo: "USUÁRIO",
-                imgSrc: ""
+                tipo: "",
+                imgSrc: "/fotos/default.png"
             };
         }
 
@@ -153,6 +153,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                                 $scope.fisica.telefonesecundario = data.telefonesecundario;
                                 $scope.fisica.tipo = data.tipo;
                                 $scope.fisica.imgSrc = data.imgSrc;
+                                console.log($scope.fisica.imgSrc);
 
                                 $scope.isNovo = false;
                             }).error(deuErro);
@@ -200,6 +201,21 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     }).error(deuErro);
         }
         ;
+
+        $scope.ehMeninoMenina = {
+            "MASCULINO": {
+                "icone": "fa fa-male",
+                "cor": "#9CC7FF"
+            },
+            "FEMININO": {
+                "icone": "fa fa-female",
+                "cor": "#FFC4C4"
+            },
+            undefined: {
+                "icone": "fa fa-briefcase",
+                "cor": "#FFD700"
+            }
+        };
 
         $scope.webcamFoto = function () {
             $(document).ready(function () {

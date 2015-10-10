@@ -50,7 +50,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             escolaridade: "",
             estadoCivil: "",
             codigoSUS: "",
-            imgSrc:""
+            imgSrc:"/fotos/default.png"
         };
         $scope.isNovoIndio = true;
     }
@@ -74,6 +74,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 dados.conveniosselecionados = data.convenio;
                                 dados.imgSrc = data.imgSrc;
                                 $scope.indio = dados;
+                                console.log($scope.indio.imgSrc);
                                 $scope.isNovoIndio = false;
                             })
                             .error(deuErro);

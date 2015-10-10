@@ -76,20 +76,20 @@ public class PessoaFisica extends Pessoa implements Serializable {
         this.funcao = funcao;
     }
 
-    public void alterar(CriarPessoaFisica aUsuario) {
-        this.setNome(aUsuario.getNome());
-        this.setTelefone(aUsuario.getTelefone());
-        this.setTelefonesecundario(aUsuario.getTelefonesecundario());
-        this.setEmail(aUsuario.getEmail());
-        this.setDatanascimento(aUsuario.getDatanasc());
-        this.setTipoPessoa(TipoPessoa.USUÁRIO);
-        this.setCpf(aUsuario.getCpf());
-        this.setGenero(aUsuario.getGenero());
-        this.getEndereco().setLogradouro(aUsuario.getLogradouro());
-        this.getEndereco().setNumero(aUsuario.getNumero());
-        this.getEndereco().setBairro(aUsuario.getBairro());
-        this.getEndereco().setComplemento(aUsuario.getComplemento());
-        this.getEndereco().setCep(aUsuario.getCep());
+    public void alterar(CriarPessoaFisica aFisica) {
+        this.setNome(aFisica.getNome());
+        this.setTelefone(aFisica.getTelefone());
+        this.setTelefonesecundario(aFisica.getTelefonesecundario());
+        this.setEmail(aFisica.getEmail());
+        this.setDatanascimento(aFisica.getDatanasc());
+        this.setTipoPessoa(aFisica.getTipo());
+        this.setCpf(aFisica.getCpf());
+        this.setGenero(aFisica.getGenero());
+        this.getEndereco().setLogradouro(aFisica.getLogradouro());
+        this.getEndereco().setNumero(aFisica.getNumero());
+        this.getEndereco().setBairro(aFisica.getBairro());
+        this.getEndereco().setComplemento(aFisica.getComplemento());
+        this.getEndereco().setCep(aFisica.getCep());
     }
 
     public CPF getCpf() {

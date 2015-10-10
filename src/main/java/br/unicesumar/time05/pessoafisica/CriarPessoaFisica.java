@@ -8,7 +8,6 @@ import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 public class CriarPessoaFisica implements Serializable{
 
