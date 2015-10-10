@@ -87,7 +87,7 @@ public class Indigena implements Serializable {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoAssindi")},
             inverseJoinColumns = {
                 @JoinColumn(name = "idocorrencia", referencedColumnName = "idocorrencia")})
-    private List<Ocorrencia> ocorrencias = new ArrayList();
+    private List<Ocorrencia> ocorrencias;
 
     public Indigena() {
     }
@@ -120,7 +120,7 @@ public class Indigena implements Serializable {
         return ocorrencias;
     }
 
-    public void setOcorrencia(List<Ocorrencia> ocorrencia) {
+    public void setOcorrencias(List<Ocorrencia> ocorrencia) {
         this.ocorrencias.addAll(ocorrencia); // = ocorrencia;
     }
     
