@@ -76,13 +76,35 @@
 
                 </div>
             <div class="col-md-12 col-xs-12"></div>
-                    <div class="col-md-4 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
                         <fieldset>
                             <legend>Convênios:</legend>
                             <p ng-repeat="conv in indio.convenio"><i class="fa fa-check"></i> {{conv.descricao}}</p>
                         </fieldset>
                     </div>
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-3 col-xs-12">
+                        <fieldset>
+                            <legend>Inserido nas famílias:</legend>
+                            <table class="table table-striped datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Família</th>
+                                        <th>Representante</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="fam in familias">
+                                        <td> {{fam.nomefamilia}}</td>
+                                        <td> {{fam.nome}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">{{nenhumaFamilia}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
                         <fieldset>
                             <legend>Ocorrências: </legend>
                             <table class="table table-striped datatable">

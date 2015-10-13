@@ -60,6 +60,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.indioComFoto = function (codAssindi) {
             $scope.carregarIndio(codAssindi);
             getFoto(codAssindi);
+            $scope.listarFamiliasPorIndigena(codAssindi);
         };
 
         $scope.carregarIndio = function (codAssindi) {
@@ -118,6 +119,18 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 }, 100);
 
             }
+        };
+        
+        $scope.listarFamiliasPorIndigena = function (idIndigena){
+            $scope.nenhumaFamilia = "";
+            $http.get("/familia/familiasporindigena/" + idIndigena)
+                .success(function(data){
+                    $scope.familias = data;
+                    if( $scope.familias.length == 0){
+                         $scope.nenhumaFamilia = "Nenhuma família para este indígena.";
+                    }
+                })
+                .error(deuErro);
         };
         
         $scope.indioEscolaridade = {
