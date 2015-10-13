@@ -81,7 +81,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuEtniaListar;
         menuEtniaListar = this.getItemAcesso(itensAcesso, "Listar Etnia", "#/Etnia/listar");
         if (menuEtniaListar == null) {
-            menuEtniaListar = new ItemAcesso("Listar Etnia", "#/Etnia/listar", "fa-list-alt", menuEtnia);
+            menuEtniaListar = new ItemAcesso("Listar Etnia", "#/Etnia/listar", "fa-list", menuEtnia);
             itensAcesso.add(menuEtniaListar);
         }
 
@@ -103,7 +103,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuTerraIndigenaListar;
         menuTerraIndigenaListar = this.getItemAcesso(itensAcesso, "Listar Terra Indígena", "#/TerraIndigena/listar");
         if (menuTerraIndigenaListar == null) {
-            menuTerraIndigenaListar = new ItemAcesso("Listar Terra Indígena", "#/TerraIndigena/listar", "fa-list-alt", menuTerraIndigena);
+            menuTerraIndigenaListar = new ItemAcesso("Listar Terra Indígena", "#/TerraIndigena/listar", "fa-list", menuTerraIndigena);
             itensAcesso.add(menuTerraIndigenaListar);
         }
 
@@ -125,7 +125,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuIndigenaListar;
         menuIndigenaListar = this.getItemAcesso(itensAcesso, "Listar Indígena", "#/Perfil/listar");
         if (menuIndigenaListar == null) {
-            menuIndigenaListar = new ItemAcesso("Listar Indígena", "#/Indigena/listar", "fa-list-alt", menuIndigena);
+            menuIndigenaListar = new ItemAcesso("Listar Indígena", "#/Indigena/listar", "fa-list", menuIndigena);
             itensAcesso.add(menuIndigenaListar);
         }
 
@@ -134,6 +134,28 @@ public class InicializadorItemAcesso {
         if (menuIndigenaNovo == null) {
             menuIndigenaNovo = new ItemAcesso("Cadastrar Indígena", "#/Indigena/novo", "fa-plus", menuIndigena);
             itensAcesso.add(menuIndigenaNovo);
+        }
+        
+        //FAMILIA
+        ItemAcesso menuFamilia;
+        menuFamilia = this.getItemAcesso(itensAcesso, "Gerenciar Família", "");
+        if (menuFamilia == null) {
+            menuFamilia = new ItemAcesso("Gerenciar Família", "", "fa-sitemap", menu);
+            itensAcesso.add(menuFamilia);
+        }
+
+        ItemAcesso menuFamiliaListar;
+        menuFamiliaListar = this.getItemAcesso(itensAcesso, "Listar Família", "#/Familia/listar");
+        if (menuFamiliaListar == null) {
+            menuFamiliaListar = new ItemAcesso("Listar Família", "#/Familia/listar", "fa-list", menuFamilia);
+            itensAcesso.add(menuFamiliaListar);
+        }
+
+        ItemAcesso menuFamiliaNova;
+        menuFamiliaNova = this.getItemAcesso(itensAcesso, "Nova Família", "#/Familia/nova");
+        if (menuFamiliaNova == null) {
+            menuFamiliaNova = new ItemAcesso("Cadastrar Família", "#/Familia/nova", "fa-plus", menuFamilia);
+            itensAcesso.add(menuFamiliaNova);
         }
 
         //CONVENIO
@@ -147,7 +169,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuConvenioListar;
         menuConvenioListar = this.getItemAcesso(itensAcesso, "Listar Convênio", "#/Perfil/listar");
         if (menuConvenioListar == null) {
-            menuConvenioListar = new ItemAcesso("Listar Convênio", "#/Convenio/listar", "fa-list-alt", menuConvenio);
+            menuConvenioListar = new ItemAcesso("Listar Convênio", "#/Convenio/listar", "fa-list", menuConvenio);
             itensAcesso.add(menuConvenioListar);
         }
 
@@ -169,7 +191,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuUsuarioListar;
         menuUsuarioListar = this.getItemAcesso(itensAcesso, "Listar Usuário", "#/Usuario/listar");
         if (menuUsuarioListar == null) {
-            menuUsuarioListar = new ItemAcesso("Listar Usuário", "#/Usuario/listar", "fa-list-alt", menuUsuario);
+            menuUsuarioListar = new ItemAcesso("Listar Usuário", "#/Usuario/listar", "fa-list", menuUsuario);
             itensAcesso.add(menuUsuarioListar);
         }
 
@@ -191,7 +213,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuPerfilListar;
         menuPerfilListar = this.getItemAcesso(itensAcesso, "Listar Perfil", "#/Perfil/listar");
         if (menuPerfilListar == null) {
-            menuPerfilListar = new ItemAcesso("Listar Perfil", "#/Perfil/listar", "fa-list-alt", menuPerfil);
+            menuPerfilListar = new ItemAcesso("Listar Perfil", "#/Perfil/listar", "fa-list", menuPerfil);
             itensAcesso.add(menuPerfilListar);
         }
 
@@ -200,6 +222,28 @@ public class InicializadorItemAcesso {
         if (menuPerfilNovo == null) {
             menuPerfilNovo = new ItemAcesso("Cadastrar Perfil", "#/Perfil/novo", "fa-plus", menuPerfil);
             itensAcesso.add(menuPerfilNovo);
+        }
+        
+        //EVENTOS
+        ItemAcesso menuEventos;
+        menuEventos = this.getItemAcesso(itensAcesso, "Gerenciar Eventos", "");
+        if (menuEventos == null) {
+            menuEventos = new ItemAcesso("Gerenciar Eventos", "", "fa-calendar", menu);
+            itensAcesso.add(menuEventos);
+        }
+
+        ItemAcesso menuEventosListar;
+        menuEventosListar = this.getItemAcesso(itensAcesso, "Listar Eventos", "#/Eventos/listar");
+        if (menuEventosListar == null) {
+            menuEventosListar = new ItemAcesso("Listar Eventos", "#/Eventos/listar", "fa-list-alt", menuEventos);
+            itensAcesso.add(menuEventosListar);
+        }
+
+        ItemAcesso menuEventosNovo;
+        menuEventosNovo = this.getItemAcesso(itensAcesso, "Novo Eventos", "#/Evento/novo");
+        if (menuEventosNovo == null) {
+            menuEventosNovo = new ItemAcesso("Cadastrar Eventos", "#/Eventos/novo", "fa-plus", menuEventos);
+            itensAcesso.add(menuEventosNovo);
         }
 
         //FUNCAO
@@ -213,7 +257,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuFuncaoListar;
         menuFuncaoListar = this.getItemAcesso(itensAcesso, "Listar Função", "#/Funcao/listar");
         if (menuFuncaoListar == null) {
-            menuFuncaoListar = new ItemAcesso("Listar Função", "#/Funcao/listar", "fa-list-alt", menuFuncao);
+            menuFuncaoListar = new ItemAcesso("Listar Função", "#/Funcao/listar", "fa-list", menuFuncao);
             itensAcesso.add(menuFuncaoListar);
         }
 
@@ -224,27 +268,49 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuFuncaoNovo);
         }
 
+        ItemAcesso menuEstadia;
+        menuEstadia = this.getItemAcesso(itensAcesso, "Gerenciar Estadia", "");
+        if (menuEstadia == null) {
+            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-sitemap", menu);
+            itensAcesso.add(menuEstadia);
+        }
+
+        ItemAcesso menuEstadiaListar;
+        menuEstadiaListar = this.getItemAcesso(itensAcesso, "Listar Estadia", "#/Estadia/listar");
+        if (menuEstadiaListar == null) {
+            menuEstadiaListar = new ItemAcesso("Listar Estadia", "#/Estadia/listar", "fa-list-alt", menuEstadia);
+            itensAcesso.add(menuEstadiaListar);
+        }
+
+        ItemAcesso menuEstadiaNovo;
+        menuEstadiaNovo = this.getItemAcesso(itensAcesso, "Nova Estadia", "#/Estadia/novo");
+        if (menuEstadiaNovo == null) {
+            menuEstadiaNovo = new ItemAcesso("Cadastrar Estadia", "#/Estadia/nova", "fa-plus", menuEstadia);
+            itensAcesso.add(menuEstadiaNovo);
+        }
+
+        
+        
+        
         //RELATORIOS
         ItemAcesso menuRelatorios;
         menuRelatorios = this.getItemAcesso(itensAcesso, "Relatórios", "");
         if (menuRelatorios == null) {
-            menuRelatorios = new ItemAcesso("Gerenciar Relatórios", "", "fa-pencil", menu);
+            menuRelatorios = new ItemAcesso("Relatórios", "", "fa-list ", menu);
             itensAcesso.add(menuRelatorios);
         }
 
-        ItemAcesso menuListarIndigenas;
-        menuListarIndigenas = this.getItemAcesso(itensAcesso, "Listar Indígenas", "#/Relatorios/ListarIndigenas");
-        if (menuListarIndigenas == null) {
-            menuListarIndigenas = new ItemAcesso("Listar Indígenas", "#/Relatorios/ListarIndigenas", "fa-table", menuRelatorios);
-            itensAcesso.add(menuListarIndigenas);
+        ItemAcesso menuRelatoriosFamilias;
+        menuRelatoriosFamilias = this.getItemAcesso(itensAcesso, "Relatório de Famílias", "#/Relatorios/familias");
+        if (menuRelatoriosFamilias == null) {
+            menuRelatoriosFamilias = new ItemAcesso("Relatório de Famílias", "#/Relatorios/familias", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosFamilias);
         }
         
-        
-        
         //----------------------------------------------------
         //----------------------------------------------------
         //----------------------------------------------------
-        
+
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }

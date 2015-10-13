@@ -3,9 +3,12 @@ package br.unicesumar.time05.indigena;
 import br.unicesumar.time05.convenio.Convenio;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.genero.Genero;
+import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class CriarIndigena implements Serializable {
@@ -23,11 +26,12 @@ public class CriarIndigena implements Serializable {
     private EstadoCivil estadoCivil;
     private Long codigoSUS;
     private String imgSrc;
+    private List<Ocorrencia> ocorrencias = new ArrayList<Ocorrencia>();
 
     public CriarIndigena() {
     }
 
-    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS, String imgSrc) {
+    public CriarIndigena(Long codigoAssindi, String nome, CPF cpf, Long etnia, Genero genero, Date dataNascimento, Set<Convenio> convenio, Telefone telefone, Long terraIndigena, Escolaridade escolaridade, EstadoCivil estadoCivil, Long codigoSUS, String imgSrc, List<Ocorrencia> ocorrencia) {
         this.codigoAssindi = codigoAssindi;
         this.nome = nome;
         this.cpf = cpf;
@@ -41,6 +45,7 @@ public class CriarIndigena implements Serializable {
         this.estadoCivil = estadoCivil;
         this.codigoSUS = codigoSUS;
         this.imgSrc = imgSrc;
+        this.ocorrencias = ocorrencia;
     }
 
     public Long getCodigoAssindi() {
@@ -145,6 +150,14 @@ public class CriarIndigena implements Serializable {
 
     public void setImgSrc(String imgSrc) {
         this.imgSrc = imgSrc;
+    }
+
+    public List<Ocorrencia> getOcorrencias() {
+        return ocorrencias;
+    }
+
+    public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+        this.ocorrencias.addAll(ocorrencias);// = ocorrencias;
     }
 
 }

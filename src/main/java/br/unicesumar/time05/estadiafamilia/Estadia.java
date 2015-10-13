@@ -1,0 +1,134 @@
+package br.unicesumar.time05.estadiafamilia;
+
+import br.unicesumar.time05.familia.Familia;
+import br.unicesumar.time05.indigena.Indigena;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Estadia implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long idestadia;
+    private Date dataentrada;
+    private Date datasaida;
+    private String observacoesentrada;
+    private String observacoessaida;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idfamilia")
+    private Familia familia;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "estadia_indigena",
+            joinColumns = {
+                @JoinColumn(name = "idestadia", referencedColumnName = "idestadia")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
+    private List<Indigena> membros;
+
+    public Estadia() {
+    }
+
+    public Estadia(Date dataentrada, Date datasaida, String observacoesentrada, String observacoessaida, Familia familia, List<Indigena> membros) {
+        this.dataentrada = dataentrada;
+        this.datasaida = datasaida;
+        this.observacoesentrada = observacoesentrada;
+        this.observacoessaida = observacoessaida;
+        this.familia = familia;
+        this.membros = membros;
+    }
+
+    public Long getIdestadia() {
+        return idestadia;
+    }
+
+    public Date getDataentrada() {
+        return dataentrada;
+    }
+
+    public Date getDatasaida() {
+        return datasaida;
+    }
+
+    public String getObservacoesentrada() {
+        return observacoesentrada;
+    }
+
+    public String getObservacoessaida() {
+        return observacoessaida;
+    }
+
+    public Familia getFamilia() {
+        return familia;
+    }
+
+    public List<Indigena> getMembros() {
+        return membros;
+    }
+
+    public void setDataentrada(Date dataentrada) {
+        this.dataentrada = dataentrada;
+    }
+
+    public void setDatasaida(Date datasaida) {
+        this.datasaida = datasaida;
+    }
+
+    public void setObservacoesentrada(String observacoesentrada) {
+        this.observacoesentrada = observacoesentrada;
+    }
+
+    public void setObservacoessaida(String observacoessaida) {
+        this.observacoessaida = observacoessaida;
+    }
+
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
+    }
+
+    public void setMembros(List<Indigena> membros) {
+        this.membros = membros;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.idestadia);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Estadia other = (Estadia) obj;
+        if (!Objects.equals(this.idestadia, other.idestadia)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Estadia{" + "idestadia=" + idestadia + ", dataentrada=" + dataentrada + ", datasaida=" + datasaida + ", observacoesEntrada=" + observacoesentrada + ", observacoesSaida=" + observacoessaida + ", familia=" + familia + ", membros=" + membros + '}';
+    }
+
+}

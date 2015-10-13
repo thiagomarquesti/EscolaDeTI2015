@@ -35,6 +35,6 @@ public class InterceptadorDeRequisicoes extends HandlerInterceptorAdapter{
         }
         
         System.out.println("Req...." + url);
-        return false;
+        return true;
     }
 }

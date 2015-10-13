@@ -1,4 +1,3 @@
-
 <div ng-init="carregar()" class="panel panel-info">
 
     <div class="panel-heading">
@@ -31,8 +30,8 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Cadastrar</button>
-                    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Alterar</button>
+                    <button ng-show="isNovo" ng-click="salvar('cad')" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Cadastrar</button>
+                    <button ng-hide="isNovo" ng-click="salvar('cad')" ng-disabled="!formPerfil.$valid" class="btn btn-success"> Alterar</button>
                     <button ng-show="isNovo" ng-click="carregar()" class="btn btn-info">Limpar</button>
                 </div>
             </div>

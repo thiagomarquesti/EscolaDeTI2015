@@ -4,6 +4,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
     $scope.placeHolder = "Buscar função";
     $scope.ent = $rootScope.ent = "funcao";
     $scope.campoPrincipal = 'descricao';
+    $rootScope.tipoOrdem = 'asc';
 
     $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
         if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
@@ -34,87 +35,104 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
         $scope.isNovaFuncao = true;
     }
 
-    $scope.novaFuncao = function () {
-        novaFuncao();
-    }
+        function novaFuncao() {
+            $scope.funcao = {
+                descricao: ""
+            };
+            $scope.isNovaFuncao = true;
+        }
 
-    $scope.carregarFuncao = function () {
-        if ($location.path() === "/Funcao/nova") {
+        $scope.novaFuncao = function () {
             novaFuncao();
         }
-        else {
-            $http.get("/funcao/" + $routeParams.id)
+
+        $scope.carregarFuncao = function () {
+            if ($location.path() === "/Funcao/nova") {
+                novaFuncao();
+            }
+            else {
+                $http.get("/funcao/" + $routeParams.id)
+                        .success(function (data) {
+                            $scope.funcao = data;
+                            $scope.isNovaFuncao = false;
+                        })
+                        .error(deuErro);
+            }
+        };
+
+        $scope.todasFuncoes = function () {
+            $http.get("/funcao")
                     .success(function (data) {
-                        $scope.funcao = data;
-                        $scope.isNovaFuncao = false;
+                        $scope.funcoes = data;
                     })
                     .error(deuErro);
-        }
-    };
-    
-    $scope.todasFuncoes = function(){
-        $http.get("/funcao")
-            .success(function (data) {
-                $scope.funcoes = data;
-            })
-            .error(deuErro);
-    };
-    
-    $scope.atualizarFuncoes = function () {
-        $http.get("/funcao")
-                .success(function (data) {
-                    $scope.funcoes = data;
-                })
-                .error(deuErro);
-    };
+        };
 
-    $scope.editarFuncao = function (funcao) {
-        $location.path("/Funcao/editar/" + funcao.idfuncao);
-    };
+        $scope.atualizarFuncoes = function () {
+            $http.get("/funcao")
+                    .success(function (data) {
+                        $scope.funcoes = data;
+                    })
+                    .error(deuErro);
+        };
 
-    $scope.deletarFuncao = function (funcao) {
-        $http.delete("/funcao/" + funcao.idfuncao)
-                .success(function (status) {
-                    toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
-                    $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
-                })
-                .error(deuErro);
-    };
+        $scope.editarFuncao = function (funcao) {
+            $location.path("/Funcao/editar/" + funcao.idfuncao);
+            console.log(funcao.idfuncao);
+        };
 
-    $scope.salvarFuncao = function () {
-        $http.get("/funcao//verificarDescricao/" + $scope.funcao.descricao)
-            .success(function (data) {
-                if (data == false) {
-                    toastr.error("Já existe uma função cadastrada com esse nome!");
-                    $scope.funcao.descricao = "";
-                    if(!$scope.isNovaFuncao){
-                       $location.path("/Funcao/listar"); 
-                       toastr.info("Não foram feitas modificações!");
+        $scope.deletarFuncao = function (funcao) {
+            $http.delete("/funcao/" + funcao.idfuncao)
+                    .success(function (status) {
+                        toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
+                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
+                    })
+                    .error(deuErro);
+        };
+
+        $scope.salvarFuncao = function (flag) {
+
+
+            $http.get("/funcao/verificarDescricao/" + $scope.funcao.descricao)
+                    .success(function (data) {
+                        console.log(data);
+                        if (data == false) {
+                            toastr.error("Já existe uma função cadastrada com esse nome!");
+                            $scope.funcao.descricao = "";
+                            if (!$scope.isNovaFuncao) {
+                                $location.path("/Funcao/listar");
+                                toastr.info("Não foram feitas modificações!");
+                            }
+                        }
+                        else {
+                            if (flag == "modal")
+                                $scope.isNovaFuncao = true;
+                            if ($scope.isNovaFuncao) {
+                                $http.post("/funcao", $scope.funcao)
+                                        .success(function () {
+                                            if (flag == "cad")
+                                                $location.path("/Funcao/listar");
+                                            else{
+                                                novaFuncao();
+                                                $scope.getFuncoes();
+                                            }
+                                            toastr.success("Funcao inserida com sucesso!");
+                                        })
+                                        .error(deuErro);
+                            }
+                            else {
+                                $http.put("/funcao/", $scope.funcao)
+                                        .success(function () {
+                                            $location.path("/Funcao/listar");
+                                            toastr.success("Funcao atualizada com sucesso!");
+                                        })
+                                        .error(deuErro);
+                            }
+                        }
                     }
-                }
-                else {
-                    if ($scope.isNovaFuncao) {
-                        $http.post("/funcao", $scope.funcao)
-                                .success(function () {
-                                    $location.path("/Funcao/listar");
-                                    toastr.success("Funcao inserida com sucesso!");
-                                })
-                                .error(deuErro);
-                    }
-                    else {
-                        $http.put("/funcao/", $scope.funcao)
-                                .success(function () {
-                                    $location.path("/Funcao/listar");
-                                    toastr.success("Funcao atualizada com sucesso!");
-                                })
-                                .error(deuErro);
-                    }
-                }
-            }
-            ).error(deuErro);
-    };
-    
-    function deuErro() {
-        toastr.error("Algo deu errado. Tente novamente.");
-    }
-}]);
+                    ).error(deuErro);
+
+
+
+        };
+    }]);

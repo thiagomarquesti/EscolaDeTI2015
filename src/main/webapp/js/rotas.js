@@ -1,11 +1,11 @@
-module.config(function($routeProvider, $locationProvider) {
+module.config(function($routeProvider, $locationProvider) {  
 //------- Rotas do Usuário --------
     $routeProvider
     .when('/', {
         templateUrl: 'views/home.html',
         controller: 'HomeController'
     }).when('/Usuario/listar', {
-        templateUrl: 'views/usuariosListar.html',
+        templateUrl: 'views/usuarioListar.html',
         controller: 'UsuarioController'
     }).when('/Usuario/novo', {
         templateUrl: 'views/usuarioCadastrar.html',
@@ -74,6 +74,17 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/terraCadastrar.html',
         controller: 'TerraController'
     })
+    //------- Rotas da Familia --------   
+    .when('/Familia/nova', {
+        templateUrl: 'views/familiaCadastrar.html',
+        controller: 'FamiliaController'
+    }).when('/Familia/listar', {
+        templateUrl: 'views/familiaListar.html',
+        controller: 'FamiliaController'
+    }).when('/Familia/editar/:id', {
+        templateUrl: 'views/familiaCadastrar.html',
+        controller: 'FamiliaController'
+    })
     //------- Rotas do Indigena --------   
     .when('/Indigena/novo', {
         templateUrl: 'views/indigenaCadastrar.html',
@@ -84,6 +95,28 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Indigena/editar/:id', {
         templateUrl: 'views/indigenaCadastrar.html',
         controller: 'IndigenaController'
+    })
+    //------- Rotas de Estadia de familia
+    .when('/Estadia/listar', {
+        templateUrl: 'views/estadiaListar.html',
+        controller: 'EstadiaController'
+    }).when('/Estadia/nova', {
+        templateUrl: 'views/estadiaCadastrar.html',
+        controller: 'EstadiaController'
+    }).when('/Estadia/nova/:id', {
+        templateUrl: 'views/estadiaCadastrar.html',
+        controller: 'EstadiaController'
+    })
+    //------- Rotas do Evento -------- 
+    .when('/Eventos/novo', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/listar', {
+        templateUrl: 'views/eventosListar.html',
+        controller: 'EventosController'
+    }).when('/Eventos/editar/:id', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
     }).otherwise ({ redirectTo: '/' });
 
     $locationProvider.html5Mode(false);

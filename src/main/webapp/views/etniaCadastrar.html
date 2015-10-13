@@ -9,7 +9,7 @@
     </div>
     <div class="panel-body">
         <form name="formEtnia" novalidate class="form-horizontal">
-            
+
             <div class="form-group">    
                 <label for="nome" class="col-md-1 control-label">Nome:</label>
                 <div class="col-md-11"><input type="text" ng-model="etnia.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
@@ -20,14 +20,14 @@
                 <span ng-show="formEtnia.descricao.$error.minlength">Etnia deve ter mais de 3 caracteres. </span>
                 <span ng-show="formEtnia.descricao.$error.maxlength">Etnia não pode ter mais de 30 caracteres. </span>
             </div>
-            
+
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-11">
-                    <button ng-show="isNovaEtnia" ng-click="salvarEtnia()" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
-                    <button ng-show="!isNovaEtnia" ng-click="salvarEtnia()" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Alterar</button>
+                    <button ng-show="isNovaEtnia" ng-click="salvarEtnia('cad')" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+                    <button ng-show="!isNovaEtnia" ng-click="salvarEtnia('cad')" ng-disabled="!formEtnia.$valid" class="btn btn-success col-md-2">Alterar</button>
                 </div>
             </div>
-            
+
         </form>
     </div>
 </div>

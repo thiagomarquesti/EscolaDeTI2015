@@ -1,0 +1,57 @@
+<div class="panel panel-info">
+
+    <div class="panel-heading"> 
+        <div class="panel-title" >Cadastrar Evento</div>
+       
+        <div class="panel-options">
+            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="formEvento" novalidate class="form-horizontal">
+            
+            <div class="form-group">    
+                <label for="descricao" class="col-md-2 control-label">Descrição:</label>
+                <div class="col-md-5 col-sm-10"><input type="text" id="descricaoEvento" name="descricaoEvento" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50 ></div>
+            </div>
+
+<!--            <div ng-show="formTerra.descricaoEvento.$dirty && formEvento.descricaoEvento.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
+                <span ng-show="formEvento.descricaoEvento.$error.required">Preencha a descrição do evento. </span>
+                <span ng-show="formEvento.descricaoEvento.$error.minlength">A descrição do evento deve ter mais de 3 caracteres. </span>
+                <span ng-show="formEvento.descricaoEvento.$error.maxlength">A descrição do evento não pode ter mais de 50 caracteres. </span>
+            </div>-->
+            <div class="form-group">    
+           <label for="dataInicio" class="col-md-2 control-label">Data de Inicio: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="date" id="dataNascimento" name="dataInicio" class="form-control requerido" required="">
+                    </div>
+                </div>
+           </div>
+            <div class="form-group">  
+           <label for="dataTermino" class="col-md-2 control-label">Data de Termino: </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="date" id="dataNascimento" name="dataTermino" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="calendario" class="col-md-2 control-label">Gravar no Calendário: </label>
+                <div class="col-md-2">
+                    <select name="calendario" ng-model="indio.calendario" id="calendario" required="" class="form-control requerido">
+                        <option value="NAO">Não</option>
+                        <option value="SIM">Sim</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-11">
+                    <button ng-click="salvarEvento()" ng-disabled="!formEvento.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
