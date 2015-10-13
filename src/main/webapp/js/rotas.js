@@ -121,7 +121,7 @@ module.config(function($routeProvider, $locationProvider) {
     //------- Rotas de Relatorios  -------- 
     .when('/Relatorios/familia', {
         templateUrl: 'views/relfamilias.html',
-        controller: 'RelatoriosController'
+        controller: 'RelatorioController'
     })
     
     
