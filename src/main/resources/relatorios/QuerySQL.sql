@@ -48,8 +48,11 @@ FROM indigena I
   
 //retorna Familia
 SELECT f.nomefamilia,
-       f.telefone,
-       ir.nome as representanteFamilia
- FROM familia f
- inner join indigena ir
-    on ir.codigoassindi = f.idrepresentante
+	f.telefone,
+	ir.nome AS representanteFamilia,
+	ir.codigoassindi,
+	ir.cpf,
+	ir.genero
+FROM familia f
+	inner join indigena ir ON 
+	 ir.codigoassindi = f.idrepresentante
