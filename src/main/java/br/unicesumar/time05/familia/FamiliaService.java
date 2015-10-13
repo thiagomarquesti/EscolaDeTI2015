@@ -85,4 +85,27 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
         params.addValue("aIdFamilia", aIdFamilia);
         return query.execute(sql, params);
     }
+
+    List<Map<String, Object>> getFamiliasPorIndigena(Long aCodigoAssindi) {
+        String sql
+                = "SELECT f.idfamilia, "
+                + "       f.telefone, "
+                + "       f.nomefamilia, "
+                + "       f.idrepresentante, "
+                + "       ir.nome, "
+                + "       (SELECT count(fi.codigoassindi) as quantidade "
+                + "          FROM familia ff "
+                + "          JOIN familia_indigena fi ON fi.idfamilia = ff.idfamilia "
+                + "          JOIN indigena i ON i.codigoassindi = fi.codigoassindi "
+                + "         WHERE ff.idfamilia = f.idfamilia) "
+                
+                + " FROM familia_indigena fi "
+                + " LEFT JOIN familia f ON f.idfamilia = fi.idfamilia "
+                + " LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi "                
+                + "WHERE (ir.codigoassindi = :aCodigoAssindi) or (fi.codigoassindi = :aCodigoAssindi) "
+                + "GROUP BY fi.idfamilia, f.idfamilia, ir.codigoassindi ";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("aCodigoAssindi", aCodigoAssindi);
+        return query.execute(sql, params);
+    }
 }
