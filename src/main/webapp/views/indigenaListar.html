@@ -36,15 +36,13 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', '')">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{i.codigoassindi}}</td>
-                        <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  
-                            <a onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">
+                        <td onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.codigoassindi}}</td>
+                        <td onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)"><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  
                             {{i.nome}}
-                            </a>
                         </td>
-                        <td>{{calculaIdade(i.datanascimento)}} anos</td>
-                        <td>{{i.descricao}} <br> {{i.nometerra}}</td>
-                        <td>{{i.telefone}}</td>
+                        <td onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{calculaIdade(i.datanascimento)}} anos</td>
+                        <td onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.descricao}} <br> {{i.nometerra}}</td>
+                        <td onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">

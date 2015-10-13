@@ -4,6 +4,8 @@ import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.indigena.Indigena;
 import br.unicesumar.time05.indigena.IndigenaService;
 import classesbase.ServiceBase;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
@@ -29,6 +31,10 @@ public class OcorrenciaService extends ServiceBase<Ocorrencia, Long, OcorrenciaR
 
     @Override
     public void salvar(Ocorrencia aEntidade) {
+        if(aEntidade.getDatabloqueio()!=null && aEntidade.getDatabloqueio().before(new Date(31557600000l)))
+            aEntidade.setDatabloqueio(null);
+        if(aEntidade.getDatabloqueio()!=null && aEntidade.getDatabloqueio().after(aEntidade.getDataocorrencia()))
+            throw new RuntimeException("Data ocorrencia deve ser anterior a data bloqueio");
         repository.save(aEntidade);
         indigenaServicy.addOcorrencia(aEntidade);
     }

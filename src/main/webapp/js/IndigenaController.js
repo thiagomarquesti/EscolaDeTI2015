@@ -106,11 +106,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 if (!dados.codigosus) {
                                     dados.codigosus = "Não informado";
                                 }
-                                
-                                if(dados.ocorrencia.length == 0){
+
+                                if (dados.ocorrencia.length == 0) {
                                     dados.nenhumaOcorrencia = "Nenhuma ocorrência para este indígena.";
                                 }
-                                
+
                                 $scope.indio = dados;
                                 $scope.isNovoIndio = false;
 
@@ -120,26 +120,26 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
             }
         };
-        
-        $scope.listarFamiliasPorIndigena = function (idIndigena){
+
+        $scope.listarFamiliasPorIndigena = function (idIndigena) {
             $scope.nenhumaFamilia = "";
             $http.get("/familia/familiasporindigena/" + idIndigena)
-                .success(function(data){
-                    $scope.familias = data;
-                    if( $scope.familias.length == 0){
-                         $scope.nenhumaFamilia = "Nenhuma família para este indígena.";
-                    }
-                })
-                .error(deuErro);
+                    .success(function (data) {
+                        $scope.familias = data;
+                        if ($scope.familias.length == 0) {
+                            $scope.nenhumaFamilia = "Nenhuma família para este indígena.";
+                        }
+                    })
+                    .error(deuErro);
         };
-        
+
         $scope.indioEscolaridade = {
-            "FUNDAMENTALINCOMPLETO" : "Fundamental incompleto",
-            "FUNDAMENTALCOMPLETO" : "Fundamental completo",
-            "MEDIOINCOMPLETO" : "Médio incompleto",
-            "MEDIOCOMPLETO" : "Médio completo",
-            "SUPERIORINCOMPLETO" : "Superior incompleto",
-            "SUPERIORCOMPLETO" : "Superior completo"
+            "FUNDAMENTALINCOMPLETO": "Fundamental incompleto",
+            "FUNDAMENTALCOMPLETO": "Fundamental completo",
+            "MEDIOINCOMPLETO": "Médio incompleto",
+            "MEDIOCOMPLETO": "Médio completo",
+            "SUPERIORINCOMPLETO": "Superior incompleto",
+            "SUPERIORCOMPLETO": "Superior completo"
         };
 
         function getFoto(id) {
@@ -199,10 +199,13 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
             return data;
         }
-        
-        $scope.dateToData = function(valor) {
-           var data = ServiceFuncoes.dateToData(valor);
-           return data;
+
+        $scope.dateToData = function (valor) {
+            var data = "";
+            if (valor != null && valor != "" && valor != undefined) {
+                data = ServiceFuncoes.dateToData(valor);
+            }
+            return data;
         };
 
         $scope.editarIndio = function (indio) {
@@ -340,13 +343,16 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 descricao: $scope.ocorrencia.descricao,
                 idIndigena: $routeParams.id
             };
-
+            if(new Date(dataBloqueio) > new Date(dataOcorrencia) || dataBloqueio==""){
             $http.post("/ocorrencia", OcorrenciaCompleta)
                     .success(function () {
                         toastr.success("Ocorrência salva com sucesso.", "Salvo");
                         $scope.getOcorrencias();
                     })
                     .error(deuErro);
+            }else{
+                toastr.warning("Data da ocorrência deve ser anterior à data de bloqueio.");
+            }
         };
 
         function deuErro() {
