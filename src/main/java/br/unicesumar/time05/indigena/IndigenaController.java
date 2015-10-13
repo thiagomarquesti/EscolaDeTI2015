@@ -93,8 +93,10 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
  // ******************************************************************      
     }
 
-    @RequestMapping(value = "/rel2", method = RequestMethod.GET)
-    public void verifcarDescricao2(HttpServletResponse response) throws JRException, SQLException, IOException {
+    @RequestMapping(value = "/rel2/{where}", method = RequestMethod.GET)
+    public void verifcarDescricao2(HttpServletResponse response,@PathVariable String where) throws JRException, SQLException, IOException {
+        System.out.println("parametro " + where);
+        
         // compilacao do JRXML
         URL reportResource = getClass().getClassLoader().getResource("./relatorios/teste01.jrxml");
         JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());  
