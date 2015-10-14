@@ -33,7 +33,7 @@ public class OcorrenciaService extends ServiceBase<Ocorrencia, Long, OcorrenciaR
     public void salvar(Ocorrencia aEntidade) {
         if(aEntidade.getDatabloqueio()!=null && aEntidade.getDatabloqueio().before(new Date(31557600000l)))
             aEntidade.setDatabloqueio(null);
-        if(aEntidade.getDatabloqueio()!=null && aEntidade.getDatabloqueio().after(aEntidade.getDataocorrencia()))
+        if(aEntidade.getDatabloqueio()!=null && aEntidade.getDatabloqueio().before(aEntidade.getDataocorrencia()))
             throw new RuntimeException("Data ocorrencia deve ser anterior a data bloqueio");
         repository.save(aEntidade);
         indigenaServicy.addOcorrencia(aEntidade);
