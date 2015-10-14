@@ -99,12 +99,17 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 visualizarnocalendario: $scope.evento.visualizarnocalendario
             };
             console.log(eventoCorreto);
-            $http.post("/eventos", eventoCorreto)
+            if(new Date (dataInicio) < new Date (dataFinal)){
+              $http.post("/eventos", eventoCorreto)
                     .success(function () {
                         $location.path("/Eventos/listar");
                         toastr.success("Evento inserido com sucesso!");
                     })
                     .error(deuErroSalvar);
+           }
+           else{
+               toastr.warning("Datas Invalidas");
+           }
 
         };
 
