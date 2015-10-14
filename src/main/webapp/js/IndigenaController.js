@@ -1,7 +1,7 @@
 module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", "ServiceFuncoes", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, ServiceFuncoes, $rootScope) {
 
         $scope.busca = {};
-        $scope.placeHolder = "Buscar indígena";
+        $scope.placeHolder = "Buscar indÃ­gena";
         $scope.ent = $rootScope.ent = "indigena";
         $scope.campoPrincipal = 'nome';
         $rootScope.tipoOrdem = 'asc';
@@ -92,23 +92,23 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 dados.terraIndigena = data.terraindigena.idterraindigena;
                                 dados.conveniosselecionados = data.convenio;
                                 if (!dados.cpf) {
-                                    dados.cpfInformado = "CPF não informado";
+                                    dados.cpfInformado = "CPF nÃ£o informado";
                                 }
                                 else {
                                     dados.cpfInformado = dados.cpf;
                                 }
                                 if (!dados.telefone) {
-                                    dados.telInformado = "Telefone não informado";
+                                    dados.telInformado = "Telefone nÃ£o informado";
                                 }
                                 else {
                                     dados.telInformado = dados.telefone;
                                 }
                                 if (!dados.codigosus) {
-                                    dados.codigosus = "Não informado";
+                                    dados.codigosus = "NÃ£o informado";
                                 }
 
                                 if (dados.ocorrencia.length == 0) {
-                                    dados.nenhumaOcorrencia = "Nenhuma ocorrência para este indígena.";
+                                    dados.nenhumaOcorrencia = "Nenhuma ocorrÃªncia para este indÃ­gena.";
                                 }
 
                                 $scope.indio = dados;
@@ -127,7 +127,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     .success(function (data) {
                         $scope.familias = data;
                         if ($scope.familias.length == 0) {
-                            $scope.nenhumaFamilia = "Nenhuma família para este indígena.";
+                            $scope.nenhumaFamilia = "Nenhuma famÃ­lia para este indÃ­gena.";
                         }
                     })
                     .error(deuErro);
@@ -136,8 +136,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.indioEscolaridade = {
             "FUNDAMENTALINCOMPLETO": "Fundamental incompleto",
             "FUNDAMENTALCOMPLETO": "Fundamental completo",
-            "MEDIOINCOMPLETO": "Médio incompleto",
-            "MEDIOCOMPLETO": "Médio completo",
+            "MEDIOINCOMPLETO": "MÃ©dio incompleto",
+            "MEDIOCOMPLETO": "MÃ©dio completo",
             "SUPERIORINCOMPLETO": "Superior incompleto",
             "SUPERIORCOMPLETO": "Superior completo"
         };
@@ -177,7 +177,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 console.log(indioCompleto);
                 $http.post("/indigena", indioCompleto)
                         .success(function () {
-                            toastr.success("Indígena cadastrado com sucesso!");
+                            toastr.success("IndÃ­gena cadastrado com sucesso!");
                             $location.path("/Indigena/listar");
                         })
                         .error(erroCadastraIndio);
@@ -187,7 +187,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 console.log(indioCompleto);
                 $http.put("/indigena", indioCompleto)
                         .success(function () {
-                            toastr.success("Indígena atualizado com sucesso!");
+                            toastr.success("IndÃ­gena atualizado com sucesso!");
                             $location.path("/Indigena/listar");
                         })
                         .error(deuErro);
@@ -221,7 +221,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
 
         function erroCadastraIndio() {
-            toastr.error("Não foi possível cadastrar o indígena. ", "Erro");
+            toastr.error("NÃ£o foi possÃ­vel cadastrar o indÃ­gena. ", "Erro");
         }
 
         $scope.ehMeninoMenina = {
@@ -245,24 +245,25 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
 
         $scope.calculaIdade = function (data) {
+            var quantos_anos = 0;
+            if (data != undefined) {
+                var ano_aniversario = data.substring(0, 4);
+                var mes_aniversario = data.substring(5, 7);
+                var dia_aniversario = data.substring(8, 10);
 
-            var ano_aniversario = data.substring(0, 4);
-            var mes_aniversario = data.substring(5, 7);
-            var dia_aniversario = data.substring(8, 10);
+                var d = new Date,
+                        ano_atual = d.getFullYear(),
+                        mes_atual = d.getMonth() + 1,
+                        dia_atual = d.getDate(),
+                        ano_aniversario = +ano_aniversario,
+                        mes_aniversario = +mes_aniversario,
+                        dia_aniversario = +dia_aniversario,
+                        quantos_anos = ano_atual - ano_aniversario;
 
-            var d = new Date,
-                    ano_atual = d.getFullYear(),
-                    mes_atual = d.getMonth() + 1,
-                    dia_atual = d.getDate(),
-                    ano_aniversario = +ano_aniversario,
-                    mes_aniversario = +mes_aniversario,
-                    dia_aniversario = +dia_aniversario,
-                    quantos_anos = ano_atual - ano_aniversario;
-
-            if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
-                quantos_anos--;
+                if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
+                    quantos_anos--;
+                }
             }
-
             return quantos_anos < 0 ? 0 : quantos_anos;
         };
         /*  SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS  */
@@ -343,14 +344,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 descricao: $scope.ocorrencia.descricao,
                 idIndigena: $routeParams.id
             };
-            if(new Date(dataBloqueio) > new Date(dataOcorrencia) || dataBloqueio==""){
-            $http.post("/ocorrencia", OcorrenciaCompleta)
-                    .success(function () {
-                        toastr.success("Ocorrência salva com sucesso.", "Salvo");
-                        $scope.getOcorrencias();
-                    })
-                    .error(deuErro);
-            }else{
+            if (new Date(dataBloqueio) > new Date(dataOcorrencia) || dataBloqueio == "") {
+                $http.post("/ocorrencia", OcorrenciaCompleta)
+                        .success(function () {
+                            toastr.success("Ocorrência salva com sucesso.", "Salvo");
+                            $scope.getOcorrencias();
+                        })
+                        .error(deuErro);
+            } else {
                 toastr.warning("Data da ocorrência deve ser anterior à data de bloqueio.");
             }
         };
