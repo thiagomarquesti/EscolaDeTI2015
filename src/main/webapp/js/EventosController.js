@@ -99,7 +99,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 visualizarnocalendario: $scope.evento.visualizarnocalendario
             };
             console.log(eventoCorreto);
-            if(new Date (dataInicio) < new Date (dataFinal)){
+            if(new Date (dataInicio) <= new Date (dataFinal)){
               $http.post("/eventos", eventoCorreto)
                     .success(function () {
                         $location.path("/Eventos/listar");
