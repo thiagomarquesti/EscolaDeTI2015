@@ -112,12 +112,16 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
     };
 
 
-    $scope.editar = function (aId) {
-        $location.path("/Fisica/editar/" + aId);
+    $scope.editar = function (aId, genero) {
+        console.log(genero);
+        if (genero == undefined || genero == null)
+            $location.path("/Juridica/editar/" + aId);
+        else
+            $location.path("/Fisica/editar/" + aId);
     };
 
     $scope.carregar = function (tipo) {
-        if(tipo) {
+        if (tipo) {
             if ($location.path() === "/Fisica/nova") {
                 novaPessoaFisica();
             }
@@ -125,7 +129,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 $timeout(function () {
                     $http.get("/pessoa/fisica/obj/" + $routeParams.id)
                             .success(function (data) {
-                                criarPessoaFisicaParaEditar();
+
+                                novaPessoaFisica();
                                 $scope.fisica.idpessoa = $routeParams.id;
                                 $scope.fisica.nome = data.nome;
                                 $scope.fisica.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
@@ -159,11 +164,11 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 }, 100);
             }
         }
-        else{
-            
+        else {
+
         }
     };
-    
+
     $scope.calculaIdade = function (data) {
         var quantos_anos = 0;
         if (data != undefined) {
@@ -226,8 +231,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     $scope.urlFoto = data.foto;
                 }).error(deuErro);
     }
-    ;
-
     $scope.ehMeninoMenina = {
         "MASCULINO": {
             "icone": "fa fa-male",
@@ -237,11 +240,13 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             "icone": "fa fa-female",
             "cor": "#FFC4C4"
         },
-        undefined: {
+        null: {
             "icone": "fa fa-briefcase",
             "cor": "#FFD700"
         }
     };
+
+
 
     $scope.webcamFoto = function () {
         $(document).ready(function () {

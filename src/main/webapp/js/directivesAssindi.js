@@ -52,14 +52,21 @@ valida.directive('emailUnique', ['$http', function ($http) {
             link: function (scope, elem, attrs, ctrl) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
-                        if (scope.fisica.email && scope.fisica.email.email !== undefined && scope.fisica.email.email !== "") {
-                            if (scope.fisica.idpessoa) {
-                                var dados = scope.fisica.email.email + "/" + scope.fisica.idpessoa;
+                        if (scope.fisica) {
+                            var pessoa = scope.fisica;
+                            var entity = 'fisica';
+                        } else {
+                            var pessoa = scope.juridica;
+                            var entity = 'juridica';
+                        }
+                        if (pessoa.email && pessoa.email.email !== undefined && pessoa.email.email !== "") {
+                            if (pessoa.idpessoa) {
+                                var dados = pessoa.email.email + "/" + pessoa.idpessoa;
                             }
                             else {
-                                var dados = scope.fisica.email.email + "/-1";
+                                var dados = pessoa.email.email + "/-1";
                             }
-                            $http.get('/pessoa/fisica/verificarEmail/' + dados)
+                            $http.get('/pessoa/'+entity+'/verificarEmail/' + dados)
                                     .success(function (data) {
                                         ctrl.$setValidity('unemail', data);
                                     });
@@ -88,19 +95,60 @@ valida.directive('cpfUnique', ['$http', function ($http) {
                                     .success(function (data) {
                                         console.log(data.retorno);
                                         if (data.retorno == "existe") {
-                                        console.log("ex");
+                                            console.log("ex");
                                             ctrl.$setValidity('uncpf', false);
                                             ctrl.$setValidity('cpf', true);
                                         }
                                         if (data.retorno == "invalido") {
-                                        console.log("inv");
+                                            console.log("inv");
                                             ctrl.$setValidity('cpf', false);
                                             ctrl.$setValidity('uncpf', true);
                                         }
-                                        if(data.retorno == "valido"){
-                                        console.log("va");
+                                        if (data.retorno == "valido") {
+                                            console.log("va");
                                             ctrl.$setValidity('cpf', true);
-                                            ctrl.$setValidity('uncpf', true); 
+                                            ctrl.$setValidity('uncpf', true);
+                                        }
+                                    });
+                        }
+                    });
+                });
+            }
+        };
+    }]);
+
+valida.directive('cnpjUnique', ['$http', function ($http) {
+        return {
+            require: 'ngModel',
+            link: function (scope, elem, attrs, ctrl) {
+                elem.on('blur', function () {
+                    scope.$apply(function () {
+                        if (scope.juridica.cnpj.cnpj) {
+                            var cnpj = scope.juridica.cnpj.cnpj.replace("/", "p");
+                            if (scope.juridica.idpessoa) {
+                                var dados = cnpj + "/" + scope.juridica.idpessoa;
+                            }
+                            else {
+                                var dados = cnpj + "/-1";
+                            }
+                            console.log(dados);
+                            $http.get('/pessoa/juridica/verificarCnpj/' + dados)
+                                    .success(function (data) {
+                                        console.log(data.retorno);
+                                        if (data.retorno == "existe") {
+                                            console.log("ex");
+                                            ctrl.$setValidity('uncnpj', false);
+                                            ctrl.$setValidity('cnpj', true);
+                                        }
+                                        if (data.retorno == "invalido") {
+                                            console.log("inv");
+                                            ctrl.$setValidity('cnpj', false);
+                                            ctrl.$setValidity('uncnpj', true);
+                                        }
+                                        if (data.retorno == "valido") {
+                                            console.log("va");
+                                            ctrl.$setValidity('cnpj', true);
+                                            ctrl.$setValidity('uncnpj', true);
                                         }
                                     });
                         }

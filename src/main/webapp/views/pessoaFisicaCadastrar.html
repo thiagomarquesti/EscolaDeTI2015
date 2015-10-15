@@ -22,8 +22,7 @@
 
             <div class="form-group"> 
                 <label for="cpf" class="col-md-2 control-label">CPF:</label>
-                <div class="col-md-3 col-sm-4"><input type="" ng-model="fisica.cpf.cpf" id="cpf" name="cpf" required="" cpf-unique class="form-control cpf requerido"></div>
-
+                <div class="col-md-3 col-sm-4"><input type="" ng-model="fisica.cpf.cpf" id="cpf" name="cpf" required="" maxlength="14" cpf-unique class="form-control cpf requerido"></div>
                 <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                     <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
                     <span ng-show="formCad.cpf.$error.cpf">CPF invalido. </span>
@@ -236,7 +235,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" data-dismiss="modal" class="btn btn-success col-md-2">Cadastrar</button>
+                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" data-dismiss="modal" class="btn btn-success ">Cadastrar</button>
+                            <button ng-click="novaFuncao()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>

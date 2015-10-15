@@ -32,11 +32,17 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     private UploadService uploadService;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
     private final String SQLConsultaUsuarios
-            = "SELECT u.idusuario, u.login, u.status, p.nome, p.email"
+            = "SELECT u.idusuario, "
+            + "       u.login, "
+            + "       u.status, "
+            + "       COALESCE(p.nome, u.nome) AS nome, "
+            + "       COALESCE(p.email, u.email) AS email "
             + " FROM usuario u"
             + " LEFT JOIN pessoa p"
             + "        ON u.pessoa_idpessoa = p.idpessoa";
+    
     private final String SQLConsultaUsuarioPorID
             = "SELECT u.idusuario, u.login, u.status, p.nome, p.email"
             + " FROM usuario u"
