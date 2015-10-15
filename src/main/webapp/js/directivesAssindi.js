@@ -287,4 +287,8 @@ camera.directive('ngCamera', ['$q', '$timeout', function ($q, $timeout) {
         }
     }]);
 
-
+//ficha = angular.module('carregaFichas', []);
+//
+//ficha.directive('fichaIndigena', [function(){
+//        
+//}]);

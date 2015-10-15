@@ -62,6 +62,19 @@ module.service('ServicePaginacao', ['$http','$rootScope', function ($http, $root
         
 }]);
 
+module.service('ServiceFuncoes', [function(){
+    return {
 
+        dateToData : function(d) {
+            var ano = d.substring(0, 4);
+            var mes = d.substring(5, 7);
+            var dia = d.substring(8, 10);
+            var data = dia+"/"+mes+"/"+ano;
+            return data;
+        }
+
+    };
+
+}]);
 
 
