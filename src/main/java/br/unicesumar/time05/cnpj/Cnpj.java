@@ -43,6 +43,7 @@ public class Cnpj implements Serializable {
         } else {
             replace = this.cnpj.replace(".", "");
             replace = replace.replace("-", "");
+            replace = replace.replace("/", "");
         }
         if (replace.equals("00000000000000") || replace.equals("11111111111111")
                 || replace.equals("22222222222222") || replace.equals("33333333333333")

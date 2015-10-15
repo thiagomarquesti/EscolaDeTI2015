@@ -27,8 +27,8 @@ public class JuridicaController extends ControllerBase<CriarPessoaJuridica, Long
         }
     }
 
-    @RequestMapping(value = "/verificarCpf/{aCpf:.+}/{aUsuarioId}", method = RequestMethod.GET)
-    public Map<String, String> verifcarCpf(@PathVariable Cnpj aCnpj, @PathVariable Long aUsuarioId) {
+    @RequestMapping(value = "/verificarCnpj/{aCnpj:.+}/{aUsuarioId}", method = RequestMethod.GET)
+    public Map<String, String> verifcarCnpj(@PathVariable Cnpj aCnpj, @PathVariable Long aUsuarioId) {
 //        Map<String, String> map = new HashMap<>();
 //        map.put("retorno", "valido");
 //        return map;

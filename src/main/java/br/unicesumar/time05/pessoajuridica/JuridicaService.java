@@ -89,6 +89,7 @@ public class JuridicaService extends ServiceBase<CriarPessoaJuridica, Long, Juri
     }
 
     public Map<String, String> verificarCnpj(Cnpj aCnpj, Long aUsuarioId) {
+        aCnpj.setCnpj(aCnpj.getCnpj().replace("p", "/"));
         Map<String, String> retorno = new HashMap<>();
         if (aCnpj.valido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
@@ -107,6 +108,7 @@ public class JuridicaService extends ServiceBase<CriarPessoaJuridica, Long, Juri
     }
 
     public Map<String, String> verificarCnpj(Cnpj aCnpj) {
+        aCnpj.setCnpj(aCnpj.getCnpj().replace("p", "/"));
         Map<String, String> retorno = new HashMap<>();
         if (aCnpj.valido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
@@ -126,8 +128,8 @@ public class JuridicaService extends ServiceBase<CriarPessoaJuridica, Long, Juri
     public boolean verificarEmail(Email aEmail) {
         if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> pessoa = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            params.addValue("aEmail", aEmail.getEmail());
+            List<Map<String, Object>> pessoa = query.execute("SELECT email FROM pessoa WHERE email = :aEmail AND tipo_pessoa = 'JURÍDICA'", params);
             if (!pessoa.isEmpty()) {
                 return false;
             }
@@ -140,14 +142,14 @@ public class JuridicaService extends ServiceBase<CriarPessoaJuridica, Long, Juri
     boolean verificarEmail(Email aEmail, Long aPessoaId) {
         if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
+            params.addValue("aEmail", aEmail.getEmail());
             params.addValue("aId", aPessoaId);
-            List<Map<String, Object>> pessoa = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
+            List<Map<String, Object>> pessoa = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId AND tipo_pessoa = 'JURÍDICA'", params);
             if (!pessoa.isEmpty()) {
                 return false;
             }
             return true;
-        }else{
+        } else {
             throw new RuntimeException("Campo email vazio");
         }
     }

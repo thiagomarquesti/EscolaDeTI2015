@@ -1,7 +1,7 @@
 <div ng-init="carregar()" class="panel panel-info">
     <div class="panel-heading"> 
-        <div class="panel-title" ng-show="isNovo">Cadastrar Pessoa Jurica</div>
-        <div class="panel-title" ng-show="!isNovo">Alterar Pessoa Juridica</div>
+        <div class="panel-title" ng-show="isNovaJuridica">Cadastrar Pessoa Jurica</div>
+        <div class="panel-title" ng-show="!isNovaJuridica">Alterar Pessoa Juridica</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -21,13 +21,13 @@
 
             <div class="form-group"> 
                 <label for="cnpj" class="col-md-2 control-label">CNPJ:</label>
-                <div class="col-md-10"><input type="" ng-model="juridica.cnpj.cnpj" id="cnpj" name="cnpj" required="" cnpj-unique class="form-control cnpj requerido"></div>
+                <div class="col-md-10"><input type="" ng-model="juridica.cnpj.cnpj" id="cnpj" name="cnpj" maxlength="18" required="" cnpj-unique class="form-control cnpj requerido"></div>
             </div>
 
-            <div ng-show="formCad.cnpj.$dirty && formCad.cpf.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.cpf.$error.required">Preencha o CNPJ. </span>
-                <span ng-show="formCad.cpf.$error.cpf">CNPJ invalido. </span>
-                <span ng-show="formCad.cpf.$error.uncpf">CNPJ já cadastrado. </span>
+            <div ng-show="formCad.cnpj.$dirty && formCad.cnpj.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.cnpj.$error.required">Preencha o CNPJ. </span>
+                <span ng-show="formCad.cnpj.$error.cnpj">CNPJ invalido. </span>
+                <span ng-show="formCad.cnpj.$error.uncnpj">CNPJ já cadastrado. </span>
             </div>
 
             <div class="form-group">

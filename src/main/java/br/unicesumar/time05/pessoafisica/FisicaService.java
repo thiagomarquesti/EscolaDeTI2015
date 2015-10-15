@@ -194,7 +194,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail.getEmail());
-            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail AND tipo_pessoa = 'JURÍDICA'", params);
             if (!usuario.isEmpty()) {
                 return false;
             }
@@ -209,7 +209,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
             params.addValue("aId", aPessoaId);
-            List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
+            List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId AND tipo_pessoa <> 'JURÍDICA'", params);
             if (!fisica.isEmpty()) {
                 return false;
             }
