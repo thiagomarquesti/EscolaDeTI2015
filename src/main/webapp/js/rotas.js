@@ -34,10 +34,10 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'PessoaFisicaController'
     }).when('/Juridica/nova', {
         templateUrl: 'views/pessoaJuridicaCadastrar.html',
-        controller: 'UsuarioController'
+        controller: 'PessoaJuridicaController'
     }).when('/Juridica/editar/:id', {
         templateUrl: 'views/pessoaJuridicaCadastrar.html',
-        controller: 'UsuarioController'
+        controller: 'PessoaJuridicaController'
     }).when('/Fisica/nova', {
         templateUrl: 'views/pessoaFisicaCadastrar.html',
         controller: 'PessoaFisicaController'

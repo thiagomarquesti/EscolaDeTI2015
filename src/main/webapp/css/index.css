@@ -2,3 +2,8 @@ body{
     background-color: #ccc;
 }
 
+#topo {
+    background-image: url(../img/fundo_bambu4.jpg);
+    background-size: 100%;
+    background-position:  center 110px;
+}

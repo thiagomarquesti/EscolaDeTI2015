@@ -48,12 +48,13 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             + " LEFT JOIN uf u"
             + "    ON c.estado_codigoestado = u.codigoestado";
 
-            //nome, telefone, email, tipo, cidade, cpf/cnpj
-    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf as documento, p.telefone,"
+    final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, COALESCE(pf.cpf, pj.cnpj) as documento, p.telefone,"
             + " c.descricao, u.sigla "
             + "FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
             + "    ON pf.idpessoa = p.idpessoa"
+            + " LEFT JOIN pessoa_juridica pj "
+            + "    ON pj.idpessoa = p.idpessoa"
             + " LEFT JOIN endereco ende "
             + "    ON p.endereco_id = ende.idendereco"
             + " LEFT JOIN endereco_cidade ec "
@@ -62,6 +63,22 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             + "    ON ec.cidade_id = c.codigoibge"
             + " LEFT JOIN uf u"
             + "    ON c.estado_codigoestado = u.codigoestado";
+   /*         + " WHERE p.tipo_pessoa <> 'JURÍDICA'"
+            + " UNION"
+            + " SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.cnpj as documento, p.telefone,"
+            + " p.telefonesecundario, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " LEFT JOIN pessoa_juridica pj "
+            + "    ON pj.idpessoa = p.idpessoa"
+            + " LEFT JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " LEFT JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " LEFT JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " LEFT JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado"
+            + " WHERE p.tipo_pessoa = 'JURÍDICA'";*/
 
     @Override
     protected void setConstrutorDeSQL(br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL aConstrutorDeSQL) {
@@ -177,7 +194,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail.getEmail());
-            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail AND tipo_pessoa = 'JURÍDICA'", params);
             if (!usuario.isEmpty()) {
                 return false;
             }
@@ -192,7 +209,7 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
             params.addValue("aId", aPessoaId);
-            List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
+            List<Map<String, Object>> fisica = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId AND tipo_pessoa <> 'JURÍDICA'", params);
             if (!fisica.isEmpty()) {
                 return false;
             }
