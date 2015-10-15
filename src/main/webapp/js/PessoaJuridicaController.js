@@ -33,11 +33,8 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
         function novaPessoaJuridica() {
             $scope.juridica = {
                 nome: "",
-                telefones: [{
-                        telefone: ""
-                    }, {
-                        telefone: ""
-                    }],
+                telefone: "",
+                telefonesecundario: "",
                 email: {
                     email: ""
                 },
