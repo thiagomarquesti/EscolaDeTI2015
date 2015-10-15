@@ -57,38 +57,12 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             $scope.isNovo = true;
         }
 
-        function criarPessoaFisicaParaEditar() {
-            $scope.fisica = {
-                nome: "",
-                telefone: "",
-                telefonesecundario: "",
-                email: {
-                    email: ""
-                },
-                idfuncao: "",
-                logradouro: "",
-                numero: "",
-                bairro: "",
-                complemento: "",
-                cep: "",
-                codigoibge: "",
-                codigoestado: "",
-                datanasc: "",
-                cpf: {
-                    cpf: ""
-                },
-                genero: "",
-                tipo: "",
-                imgSrc: "/fotos/default.png"
-            };
-        }
-
         $scope.salvar = function () {
             if ($scope.isNovo) {
                 console.log($scope.fisica);
                 $http.post("/pessoa/fisica", $scope.fisica)
                         .success(function () {
-                            toastr.success("Usuário cadastrado com sucesso!");
+                            toastr.success("Pessoa cadastrada com sucesso!");
                             if ($location.path() === "/Fisica/nova") {
                                 $location.path("/Pessoa/listar");
                             }
@@ -112,8 +86,12 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         };
 
 
-        $scope.editar = function (aId) {
-            $location.path("/Fisica/editar/" + aId);
+        $scope.editar = function (aId, genero) {
+            console.log(genero);
+            if (genero == undefined || genero == null)
+                $location.path("/Juridica/editar/" + aId);
+            else
+                $location.path("/Fisica/editar/" + aId);
         };
 
         $scope.carregar = function () {
@@ -125,7 +103,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     $http.get("/pessoa/fisica/obj/" + $routeParams.id)
                             .success(function (data) {
 
-                                criarPessoaFisicaParaEditar();
+                                novaPessoaFisica();
                                 $scope.fisica.idpessoa = $routeParams.id;
                                 $scope.fisica.nome = data.nome;
                                 $scope.fisica.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
@@ -211,7 +189,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 "icone": "fa fa-female",
                 "cor": "#FFC4C4"
             },
-            undefined: {
+            null: {
                 "icone": "fa fa-briefcase",
                 "cor": "#FFD700"
             }
