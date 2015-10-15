@@ -1,59 +1,57 @@
-module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", "ServiceFuncoes", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, ServiceFuncoes, $rootScope) {
+module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
-        $scope.busca = {};
-        $scope.placeHolder = "Buscar indígena";
-        $scope.ent = $rootScope.ent = "indigena";
-        $scope.campoPrincipal = 'nome';
-        $rootScope.tipoOrdem = 'asc';
-
-        $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
-            if (campo == null || campo == "") {
-                campo = $scope.campoPrincipal;
-            }
-            $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
-            atualizaScope;
+    $scope.busca = {};
+    $scope.placeHolder = "Buscar indígena";
+    $scope.ent = $rootScope.ent = "indigena";
+    $scope.campoPrincipal = 'nome';
+    $rootScope.tipoOrdem = 'asc';
+        
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
+        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
+        atualizaScope;
+    };
+    
+    function atualizaScope() {
+        $scope = $rootScope;
+    }
+    
+    $rootScope.atualizarListagens = $scope.atualizarListagens;
+    
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+        $rootScope.numregistros = $scope.busca.numregistros;
+    };
+    
+    $scope.fazPesquisa = function(registros, string){
+        $rootScope.string = string;
+        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+    };
+    
+    $scope.todosIndigenas = function(){
+        $http.get("/indigena")
+            .success(function(data){
+                console.log(data);
+                $scope.indigenas = data;
+            })
+            .error(deuErro);
+    };
+    
+    function novoIndio() {
+        $scope.indio = {
+            nome: "",
+            cpf: "",
+            etnia: "",
+            genero: "",
+            dataNascimento: "",
+            conveniosselecionados:[],
+            telefone: "",
+            terraIndigena: "",
+            escolaridade: "",
+            estadoCivil: "",
+            codigoSUS: "",
+            imgSrc:"/fotos/default.png"
         };
-
-        function atualizaScope() {
-            $scope = $rootScope;
-        }
-
-        $rootScope.atualizarListagens = $scope.atualizarListagens;
-
-        $scope.registrosPadrao = function () {
-            $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
-            $rootScope.numregistros = $scope.busca.numregistros;
-        };
-
-        $scope.fazPesquisa = function (registros, string) {
-            $rootScope.string = string;
-            $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
-        };
-
-        $scope.todosIndigenas = function () {
-            $http.get("/indigena")
-                    .success(function (data) {
-                        console.log(data);
-                        $scope.indigenas = data;
-                    })
-                    .error(deuErro);
-        };
-
-        function novoIndio() {
-            $scope.indio = {
-                nome: "",
-                cpf: "",
-                etnia: "",
-                genero: "",
-                dataNascimento: "",
-                conveniosselecionados: [],
-                telefone: "",
-                terraIndigena: "",
-                escolaridade: "",
-                estadoCivil: "",
-                codigoSUS: "",
-                imgSrc: ""
-            };
             $scope.isNovoIndio = true;
         }
 
@@ -112,6 +110,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 }
 
                                 $scope.indio = dados;
+                                console.log($scope.indio.imgSrc);
                                 $scope.isNovoIndio = false;
 
                             })

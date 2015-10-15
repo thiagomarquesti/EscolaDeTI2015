@@ -3,20 +3,11 @@ package br.unicesumar.time05.telefone;
 import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Telefone implements Serializable{
     
-    @CampoConsulta
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long idtelefone;
-    
-    @CampoConsulta
     private String telefone;
 
     public Telefone() {
