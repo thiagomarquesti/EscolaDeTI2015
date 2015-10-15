@@ -60,6 +60,10 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="modal fade custom-width" id="modalPessoaFisica" data-backdrop="true" ng-include="'views/fichaPessoaFisica.html'"></div>
+            <div class="modal fade custom-width" id="modalPessoaJuridica" data-backdrop="true" ng-include="'views/fichaPessoaJuridica.html'"></div>
+            
             <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
         </div>
         <div id="blocoPaginacao">
