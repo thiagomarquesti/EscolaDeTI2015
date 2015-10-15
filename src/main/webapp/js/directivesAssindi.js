@@ -52,14 +52,14 @@ valida.directive('emailUnique', ['$http', function ($http) {
             link: function (scope, elem, attrs, ctrl) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
-                        if (scope.usuario.email && scope.usuario.email.email !== undefined && scope.usuario.email.email !== "") {
-                            if (scope.usuario.idusuario) {
-                                var dados = scope.usuario.email.email + "/" + scope.usuario.idusuario;
+                        if (scope.fisica.email && scope.fisica.email.email !== undefined && scope.fisica.email.email !== "") {
+                            if (scope.fisica.idpessoa) {
+                                var dados = scope.fisica.email.email + "/" + scope.fisica.idpessoa;
                             }
                             else {
-                                var dados = scope.usuario.email.email + "/-1";
+                                var dados = scope.fisica.email.email + "/-1";
                             }
-                            $http.get('/usuario/verificarEmail/' + dados)
+                            $http.get('/pessoa/fisica/verificarEmail/' + dados)
                                     .success(function (data) {
                                         ctrl.$setValidity('unemail', data);
                                     });
@@ -76,15 +76,15 @@ valida.directive('cpfUnique', ['$http', function ($http) {
             link: function (scope, elem, attrs, ctrl) {
                 elem.on('blur', function () {
                     scope.$apply(function () {
-                        if (scope.usuario.cpf.cpf) {
-                            if (scope.usuario.idusuario) {
-                                var dados = scope.usuario.cpf.cpf + "/" + scope.usuario.idusuario;
+                        if (scope.fisica.cpf.cpf) {
+                            if (scope.fisica.idpessoa) {
+                                var dados = scope.fisica.cpf.cpf + "/" + scope.fisica.idpessoa;
                             }
                             else {
-                                var dados = scope.usuario.cpf.cpf + "/-1";
+                                var dados = scope.fisica.cpf.cpf + "/-1";
                             }
                             console.log(dados);
-                            $http.get('/usuario/verificarCpf/' + dados)
+                            $http.get('/pessoa/fisica/verificarCpf/' + dados)
                                     .success(function (data) {
                                         console.log(data.retorno);
                                         if (data.retorno == "existe") {
@@ -287,4 +287,8 @@ camera.directive('ngCamera', ['$q', '$timeout', function ($q, $timeout) {
         }
     }]);
 
-
+//ficha = angular.module('carregaFichas', []);
+//
+//ficha.directive('fichaIndigena', [function(){
+//        
+//}]);

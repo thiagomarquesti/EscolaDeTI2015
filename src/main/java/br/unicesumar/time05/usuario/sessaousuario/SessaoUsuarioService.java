@@ -28,7 +28,7 @@ public class SessaoUsuarioService {
 
     public boolean efetuarLogin(DadosLogin aDadosLogin, HttpSession session) {
 
-        String SQL = "SELECT u.idpessoa AS idusuario "
+        String SQL = "SELECT u.idusuario AS idusuario "
                 + "  FROM usuario u "
                 + " WHERE u.login = :login "
                 + "   AND u.senha = :senha ";
@@ -52,13 +52,12 @@ public class SessaoUsuarioService {
 
     public Map<String, Object> getUsuarioLogado() {
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
-            String SQL = "SELECT u.idpessoa as idusuario, "
-                       + "       p.nome "
+            String SQL = "SELECT u.idusuario as idusuario, "
+                       + "       u.nome "
                        + "  FROM usuario u "
-                       + "  JOIN pessoa p ON (u.idpessoa = p.idpessoa) "
-                       + " WHERE u.idpessoa = :id";
+                       + " WHERE u.idusuario = :id";
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("id", sessaoUsuario.getUsuario().getIdUsuario());
+            params.addValue("id", sessaoUsuario.getUsuario().getIdusuario());
 
             return query.execute(SQL, params).get(0);
         }
@@ -107,7 +106,7 @@ public class SessaoUsuarioService {
                         + "    JOIN perfildeacesso pa ON (up.perfis_idperfildeacesso = pa.idperfildeacesso)  "
                         + "    JOIN perfildeacesso_itemacesso pai ON (pa.idperfildeacesso = pai.perfildeacesso_id)  "
                         + "    JOIN itemacesso ia ON (pai.itemacesso_id = ia.iditemacesso) "
-                        + "   WHERE up.usuario_idpessoa = :idUsuario "
+                        + "   WHERE up.usuario_idusuario = :idUsuario "
                         + "   GROUP BY ia.iditemacesso,  "
                         + "         ia.nome, "
                         + "         ia.rota, "
@@ -116,7 +115,7 @@ public class SessaoUsuarioService {
                         + " ORDER BY ia.superior_id NULLS FIRST, ia.iditemacesso  ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdUsuario());
+            params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdusuario());
 
             List<Map<String, Object>> resultQuery = query.execute(SQL, params);
 

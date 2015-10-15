@@ -50,37 +50,104 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             escolaridade: "",
             estadoCivil: "",
             codigoSUS: "",
-            imgSrc:""
+            imgSrc:"/fotos/default.png"
         };
-        $scope.isNovoIndio = true;
-    }
-    
+            $scope.isNovoIndio = true;
+        }
 
-        $scope.carregarIndio = function () {
+        $scope.indioComFoto = function (codAssindi) {
+            $scope.carregarIndio(codAssindi);
+            getFoto(codAssindi);
+            $scope.listarFamiliasPorIndigena(codAssindi);
+        };
+
+        $scope.carregarIndio = function (codAssindi) {
             if ($location.path() === "/Indigena/novo") {
                 novoIndio();
             }
             else {
                 $timeout(function () {
-                    $http.get("/indigena/obj/" + $routeParams.id)
+                    var busca;
+                    if (codAssindi) {
+                        busca = "/indigena/obj/" + codAssindi;
+                    }
+                    else {
+                        busca = "/indigena/obj/" + $routeParams.id;
+                    }
+
+                    $http.get(busca)
                             .success(function (data) {
+//                                console.log(data);
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
                                 dados.telefone = data.telefone.telefone;
                                 dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                                dados.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear();
+                                dados.nomeEtnia = data.etnia.descricao;
                                 dados.etnia = data.etnia.idetnia;
-                                dados.terraIndigena = data.terraIndigena.idterraindigena;
+                                dados.nomeTerra = data.terraIndigena.nometerra;
+                                dados.terraIndigena = data.terraindigena.idterraindigena;
                                 dados.conveniosselecionados = data.convenio;
-                                dados.imgSrc = data.imgSrc;
+                                if (!dados.cpf) {
+                                    dados.cpfInformado = "CPF não informado";
+                                }
+                                else {
+                                    dados.cpfInformado = dados.cpf;
+                                }
+                                if (!dados.telefone) {
+                                    dados.telInformado = "Telefone não informado";
+                                }
+                                else {
+                                    dados.telInformado = dados.telefone;
+                                }
+                                if (!dados.codigosus) {
+                                    dados.codigosus = "Não informado";
+                                }
+
+                                if (dados.ocorrencia.length == 0) {
+                                    dados.nenhumaOcorrencia = "Nenhuma ocorrência para este indígena.";
+                                }
+
                                 $scope.indio = dados;
+                                console.log($scope.indio.imgSrc);
                                 $scope.isNovoIndio = false;
+
                             })
                             .error(deuErro);
                 }, 100);
 
             }
         };
+
+        $scope.listarFamiliasPorIndigena = function (idIndigena) {
+            $scope.nenhumaFamilia = "";
+            $http.get("/familia/familiasporindigena/" + idIndigena)
+                    .success(function (data) {
+                        $scope.familias = data;
+                        if ($scope.familias.length == 0) {
+                            $scope.nenhumaFamilia = "Nenhuma família para este indígena.";
+                        }
+                    })
+                    .error(deuErro);
+        };
+
+        $scope.indioEscolaridade = {
+            "FUNDAMENTALINCOMPLETO": "Fundamental incompleto",
+            "FUNDAMENTALCOMPLETO": "Fundamental completo",
+            "MEDIOINCOMPLETO": "Médio incompleto",
+            "MEDIOCOMPLETO": "Médio completo",
+            "SUPERIORINCOMPLETO": "Superior incompleto",
+            "SUPERIORCOMPLETO": "Superior completo"
+        };
+
+        function getFoto(id) {
+            $http.get("/foto/indio/" + id)
+                    .success(function (data) {
+                        $scope.urlFoto = data.foto;
+                    }).error(deuErro);
+        }
+        ;
 
         $scope.salvarIndio = function () {
 //        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
@@ -125,72 +192,20 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         .error(deuErro);
             }
         };
-        
-        $scope.trocaOrdem = function (string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-            else {
-                $scope.tipoOrdem = true;
-                var ordem = "desc";
-            }
-            $scope.atualizarIndigenas("", "", ordem, string, true);
-        };
-
-        $scope.atualizarIndigenas = function (reg, pag, campo, order, string, paro) {
-            if (reg == null || reg == "") {
-                reg = 10;
-            }
-            if (pag == null || pag == "") {
-                pag = 1;
-            }
-            if (campo == null || campo == "") {
-                campo = "nome";
-            }
-            if (order != "asc" && order != "desc") {
-                order = "asc";
-            }
-            if (string == null) {
-                string = "";
-            }
-//      if(order == "desc"){ $scope.tipoOrdem == true; } else { $scope.tipoOrdem == false; }
-            $http.get("/indigena/listar/" + reg + "/" + pag + "/" + campo + "/" + order + "/" + string)
-                    .success(function (data) {
-                        $scope.indigenas = data;
-                        if (!paro) {
-                            atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
-                        }
-                    })
-                    .error(deuErro);
-        };
-
-        $scope.trocaOrdem = function (campo, string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-
-            $scope.campoAtual = campo;
-            $scope.atualizarIndigenas("", campo, ordem, string, true);
-        };
-
-        function atualizaPaginacao(qtde, pag, campo, order, string, paro) {
-            $('#paginacao').bootpag({
-                total: qtde,
-                page: pag,
-                maxVisible: 5
-            }).on('page', function (event, num) {
-                paro = true;
-                $scope.atualizarIndigenas(reg, num, campo, order, string, paro);
-            });
-        }
 
         function dataToDate(valor) {
             var date = new Date(valor);
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
             return data;
         }
+
+        $scope.dateToData = function (valor) {
+            var data = "";
+            if (valor != null && valor != "" && valor != undefined) {
+                data = ServiceFuncoes.dateToData(valor);
+            }
+            return data;
+        };
 
         $scope.editarIndio = function (indio) {
             $location.path("/Indigena/editar/" + indio.codigoassindi);
@@ -219,41 +234,35 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
         };
 
-        function foto(id) {
-            $http.get("/foto/indio/" + id)
-                    .success(function (data) {
-                        $scope.urlFoto = data.foto;
-                    }).error(deuErro);
+        $scope.webcamFoto = function () {
+            $(document).ready(function () {
+                canvas = document.getElementById('imgCanvas');
+                $scope.indio.imgSrc = canvas.src;
+            });
+            console.log($scope.indio.imgSrc);
         };
 
-    $scope.webcamFoto = function () {
-        $(document).ready(function () {
-            canvas = document.getElementById('imgCanvas');
-            $scope.indio.imgSrc = canvas.src;
-        });
-        console.log($scope.indio.imgSrc);
-    };
-    
 
         $scope.calculaIdade = function (data) {
+            var quantos_anos = 0;
+            if (data != undefined) {
+                var ano_aniversario = data.substring(0, 4);
+                var mes_aniversario = data.substring(5, 7);
+                var dia_aniversario = data.substring(8, 10);
 
-            var ano_aniversario = data.substring(0, 4);
-            var mes_aniversario = data.substring(5, 7);
-            var dia_aniversario = data.substring(8, 10);
+                var d = new Date,
+                        ano_atual = d.getFullYear(),
+                        mes_atual = d.getMonth() + 1,
+                        dia_atual = d.getDate(),
+                        ano_aniversario = +ano_aniversario,
+                        mes_aniversario = +mes_aniversario,
+                        dia_aniversario = +dia_aniversario,
+                        quantos_anos = ano_atual - ano_aniversario;
 
-            var d = new Date,
-                    ano_atual = d.getFullYear(),
-                    mes_atual = d.getMonth() + 1,
-                    dia_atual = d.getDate(),
-                    ano_aniversario = +ano_aniversario,
-                    mes_aniversario = +mes_aniversario,
-                    dia_aniversario = +dia_aniversario,
-                    quantos_anos = ano_atual - ano_aniversario;
-
-            if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
-                quantos_anos--;
+                if (mes_atual < mes_aniversario || mes_atual == mes_aniversario && dia_atual < dia_aniversario) {
+                    quantos_anos--;
+                }
             }
-
             return quantos_anos < 0 ? 0 : quantos_anos;
         };
         /*  SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS  */
@@ -265,7 +274,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
         };
-        
+
         $scope.getTerras = function () {
             $http.get("/terraIndigena")
                     .success(function (data) {
@@ -274,7 +283,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                     })
                     .error(deuErro);
         };
-        
+
         $scope.getConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
@@ -291,7 +300,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 document.getElementsByTagName('head')[0].appendChild(script);
             }, 100);
         };
-        
+
         function novaOcorrencia() {
             $scope.ocorrencia = {
                 dataOcorrencia: "",
@@ -312,17 +321,17 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }).error(deuErro);
         };
 
-        $scope.getIdIndigena = function (indigena){
+        $scope.getIdIndigena = function (indigena) {
             $routeParams.id = indigena.codigoassindi;
         };
 
         $scope.deletarOcorrencia = function (idOcorrencia) {
             $http.delete("/ocorrencia/" + idOcorrencia + "/" + $routeParams.id)
-            .success(function () {
-                toastr.success("Ocorrência deletada com sucesso.", "Apagado");
-                $scope.getOcorrencias();
-            })
-            .error(deuErro);
+                    .success(function () {
+                        toastr.success("Ocorrência deletada com sucesso.", "Apagado");
+                        $scope.getOcorrencias();
+                    })
+                    .error(deuErro);
         };
 
         $scope.salvarOcorrencia = function () {
@@ -334,15 +343,18 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 descricao: $scope.ocorrencia.descricao,
                 idIndigena: $routeParams.id
             };
-
-            $http.post("/ocorrencia", OcorrenciaCompleta)
-                    .success(function () {
-                        toastr.success("Ocorrência salva com sucesso.", "Salvo");
-                        $scope.getOcorrencias();
-                    })
-                    .error(deuErro);
+            if (new Date(dataBloqueio) > new Date(dataOcorrencia) || dataBloqueio == "") {
+                $http.post("/ocorrencia", OcorrenciaCompleta)
+                        .success(function () {
+                            toastr.success("Ocorrência salva com sucesso.", "Salvo");
+                            $scope.getOcorrencias();
+                        })
+                        .error(deuErro);
+            } else {
+                toastr.warning("Data da ocorrência deve ser anterior à data de bloqueio.");
+            }
         };
-        
+
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");
         }

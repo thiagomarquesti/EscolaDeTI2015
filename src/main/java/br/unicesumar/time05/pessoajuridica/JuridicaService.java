@@ -1,100 +1,68 @@
 package br.unicesumar.time05.pessoajuridica;
 
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.email.Email;
-import br.unicesumar.time05.pessoa.TipoPessoa;
-import br.unicesumar.time05.rowmapper.MapRowMapper;
-import java.util.Collections;
+import classesbase.ServiceBase;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @Transactional
-public class JuridicaService {
+public class JuridicaService extends ServiceBase<PessoaJuridica, Long, JuridicaRepository> {
 
-    @Autowired
-    private JuridicaRepository juridicaRepo;
+    final String SQLConsultaJuridica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.cnpj, t.telefone,"
+            + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
+            + "FROM pessoa p"
+            + " INNER JOIN pessoa_juridica pj "
+            + "    ON pj.idpessoa = p.idpessoa"
+            + " INNER JOIN pessoa_telefone pt "
+            + "    ON pt.pessoa_id = p.idpessoa"
+            + " INNER JOIN telefone t "
+            + "    ON pt.telefone_id = t.idtelefone"
+            + " INNER JOIN endereco ende "
+            + "    ON p.endereco_id = ende.idendereco"
+            + " INNER JOIN endereco_cidade ec "
+            + "    ON ende.idendereco = ec.endereco_id"
+            + " INNER JOIN cidade c"
+            + "    ON ec.cidade_id = c.codigoibge"
+            + " INNER JOIN uf u"
+            + "    ON c.estado_codigoestado = u.codigoestado";
 
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-
-    public void salvarJuridica(PessoaJuridica aPessoa) {
-        try {
-            juridicaRepo.save(aPessoa);
-            juridicaRepo.flush();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public List<Map<String, Object>> listarSemPaginacao() {
+        return query.execute(SQLConsultaJuridica);
     }
 
-    public void removerJuridica(Long aPessoaId) {
-        try {
-            juridicaRepo.delete(aPessoaId);
-        } catch (Exception e) {
-            throw new RuntimeException("Pessoa não encontrada");
-        }
+    @Override
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(SQLConsultaJuridica, "p.nome", new ParametrosConsulta()); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<Map<String, Object>> getJuridica() {
-        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.cnpj, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_juridica pj "
-                + "    ON pj.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado",
-                new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(juridica);
+    @Override
+    public Object getObjeto(Long aId) {
+        return repository.findOne(aId); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Map<String, Object> getJuridicaById(Long aPessoaId) {
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aPessoaId", aPessoaId);
-        List<Map<String, Object>> juridica = jdbcTemplate.query("SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pj.genero, pj.cnpj, t.telefone,"
-                + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-                + "FROM pessoa p"
-                + " INNER JOIN pessoa_juridica pj "
-                + "    ON pj.idpessoa = p.idpessoa"
-                + " INNER JOIN pessoa_telefone pt "
-                + "    ON pt.pessoa_id = p.idpessoa"
-                + " INNER JOIN telefone t "
-                + "    ON pt.telefone_id = t.idtelefone"
-                + " INNER JOIN endereco ende "
-                + "    ON p.endereco_id = ende.idendereco"
-                + " INNER JOIN endereco_cidade ec "
-                + "    ON ende.idendereco = ec.endereco_id"
-                + " INNER JOIN cidade c"
-                + "    ON ec.cidade_id = c.codigoibge"
-                + " INNER JOIN uf u"
-                + "    ON c.estado_codigoestado = u.codigoestado"
-                + " WHERE p.idpessoa = :aPessoaId",
-                params, new MapRowMapper());
-        try {
-            return juridica.get(0);
-        } catch (Exception e) {
-            throw new RuntimeException("Nenhum resultado encontrado!");
-        }
+    @Override
+    public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
+        return query.executeComPaginacao(SQLConsultaJuridica, "p.nome", aParametrosConsulta); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    protected void setConstrutorDeSQL(br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL aConstrutorDeSQL) {
+        super.setConstrutorDeSQL(new ConstrutorDeSQL(PessoaJuridica.class)); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public boolean verificarEmail(Email aEmail) {
         if (aEmail != null && aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT email FROM pessoa WHERE email = :aEmail", params, new MapRowMapper());
+            List<Map<String, Object>> pessoa = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
             if (!pessoa.isEmpty()) {
                 return false;
             }
@@ -104,27 +72,11 @@ public class JuridicaService {
         }
     }
 
-    public void trocarTipoJuridica(Long aPessoaId, String tipo) {
-        PessoaJuridica pessoa = juridicaRepo.getOne(aPessoaId);
-        switch (tipo) {
-            case "USUÁRIO":
-                pessoa.setTipoPessoa(TipoPessoa.USUÁRIO);
-                break;
-            case "VISITANTE":
-                pessoa.setTipoPessoa(TipoPessoa.VISITANTE);
-                break;
-            case "ÍNDIO":
-                pessoa.setTipoPessoa(TipoPessoa.ÍNDIO);
-                break;
-        }
-        juridicaRepo.save(pessoa);
-    }
-
     boolean verificarEmail(String aEmail, Long aPessoaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aEmail", aEmail);
         params.addValue("aId", aPessoaId);
-        List<Map<String, Object>> pessoa = jdbcTemplate.query("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
+        List<Map<String, Object>> pessoa = query.execute("SELECT id, email FROM pessoa WHERE email = :aEmail AND id <> :aId", params);
         if (!pessoa.isEmpty()) {
             return false;
         }
