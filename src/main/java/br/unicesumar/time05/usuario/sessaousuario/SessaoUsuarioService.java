@@ -53,7 +53,8 @@ public class SessaoUsuarioService {
     public Map<String, Object> getUsuarioLogado() {
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
             String SQL = "SELECT u.idusuario as idusuario, "
-                       + "       u.nome "
+                       + "       u.nome, "
+                       + "       u.pessoa_idpessoa as idpessoa "
                        + "  FROM usuario u "
                        + " WHERE u.idusuario = :id";
             final MapSqlParameterSource params = new MapSqlParameterSource();

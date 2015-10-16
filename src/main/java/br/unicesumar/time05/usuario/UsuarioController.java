@@ -1,6 +1,5 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
 import java.io.File;
@@ -19,8 +18,10 @@ public class UsuarioController extends ControllerBase<Usuario, Long, UsuarioServ
     @Override
     public Usuario getObjeto(@PathVariable Long aId) {
         Usuario u = (Usuario) service.getObjeto(aId);
-        if (new File("src/main/webapp/fotos/users/" + u.getIdusuario()+ ".jpg").exists()) {
-            u.setImgSrc("src/main/webapp/fotos/users/" + u.getIdusuario()+ ".jpg");
+        if (u.getPessoa()!=null && new File("src/main/webapp/fotos/users/" + u.getPessoa().getIdpessoa()+ ".jpg").exists()) {
+            u.setImgSrc("/fotos/users/" + u.getPessoa().getIdpessoa()+ ".jpg");
+        }else{
+            u.setImgSrc("/fotos/default.png");
         }
         return u;
     }

@@ -63,6 +63,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     else {
                         $scope.nomeUsuario = data.nome;
                         $scope.idUsuario = data.idusuario;
+                        $scope.idPessoa = data.idpessoa;
                         foto(data.idusuario);
                     }
                 })
@@ -203,6 +204,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.usuario = data;
                             $scope.usuario.rsenha = data.senha.senha;
                             $scope.isNovo = false;
+                            $scope.urlFoto = data.imgSrc;
                         }).error(deuErro);
             }, 100);
         }
@@ -283,9 +285,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     function foto(id) {
-        $http.get("/foto/user/" + id)
+        $http.get("/usuario/obj/" + id)
                 .success(function (data) {
-                    $scope.urlFoto = data.foto;
+                    $scope.urlFoto = data.imgSrc;
                 }).error(deuErro);
     };
 
@@ -295,6 +297,13 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $scope.usuario.imgSrc = canvas.src;
         });
         console.log($scope.usuario.imgSrc);
+    };
+
+    $scope.trocarDados = function (idpessoa,idusuario){
+        if(idpessoa)
+            return "Fisica/editar/"+idpessoa;
+        else
+            return "Usuario/editar/"+idusuario;
     };
 
     $scope.valido = function (){
