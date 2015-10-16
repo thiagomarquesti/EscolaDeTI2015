@@ -94,8 +94,42 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             $location.path("/Fisica/editar/" + aId);
     };
 
+    $scope.juridica = {};
+    
     $scope.carregar = function (tipo, idPessoa) {
-        if (tipo) {
+        if (!tipo) {
+                $timeout(function () {
+                    var busca = "/pessoa/juridica/obj/" + idPessoa; 
+                    $http.get(busca)
+                    .success(function (data) {
+                        $scope.juridica.nome = data.nome;
+                        $scope.juridica.cnpj = (data.cnpj != null) ? data.cnpj : "";
+                        $scope.juridica.email = data.email.email;
+                        $scope.juridica.cep = data.endereco.cep;
+                        if (data.endereco != null && data.endereco.cidade != null && data.endereco.cidade.estado != null) {
+                            $scope.juridica.cidade = data.endereco.cidade.descricao + " - " + data.endereco.cidade.estado.sigla;
+
+                        } else {
+                            $scope.juridica.codigoestado = "";
+                            $scope.juridica.codigoibge = "";
+                            $scope.juridica.cidade = "Cidade não informada."
+                        }
+                        $scope.juridica.logradouro = data.endereco.logradouro;
+                        $scope.juridica.numero = data.endereco.numero;
+                        $scope.juridica.complemento = data.endereco.complemento;
+                        $scope.juridica.bairro = data.endereco.bairro;
+                        $scope.juridica.telefone = data.telefone;
+                        $scope.juridica.telefonesecundario = data.telefonesecundario;
+                        $scope.juridica.telefones = $scope.juridica.telefone.telefone;
+                        if(data.telefonesecundario.telefone) { $scope.juridica.telefones += " / "+ data.telefonesecundario.telefone; }
+                        $scope.juridica.tipoPessoa = "JURÍDICA";
+                        $scope.juridica.imgSrc = data.imgSrc;
+
+                        $scope.isNovaJuridica = false;
+                    }).error(deuErro);
+                }, 100);
+        }
+        else{
             if ($location.path() === "/Fisica/nova") {
                 novaPessoaFisica();
             }
@@ -103,7 +137,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 $timeout(function () {
                     var busca = "/pessoa/fisica/obj/" + $routeParams.id;
                     if(idPessoa){ busca = "/pessoa/fisica/obj/" + idPessoa; }
-                    console.log(busca);
                     $http.get(busca)
                     .success(function (data) {
                         novaPessoaFisica();
@@ -147,9 +180,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                     }).error(deuErro);
                 }, 100);
             }
-        }
-        else {
-
         }
     };
 

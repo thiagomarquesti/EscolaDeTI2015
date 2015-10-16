@@ -43,11 +43,11 @@
                         <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">
                             <i class="{{ehMeninoMenina[p.genero].icone}}" style="color: {{ehMeninoMenina[p.genero].cor}};"></i>{{" "+p.nome}}
                         </td>
-                        <td class="hidden-sm hidden-xs">{{p.email}}</td>
-                        <td>{{p.documento}}</td>
-                        <td>{{p.telefone}}</td>
-                        <td>{{p.descricao+" - "+p.sigla}}</td>
-                        <td>{{p.tipo_pessoa}}</td>
+                        <td class="hidden-sm hidden-xs pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">{{p.email}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">{{p.documento}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">{{p.telefone}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">{{p.descricao+" - "+p.sigla}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">{{p.tipo_pessoa}}</td>
                         
                         <td>
                             <div class="btn-group">
