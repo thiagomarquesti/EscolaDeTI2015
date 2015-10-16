@@ -3,7 +3,7 @@
 <div ng-init="carregarVisita()" class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovaVisita">Cadastrar Visita</div>
-<!--        <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>-->
+        <!--        <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>-->
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -16,7 +16,7 @@
                     <input type="text" ng-model="visita.nome" id="" name="nome" required="" class="form-control" ng-minlength=3 ng-maxlength=30>
                 </div>
             </div>!-->
-           
+
             <!--- 
             <div class="form-group">
                 <label for="dataVisita" class="col-md-2 control-label">Data/Hora da Visita: </label>
@@ -27,62 +27,75 @@
                     </div>
                 </div>
             </div>-->
-            
-           <div class="form-group">
-                <label for="dataVisita" class="col-md-2 control-label"> Data/Hora da Visita</label>
-                <div class="col-md-3"><input type="date" ng-model="visita.dataVisita" id="dataVisita" name="dataVisita" required="" class="form-control requerido"></div>
-            </div>
 
-            <div ng-show="formVisita.dataVisita.$dirty && formVisita.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formVisita.dataVisita.$error.required">Preencha data da visita. </span>
-            </div>
-           
-            <div class="form-group">    
-                <label for="qtdeVisitantes" class="col-md-2 control-label">Qtde de Visitantes:</label>
-                <div class="col-md-2">
-                    <input type="number" ng-model="visita.quantidadeDeVisitantes" id="" name="" required="" class="form-control" min="0">
-                </div>
-            </div>
             <div class="form-group">
-                <label for="cep" class="col-md-2 control-label">CEP: </label>
-                <div class="col-md-2">
-                    <input type="text" ng-model="" id="cep" name="cep" required="" class="form-control">
+                <label for="dataVisita" class="col-md-2 control-label"> Data da Visita</label>
+                <div class="col-md-3"><input type="date" ng-model="visita.dataVisita" id="dataVisita" name="dataVisita" required="" class="form-control requerido"></div>
+                <label for="horaentrada" class="col-md-2 control-label"> Horário Previsto</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+
+
+
+
+
+                <div ng-show="formVisita.dataVisita.$dirty && formVisita.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                    <span ng-show="formVisita.dataVisita.$error.required">Preencha a data da visita. </span>
                 </div>
-                <label for="uf" class="col-md-1 control-label">Estado: </label>
-                <div class="col-md-2">
-                    <select ng-model="" id="uf" name="uf" required="" class="form-control">
-                        <option value="">Selecione um estado</option>
-                        <!-- FAZER BUSCA POR ESTADOS -->
-                    </select>
+
+                <div class="form-group">
+                    <label for="entidade" class="col-md-2 control-label">Entidade: </label>
+                    <!--<div class="col-md-6"><input type="text" ng-model="" id="entidade" name="entidade" required="" class="form-control"></div>
+                
+                    !-->
+                    <div class="col-md-3" ng-controller="VisitaController">
+
+                        <select ng-model="visita.identidade" id="identidade" name="identidade" required="" class="form-control requerido">
+                            <option value="">Selecione uma entidade</option>
+                            <!-- FAZER BUSCA POR ENTIDADE-->
+                            <option ng-repeat="v in visita" value="{{v.identidade}}">{{v.identidade}}</option>
+                        </select>
+
+                    </div>
+
                 </div>
-                <label for="cidade" class="col-md-1 control-label">Cidade: </label>
-                <div class="col-md-3">
-                    <select ng-model="" id="cidade" name="cidade" required="" class="form-control">
-                        <option value="">Aguardando estado...</option>
-                        <!-- FAZER BUSCA POR CIDADES -->
-                    </select>
+
+                <div class="form-group">
+                    <label for="responsavel" class="col-md-2 control-label">Responsável: </label>
+                    <!--<div class="col-md-6"><input type="text" ng-model="" id="responsavel" name="responsavel" required="" class="form-control"></div>
+               !-->
+                    <div class="col-md-3" ng-controller="VisitaController">
+
+                        <select ng-model="visita.idpessoaresponsavel" id="idpessoaresponsavel" name="idpessoaresponsavel" required="" class="form-control requerido">
+                            <option value="">Selecione um responsável</option>
+                            <!-- FAZER BUSCA POR RESPONSÁVEL -->
+                            <option ng-repeat="v in visita" value="{{v.idpessoaresponsavel}}">{{v.idpessoaresponsavel}}</option>
+                        </select>
+
+                    </div>        
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="endereco" class="col-md-2 control-label">Endereço: </label>
-                <div class="col-md-6">
-                    <input type="text" ng-model="" id="endereco" name="endereco" required="" class="form-control">
+
+                <div class="form-group">
+                    <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
+                    <div class="col-md-2"><input type="text" ng-model="visita.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
+                    <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
+                    <div class="col-md-2"><input type="text" ng-model="visita.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
                 </div>
-                <label for="numero" class="col-md-1 control-label">n°: </label>
-                <div class="col-md-2">
-                    <input type="text" ng-model="" id="numero" name="numero" required="" class="form-control">
+
+
+                <div class="form-group">
+                    <label for="seriecurso" class="col-md-2 control-label">Série/Curso: </label>
+                    <div class="col-md-4"><input type="text" ng-model="" id="seriecurso" name="seriecurso" required="" class="form-control"></div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="bairro" class="col-md-2 control-label">Bairro: </label>
-                <div class="col-md-6"><input type="text" ng-model="" id="bairro" name="bairro" required="" class="form-control"></div>
-            </div>
-            <div class="form-group">
-                <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="" id="telefone" name="telefone" required="" class="form-control" placeholder="(99) 99999-9999"></div>
-                <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="" id="bairro" name="telefone2" class="form-control" placeholder="(99) 99999-9999"></div>
-            </div>
+
+                <div class="form-group">    
+                    <label for="qtdeVisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
+                    <div class="col-md-2">
+                        <input type="number" ng-model="visita.quantidadeDeVisitantes" id="" name="" required="" class="form-control" min="0">
+                    </div>
+                </div>
+                <!-- <div ng-show="visita.quantidadeDeVisitantes.$dirty && visita.quantidadeDeVisitantes.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                 <span ng-show="visita.quantidadeDeVisitantes.$error.required">Preencha quantidade de visitantes. </span>
+                 </div> !-->     
         </form>
     </div>
 </div>
@@ -97,17 +110,24 @@
     <div class="panel-body">
         <form name="formHoraEntradaVisita" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">
-                <label for="horaentrada" class="col-md-2 control-label"> Hora de Entrada:</label>
-                <div class="col-md-3"><input type="date" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+                <label for="horaentrada" class="col-md-2 control-label"> Hora da Entrada:</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+                <label for="horaentrada" class="col-md-2 control-label"> Hora da Saída:</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+
             </div>
 
-            <div ng-show="formHoraEntradaVisita.horaentrada.$dirty && formHoraEntradaVisita.horaentrada.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formHoraEntradaVisita.horaentrada.$error.required">Preencha hora de entrada. </span>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Visita realizada:</label>
+                <div class="col-md-1">
+                    
+                    <input type="radio" id="true" name="true" ng-model="visita.realizada" value="VERDADEIRO" required=""> &nbsp;
+                </div>
             </div>
-            <div>
-                <label class="col-md-2 control-label">Observações: </label>                
-                <textarea name="" rows=5 class="col-md-7"></textarea>
-            </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Observações: </label>                
+                    <textarea name="" rows=5 class="col-md-7"></textarea>
+                </div>
         </form>
     </div>
 </div>
