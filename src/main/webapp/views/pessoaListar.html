@@ -40,7 +40,9 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal,'', '', '')">
                     <tr ng-repeat='p in dadosRecebidos.itens.listaDeRegistros'>
-                        <td><i class="{{ehMeninoMenina[p.genero].icone}}" style="color: {{ehMeninoMenina[p.genero].cor}};"></i>{{" "+p.nome}}</td>
+                        <td class="pointer" data="{{p.genero}} {{p.idpessoa}} " ng-click="carregar(p.genero, p.idpessoa); chamaModalPessoa(p.genero);">
+                            <i class="{{ehMeninoMenina[p.genero].icone}}" style="color: {{ehMeninoMenina[p.genero].cor}};"></i>{{" "+p.nome}}
+                        </td>
                         <td class="hidden-sm hidden-xs">{{p.email}}</td>
                         <td>{{p.documento}}</td>
                         <td>{{p.telefone}}</td>

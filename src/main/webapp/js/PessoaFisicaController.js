@@ -57,32 +57,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         $scope.isNovo = true;
     }
 
-    function criarPessoaFisicaParaEditar() {
-        $scope.fisica = {
-            nome: "",
-            telefone: "",
-            telefonesecundario: "",
-            email: {
-                email: ""
-            },
-            idfuncao: "",
-            logradouro: "",
-            numero: "",
-            bairro: "",
-            complemento: "",
-            cep: "",
-            codigoibge: "",
-            codigoestado: "",
-            datanasc: "",
-            cpf: {
-                cpf: ""
-            },
-            genero: "",
-            tipo: "",
-            imgSrc: "/fotos/default.png"
-        };
-    }
-
     $scope.salvar = function () {
         if ($scope.isNovo) {
             console.log($scope.fisica);
@@ -120,52 +94,71 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             $location.path("/Fisica/editar/" + aId);
     };
 
-    $scope.carregar = function (tipo) {
+    $scope.carregar = function (tipo, idPessoa) {
         if (tipo) {
             if ($location.path() === "/Fisica/nova") {
                 novaPessoaFisica();
             }
             else {
                 $timeout(function () {
-                    $http.get("/pessoa/fisica/obj/" + $routeParams.id)
-                            .success(function (data) {
-
-                                novaPessoaFisica();
-                                $scope.fisica.idpessoa = $routeParams.id;
-                                $scope.fisica.nome = data.nome;
-                                $scope.fisica.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
-                                $scope.fisica.genero = data.genero;
-                                $scope.fisica.email.email = data.email.email;
-                                var d = new Date(data.datanascimento);
-                                $scope.fisica.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                                $scope.fisica.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear();
-                                $scope.fisica.cep = data.endereco.cep;
-                                $scope.fisica.idfuncao = (data.funcao != null) ? data.funcao.idfuncao : "";
-                                if (data.endereco != null && data.endereco.cidade != null && data.endereco.cidade.estado != null) {
-                                    $scope.fisica.codigoestado = data.endereco.cidade.estado.codigoestado;
-                                    $scope.fisica.codigoibge = data.endereco.cidade.codigoIBGE;
-                                } else {
-                                    $scope.fisica.codigoestado = "";
-                                    $scope.fisica.codigoibge = "";
-                                }
-                                $scope.listarCidades();
-                                $scope.fisica.logradouro = data.endereco.logradouro;
-                                $scope.fisica.numero = data.endereco.numero;
-                                $scope.fisica.complemento = data.endereco.complemento;
-                                $scope.fisica.bairro = data.endereco.bairro;
-                                $scope.fisica.telefone = data.telefone;
-                                $scope.fisica.telefonesecundario = data.telefonesecundario;
-                                $scope.fisica.tipo = data.tipo;
-                                $scope.fisica.imgSrc = data.imgSrc;
-                                console.log($scope.fisica.imgSrc);
-
-                                $scope.isNovo = false;
-                            }).error(deuErro);
+                    var busca = "/pessoa/fisica/obj/" + $routeParams.id;
+                    if(idPessoa){ busca = "/pessoa/fisica/obj/" + idPessoa; }
+                    console.log(busca);
+                    $http.get(busca)
+                    .success(function (data) {
+                        novaPessoaFisica();
+                        $scope.fisica.idpessoa = $routeParams.id;
+                        $scope.fisica.nome = data.nome;
+                        $scope.fisica.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
+                        $scope.fisica.genero = data.genero;
+                        $scope.fisica.email.email = data.email.email;
+                        var d = new Date(data.datanascimento);
+                        $scope.fisica.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                        $scope.fisica.datanascimento = data.datanascimento;
+                        $scope.fisica.dataArrumada = $scope.fisica.datanasc.getDate() + "/" + ($scope.fisica.datanasc.getMonth() + 1) + '/' + $scope.fisica.datanasc.getFullYear();
+                        $scope.fisica.cep = data.endereco.cep;
+                        $scope.fisica.idfuncao = (data.funcao != null) ? data.funcao.idfuncao : "";
+                        if (data.endereco != null && data.endereco.cidade != null && data.endereco.cidade.estado != null) {
+                            $scope.fisica.codigoestado = data.endereco.cidade.estado.codigoestado;
+                            $scope.fisica.codigoibge = data.endereco.cidade.codigoIBGE;
+                            $scope.fisica.cidade = data.endereco.cidade.descricao + " - " + data.endereco.cidade.estado.sigla;
+                        } else {
+                            $scope.fisica.codigoestado = "";
+                            $scope.fisica.codigoibge = "";
+                            $scope.fisica.cidade = "Cidade não informada.";
+                        }
+                        $scope.listarCidades();
+                        $scope.fisica.logradouro = data.endereco.logradouro;
+                        $scope.fisica.numero = data.endereco.numero;
+                        $scope.fisica.complemento = data.endereco.complemento;
+                        $scope.fisica.bairro = data.endereco.bairro;
+                        $scope.fisica.telefone = data.telefone;
+                        $scope.fisica.telefonesecundario = data.telefonesecundario;
+                        $scope.fisica.telefones = $scope.fisica.telefone.telefone;
+                        if(data.telefonesecundario.telefone) { $scope.fisica.telefones += " / "+ data.telefonesecundario.telefone; }
+                        $scope.fisica.tipo = data.tipo;
+                        if($scope.fisica.tipo == "COLABORADOR"){
+                            $scope.fisica.funcao = " (" + data.funcao.descricao + ")";
+                        }
+                        
+                        $scope.fisica.imgSrc = data.imgSrc;
+                        console.log($scope.fisica.imgSrc);
+                        $scope.isNovo = false;
+                    }).error(deuErro);
                 }, 100);
             }
         }
         else {
 
+        }
+    };
+
+    $scope.chamaModalPessoa = function(genero){
+        if(!genero){
+            jQuery('#modalPessoaJuridica').modal('show', {backdrop: 'static'});
+        }
+        else {
+            jQuery('#modalPessoaFisica').modal('show', {backdrop: 'static'});
         }
     };
 
