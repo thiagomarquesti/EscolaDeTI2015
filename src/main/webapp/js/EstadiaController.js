@@ -74,7 +74,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.editarEstadia = function (idestadia) {
-            $location.path("/Estadia/editar/" + idestadia);
+            $location.path("/Estadia/editar/" + idestadia );
         };
 
         $scope.dateToData = function (valor) {
