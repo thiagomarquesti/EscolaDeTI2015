@@ -117,7 +117,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Estadia/nova', {
         templateUrl: 'views/estadiaCadastrar.html',
         controller: 'EstadiaController'
-    }).when('/Estadia/nova/:id', {
+    }).when('/Estadia/editar/:id', {
         templateUrl: 'views/estadiaCadastrar.html',
         controller: 'EstadiaController'
     })
