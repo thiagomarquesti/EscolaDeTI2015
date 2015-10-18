@@ -1,11 +1,28 @@
 package br.unicesumar.time05.familia;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.rowmapper.MapRowMapper;
+import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
 import classesbase.ServiceBase;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
+import javax.sql.DataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -14,6 +31,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository> {
+
+    @Autowired
+    DataSource dataSource;
+    
+    @Autowired
+    SessaoUsuario sessaoUsuario;
 
     private final String sqlPadrao
             = "SELECT f.idfamilia, "
@@ -98,14 +121,35 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
                 + "          JOIN familia_indigena fi ON fi.idfamilia = ff.idfamilia "
                 + "          JOIN indigena i ON i.codigoassindi = fi.codigoassindi "
                 + "         WHERE ff.idfamilia = f.idfamilia) "
-                
                 + " FROM familia_indigena fi "
                 + " LEFT JOIN familia f ON f.idfamilia = fi.idfamilia "
-                + " LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi "                
+                + " LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi "
                 + "WHERE (ir.codigoassindi = :aCodigoAssindi) or (fi.codigoassindi = :aCodigoAssindi) "
                 + "GROUP BY fi.idfamilia, f.idfamilia, ir.codigoassindi ";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aCodigoAssindi", aCodigoAssindi);
         return query.execute(sql, params);
+    }
+
+    String gerarRelatorioSimples() {
+
+        try {
+            URL reportResource = getClass().getClassLoader().getResource("./relatorios/teste01.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
+            JasperPrint print = JasperFillManager.fillReport(report, new HashMap<String, Object>(), dataSource.getConnection());
+            
+            File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdUsuario());
+            path.mkdirs();
+            for (File arquivo : path.listFiles()){
+                arquivo.delete();
+            }
+            File pdf = new File(path + "/" + UUID.randomUUID().toString() + ".pdf");
+            JasperExportManager.exportReportToPdfFile(print, pdf.getAbsolutePath());
+            System.out.println("Imprimindo arquivo " + pdf);
+            return "/rels/" + sessaoUsuario.getUsuario().getIdUsuario() + "/" +  pdf.getName();
+        } catch (JRException | SQLException ex) {
+            Logger.getLogger(FamiliaService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

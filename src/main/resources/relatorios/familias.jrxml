@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-10-12T22:47:04 -->
+<!-- 2015-10-15T21:29:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="familias" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c8ae8b1-bf3b-4a0a-a222-3cac3dbaf3b5">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="time05"/>
 	<queryString>
 		<![CDATA[SELECT f.nomefamilia,
 	f.telefone,
@@ -60,6 +59,14 @@ FROM familia f
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="8a9eac41-579b-410d-9720-fe802fb5d0de"/>
 			</line>
+			<textField>
+				<reportElement x="0" y="5" width="100" height="14" uuid="710caf86-7564-4ee4-81a9-abeaffc2e4e2"/>
+				<textFieldExpression><![CDATA[$F{nomefamilia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="6" width="100" height="14" uuid="539edfbf-11e9-4c01-aff4-54d644ccb562"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
