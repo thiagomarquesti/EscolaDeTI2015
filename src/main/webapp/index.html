@@ -111,8 +111,8 @@
                                     {{nomeUsuario}} <i class="entypo-down-open-big right"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#/Usuario/editar/{{idUsuario}}">Alterar meus dados</a></li>
-                                    <li><a>Alterar minha senha</a></li>
+                                    <li><a href="#/{{trocarDados(idPessoa,idUsuario)}}">Alterar meus dados</a></li>
+                                    <li><a href="#/Usuario/editar/{{idUsuario}}">Alterar minha senha</a></li>
                                     <li class="divider"></li>
                                     <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                                 </ul>
