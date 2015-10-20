@@ -6,6 +6,24 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
         var monthArray = [["JAN", "Janeiro"], ["FEB", "Fevereiro"], ["MAR", "Março"], ["APR", "Abril"], ["MAY", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AUG", "Agosto"], ["SEP", "Setembro"], ["OCT", "Outubro"], ["NOV", "Novembro"], ["DEC", "Dezembro"]];
         var letrasArray = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
         var dayArray = ["7", "1", "2", "3", "4", "5", "6"];
+
+        function novoEvento() {
+            $scope.eventos = {
+                descricao: "",
+                datainicial: "",
+                datafinal: "",
+                visualizarnocalendario: ""
+            };
+        }
+
+        function getEventosDoCalendario() {
+            novoEvento();
+            $http.get("/eventos").success(function (data) {
+                $scope.eventos = data;
+                console.log($scope.eventos);
+            }).error(erroNoEvento);
+        }
+
         $(document).ready(function () {
             $(document).on('click', '.calendar-day.have-events', activateDay);
             $(document).on('click', '.specific-day', activatecalendar);
@@ -63,18 +81,34 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
                 if ($(this).data("color") == undefined) {
                     $(this).data("color", "red");
                 }
-                $(this).find('[data-role=day]').each(function () {
+//                $(this).find('[data-role=day]').each(function () {
+//                    var tempdayarray = [];
+//                    $(this).find('[data-role=event]').each(function () {
+//                        var tempeventarray = [];
+//                        tempeventarray["name"] = $(this).data("name");
+//                        tempeventarray["start"] = $(this).data("start");
+//                        tempeventarray["end"] = $(this).data("end");
+//                        tempeventarray["location"] = $(this).data("location");
+//                        tempdayarray.push(tempeventarray);
+//                    });
+//                    calendarArray[$(this).data('day')] = tempdayarray;
+//                });
+                $(this).each($scope.eventos, function (key, value) {
                     var tempdayarray = [];
-                    $(this).find('[data-role=event]').each(function () {
-                        var tempeventarray = [];
-                        tempeventarray["name"] = $(this).data("name");
-                        tempeventarray["start"] = $(this).data("start");
-                        tempeventarray["end"] = $(this).data("end");
-                        tempeventarray["location"] = $(this).data("location");
-                        tempdayarray.push(tempeventarray);
-                    });
-                    calendarArray[$(this).data('day')] = tempdayarray;
+                    if (key === "datainicial") {
+                        if (calendarArray.indexOf(value) === -1) {
+                            var tempeventarray = [];
+                            tempeventarray["descricao"] = $(this).data("descricao");
+                            tempdayarray.push(tempeventarray);
+                            calendarArray[value] = tempdayarray;
+                        } else {
+
+                        }
+                    }
+                    ;
+                    console.log(calendarArray);
                 });
+
             });
             $(".calendar [data-role=day]").remove();
             calendarSetMonth();
@@ -139,14 +173,14 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
                 if (d.getTime() == c.getTime()) {
                     cal_day.addClass('this-day');
                 }
-                var strtime = d.getFullYear() + '' + (d.getMonth() + 1) + '' + d.getDate();
+                var strtime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
                 if (calendarArray[strtime] !== undefined) {
                     cal_day.addClass('have-events');
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
                 if (calendarArray[strtime] != undefined) {
-                    for (var u = 0; u < 3 && u < calendarArray[strtime].length; u++) {
-                        cal_day_eventholder.append('<div class="event-notif"></div>')
+                    for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
+                        cal_day_eventholder.append('<div class="event-notif"></div>') // Mostra a quantidade de eventos no dia.
                     }
                 }
                 cal_day.attr('strtime', strtime);
@@ -159,6 +193,10 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
         }
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");
+        }
+
+        function erroNoEvento() {
+            toastr.error("Erro ao carregar os eventos.");
         }
 
 
