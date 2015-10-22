@@ -7,7 +7,10 @@ import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,8 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
@@ -32,20 +33,21 @@ public abstract class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idpessoa;
-    
+
     @CampoConsulta
     @NotBlank(message = "Nome não estar vazio!")
     private String nome;
-    
+
     @CampoConsulta
     @NotNull(message = "Telefone não pode estar vazio!")
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "pessoa_telefone",
-            joinColumns = {
-                @JoinColumn(name = "pessoa_id", referencedColumnName = "idpessoa")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "telefone_id", referencedColumnName = "idtelefone")})
-    private List<Telefone> telefones;
+    @Embedded
+    private Telefone telefone;
+
+    @CampoConsulta
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "telefone", column = @Column(name = "telefonesecundario"))})
+    private Telefone telefonesecundario;
 
     @CampoConsulta
     @NotNull(message = "Email não pode estar vazio!")
@@ -56,7 +58,7 @@ public abstract class Pessoa implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", referencedColumnName = "idendereco")
     private Endereco endereco;
-    
+
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa;
@@ -69,17 +71,19 @@ public abstract class Pessoa implements Serializable {
         this.email = email;
     }
 
-    public Pessoa(String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+    public Pessoa(String nome, Telefone telefone, Telefone telefonesecundario, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
         this.nome = nome;
-        this.telefones = telefones;
+        this.telefone = telefone;
+        this.telefonesecundario = telefonesecundario;
         this.email = email;
         this.endereco = endereco;
         this.tipoPessoa = tipoPessoa;
     }
 
-    public Pessoa(String nome, List<Telefone> telefones, Email email) {
+    public Pessoa(String nome, Telefone telefone, Telefone telefonesecundario, Email email) {
         this.nome = nome;
-        this.telefones = telefones;
+        this.telefone = telefone;
+        this.telefonesecundario = telefonesecundario;
         this.email = email;
     }
 
@@ -107,16 +111,20 @@ public abstract class Pessoa implements Serializable {
         this.nome = nome;
     }
 
-    public List<Telefone> getTelefones() {
-        return telefones;
+    public Telefone getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<Telefone> telefones) {
-        this.telefones = telefones;
-    }
-    
     public void setTelefone(Telefone telefone) {
-        this.telefones.add(telefone);
+        this.telefone = telefone;
+    }
+
+    public Telefone getTelefonesecundario() {
+        return telefonesecundario;
+    }
+
+    public void setTelefonesecundario(Telefone telefonesecundario) {
+        this.telefonesecundario = telefonesecundario;
     }
 
     public Email getEmail() {
@@ -138,7 +146,6 @@ public abstract class Pessoa implements Serializable {
     public TipoPessoa getTipo() {
         return tipoPessoa;
     }
-
 
     @Override
     public int hashCode() {

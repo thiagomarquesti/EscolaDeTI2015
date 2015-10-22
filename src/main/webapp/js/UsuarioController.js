@@ -30,68 +30,12 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
     function novoUsuario() {
         $scope.usuario = {
-            nome: "",
-            telefones: [{
-                    telefone: ""
-                }, {
-                    telefone: ""
-                }],
-            email: {
-                email: ""
-            },
-            idfuncao: "",
-            logradouro: "",
-            numero: "",
-            bairro: "",
-            complemento: "",
-            cep: "",
-            codigoibge: "",
-            codigoestado: "",
-            datanasc: "",
-            cpf: {
-                cpf: ""
-            },
-            genero: "",
-            login: "",
-            senha: {
-                senha: ""
-            },
-            perfis: [],
-            tipo: "USUÁRIO",
-            status: "ATIVO",
-            imgSrc: ""
+            pessoa: "",
+            login:"",
+            senha:"",
+            perfis:[]
         };
         $scope.isNovo = true;
-    }
-
-    function criarUsuarioParaEditar() {
-        $scope.usuario = {
-            nome: "",
-            telefones: [{
-                    telefone: ""
-                }, {
-                    telefone: ""
-                }],
-            email: {
-                email: ""
-            },
-            idfuncao: "",
-            logradouro: "",
-            numero: "",
-            bairro: "",
-            complemento: "",
-            cep: "",
-            codigoibge: "",
-            codigoestado: "",
-            datanasc: "",
-            cpf: {
-                cpf: ""
-            },
-            genero: "",
-            tipo: "USUÁRIO",
-            status: "",
-            imgSrc: ""
-        };
     }
 
     function novoUsuarioAdmin() {
@@ -119,6 +63,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                     else {
                         $scope.nomeUsuario = data.nome;
                         $scope.idUsuario = data.idusuario;
+                        $scope.idPessoa = data.idpessoa;
                         foto(data.idusuario);
                     }
                 })
@@ -144,7 +89,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         }
         else {
             console.log($scope.usuario);
-            $scope.usuario.idpessoa = $routeParams.id;
+            $scope.usuario.idusuario = $routeParams.id;
             console.log($scope.usuario);
             $http.put("/usuario", $scope.usuario)
                     .success(function () {
@@ -255,38 +200,11 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $timeout(function () {
                 $http.get("/usuario/obj/" + $routeParams.id)
                         .success(function (data) {
-                            criarUsuarioParaEditar();     
-                            $scope.usuario.idusuario = $routeParams.id;
-                            $scope.usuario.nome = data.nome;
-                            $scope.usuario.cpf.cpf = (data.cpf != null) ? data.cpf.cpf : "";
-                            $scope.usuario.genero = data.genero;
-                            $scope.usuario.email.email = data.email.email;
-                            var d = new Date(data.datanascimento);
-                            $scope.usuario.datanasc = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                            $scope.usuario.cep = data.endereco.cep;
-                            $scope.usuario.idfuncao = (data.funcao != null) ? data.funcao.idfuncao : "";
-                            if (data.endereco != null && data.endereco.cidade != null && data.endereco.cidade.estado != null) {
-                                $scope.usuario.codigoestado = data.endereco.cidade.estado.codigoestado;
-                                $scope.usuario.codigoibge = data.endereco.cidade.codigoIBGE;
-                            } else {
-                                $scope.usuario.codigoestado = "";
-                                $scope.usuario.codigoibge = "";
-                            }
-                            $scope.listarCidades();
-                            $scope.usuario.logradouro = data.endereco.logradouro;
-                            $scope.usuario.numero = data.endereco.numero;
-                            $scope.usuario.complemento = data.endereco.complemento;
-                            $scope.usuario.bairro = data.endereco.bairro;
-                            $scope.usuario.telefones[0].telefone = (data.telefones[0]!=undefined)?data.telefones[0].telefone:"";
-                            if (data.telefones[1] != undefined) {
-                                $scope.usuario.telefones[1].telefone = data.telefones[1].telefone;
-                            }
-                            $scope.usuario.status = data.status;
-                            $scope.usuario.tipo = data.tipo;
-                            $scope.usuario.imgSrc = data.imgSrc;
-//                                $scope.usuario.rsenha = $scope.usuario.senha;
-
+                            console.log(data);
+                            $scope.usuario = data;
+                            $scope.usuario.rsenha = data.senha.senha;
                             $scope.isNovo = false;
+                            $scope.urlFoto = data.imgSrc;
                         }).error(deuErro);
             }, 100);
         }
@@ -340,6 +258,14 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 .error(deuErro);
     };
 
+    $scope.carregaColoaborador = function (){
+        $http.get("/usuario/colaboradores")
+                .success(function (data) {
+                    $scope.colaboradores = data;
+                    console.log(data);
+                })
+                .error(deuErro);
+    };
 
     $scope.carregaitensAcesso = function () {
         $http.get("/login/usuariologado/itensdeacesso")
@@ -359,9 +285,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
     };
 
     function foto(id) {
-        $http.get("/foto/user/" + id)
+        $http.get("/usuario/obj/" + id)
                 .success(function (data) {
-                    $scope.urlFoto = data.foto;
+                    $scope.urlFoto = data.imgSrc;
                 }).error(deuErro);
     };
 
@@ -373,15 +299,22 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         console.log($scope.usuario.imgSrc);
     };
 
-/*   SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS    */
-        $scope.getFuncoes = function () {
-            $http.get("/funcao")
-                    .success(function (data) {
-                        $scope.funcoes = data;
-                    })
-                    .error(deuErro);
-        };
-/*   FIM DOS SCRIPST   */
+    $scope.trocarDados = function (idpessoa,idusuario){
+        if(idpessoa)
+            return "Fisica/editar/"+idpessoa;
+        else
+            return "Usuario/editar/"+idusuario;
+    };
+
+    $scope.valido = function (){
+        console.log($scope.usuario);
+
+        if($scope.usuario.pessoa=="")
+            $scope.formCad.$valid = false;
+        if($scope.usuario.perfis.length==0)
+            $scope.formCad.$valid = false;
+    };
+        
 //-----------------AKI-------------------------------
     function erroListarItensAcessoDoMenu() {
         alert("Atenção, erro ao subir os itens de acesso do usuário! Entre em contato com o Administrador!!");

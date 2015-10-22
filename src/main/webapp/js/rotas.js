@@ -27,9 +27,23 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Perfil/editar/:id', {
         templateUrl: 'views/perfilCadastrar.html',
         controller: 'PerfilController'
-    }).when('/Perfil/editar', {
-        templateUrl: 'views/perfilCadastrar.html',
-        controller: 'PerfilController'
+    
+//------- Rotas do Pessoa --------
+    }).when('/Pessoa/listar', {
+        templateUrl: 'views/pessoaListar.html',
+        controller: 'PessoaFisicaController'
+    }).when('/Juridica/nova', {
+        templateUrl: 'views/pessoaJuridicaCadastrar.html',
+        controller: 'PessoaJuridicaController'
+    }).when('/Juridica/editar/:id', {
+        templateUrl: 'views/pessoaJuridicaCadastrar.html',
+        controller: 'PessoaJuridicaController'
+    }).when('/Fisica/nova', {
+        templateUrl: 'views/pessoaFisicaCadastrar.html',
+        controller: 'PessoaFisicaController'
+    }).when('/Fisica/editar/:id', {
+        templateUrl: 'views/pessoaFisicaCadastrar.html',
+        controller: 'PessoaFisicaController'
 //------- Convênio -------        
     }).when('/Convenio/novo', {
         templateUrl: 'views/convenioCadastrar.html',

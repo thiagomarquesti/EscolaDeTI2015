@@ -36,11 +36,13 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', '')">
                     <tr ng-repeat='i in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{i.codigoassindi}}</td>
-                        <td><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  {{i.nome}}</td>
-                        <td>{{calculaIdade(i.datanascimento)}} anos</td>
-                        <td>{{i.descricao}} <br> {{i.nometerra}}</td>
-                        <td>{{i.telefone}}</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.codigoassindi}}</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)"><i class="{{ehMeninoMenina[i.genero].icone}}" style="color: {{ehMeninoMenina[i.genero].cor}};"></i>  
+                            {{i.nome}}
+                        </td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{calculaIdade(i.datanascimento)}} anos</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.descricao}} <br> {{i.nometerra}}</td>
+                        <td class="pointer" onclick="jQuery('#modalIndigena').modal('show', {backdrop: 'static'});" data="{{i.codigoassindi}}" ng-click="indioComFoto(i.codigoassindi)">{{i.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
@@ -56,6 +58,9 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="modal fade custom-width" id="modalIndigena" data-backdrop="true" ng-include="'views/fichaIndigena.html'"></div>
+            
             <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
             
         </div>
@@ -65,7 +70,7 @@
         <a ng-href="#/Indigena/novo" class="btn btn-success">Cadastrar novo</a>
         
     </div>
-    <div class="modal fade" id="ocorrenciaModal" data-backdrop="true">
+    <div class="modal fade " id="ocorrenciaModal" data-backdrop="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -106,3 +111,4 @@
     </div>
 </div>
 </div>
+

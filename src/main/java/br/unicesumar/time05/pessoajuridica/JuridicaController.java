@@ -1,48 +1,41 @@
 package br.unicesumar.time05.pessoajuridica;
 
-import java.util.List;
+import br.unicesumar.time05.cnpj.Cnpj;
+import br.unicesumar.time05.email.Email;
+import classesbase.ControllerBase;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/pessoa/juridica")
-public class JuridicaController {
+public class JuridicaController extends ControllerBase<CriarPessoaJuridica, Long, JuridicaService> {
 
-    @Autowired
-    private JuridicaService service;
-
-    @RequestMapping(method = RequestMethod.POST)
-    public void salvarPessoa(@RequestBody PessoaJuridica aPessoa) {
-        service.salvarJuridica(aPessoa);
+    @Override
+    public Object getObjeto(@PathVariable Long aId) {
+        return (PessoaJuridica)service.getObjeto(aId);
     }
 
-    @RequestMapping(value = "/{aPessoaId}", method = RequestMethod.DELETE)
-    public void deletarPessoa(@PathVariable Long aPessoaId) {
-        service.removerJuridica(aPessoaId);
+    @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)
+    public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId) {
+        if (aUsuarioId == -1) {
+            return service.verificarEmail(new Email(aEmail));
+        } else {
+            return service.verificarEmail(new Email(aEmail), aUsuarioId);
+        }
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void alterarPessoa(@RequestBody PessoaJuridica aPessoa) {
-        service.salvarJuridica(aPessoa);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Map<String, Object>> getPessoas() {
-        return service.getJuridica();
-    }
-
-    @RequestMapping(value = "/{aPessoaId}", method = RequestMethod.GET)
-    public Map<String, Object> getPessoaPorId(@PathVariable Long aPessoaId) {
-        return service.getJuridicaById(aPessoaId);
-    }
-    
-    @RequestMapping(value = "/trocarTipo/{aPessoaId}", method = RequestMethod.POST)
-    public void alterarTipoPessoa(@PathVariable Long aPessoaId, @RequestBody String tipo){
-        service.trocarTipoJuridica(aPessoaId, tipo);
+    @RequestMapping(value = "/verificarCnpj/{aCnpj:.+}/{aUsuarioId}", method = RequestMethod.GET)
+    public Map<String, String> verifcarCnpj(@PathVariable Cnpj aCnpj, @PathVariable Long aUsuarioId) {
+//        Map<String, String> map = new HashMap<>();
+//        map.put("retorno", "valido");
+//        return map;
+        if (aUsuarioId != -1) {
+            return service.verificarCnpj(aCnpj, aUsuarioId);
+        } else {
+            return service.verificarCnpj(aCnpj);
+        }
     }
 }

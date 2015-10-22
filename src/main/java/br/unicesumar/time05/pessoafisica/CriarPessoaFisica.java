@@ -1,22 +1,20 @@
-package br.unicesumar.time05.usuario;
+package br.unicesumar.time05.pessoafisica;
 
+import br.unicesumar.time05.usuario.*;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.genero.Genero;
-import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-public class CriarUsuario implements Serializable{
+public class CriarPessoaFisica implements Serializable{
 
     private Long idpessoa;
     private String nome;
-    private List<Telefone> telefones;
+    private Telefone telefone;
+    private Telefone telefonesecundario;
     private Email email;
     private String logradouro;
     private String numero;
@@ -30,19 +28,16 @@ public class CriarUsuario implements Serializable{
     private TipoPessoa tipo;
     private CPF cpf;
     private Genero genero;
-    private String login;
-    private Senha senha;
-    private Status status = Status.ATIVO;
-    private Set<PerfilDeAcesso> perfis = new HashSet<>();
     private String imgSrc;
 
-    public CriarUsuario() {
+    public CriarPessoaFisica() {
     }
     
-    public CriarUsuario(Long idpessoa, String nome, List<Telefone> telefones, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
+    public CriarPessoaFisica(Long idpessoa, String nome, Telefone telefone, Telefone telefonesecundario, Email email, String logradouro, String numero, String bairro, String complemento, String cep, Long codigoIBGE, Long codigoUF, Long idfuncao, Date datanasc, TipoPessoa tipo, CPF cpf, Genero genero, String login, Senha senha, String imgSrc) {
         this.idpessoa = idpessoa;
         this.nome = nome;
-        this.telefones = telefones;
+        this.telefone = telefone;
+        this.telefonesecundario = telefonesecundario;
         this.email = email;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -56,8 +51,6 @@ public class CriarUsuario implements Serializable{
         this.tipo = tipo;
         this.cpf = cpf;
         this.genero = genero;
-        this.login = login;
-        this.senha = senha;
         this.imgSrc = imgSrc;
     }
     
@@ -77,12 +70,20 @@ public class CriarUsuario implements Serializable{
         this.nome = nome;
     }
 
-    public List<Telefone> getTelefones() {
-        return telefones;
+    public Telefone getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<Telefone> telefones) {
-        this.telefones = telefones;
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    public Telefone getTelefonesecundario() {
+        return telefonesecundario;
+    }
+
+    public void setTelefonesecundario(Telefone telefonesecundario) {
+        this.telefonesecundario = telefonesecundario;
     }
 
     public Email getEmail() {
@@ -179,38 +180,6 @@ public class CriarUsuario implements Serializable{
 
     public void setGenero(Genero genero) {
         this.genero = genero;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public Senha getSenha() {
-        return senha;
-    }
-
-    public void setSenha(Senha senha) {
-        this.senha = senha;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Set<PerfilDeAcesso> getPerfis() {
-        return perfis;
-    }
-
-    public void setPerfis(Set<PerfilDeAcesso> perfis) {
-        this.perfis = perfis;
     }
 
     public TipoPessoa getTipo() {

@@ -1,6 +1,5 @@
 package br.unicesumar.time05.usuario;
 
-import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
 import java.io.File;
@@ -14,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/usuario")
-public class UsuarioController extends ControllerBase<CriarUsuario, Long, UsuarioService> {
+public class UsuarioController extends ControllerBase<Usuario, Long, UsuarioService> {
 
     @Override
     public Usuario getObjeto(@PathVariable Long aId) {
         Usuario u = (Usuario) service.getObjeto(aId);
-        if (new File("src/main/webapp/fotos/users/" + u.getIdpessoa() + ".jpg").exists()) {
-            u.setImgSrc("src/main/webapp/fotos/users/" + u.getIdpessoa() + ".jpg");
+        if (u.getPessoa()!=null && new File("src/main/webapp/fotos/users/" + u.getPessoa().getIdpessoa()+ ".jpg").exists()) {
+            u.setImgSrc("/fotos/users/" + u.getPessoa().getIdpessoa()+ ".jpg");
+        }else{
+            u.setImgSrc("/fotos/default.png");
         }
         return u;
     }
@@ -30,18 +31,6 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
         return service.verificarSenha(aSenha);
     }
 
-    @RequestMapping(value = "/verificarCpf/{aCpf:.+}/{aUsuarioId}", method = RequestMethod.GET)
-    public Map<String, String> verifcarCpf(@PathVariable CPF aCpf, @PathVariable Long aUsuarioId) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("retorno", "valido");
-//        return map;
-        if (aUsuarioId != -1) {
-            return service.verificarCpf(aCpf, aUsuarioId);
-        } else {
-            return service.verificarCpf(aCpf);
-        }
-    }
-
     @RequestMapping(value = "/trocarStatusUsuario/{aUsuarioId}", method = RequestMethod.PUT)
     public void alterarStatus(@PathVariable Long aUsuarioId) {
         service.trocarStatusUsuario(aUsuarioId);
@@ -49,11 +38,7 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
 
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)
     public boolean verifcarEmail(@PathVariable String aEmail, @PathVariable Long aUsuarioId) {
-        if (aUsuarioId != -1) {
-            return service.verificarEmail(new Email(aEmail), aUsuarioId);
-        } else {
             return service.verificarEmail(new Email(aEmail));
-        }
     }
 
 //    @RequestMapping(value = "/verificarEmail/{aEmail:.+}", method = RequestMethod.GET)
@@ -85,4 +70,9 @@ public class UsuarioController extends ControllerBase<CriarUsuario, Long, Usuari
         service.deletePerfis(aUsuarioId, aPerfilId);
     }
 
+    @RequestMapping(value = "/colaboradores", method = RequestMethod.GET)
+    public List<Map<String, Object>> getColaboradores(){
+        return service.getColaboradores();
+    }
+    
 }
