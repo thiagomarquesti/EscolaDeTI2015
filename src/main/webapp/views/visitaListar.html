@@ -51,38 +51,38 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='visita'"></i> 
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'visita'"></i> 
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'visita', busca.descricao, 'ok', true)">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='dataentrada'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'dataentrada'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.descricao, 'ok', true)">Data de Entrada</a>
                         </th>   
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datasaida'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datasaida'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datasaida', busca.descricao, 'ok', true)">Data de Saída</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='quantidademembros'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidademembros'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidademembros', busca.descricao, 'ok', true)">Quantidade de Visitantes</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='responsavel'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'responsavel'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'responsavel', busca.descricao, 'ok', true)">Responsável</a>
                         </th>
-                        
-                        
+
+
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='contato'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'contato'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'contato', busca.descricao, 'ok', true)">Contato</a>
                         </th>
-                        
+
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', ent, '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', ent, '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{v.visita}}</td>
+                        <td>{{v.idvisita}}</td>
                         <td>{{v.datavisita}}</td>
                         <td>{{v.horasaida}}</td>
                         <td>{{v.quantidadedevisitantes}}</td>
