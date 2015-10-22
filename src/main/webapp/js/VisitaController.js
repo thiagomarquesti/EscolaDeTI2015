@@ -2,14 +2,21 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.busca = {};
         $scope.placeHolder = "Buscar visita";
         $scope.ent = $rootScope.ent = "visita";
-        $scope.campoPrincipal = 'idpessoaresponsavel';
+        $scope.campoPrincipal = 'nome';
         $scope.isNovaEstadia = true;
 
         function novaVisita() {
             $scope.visita = {
-                idpessoaresponsavel: "",
-                quantidadedevisitantes: 0
-
+                datavisita : "",
+                horavisita : "",
+                horaentrada : "",
+                horasaida : "",
+                observacao : "",
+                quantidadedevisitantes : "",
+                seriecurso : "",
+                visitarealizada : "",
+                pessoaresponsavel : {  },
+                entidade : { } 
             };
             $scope.isNovaVisita = true;
         }
@@ -22,7 +29,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 novaVisita();
             }
         };
-    }]);
+    
 
 $scope.atualizarVisitas = function () {
     $http.get("/visita")
@@ -85,3 +92,5 @@ $scope.salvarVisita = function (flag) {
                 .error(deuErroAtualizacao);
     }
 };
+
+}]);
