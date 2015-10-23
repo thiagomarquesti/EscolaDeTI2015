@@ -24,8 +24,11 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
             + " v.horasaida, "
             + " v.seriecurso, "
             + " v.idpessoaresponsavel, "
-            + " v.identidade "
-            + " FROM visita v ");
+            + " v.identidade, "
+            + " pf.nome as nomePF, "
+            + " pj.nome as nomePJ "
+            + " FROM visita v "
+            + " INNER JOIN pessoa pf ON pf.idpessoa = v.idpessoaresponsavel LEFT JOIN pessoa pj ON pj.idpessoa = v.identidade" );
 
     public VisitaService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Visita.class));
