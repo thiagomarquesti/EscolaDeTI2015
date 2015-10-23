@@ -36,17 +36,18 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
 
     final String SQLConsultaFisicaCompleta = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, pf.cpf as documento, p.telefone,"
             + " p.telefonesecundario, ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.descricao, u.sigla "
-            + "FROM pessoa p"
+            + " FROM pessoa p"
             + " LEFT JOIN pessoa_fisica pf "
-            + "    ON pf.idpessoa = p.idpessoa"
+            + "    ON pf.idpessoa = p.idpessoa "
             + " LEFT JOIN endereco ende "
-            + "    ON p.endereco_id = ende.idendereco"
+            + "    ON p.endereco_id = ende.idendereco "
             + " LEFT JOIN endereco_cidade ec "
-            + "    ON ende.idendereco = ec.endereco_id"
-            + " LEFT JOIN cidade c"
-            + "    ON ec.cidade_id = c.codigoibge"
-            + " LEFT JOIN uf u"
-            + "    ON c.estado_codigoestado = u.codigoestado";
+            + "    ON ende.idendereco = ec.endereco_id "
+            + " LEFT JOIN cidade c "
+            + "    ON ec.cidade_id = c.codigoibge "
+            + " LEFT JOIN uf u "
+            + "    ON c.estado_codigoestado = u.codigoestado "
+            + " WHERE p.tipo_pessoa<>'JURÍDICA'";
 
     final String SQLConsultaFisica = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, pf.genero, COALESCE(pf.cpf, pj.cnpj) as documento, p.telefone,"
             + " c.descricao, u.sigla "
@@ -119,6 +120,10 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
     @Override
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(SQLConsultaFisica);
+    }
+    
+    public List<Map<String, Object>> listarFisicas() {
+        return query.execute(SQLConsultaFisicaCompleta);
     }
 
     @Override
