@@ -107,6 +107,23 @@ $scope.salvarVisita = function (flag) {
                 .error(deuErroAtualizacao);
     }
 };
+    
+    $scope.listarFisicas = function(){
+        $http.get('/pessoa/fisica/getfisicas')
+                .success(function(data) {
+                    $scope.fisicas = data;
+                })
+                .error(deuErro);
+    };
+    
+    $scope.listarJuridicas = function(){
+        $http.get('/pessoa/juridica')
+                .success(function(data) {
+                    $scope.juridicas = data;
+            console.log($scope.juridicas);
+                })
+                .error(deuErro);
+    };
 
     $scope.dateToData = function (valor) {
             var data = "";

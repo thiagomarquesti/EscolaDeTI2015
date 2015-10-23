@@ -17,25 +17,18 @@
                 <label for="horaentrada" class="col-md-2 control-label"> Horário Previsto</label>
                 <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
 
-
-
-
-
                 <div ng-show="formVisita.dataVisita.$dirty && formVisita.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                     <span ng-show="formVisita.dataVisita.$error.required">Preencha a data da visita. </span>
                 </div>
-
-                <div class="form-group">
+            </div>
+                    <div class="form-group">
                     <label for="entidade" class="col-md-2 control-label">Entidade: </label>
-                    <!--<div class="col-md-6"><input type="text" ng-model="" id="entidade" name="entidade" required="" class="form-control"></div>
-                
-                    !-->
-                    <div class="col-md-3" ng-controller="VisitaController">
+                    <div class="col-md-5" ng-init="listarJuridicas()">
 
                         <select ng-model="visita.identidade" id="identidade" name="identidade" required="" class="form-control requerido">
                             <option value="">Selecione uma entidade</option>
                             <!-- FAZER BUSCA POR ENTIDADE-->
-                            <option ng-repeat="v in visita" value="{{v.identidade}}">{{v.identidade}}</option>
+                            <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
                         </select>
 
                     </div>
@@ -46,7 +39,7 @@
                     <label for="responsavel" class="col-md-2 control-label">Responsável: </label>
                     <!--<div class="col-md-6"><input type="text" ng-model="" id="responsavel" name="responsavel" required="" class="form-control"></div>
                !-->
-                    <div class="col-md-3" ng-controller="VisitaController">
+                    <div class="col-md-3" ng-init="listarFisicas()">
 
                         <select ng-model="visita.idpessoaresponsavel" id="idpessoaresponsavel" name="idpessoaresponsavel" required="" class="form-control requerido">
                             <option value="">Selecione um responsável</option>
@@ -80,7 +73,6 @@
                  <span ng-show="visita.quantidadeDeVisitantes.$error.required">Preencha quantidade de visitantes. </span>
                  </div> !-->     
         </form>
-    </div>
 </div>
 </div>
 <div class="panel panel-info">    
