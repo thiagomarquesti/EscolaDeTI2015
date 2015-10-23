@@ -148,7 +148,7 @@
             <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
-            <div class="form-group">
+            <div ng-show="tipoPessoa()" class="form-group">
                 <label for="escolaridade" class="col-md-2 control-label">Tipo de Pessoa: </label>
                 <div class="col-md-3">
                     <select name="escolaridade" ng-model="fisica.tipo" id="escolaridade" required="" class="form-control requerido">

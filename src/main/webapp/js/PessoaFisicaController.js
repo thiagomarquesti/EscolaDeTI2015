@@ -268,8 +268,13 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             "cor": "#FFD700"
         }
     };
-
-
+    
+    $scope.tipoPessoa = function (){
+        if($scope.fisica.tipo==="USUÁRIO")
+            return false;
+        else
+            return true;
+    };
 
     $scope.webcamFoto = function () {
         $(document).ready(function () {
