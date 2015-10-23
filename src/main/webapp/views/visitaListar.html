@@ -1,42 +1,3 @@
-<!--<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">Visitas cadastradas</div>
-        <div class="panel-options">
-            <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
-        </div>    
-    </div>
-    <div class="panel-body">
-        <div class="input-group">
-            <span class="input-group-addon btn-info" id="basic-addon1"><i class="fa fa-search"></i></span>
-            <input type="text" ng-model="busca.nome" placeholder="Buscar visitas (digite o nome)" class="form-control" aria-describedby="basic-addon1">
-        </div>
-        <br>
-        <div class="panel panel-default">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome</th><th>Entrada</th><th>Saída</th><th>Quantidade de visitantes</th><th>Responsável</th><th>Contato</th>
-                    </tr>
-                </thead>
-                <tbody ng-init="atualizarVisitas()">
-                    <tr ng-repeat='v in filtered = (visitas| filter:busca
-                                            )' >
-                        <td>{{v.nome}}</td>
-                        <td>{{v.dataEntrada}}</td>
-                        <td>{{v.dataSaida}}</td>
-                        <td>{{v.quantidadeDeVisitantes}}</td>
-                        <td>{{v.responsavel}}</td>
-                        <td>{{v.contato}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="panel-footer">Registros encontrados: {{filtered.length}}</div>
-        </div>
-        <a ng-href="#/Visita/nova" class="btn btn-success">Cadastrar nova</a>
-    </div>
-</div>     
-!--> 
-
 <div class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title">Lista de Visitas</div>
@@ -51,42 +12,36 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'visita'"></i> 
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'visita', busca.descricao, 'ok', true)">Nome</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomepj'"></i> 
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomepj', busca.descricao, 'ok', true)">Nome</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'dataentrada'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.descricao, 'ok', true)">Data de Entrada</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datavisita'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datavisita', busca.descricao, 'ok', true)">Data da visita</a>
                         </th>   
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datasaida'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datasaida', busca.descricao, 'ok', true)">Data de Saída</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'horaentrada'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'horaentrada', busca.descricao, 'ok', true)">Horário</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidademembros'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidademembros', busca.descricao, 'ok', true)">Quantidade de Visitantes</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidadedevisitantes'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidadedevisitantes', busca.descricao, 'ok', true)">Visitantes</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'responsavel'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'responsavel', busca.descricao, 'ok', true)">Responsável</a>
-                        </th>
-
-
-                        <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'contato'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'contato', busca.descricao, 'ok', true)">Contato</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomepf'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomepf', busca.descricao, 'ok', true)">Responsável</a>
                         </th>
 
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', ent, '')">
-                    <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{v.idvisita}}</td>
-                        <td>{{v.datavisita}}</td>
-                        <td>{{v.horasaida}}</td>
-                        <td>{{v.quantidadedevisitantes}}</td>
-                        <td>{{v.idpessoaresponsavel}}</td>
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', 'ok', ent, '')">
+                    <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
+                        <td>{{v.nomepj}}</td>
+                        <td>{{dateToData(v.datavisita)}}</td>
+                        <td>Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
+                        <td>{{v.quantidadedevisitantes}} pessoas</td>
+                        <td>{{v.nomepf}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">

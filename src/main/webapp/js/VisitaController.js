@@ -1,10 +1,32 @@
-module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', 'ServiceFuncoes', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
         $scope.busca = {};
         $scope.placeHolder = "Buscar visita";
         $scope.ent = $rootScope.ent = "visita";
-        $scope.campoPrincipal = 'nome';
+        $scope.campoPrincipal = 'datavisita';
         $scope.isNovaEstadia = true;
-
+    
+    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
+        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
+        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
+        atualizaScope;
+    };
+    
+    function atualizaScope() {
+        $scope = $rootScope;
+    }
+    
+    $rootScope.atualizarListagens = $scope.atualizarListagens;
+    
+    $scope.registrosPadrao = function() {
+        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+        $rootScope.numregistros = $scope.busca.numregistros;
+    };
+    
+    $scope.fazPesquisa = function(registros, string){
+        $rootScope.string = string;
+        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+    };
+    
         function novaVisita() {
             $scope.visita = {
                 datavisita : "",
@@ -31,13 +53,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         };
     
 
-$scope.atualizarVisitas = function () {
-    $http.get("/visita")
-            .success(function (data) {
-                $scope.visitas = data;
-            })
-            .error(deuErro);
-};
 
 $scope.editarVisita = function (visita) {
     $location.path("/Visita/editar/" + visita.idvisita);
@@ -92,5 +107,13 @@ $scope.salvarVisita = function (flag) {
                 .error(deuErroAtualizacao);
     }
 };
+
+    $scope.dateToData = function (valor) {
+            var data = "";
+            if (valor != null && valor != "" && valor != undefined) {
+                data = ServiceFuncoes.dateToData(valor);
+            }
+            return data;
+        };
 
 }]);
