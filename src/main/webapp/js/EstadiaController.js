@@ -74,12 +74,10 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         
         function getSelects(id){
             $http.get("/estadia/getRepresentante/"+id).success(function (data){
-                console.log(data);
                 $scope.estadia.representante = data;
             }).error(deuErro);
             
             $http.get("/estadia/getMembros/"+id).success(function (data){
-                console.log(data);
                 $scope.estadia.membros = data;
             }).error(deuErro);
             
@@ -98,10 +96,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.dateToData = function (valor) {
+            
             var date = new Date(valor);
+            var date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+            console.log(date);
             var dia = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-            var data = dia + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-            return data;
+            var data = dia + "/" + (((date.getMonth() + 1)<10)?"0"+(date.getMonth() + 1):(date.getMonth() + 1)) + "/" + date.getFullYear();
+            return (valor!=null)?data:"";
         };
 
 
@@ -151,7 +152,6 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         $scope.carregarMembros = function (id) {
             $http.get("/familia/membrosPorFamilia/" + id)
                     .success(function (data) {
-                        console.log(data);
                         $scope.itens = data;
                     }).error(deuErro);
         };

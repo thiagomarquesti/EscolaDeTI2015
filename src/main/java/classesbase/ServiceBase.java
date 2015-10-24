@@ -71,6 +71,20 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     }
 
     public RetornoConsultaPaginada listar(ParametrosConsulta aParametrosConsulta) {
+        if (aParametrosConsulta.getPalavraChave().contains("-")) {
+            String data = aParametrosConsulta.getPalavraChave();
+            String[] sub = data.split("-");
+            if (sub.length == 1) {
+                aParametrosConsulta.setPalavraChave(sub[0]);
+            } else {
+                if (sub.length == 2) {
+                    aParametrosConsulta.setPalavraChave(sub[1] + "-" + sub[0]);
+                } else {
+                    aParametrosConsulta.setPalavraChave(sub[2] + "-" + sub[1] + "-" + sub[0]);
+                }
+            }
+        }
+        System.out.println(aParametrosConsulta.getPalavraChave());
         if (this.temSqlPadraoSetado()) {
             return query.executeComPaginacao(sqlPadrao, campoOrdenacaoPadrao, aParametrosConsulta);
         } else {

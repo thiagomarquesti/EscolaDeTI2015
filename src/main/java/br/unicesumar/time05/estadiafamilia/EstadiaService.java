@@ -23,7 +23,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
             + "    FROM estadia es "
             + "    LEFT JOIN estadia_indigena ei ON es.idestadia = ei.idestadia "
             + "    LEFT JOIN familia f ON es.idfamilia = f.idfamilia "
-            + "    LEFT JOIN indigena i ON es.representante_codigoassindi = i.codigoassindi "
+            + "    LEFT JOIN indigena i ON es.idrepresentante = i.codigoassindi "
             + "GROUP BY es.idestadia , f.idfamilia, i.codigoassindi";
 
     String sqlPadraoComWhere
@@ -39,7 +39,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
             + "    FROM estadia es "
             + "    LEFT JOIN estadia_indigena ei ON es.idestadia = ei.idestadia "
             + "    LEFT JOIN familia f ON es.idfamilia = f.idfamilia "
-            + "    LEFT JOIN indigena i ON es.representante_codigoassindi = i.codigoassindi "
+            + "    LEFT JOIN indigena i ON es.idrepresentante = i.codigoassindi "
             + "   WHERE es.idestadia = :idestadia "
             + " GROUP BY es.idestadia , f.idfamilia, i.codigoassindi";
 
@@ -62,9 +62,9 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
                 + "       i.nome, "
                 + "       i.telefone, "
                 + "       ti.nometerra, "
-                +"        es.representante_codigoassindi "
+                +"        es.idrepresentante "
                 + " FROM estadia es "
-                + " JOIN indigena i ON es.representante_codigoassindi = i.codigoassindi "
+                + " JOIN indigena i ON es.idrepresentante = i.codigoassindi "
                 + " LEFT JOIN etnia e ON i.etnia_idetnia = e.idetnia "
                 + " LEFT JOIN terraindigena ti ON i.terraindigena_idterraindigena = ti.idterraindigena "
                 + " WHERE es.idestadia = :aIdEstadia";

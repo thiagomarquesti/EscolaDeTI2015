@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -39,6 +40,7 @@ public class Estadia implements Serializable {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
     private Set<Indigena> membros;
     
+    @JoinColumn(name = "idrepresentante")
     @ManyToOne(fetch = FetchType.EAGER)
     private Indigena representante;
 
