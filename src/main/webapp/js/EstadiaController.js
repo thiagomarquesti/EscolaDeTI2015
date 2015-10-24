@@ -65,6 +65,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects($routeParams.id);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
+                            
                             $scope.isNovaEstadia = false;
                         })
                         .error(deuErro);
