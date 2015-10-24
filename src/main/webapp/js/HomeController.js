@@ -1,4 +1,4 @@
-module.controller("HomeController", ["$scope", "$http", function ($scope, $http) {
+module.controller("HomeController", ["$scope", "$http", "$routeParams", "$location", "$timeout", function ($scope, $http) {
 
         var yy;
         var calendarArray = [];
@@ -24,13 +24,21 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
             }).error(erroNoEvento);
         }
 
+        function cadastrarevento() {
+            console.log("Cadastrar Evento");
+        }
+
         $(document).ready(function () {
-            $(document).on('click', '.calendar-day.have-events', activateDay);
-            $(document).on('click', '.specific-day', activatecalendar);
-            $(document).on('click', '.calendar-month-view-arrow', offsetcalendar);
-            $(window).resize(calendarScale);
-            calendarSet();
-            calendarScale();
+            getEventosDoCalendario();
+            setTimeout(function () {
+                $(document).on('click', '.calendar-day.have-events', activateDay);
+                $(document).on('click', '.specific-day', activatecalendar);
+                $(document).on('click', '.calendar-month-view-arrow', offsetcalendar);
+                $(document).on('click', '.calendar-day', cadastrarevento);
+                $(window).resize(calendarScale);
+                calendarSet();
+                calendarScale();
+            }, 100);
         });
 
         function calendarScale() {
@@ -60,14 +68,14 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
             var temparray = [];
             for (var u = 0; u < o; u++) {
                 for (var uu = 0; uu < p.length; uu++) {
-                    if (uu == 0) {
-                        t = uu;
-                        y = p[uu];
-                    }
-                    else if (parseInt(p[uu][deli].replace('.', '')) < parseInt(y[deli].replace('.', ''))) {
-                        y = p[uu];
-                        t = uu;
-                    }
+//                    if (uu == 0) {
+                    t = uu;
+                    y = p[uu];
+//                    }
+//                    else if (parseInt(p[uu][deli].replace('.', '')) < parseInt(y[deli].replace('.', ''))) {
+//                        y = p[uu];
+//                        t = uu;
+//                    }
                 }
                 temparray.push(y);
                 p.splice(t, 1);
@@ -77,42 +85,53 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
 
         function calendarSet() {
             $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left">&lsaquo;</div><p></p><div class="calendar-month-view-arrow" data-dir="right">&rsaquo;</div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
-            $(".calendar").each(function () {
-                if ($(this).data("color") == undefined) {
-                    $(this).data("color", "red");
+            
+            if ($(this).data("color") == undefined) {
+                $(this).data("color", "red");
+            }
+            
+            var tempdayarray = [];
+            for (var i = 0; i < $scope.eventos.length; i++) {
+                if ($scope.eventos[i].visualizarnocalendario) {
+                    var tempeventarray = [];
+                    tempeventarray["datainicial"] = $scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
+                    tempeventarray["descricao"] = $scope.eventos[i].descricao;
+                    tempdayarray.push(tempeventarray);
                 }
-//                $(this).find('[data-role=day]').each(function () {
-//                    var tempdayarray = [];
-//                    $(this).find('[data-role=event]').each(function () {
-//                        var tempeventarray = [];
-//                        tempeventarray["name"] = $(this).data("name");
-//                        tempeventarray["start"] = $(this).data("start");
-//                        tempeventarray["end"] = $(this).data("end");
-//                        tempeventarray["location"] = $(this).data("location");
-//                        tempdayarray.push(tempeventarray);
-//                    });
-//                    calendarArray[$(this).data('day')] = tempdayarray;
-//                });
-                $(this).each($scope.eventos, function (key, value) {
-                    var tempdayarray = [];
-                    if (key === "datainicial") {
-                        if (calendarArray.indexOf(value) === -1) {
-                            var tempeventarray = [];
-                            tempeventarray["descricao"] = $(this).data("descricao");
-                            tempdayarray.push(tempeventarray);
-                            calendarArray[value] = tempdayarray;
-                        } else {
+            }
 
+            for (var i = 0; i < $scope.eventos.length; i++) {
+                var tempdayevento = [];
+
+                if ($scope.eventos[i].visualizarnocalendario) {
+                    if (calendarArray[$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '')] === undefined) {
+                        for (var j = 0; j < tempdayarray.length; j++) {
+                            var tempevento = [];
+
+                            if ($scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '') === tempdayarray[j].datainicial) {
+                                tempevento["name"] = tempdayarray[j].descricao;
+                                tempdayevento.push(tempevento);
+                            }
                         }
+                        calendarArray[$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '')] = tempdayevento;
                     }
-                    ;
-                    console.log(calendarArray);
-                });
-
-            });
+                }
+            }
+            
             $(".calendar [data-role=day]").remove();
             calendarSetMonth();
         }
+
+        String.prototype.replaceAllCaracteresEspecial = function (de, para) {
+            var str = this;
+            var pos = str.indexOf(de);
+            while (pos > -1) {
+                str = str.replace(de, para);
+                pos = str.indexOf(de);
+            }
+            return (str);
+        }
+
         function activateDay() {
             $(this).parents('.calendar').addClass('spec-day');
             var di = new Date(parseInt($(this).attr('time')));
@@ -130,7 +149,7 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
             if (this.events !== undefined) {
                 var ev = orderBy('start', this.events);
                 for (var o = 0; o < ev.length; o++) {
-                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['start'] + ' - ' + ev[o]['end'] + '</p><p data-role="loc">' + ev[o]['location'] + '</p></div>');
+                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['start'] + ' - ' + ev[o]['end'] + '</p><p data-role="loc">' + ev[o]['location'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
         }
@@ -173,7 +192,22 @@ module.controller("HomeController", ["$scope", "$http", function ($scope, $http)
                 if (d.getTime() == c.getTime()) {
                     cal_day.addClass('this-day');
                 }
-                var strtime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+
+                var mes;
+                if ((d.getMonth() + 1) < 10) {
+                    mes = '0' + (d.getMonth() + 1);
+                } else {
+                    mes = (d.getMonth() + 1);
+                }
+
+                var dia;
+                if (d.getDate() < 10) {
+                    dia = '0' + d.getDate();
+                } else {
+                    dia = d.getDate();
+                }
+
+                var strtime = d.getFullYear() + '' + mes + '' + dia;
                 if (calendarArray[strtime] !== undefined) {
                     cal_day.addClass('have-events');
                 }
