@@ -65,24 +65,43 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects($routeParams.id);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
-                            
+
                             $scope.isNovaEstadia = false;
                         })
                         .error(deuErro);
             }
         };
-        
-        function getSelects(id){
-            $http.get("/estadia/getRepresentante/"+id).success(function (data){
+
+        function getSelects(id) {
+            $http.get("/estadia/getRepresentante/" + id).success(function (data) {
                 $scope.estadia.representante = data;
             }).error(deuErro);
-            
-            $http.get("/estadia/getMembros/"+id).success(function (data){
+
+            $http.get("/estadia/getMembros/" + id).success(function (data) {
                 $scope.estadia.membros = data;
             }).error(deuErro);
-            
+
         }
-        
+
+        $scope.salvarDataSaida = function () {
+            var estadia;
+            console.log($routeParams.id);
+            $http.get("/estadia/obj/" + $routeParams.id)
+                    .success(function (data) {
+                        estadia = data;
+                        estadia.datasaida = dataToDate($scope.estadia.datasaida);
+                        estadia.observacoessaida = $scope.estadia.observacoessaida;
+                        console.log(estadia);
+                        $http.put("/estadia", estadia)
+                                .success(function () {
+                                    toastr.success("Alterado com sucesso!");
+                                })
+                                .error(deuErroSalvar);
+                    })
+                    .error(deuErro);
+
+        };
+
         $scope.atualizarEstadia = function () {
             $http.get("/estadia")
                     .success(function (data) {
@@ -96,13 +115,12 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.dateToData = function (valor) {
-            
+
             var date = new Date(valor);
             var date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
-            console.log(date);
             var dia = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-            var data = dia + "/" + (((date.getMonth() + 1)<10)?"0"+(date.getMonth() + 1):(date.getMonth() + 1)) + "/" + date.getFullYear();
-            return (valor!=null)?data:"";
+            var data = dia + "/" + (((date.getMonth() + 1) < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "/" + date.getFullYear();
+            return (valor != null) ? data : "";
         };
 
 
@@ -161,6 +179,10 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
             return data;
         }
+
+        $scope.getIdEstadia = function (idestadia) {
+            $routeParams.id = idestadia;
+        };
 
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");

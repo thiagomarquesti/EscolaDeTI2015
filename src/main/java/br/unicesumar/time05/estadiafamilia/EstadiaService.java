@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository> {
 
     String sqlPadrao
-            = "  SELECT es.dataentrada, "
+            = "  SELECT es.idestadia, "
+            + "         es.dataentrada, "
             + "         es.datasaida, "
             + "         es.idestadia, "
             + "         f.nomefamilia, "
@@ -27,7 +28,8 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
             + "GROUP BY es.idestadia , f.idfamilia, i.codigoassindi";
 
     String sqlPadraoComWhere
-            = "  SELECT es.dataentrada, "
+            = "  SELECT es.idestadia, "
+            + "         es.dataentrada, "
             + "         es.datasaida, "
             + "         es.idestadia, "
             + "         f.nomefamilia, "
