@@ -24,9 +24,11 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             }).error(erroNoEvento);
         }
 
-        function cadastrarevento() {
-            console.log("Cadastrar Evento");
-        }
+//        function cadastrarevento() {
+//            var dia = new Date(parseInt($(this).attr('time')));
+//            console.log("Cadastrar Evento do dia: " + dia.getDate());
+//            
+//        }
 
         $(document).ready(function () {
             getEventosDoCalendario();
@@ -34,7 +36,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 $(document).on('click', '.calendar-day.have-events', activateDay);
                 $(document).on('click', '.specific-day', activatecalendar);
                 $(document).on('click', '.calendar-month-view-arrow', offsetcalendar);
-                $(document).on('click', '.calendar-day', cadastrarevento);
+//                $(document).on('click', '.calendar-day', cadastrarevento);
                 $(window).resize(calendarScale);
                 calendarSet();
                 calendarScale();
@@ -85,16 +87,17 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
         function calendarSet() {
             $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left">&lsaquo;</div><p></p><div class="calendar-month-view-arrow" data-dir="right">&rsaquo;</div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
-            
+
             if ($(this).data("color") == undefined) {
                 $(this).data("color", "red");
             }
-            
+
             var tempdayarray = [];
             for (var i = 0; i < $scope.eventos.length; i++) {
                 if ($scope.eventos[i].visualizarnocalendario) {
                     var tempeventarray = [];
                     tempeventarray["datainicial"] = $scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
+                    tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');
                     tempeventarray["descricao"] = $scope.eventos[i].descricao;
                     tempdayarray.push(tempeventarray);
                 }
@@ -110,6 +113,8 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
                             if ($scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '') === tempdayarray[j].datainicial) {
                                 tempevento["name"] = tempdayarray[j].descricao;
+//                                tempevento["start"] = tempdayarray[j].datainicial;
+//                                tempevento["end"] = tempdayarray[j].datafinal;
                                 tempdayevento.push(tempevento);
                             }
                         }
@@ -117,7 +122,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     }
                 }
             }
-            
+
             $(".calendar [data-role=day]").remove();
             calendarSetMonth();
         }
@@ -149,7 +154,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             if (this.events !== undefined) {
                 var ev = orderBy('start', this.events);
                 for (var o = 0; o < ev.length; o++) {
-                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['start'] + ' - ' + ev[o]['end'] + '</p><p data-role="loc">' + ev[o]['location'] + '</p></div>'); // Monta os eventos do dia clicado.
+                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p></div>'); //<p data-role="dur">' + ev[o]['start'] + ' - ' + ev[o]['end'] + '</p><p data-role="loc">' + ev[o]['location'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
         }
