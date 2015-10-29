@@ -5,6 +5,7 @@ import br.unicesumar.time05.relatorios.Relatorio;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
 import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
 import classesbase.ServiceBase;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -115,6 +116,6 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
     }
 
     public String gerarRelatorioSimples() {
-        return relatorio.gerarRelatorio("teste01.jrxml", formatoRelatorio.EXCEL);
+        return relatorio.gerarRelatorio("teste01.jrxml", formatoRelatorio.EXCEL, new HashMap());
     }
 }

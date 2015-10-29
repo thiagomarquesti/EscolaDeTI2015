@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,12 +33,12 @@ public class Relatorio {
     @Autowired
     SessaoUsuario sessaoUsuario;
 
-    public String gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio) {
+    public String gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio, Map<String, Object> params) {
 
         try {
             URL reportResource = getClass().getClassLoader().getResource("./relatorios/" + nomeXmlJasper);
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
-            JasperPrint print = JasperFillManager.fillReport(report, new HashMap<String, Object>(), dataSource.getConnection());
+            JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
 
             File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdUsuario());
             path.mkdirs();
