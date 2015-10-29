@@ -1,4 +1,3 @@
-<script src="js/datepicker-custom.js" type="text/javascript"></script>
 
 <div ng-init="carregarVisita()" class="panel panel-info">
     <div class="panel-heading"> 
@@ -9,71 +8,76 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="formVisita" novalidate="" class="form-horizontal">
+        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
 
             <div class="form-group">
                 <label for="dataVisita" class="col-md-2 control-label"> Data da Visita</label>
                 <div class="col-md-3"><input type="date" ng-model="visita.dataVisita" id="dataVisita" name="dataVisita" required="" class="form-control requerido"></div>
                 <label for="horaentrada" class="col-md-2 control-label"> Horário Previsto</label>
-                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+                <div class="col-md-2"><input type="time" ng-model="visita.horavisita" id="horavisita" name="horavisita" required="" class="form-control requerido"></div>
 
-                <div ng-show="formVisita.dataVisita.$dirty && formVisita.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formVisita.dataVisita.$error.required">Preencha a data da visita. </span>
+            </div>
+            
+            <div ng-show="formCad.dataVisita.$dirty && formCad.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.dataVisita.$error.required">Preencha data da visita. </span>
+            </div>
+            
+            <div class="form-group">
+                <label for="identidade" class="col-md-2 control-label">Entidade: </label>
+                <div class="col-md-5" ng-init="listarJuridicas()">
+
+                    <select ng-model="visita.identidade" id="identidade" name="identidade" required="" class="form-control requerido">
+                        <option value="">Selecione uma entidade</option>
+                        <!-- FAZER BUSCA POR ENTIDADE-->
+                        <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
+                    </select>
+
+                </div>
+
+            </div>
+            <div ng-show="formCad.identidade.$dirty && formCad.identidade.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.identidade.$error.required">Selecione uma entidade. </span>
+            </div>
+
+            <div class="form-group">
+                <label for="idpessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
+                <div class="col-md-3" ng-init="listarFisicas()">
+
+                    <select ng-model="visita.idpessoaresponsavel" id="idpessoaresponsavel" name="idpessoaresponsavel" required="" class="form-control requerido">
+                        <option value="">Selecione um responsável</option>
+                        <!-- FAZER BUSCA POR RESPONSÁVEL -->
+                        <option ng-repeat="f in fisicas" value="{{f.idpessoa}}">{{f.nome}}</option>
+                    </select>
+
+                </div>        
+            </div>
+
+            <div class="form-group">
+                <label for="telefone" class="col-md-2 control-label">Telefones: </label>
+                <div class="col-md-2">
+
+                </div>
+                <label for="telefone" class="col-md-2 control-label">Telefone adicional: </label>
+                <div class="col-md-2"><input type="text" ng-model="visita.telefone" id="telefone" name="telefone" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="seriecurso" class="col-md-2 control-label">Série / Curso: </label>
+                <div class="col-md-4"><input type="text" ng-model="visita.seriecurso" id="seriecurso" name="seriecurso" class="form-control"></div>
+            </div>
+
+            <div class="form-group">    
+                <label for="quantidadeDeVisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
+                <div class="col-md-2">
+                    <input type="number" ng-model="visita.quantidadeDeVisitantes" id="quantidadeDeVisitantes" name="quantidadeDeVisitantes" required="" class="form-control requerido" min="0">
                 </div>
             </div>
-                    <div class="form-group">
-                    <label for="entidade" class="col-md-2 control-label">Entidade: </label>
-                    <div class="col-md-5" ng-init="listarJuridicas()">
-
-                        <select ng-model="visita.identidade" id="identidade" name="identidade" required="" class="form-control requerido">
-                            <option value="">Selecione uma entidade</option>
-                            <!-- FAZER BUSCA POR ENTIDADE-->
-                            <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="responsavel" class="col-md-2 control-label">Responsável: </label>
-                    <!--<div class="col-md-6"><input type="text" ng-model="" id="responsavel" name="responsavel" required="" class="form-control"></div>
-               !-->
-                    <div class="col-md-3" ng-init="listarFisicas()">
-
-                        <select ng-model="visita.idpessoaresponsavel" id="idpessoaresponsavel" name="idpessoaresponsavel" required="" class="form-control requerido">
-                            <option value="">Selecione um responsável</option>
-                            <!-- FAZER BUSCA POR RESPONSÁVEL -->
-                            <option ng-repeat="v in visita" value="{{v.idpessoaresponsavel}}">{{v.idpessoaresponsavel}}</option>
-                        </select>
-
-                    </div>        
-                </div>
-
-                <div class="form-group">
-                    <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                    <div class="col-md-2"><input type="text" ng-model="visita.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
-                    <label for="telefone2" class="col-md-2 control-label">Telefone secundário: </label>
-                    <div class="col-md-2"><input type="text" ng-model="visita.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
-                </div>
-
-
-                <div class="form-group">
-                    <label for="seriecurso" class="col-md-2 control-label">Série/Curso: </label>
-                    <div class="col-md-4"><input type="text" ng-model="" id="seriecurso" name="seriecurso" required="" class="form-control"></div>
-                </div>
-
-                <div class="form-group">    
-                    <label for="qtdeVisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
-                    <div class="col-md-2">
-                        <input type="number" ng-model="visita.quantidadeDeVisitantes" id="" name="" required="" class="form-control" min="0">
-                    </div>
-                </div>
-                <!-- <div ng-show="visita.quantidadeDeVisitantes.$dirty && visita.quantidadeDeVisitantes.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                 <span ng-show="visita.quantidadeDeVisitantes.$error.required">Preencha quantidade de visitantes. </span>
-                 </div> !-->     
+             <div ng-show="formCad.quantidadeDeVisitantes.$dirty && formCad.quantidadeDeVisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.quantidadeDeVisitantes.$error.required">Preencha o número de visitantes. </span>
+            </div>
         </form>
-</div>
+    </div>
 </div>
 <div class="panel panel-info">    
     <div class="panel-heading"> 
@@ -86,22 +90,22 @@
         <form name="formHoraEntradaVisita" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">
                 <label for="horaentrada" class="col-md-2 control-label"> Hora da Entrada:</label>
-                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
-                <label for="horaentrada" class="col-md-2 control-label"> Hora da Saída:</label>
-                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" required="" class="form-control requerido"></div>
+                <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" class="form-control"></div>
+                <label for="horasaida" class="col-md-2 control-label"> Hora da Saída:</label>
+                <div class="col-md-2"><input type="time" ng-model="visita.horasaida" id="horasaida" name="horasaida" class="form-control"></div>
 
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label">Visita realizada:</label>
+                <label for="visitarealizada" class="col-md-2 control-label">Visita realizada:</label>
                 <div class="col-md-1">
 
-                    <input type="radio" id="true" name="true" ng-model="visita.realizada" value="VERDADEIRO" required=""> &nbsp;
+                    <input type="checkbox" id="visitarealizada" name="visitarealizada" ng-model="visita.realizada" value="1" required=""> &nbsp;
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Observações: </label>                
-                <textarea name="" rows=5 class="col-md-7"></textarea>
+                <label class="col-md-2 control-label" for="observacoes">Observações: </label>                
+                <textarea name="observacoes" id="observacoes" ng-model="visita.observacoes" rows=5 class="col-md-7"></textarea>
             </div>
         </form>
     </div>
@@ -109,7 +113,6 @@
 
 
 <div>
-    <button ng-show="isNovaVisita" ng-click="salvar()" ng-disabled="!formVisita.$valid" class="btn btn-success">Cadastrar</button>
-    <!--<button ng-hide="!isNovaVisita" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>-->
-    <button ng-show="isNovaVisita" ng-click="reset(formVisita)" class="btn btn-info">Limpar</button>
+    <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-show="isNovaVisita" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>

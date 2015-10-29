@@ -82,18 +82,13 @@ function deuErroDeletar() {
     toastr.error("Atenção, erro ao tentar deletar a visita, verifique!");
 }
 
-$scope.salvarVisita = function (flag) {
-    if (flag == "modal")
-        $scope.isNovaVisita = true;
+$scope.salvarVisita = function () {
     if ($scope.isNovaVisita) {
+        
         $http.post("/visita", $scope.visita)
                 .success(function () {
-                    if (flag == "cad")
-                        $location.path("/Visita/listar");
-                    else {
-                        novaVisita();
-                        $scope.getVisitas();
-                    }
+                    $location.path("/Visita/listar");
+                    novaVisita();
                     toastr.success("Visita inserida com sucesso!");
                 })
                 .error(deuErroSalvar);
@@ -109,11 +104,11 @@ $scope.salvarVisita = function (flag) {
 };
     
     $scope.listarFisicas = function(){
-        $http.get('/pessoa/fisica/getfisicas')
-                .success(function(data) {
-                    $scope.fisicas = data;
-                })
-                .error(deuErro);
+        $http.get('/pessoa/fisica/getFisicas')
+            .success(function(data) {
+                $scope.fisicas = data;
+            })
+            .error(deuErro);
     };
     
     $scope.listarJuridicas = function(){
