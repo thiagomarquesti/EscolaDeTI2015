@@ -117,7 +117,15 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Eventos/editar/:id', {
         templateUrl: 'views/eventosCadastrar.html',
         controller: 'EventosController'
-    }).otherwise ({ redirectTo: '/' });
-
+    })
+    //------- Rotas de Relatorios  -------- 
+    .when('/Relatorios/familia', {
+        templateUrl: 'views/relfamilias.html',
+        controller: 'RelatorioController'
+    })
+    
+    
+    
+    .otherwise ({ redirectTo: '/' });
     $locationProvider.html5Mode(false);
 });
