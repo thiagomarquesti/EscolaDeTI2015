@@ -8,9 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
+import java.util.Set;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -38,18 +37,22 @@ public class Estadia implements Serializable {
                 @JoinColumn(name = "idestadia", referencedColumnName = "idestadia")},
             inverseJoinColumns = {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
-    private List<Indigena> membros;
+    private Set<Indigena> membros;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Indigena representante;
 
     public Estadia() {
     }
 
-    public Estadia(Date dataentrada, Date datasaida, String observacoesentrada, String observacoessaida, Familia familia, List<Indigena> membros) {
+    public Estadia(Date dataentrada, Date datasaida, String observacoesentrada, String observacoessaida, Familia familia, Set<Indigena> membros, Indigena representante) {
         this.dataentrada = dataentrada;
         this.datasaida = datasaida;
         this.observacoesentrada = observacoesentrada;
         this.observacoessaida = observacoessaida;
         this.familia = familia;
         this.membros = membros;
+        this.representante = representante;
     }
 
     public Long getIdestadia() {
@@ -76,7 +79,7 @@ public class Estadia implements Serializable {
         return familia;
     }
 
-    public List<Indigena> getMembros() {
+    public Set<Indigena> getMembros() {
         return membros;
     }
 
@@ -100,7 +103,7 @@ public class Estadia implements Serializable {
         this.familia = familia;
     }
 
-    public void setMembros(List<Indigena> membros) {
+    public void setMembros(Set<Indigena> membros) {
         this.membros = membros;
     }
 
@@ -110,6 +113,15 @@ public class Estadia implements Serializable {
         hash = 83 * hash + Objects.hashCode(this.idestadia);
         return hash;
     }
+
+    public Indigena getRepresentante() {
+        return representante;
+    }
+
+    public void setRepresentante(Indigena representante) {
+        this.representante = representante;
+    }
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -128,7 +140,9 @@ public class Estadia implements Serializable {
 
     @Override
     public String toString() {
-        return "Estadia{" + "idestadia=" + idestadia + ", dataentrada=" + dataentrada + ", datasaida=" + datasaida + ", observacoesEntrada=" + observacoesentrada + ", observacoesSaida=" + observacoessaida + ", familia=" + familia + ", membros=" + membros + '}';
+        return "Estadia{" + "idestadia=" + idestadia + ", dataentrada=" + dataentrada + ", datasaida=" + datasaida + ", observacoesentrada=" + observacoesentrada + ", observacoessaida=" + observacoessaida + ", familia=" + familia + ", membros=" + membros + ", representante=" + representante + '}';
     }
+
+    
 
 }
