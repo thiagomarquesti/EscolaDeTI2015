@@ -129,7 +129,7 @@ module.config(function($routeProvider, $locationProvider) {
     }).when('/Visita/nova', {
         templateUrl: 'views/visitaCadastrar.html',
         controller: 'VisitaController'
-    }).when('/Visita/nova/:id', {
+    }).when('/Visita/editar/:id', {
         templateUrl: 'views/visitaCadastrar.html',
         controller: 'VisitaController'
     })

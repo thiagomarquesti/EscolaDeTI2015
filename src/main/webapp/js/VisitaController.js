@@ -38,8 +38,8 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 seriecurso : "",
                 visitarealizada : "",
                 telefonevisita : "",
-                pessoaresponsavel : {  },
-                entidade : { } 
+                pessoaresponsavel : {idpessoa : ""},
+                entidade : {idpessoa : ""} 
             };
             $scope.isNovaVisita = true;
         }
@@ -84,8 +84,26 @@ function deuErroDeletar() {
 }
 
 $scope.salvarVisita = function () {
+    
+    var visitaCompleta = $scope.visita;
+    var dVisita = new Date(visitaCompleta.datavisita);
+    var dVisitaOK = dVisita.getFullYear() + "-" + (dVisita.getMonth() + 1) + '-' + dVisita.getDate();
+    var hVisita = new Date(visitaCompleta.horavisita);
+    var hVisitaOK = hVisita.getHours() + ":" + hVisita.getMinutes() + ":00";
+    
+    var hEntrada = new Date(visitaCompleta.horaentrada);
+    var hEntradaOK = hEntrada.getHours() + ":" + hEntrada.getMinutes() + ":00";
+    var hSaida = new Date(visitaCompleta.horasaida);
+    var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
+    
+    visitaCompleta.datavisita = dVisitaOK;
+    visitaCompleta.horavisita = hVisitaOK;
+    visitaCompleta.horaentrada = hEntradaOK;
+    visitaCompleta.horasaida = hSaidaOK;
+    
     if ($scope.isNovaVisita) {
-        $http.post("/visita", $scope.visita)
+        console.log(visitaCompleta)
+        $http.post("/visita", visitaCompleta)
                 .success(function () {
                     $location.path("/Visita/listar");
                     novaVisita();
@@ -115,7 +133,6 @@ $scope.salvarVisita = function () {
         $http.get('/pessoa/juridica')
                 .success(function(data) {
                     $scope.juridicas = data;
-            console.log($scope.juridicas);
                 })
                 .error(deuErro);
     };

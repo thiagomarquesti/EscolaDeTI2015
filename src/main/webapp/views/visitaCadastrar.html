@@ -1,4 +1,3 @@
-
 <div ng-init="carregarVisita()" class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovaVisita">Cadastrar Visita</div>
@@ -26,7 +25,7 @@
                 <label for="entidade" class="col-md-2 control-label">Entidade: </label>
                 <div class="col-md-5" ng-init="listarJuridicas()">
 
-                    <select ng-model="visita.entidade" id="entidade" name="entidade" required="" class="form-control requerido">
+                    <select ng-model="visita.entidade.idpessoa" id="entidade" name="entidade" required="" class="form-control requerido">
                         <option value="">Selecione uma entidade</option>
                         <!-- FAZER BUSCA POR ENTIDADE-->
                         <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
@@ -43,7 +42,7 @@
                 <label for="pessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
                 <div class="col-md-3" ng-init="listarFisicas()">
 
-                    <select ng-model="visita.pessoaresponsavel" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
+                    <select ng-model="visita.pessoaresponsavel.idpessoa" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
                         <option value="">Selecione um responsável</option>
                         <!-- FAZER BUSCA POR RESPONSÁVEL -->
                         <option ng-repeat="f in fisicas" value="{{f.idpessoa}}">{{f.nome}}</option>
