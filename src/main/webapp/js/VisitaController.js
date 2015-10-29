@@ -37,6 +37,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 quantidadedevisitantes : "",
                 seriecurso : "",
                 visitarealizada : "",
+                telefonevisita : "",
                 pessoaresponsavel : {  },
                 entidade : { } 
             };
@@ -84,7 +85,6 @@ function deuErroDeletar() {
 
 $scope.salvarVisita = function () {
     if ($scope.isNovaVisita) {
-        
         $http.post("/visita", $scope.visita)
                 .success(function () {
                     $location.path("/Visita/listar");
@@ -127,5 +127,4 @@ $scope.salvarVisita = function () {
             }
             return data;
         };
-
 }]);

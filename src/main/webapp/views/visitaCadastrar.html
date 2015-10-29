@@ -11,22 +11,22 @@
         <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
 
             <div class="form-group">
-                <label for="dataVisita" class="col-md-2 control-label"> Data da Visita</label>
-                <div class="col-md-3"><input type="date" ng-model="visita.dataVisita" id="dataVisita" name="dataVisita" required="" class="form-control requerido"></div>
+                <label for="datavisita" class="col-md-2 control-label"> Data da Visita</label>
+                <div class="col-md-3"><input type="date" ng-model="visita.datavisita" id="datavisita" name="datavisita" required="" class="form-control requerido"></div>
                 <label for="horaentrada" class="col-md-2 control-label"> Horário Previsto</label>
                 <div class="col-md-2"><input type="time" ng-model="visita.horavisita" id="horavisita" name="horavisita" required="" class="form-control requerido"></div>
 
             </div>
             
-            <div ng-show="formCad.dataVisita.$dirty && formCad.dataVisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.dataVisita.$error.required">Preencha data da visita. </span>
+            <div ng-show="formCad.datavisita.$dirty && formCad.datavisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formCad.datavisita.$error.required">Preencha data da visita. </span>
             </div>
             
             <div class="form-group">
-                <label for="identidade" class="col-md-2 control-label">Entidade: </label>
+                <label for="entidade" class="col-md-2 control-label">Entidade: </label>
                 <div class="col-md-5" ng-init="listarJuridicas()">
 
-                    <select ng-model="visita.identidade" id="identidade" name="identidade" required="" class="form-control requerido">
+                    <select ng-model="visita.entidade" id="entidade" name="entidade" required="" class="form-control requerido">
                         <option value="">Selecione uma entidade</option>
                         <!-- FAZER BUSCA POR ENTIDADE-->
                         <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
@@ -35,15 +35,15 @@
                 </div>
 
             </div>
-            <div ng-show="formCad.identidade.$dirty && formCad.identidade.$invalid" class="alert alert-danger col-md-12" role="alert">
-                <span ng-show="formCad.identidade.$error.required">Selecione uma entidade. </span>
+            <div ng-show="formCad.entidade.$dirty && formCad.entidade.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.entidade.$error.required">Selecione uma entidade. </span>
             </div>
 
             <div class="form-group">
-                <label for="idpessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
+                <label for="pessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
                 <div class="col-md-3" ng-init="listarFisicas()">
 
-                    <select ng-model="visita.idpessoaresponsavel" id="idpessoaresponsavel" name="idpessoaresponsavel" required="" class="form-control requerido">
+                    <select ng-model="visita.pessoaresponsavel" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
                         <option value="">Selecione um responsável</option>
                         <!-- FAZER BUSCA POR RESPONSÁVEL -->
                         <option ng-repeat="f in fisicas" value="{{f.idpessoa}}">{{f.nome}}</option>
@@ -51,14 +51,18 @@
 
                 </div>        
             </div>
-
+            
+            <div ng-show="formCad.pessoaresponsavel.$dirty && formCad.pessoaresponsavel.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.pessoaresponsavel.$error.required">Selecione uma entidade. </span>
+            </div>
+            
             <div class="form-group">
-                <label for="telefone" class="col-md-2 control-label">Telefones: </label>
+                <label class="col-md-2 control-label">Telefones: </label>
                 <div class="col-md-2">
 
                 </div>
-                <label for="telefone" class="col-md-2 control-label">Telefone adicional: </label>
-                <div class="col-md-2"><input type="text" ng-model="visita.telefone" id="telefone" name="telefone" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
+                <label for="telefonevisita" class="col-md-2 control-label">Telefone adicional: </label>
+                <div class="col-md-2"><input type="text" ng-model="visita.telefonevisita" id="telefonevisita" name="telefonevisita" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
             </div>
 
 
@@ -68,13 +72,13 @@
             </div>
 
             <div class="form-group">    
-                <label for="quantidadeDeVisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
+                <label for="quantidadedevisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
                 <div class="col-md-2">
-                    <input type="number" ng-model="visita.quantidadeDeVisitantes" id="quantidadeDeVisitantes" name="quantidadeDeVisitantes" required="" class="form-control requerido" min="0">
+                    <input type="number" ng-model="visita.quantidadedevisitantes" id="quantidadedevisitantes" name="quantidadedevisitantes" required="" class="form-control requerido" min="0">
                 </div>
             </div>
-             <div ng-show="formCad.quantidadeDeVisitantes.$dirty && formCad.quantidadeDeVisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
-                <span ng-show="formCad.quantidadeDeVisitantes.$error.required">Preencha o número de visitantes. </span>
+             <div ng-show="formCad.quantidadedevisitantes.$dirty && formCad.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.quantidadedevisitantes.$error.required">Preencha o número de visitantes. </span>
             </div>
         </form>
     </div>
@@ -100,12 +104,12 @@
                 <label for="visitarealizada" class="col-md-2 control-label">Visita realizada:</label>
                 <div class="col-md-1">
 
-                    <input type="checkbox" id="visitarealizada" name="visitarealizada" ng-model="visita.realizada" value="1" required=""> &nbsp;
+                    <input type="checkbox" id="visitarealizada" name="visitarealizada" ng-model="visita.visitarealizada" value="1" required=""> &nbsp;
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="observacoes">Observações: </label>                
-                <textarea name="observacoes" id="observacoes" ng-model="visita.observacoes" rows=5 class="col-md-7"></textarea>
+                <label class="col-md-2 control-label" for="observacao">Observações: </label>                
+                <textarea name="observacao" id="observacao" ng-model="visita.observacao" rows=5 class="col-md-7"></textarea>
             </div>
         </form>
     </div>
