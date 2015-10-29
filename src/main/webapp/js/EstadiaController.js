@@ -43,6 +43,15 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             $scope.isNovaEstadia = true;
         }
 
+        $scope.saidaEstadiaNova = function () {
+            console.log("asdasd");
+            $scope.saida = {
+                idestadia: "",
+                datasaida: "",
+                observacoessaida: ""
+            };
+        };
+
         $scope.novaEstadia = function () {
             novaEstadia();
         };
@@ -57,8 +66,10 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.estadia.idestadia = $routeParams.id;
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                            d = (data.datasaida) ? new Date(data.dataentrada) : "";
+                            d = (data.datasaida) ? new Date(data.datasaida) : "";
+                            console.log(data.datasaida);
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
+                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
                             $scope.estadia.familia = data.familia.idfamilia;
@@ -84,22 +95,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         }
 
         $scope.salvarDataSaida = function () {
-            var estadia;
-            console.log($routeParams.id);
-            $http.get("/estadia/obj/" + $routeParams.id)
-                    .success(function (data) {
-                        estadia = data;
-                        estadia.datasaida = dataToDate($scope.estadia.datasaida);
-                        estadia.observacoessaida = $scope.estadia.observacoessaida;
-                        console.log(estadia);
-                        $http.put("/estadia", estadia)
-                                .success(function () {
-                                    toastr.success("Alterado com sucesso!");
-                                })
-                                .error(deuErroSalvar);
+            $scope.saida.idestadia = $routeParams.id;
+            console.log($scope.saida);
+            $http.post("/estadia/saida", $scope.saida)
+                    .success(function () {
+                        toastr.success("Atualizado com sucesso!");
                     })
-                    .error(deuErro);
-
+                    .error(deuErroSalvar);
         };
 
         $scope.atualizarEstadia = function () {
@@ -117,7 +119,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         $scope.dateToData = function (valor) {
 
             var date = new Date(valor);
-            var date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+            date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
             var dia = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
             var data = dia + "/" + (((date.getMonth() + 1) < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "/" + date.getFullYear();
             return (valor != null) ? data : "";
@@ -136,6 +138,8 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 membros: $scope.estadia.membros
             };
             if ($scope.isNovaEstadia) {
+                console.log($scope.estadia);
+                console.log($scope.estadia.datasaida);
                 $http.post("/estadia", estadiaCorreto)
                         .success(function () {
                             $location.path("/Estadia/listar");

@@ -4,6 +4,7 @@ import classesbase.ControllerBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,4 +22,10 @@ public class EstadiaController extends ControllerBase<Estadia, Long, EstadiaServ
     public Map<String, Object> getRepresentante(@PathVariable Long aIdRepresentante){
         return service.getRepresentante(aIdRepresentante);
     }
+    
+    @RequestMapping(value = "/saida", method = RequestMethod.POST)
+    public void addDataSaida(@RequestBody SaidaEstadia saida){
+        service.addDataSaida(saida);
+    }
+    
 }

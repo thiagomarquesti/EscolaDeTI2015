@@ -113,4 +113,11 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
             throw new RuntimeException("Nenhum resultado encontrado!");
         }
     }
+
+    void addDataSaida(SaidaEstadia saida) {
+        Estadia estadia = (Estadia) this.getObjeto(saida.getIdestadia());
+        estadia.setDatasaida(saida.getDatasaida());
+        estadia.setObservacoessaida(saida.getObservacoessaida());
+        this.alterar(estadia);
+    }
 }
