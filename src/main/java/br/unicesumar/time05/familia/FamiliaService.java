@@ -79,14 +79,13 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
                 + "       i.estadocivil, "
                 + "       i.genero, "
                 + "       i.nome, "
-                + "       t.telefone, "
+                + "       i.telefone, "
                 + "       ti.nometerra "
-                + "FROM familia_indigena fi "
-                + "JOIN indigena i ON fi.codigoassindi = i.codigoassindi "
-                + "LEFT JOIN etnia e ON i.etnia_idetnia = e.idetnia "
-                + "LEFT JOIN telefone t ON i.telefone_idtelefone = t.idtelefone "
-                + "LEFT JOIN terraindigena ti ON i.terraindigena_idterraindigena = ti.idterraindigena "
-                + "WHERE fi.idfamilia = :aIdFamilia";
+                + " FROM familia_indigena fi "
+                + " JOIN indigena i ON fi.codigoassindi = i.codigoassindi "
+                + " LEFT JOIN etnia e ON i.etnia_idetnia = e.idetnia "
+                + " LEFT JOIN terraindigena ti ON i.terraindigena_idterraindigena = ti.idterraindigena "
+                + " WHERE fi.idfamilia = :aIdFamilia";
 
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aIdFamilia", aIdFamilia);

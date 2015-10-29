@@ -27,6 +27,8 @@
         <script src="js/ConvenioController.js"></script>
         <script src="js/FamiliaController.js"></script>
         <script src="js/EstadiaController.js"></script>
+        <script src="js/PessoaFisicaController.js"></script>
+        <script src="js/PessoaJuridicaController.js"></script>
         <script src="js/CameraController.js" type="text/javascript"></script>
         <script src="js/HomeController.js" type="text/javascript"></script>
         <script src="js/RelatorioController.js" type="text/javascript"></script>
@@ -50,7 +52,6 @@
         <link rel="stylesheet" href="css/toastr.min.css">
         <link href="css/camera.css" rel="stylesheet" type="text/css"/>
         <link href="bootstrap/neon/css/custom.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body ng-controller="UsuarioController"  class="page-body gray page-fade-only" ng-init="verificaLogado(); carregaitensAcesso();">
         <div class="page-container">
@@ -107,12 +108,12 @@
                         <li class="sep"></li>
                         <li>
                             <div class="btn-group">
-                                <a class="btn btn-black dropdown-toggle" data-toggle="dropdown">
+                                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                     {{nomeUsuario}} <i class="entypo-down-open-big right"></i>
                                 </a>
                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#/Usuario/editar/{{idUsuario}}">Alterar meus dados</a></li>
-                                    <li><a>Alterar minha senha</a></li>
+                                    <li><a href="#/{{trocarDados(idPessoa,idUsuario)}}">Alterar meus dados</a></li>
+                                    <li><a href="#/Usuario/editar/{{idUsuario}}">Alterar minha senha</a></li>
                                     <li class="divider"></li>
                                     <li><a ng-click="logout()">Sair do sistema <i class="entypo-logout right"></i></a></li>
                                 </ul>
@@ -137,4 +138,3 @@
 <script src="js/jquery.mask.js" type="text/javascript"></script>
 <script src="js/mask-custom.js" type="text/javascript"></script>
 <script src="js/jquery.bootpag.min.js" type="text/javascript"></script>
-

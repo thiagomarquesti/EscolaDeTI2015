@@ -40,7 +40,7 @@ public class Relatorio {
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
             JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
 
-            File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdUsuario());
+            File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdusuario());
             path.mkdirs();
             for (File arquivo : path.listFiles()) {
                 arquivo.delete();
@@ -71,8 +71,8 @@ public class Relatorio {
                 }
                 break;
             }
-            System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdUsuario() + " - " + sessaoUsuario.getUsuario().getNome());
-            return "/rels/" + sessaoUsuario.getUsuario().getIdUsuario() + "/" + resultado;
+            System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdusuario() + " - " + sessaoUsuario.getUsuario().getNome());
+            return "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
         } catch (JRException | SQLException | FileNotFoundException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
         }

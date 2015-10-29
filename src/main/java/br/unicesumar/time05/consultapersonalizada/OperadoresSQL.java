@@ -14,8 +14,16 @@ public final class OperadoresSQL {
     public static final String LIMIT = " LIMIT ";
     public static final String OFFSET = " OFFSET ";
     public static final String ORDER_BY = " ORDER BY ";
-    public static final String DESC = " DESC ";
-    
+    public static final String DESC = " DESC ";    
+    public static final String GROUP_BY = " GROUP BY ";
+        
+    //Agregação
+    public static final String SUM = " SUM ";
+    public static final String COUNT = " COUNT ";
+    public static final String AVG = " AVG ";
+    public static final String MAX = " MAX ";
+    public static final String MIN = " MIN ";
+           
     public static final String PARAMETRO_PARA_LIKE = ":palavrachavelike";
     public static final String PARAMETRO_PARA_IGUAL = ":palavrachaveigual";
     public static final String NOME_PARAMETRO_PARA_LIKE = "palavrachavelike";

@@ -12,12 +12,12 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='familia'"></i> 
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'familia', busca.descricao, 'ok', true)">Familia</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='nomefamilia'"></i> 
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomefamilia', busca.nomefamilia, 'ok', true)">Familia</a>
                         </th>
                         <th>
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='dataentrada'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.descricao, 'ok', true)">Data de Entrada</a>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.dataentrada, 'ok', true)">Data de Entrada</a>
                         </th>   
                         <th>
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datasaida'"></i>
@@ -30,24 +30,29 @@
                         <th>
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='representante'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'representante', busca.descricao, 'ok', true)">Representante</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone', busca.descricao, 'ok', true)">Telefone</a>
                         </th>   
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', ent, '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{f.familia}}</td>
-                        <td>{{f.dataentrada}}</td>
-                        <td>{{f.datasaida}}</td>
+                        <td>{{f.nomefamilia}}</td>
+                        <td>{{dateToData(f.dataentrada)}}</td>
+                        <td>{{dateToData(f.datasaida)}}</td>
                         <td>{{f.quantidademembros}}</td>
-                        <td>{{f.representante}}</td>
+                        <td>{{f.nome}}</td>
+                        <td>{{f.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editarEstadia(f)">Editar</a></li>
+                                    <li><a ng-click="editarEstadia(f.idestadia)">Editar</a></li>
                                 </ul>
                             </div>
                         </td>

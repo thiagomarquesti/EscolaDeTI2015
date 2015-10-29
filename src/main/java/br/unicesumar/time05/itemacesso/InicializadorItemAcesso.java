@@ -196,6 +196,37 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuUsuarioNovo);
         }
 
+        
+        //PESSOA
+        ItemAcesso menuPessoa;
+        menuPessoa = this.getItemAcesso(itensAcesso, "Gerenciar Pessoa", "");
+        if (menuPessoa == null) {
+            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-user", menu);
+            itensAcesso.add(menuPessoa);
+        }
+        
+        ItemAcesso menuPessoaListar;
+        menuPessoaListar = this.getItemAcesso(itensAcesso, "Listar Pessoa", "#/Pessoa/listar");
+        if (menuPessoaListar == null) {
+            menuPessoaListar = new ItemAcesso("Listar Pessoa", "#/Pessoa/listar", "fa-list", menuPessoa);
+            itensAcesso.add(menuPessoaListar);
+        }
+        
+        // PESSOA FISICA
+        ItemAcesso menuFisicaNovo;
+        menuFisicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Física", "#/Fisica/novo");
+        if (menuFisicaNovo == null) {
+            menuFisicaNovo = new ItemAcesso("Cadastrar Pessoa Física", "#/Fisica/nova", "fa-plus", menuPessoa);
+            itensAcesso.add(menuFisicaNovo);
+        }
+        // PESSOA JURIDICA
+        ItemAcesso menuJuridicaNovo;
+        menuJuridicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Jurídica", "#/Juridica/novo");
+        if (menuJuridicaNovo == null) {
+            menuJuridicaNovo = new ItemAcesso("Cadastrar Pessoa Jurídica", "#/Juridica/nova", "fa-plus", menuPessoa);
+            itensAcesso.add(menuJuridicaNovo);
+        }
+
         //PERFIL
         ItemAcesso menuPerfil;
         menuPerfil = this.getItemAcesso(itensAcesso, "Gerenciar Perfil", "");

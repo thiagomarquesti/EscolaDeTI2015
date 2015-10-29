@@ -27,10 +27,6 @@
                             <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='email'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'email', busca.descricao, 'ok', true)">E-mail</a>
                         </th>
-                        <th class="hidden-xs">
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='telefone1'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone1', busca.descricao, 'ok', true)">Telefone</a>
-                        </th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -42,16 +38,15 @@
                         <td>{{u.nome}}</td>
                         <td>{{u.login}}</td>
                         <td class="hidden-sm hidden-xs">{{u.email}}</td>
-                        <td class="hidden-xs">{{u.telefone1}}</td>                        
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editar(u.idpessoa)">Editar</a></li>
-                                    <li ng-show="u.status === 'ATIVO'"><a data="{{u.idpessoa}}" ng-click="alteraStatus(u.idpessoa)">Bloquear acesso</a></li>
-                                    <li ng-show="u.status === 'INATIVO'"><a data="{{u.idpessoa}}" ng-click="alteraStatus(u.idpessoa)">Liberar acesso</a></li>
+                                    <li><a ng-click="editar(u.idusuario)">Editar</a></li>
+                                    <li ng-show="u.status === 'ATIVO'"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Bloquear acesso</a></li>
+                                    <li ng-show="u.status === 'INATIVO'"><a data="{{u.idusuario}}" ng-click="alteraStatus(u.idusuario)">Liberar acesso</a></li>
                                 </ul>
                             </div>
                         </td>

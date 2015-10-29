@@ -36,24 +36,20 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
             + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
-            + "i.genero, i.nome, t.telefone, ti.nometerra "
+            + "i.genero, i.nome, i.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN telefone t "
-            + "ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
             + "ON i.terraindigena_idterraindigena = ti.idterraindigena ";
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
             + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
-            + "i.genero, i.nome, t.telefone, ti.nometerra "
+            + "i.genero, i.nome, i.telefone, ti.nometerra "
             + "FROM indigena i "
             + "LEFT JOIN etnia e "
             + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN telefone t "
-            + " ON i.telefone_idtelefone = t.idtelefone "
             + "LEFT JOIN terraindigena ti "
             + " ON i.terraindigena_idterraindigena = ti.idterraindigena "
             + "WHERE i.codigoassindi = :idIndigena";
@@ -72,7 +68,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
 
     @Override
     public void alterar(CriarIndigena aIndigena) {
-        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), aIndigena.getOcorrencias());
+        Indigena i = new Indigena(aIndigena.getCodigoAssindi(), aIndigena.getNome(), aIndigena.getCpf(), null, aIndigena.getGenero(), aIndigena.getDataNascimento(), aIndigena.getConvenio(), aIndigena.getTelefone(), null, aIndigena.getEscolaridade(), aIndigena.getEstadoCivil(), aIndigena.getCodigoSUS(), repository.getOne(aIndigena.getCodigoAssindi()).getOcorrencia());
         i.setTerraIndigena((TerraIndigena) terraService.getObjeto(aIndigena.getTerraIndigena()));
         i.setEtnia((Etnia) etniaService.getObjeto(aIndigena.getEtnia()));
         if (aIndigena.getImgSrc() != null && aIndigena.getImgSrc().startsWith("data:image/jpeg;base64")) {

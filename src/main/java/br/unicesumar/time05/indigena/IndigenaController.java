@@ -18,8 +18,10 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
     @Override
     public Indigena getObjeto(@PathVariable Long aId) {
         Indigena i = (Indigena) service.getObjeto(aId);
-        if (new File("src/main/webapp/fotos/users/" + i.getCodigoAssindi()+ ".jpg").exists()) 
-            i.setImgSrc("src/main/webapp/fotos/users/" + i.getCodigoAssindi()+ ".jpg");
+        if (new File("src/main/webapp/fotos/indios/" + i.getCodigoAssindi()+ ".jpg").exists()) 
+            i.setImgSrc("/fotos/indios/" + i.getCodigoAssindi()+ ".jpg");
+        else
+            i.setImgSrc("/fotos/default.png");
         return i;
     }
     
