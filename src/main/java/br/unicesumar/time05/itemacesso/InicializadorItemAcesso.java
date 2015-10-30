@@ -195,6 +195,7 @@ public class InicializadorItemAcesso {
             menuUsuarioNovo = new ItemAcesso("Cadastrar Usuário", "#/Usuario/novo", "fa-plus", menuUsuario);
             itensAcesso.add(menuUsuarioNovo);
         }
+
         
         //PESSOA
         ItemAcesso menuPessoa;
@@ -312,6 +313,28 @@ public class InicializadorItemAcesso {
             menuEstadiaNovo = new ItemAcesso("Cadastrar Estadia", "#/Estadia/nova", "fa-plus", menuEstadia);
             itensAcesso.add(menuEstadiaNovo);
         }
+
+        
+        
+        
+        //RELATORIOS
+        ItemAcesso menuRelatorios;
+        menuRelatorios = this.getItemAcesso(itensAcesso, "Relatórios", "");
+        if (menuRelatorios == null) {
+            menuRelatorios = new ItemAcesso("Relatórios", "", "fa-list ", menu);
+            itensAcesso.add(menuRelatorios);
+        }
+
+        ItemAcesso menuRelatoriosFamilias;
+        menuRelatoriosFamilias = this.getItemAcesso(itensAcesso, "Relatório de Famílias", "#/Relatorios/familias");
+        if (menuRelatoriosFamilias == null) {
+            menuRelatoriosFamilias = new ItemAcesso("Relatório de Famílias", "#/Relatorios/familias", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosFamilias);
+        }
+        
+        //----------------------------------------------------
+        //----------------------------------------------------
+        //----------------------------------------------------
 
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
