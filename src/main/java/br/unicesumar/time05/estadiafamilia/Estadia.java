@@ -39,6 +39,7 @@ public class Estadia implements Serializable {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
     private Set<Indigena> membros;
     
+    @JoinColumn(name = "idrepresentante")
     @ManyToOne(fetch = FetchType.EAGER)
     private Indigena representante;
 

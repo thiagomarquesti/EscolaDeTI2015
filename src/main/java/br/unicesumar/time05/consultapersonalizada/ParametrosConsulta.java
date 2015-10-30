@@ -8,7 +8,7 @@ public class ParametrosConsulta implements Serializable {
     private final int registrosPorPagina;
     private final String ordenarPor;
     private final String sentidoOrdenacao;
-    private final String palavraChave;
+    private String palavraChave;
 
     public ParametrosConsulta() {
         this.registrosPorPagina = 0;
@@ -61,4 +61,9 @@ public class ParametrosConsulta implements Serializable {
     public String getPalavraChave() {
         return palavraChave;
     }
+
+    public void setPalavraChave(String palavraChave) {
+        this.palavraChave = palavraChave;
+    }
+    
 }
