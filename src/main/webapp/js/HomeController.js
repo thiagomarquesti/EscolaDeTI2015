@@ -3,7 +3,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         var yy;
         var calendarArray = [];
         var monthOffset = [6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5];
-        var monthArray = [["JAN", "Janeiro"], ["FEB", "Fevereiro"], ["MAR", "Março"], ["APR", "Abril"], ["MAY", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AUG", "Agosto"], ["SEP", "Setembro"], ["OCT", "Outubro"], ["NOV", "Novembro"], ["DEC", "Dezembro"]];
+        var monthArray = [["JAN", "Janeiro"], ["FEV", "Fevereiro"], ["MAR", "Março"], ["ABR", "Abril"], ["MAI", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AGO", "Agosto"], ["SET", "Setembro"], ["OUT", "Outubro"], ["NOV", "Novembro"], ["DEZ", "Dezembro"]];
         var letrasArray = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
         var dayArray = ["7", "1", "2", "3", "4", "5", "6"];
 
@@ -95,36 +95,62 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             var tempdayarray = [];
             for (var i = 0; i < $scope.eventos.length; i++) {
                 if ($scope.eventos[i].visualizarnocalendario) {
-                    var tempeventarray = [];
-                    tempeventarray["datainicial"] = $scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
-                    tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');
-                    tempeventarray["descricao"] = $scope.eventos[i].descricao;
-                    tempdayarray.push(tempeventarray);
+                    var periodo = getPeriodo($scope.eventos[i].datainicial, $scope.eventos[i].datafinal);
+                    for (var j = 0; j <= periodo; j++) {
+                        var tempeventarray = [];
+                        var date = new Date($scope.eventos[i].datainicial);
+                        date.setDate(date.getDate() + (j + 1));
+
+                        var mes;
+                        if ((date.getMonth() + 1) < 10) {
+                            mes = '0' + (date.getMonth() + 1);
+                        } else {
+                            mes = (date.getMonth() + 1);
+                        }
+
+                        var dia;
+                        if (date.getDate() < 10) {
+                            dia = '0' + date.getDate();
+                        } else {
+                            dia = date.getDate();
+                        }
+
+                        var strdate = date.getFullYear() + '' + mes + '' + dia;
+                        tempeventarray["datainicial"] = strdate; //$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
+//                        tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');
+                        tempeventarray["descricao"] = $scope.eventos[i].descricao;
+                        tempdayarray.push(tempeventarray);
+                    }
                 }
             }
 
-            for (var i = 0; i < $scope.eventos.length; i++) {
-                var tempdayevento = [];
-
-                if ($scope.eventos[i].visualizarnocalendario) {
-                    if (calendarArray[$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '')] === undefined) {
-                        for (var j = 0; j < tempdayarray.length; j++) {
-                            var tempevento = [];
-
-                            if ($scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '') === tempdayarray[j].datainicial) {
-                                tempevento["name"] = tempdayarray[j].descricao;
-//                                tempevento["start"] = tempdayarray[j].datainicial;
-//                                tempevento["end"] = tempdayarray[j].datafinal;
-                                tempdayevento.push(tempevento);
-                            }
+            calendarArray = [];
+            for (var i = 0; i < tempdayarray.length; i++) {
+                var tempdayevent = [];
+                if (calendarArray[tempdayarray[i].datainicial] === undefined) {
+                    for (var j = 0; j < tempdayarray.length; j++) {
+                        var tempevent = [];
+                        if (tempdayarray[i].datainicial === tempdayarray[j].datainicial) {
+                            tempevent["name"] = tempdayarray[j].descricao;
+                            tempdayevent.push(tempevent);
                         }
-                        calendarArray[$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '')] = tempdayevento;
                     }
+                    calendarArray[tempdayarray[i].datainicial] = tempdayevent;
                 }
             }
 
             $(".calendar [data-role=day]").remove();
             calendarSetMonth();
+        }
+
+        function getPeriodo(datainicialevento, datafinalevento) {
+            var datainicial = new Date(datainicialevento);
+            var datafinal = new Date(datafinalevento);
+            var milisegundos = datafinal - datainicial;
+            var segundos = milisegundos / 1000;
+            var minutos = segundos / 60;
+            var horas = minutos / 60;
+            return horas / 24;
         }
 
         String.prototype.replaceAllCaracteresEspecial = function (de, para) {
