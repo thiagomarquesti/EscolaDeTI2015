@@ -81,9 +81,10 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.dateToData = function (valor) {
             var date = new Date(valor);
-            var dia = (date.getDate()<10)?"0"+date.getDate():date.getDate();
-            var data = dia + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-            return data;
+            date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+            var dia = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+            var data = dia + "/" + (((date.getMonth() + 1) < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "/" + date.getFullYear();
+            return (valor != null) ? data : "";
         };
 
 

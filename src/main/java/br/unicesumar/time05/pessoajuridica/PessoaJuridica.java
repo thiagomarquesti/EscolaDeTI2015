@@ -8,7 +8,6 @@ import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -19,9 +18,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cnpj"}, name = "uk_cnpj")})
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"cnpj"}, name = "uk_cnpj")})
 @Inheritance(strategy = InheritanceType.JOINED)
-public class PessoaJuridica extends Pessoa implements Serializable{
+public class PessoaJuridica extends Pessoa implements Serializable {
 
     @CampoConsulta
     @Embedded
@@ -31,14 +31,32 @@ public class PessoaJuridica extends Pessoa implements Serializable{
     public PessoaJuridica() {
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
-        super(nome, telefones, email, endereco, tipoPessoa);
+    public PessoaJuridica(Cnpj cnpj, String nome, Telefone telefoneP, Telefone telefoneS, Email email, Endereco endereco, TipoPessoa tipoPessoa) {
+        super(nome, telefoneP, telefoneS, email, endereco, tipoPessoa);
         this.cnpj = cnpj;
     }
 
-    public PessoaJuridica(Cnpj cnpj, String nome, List<Telefone> telefones, Email email) {
-        super(nome, telefones, email);
+    public PessoaJuridica(Cnpj cnpj, String nome, Telefone telefoneP, Telefone telefoneS, Email email) {
+        super(nome, telefoneP, telefoneS, email);
         this.cnpj = cnpj;
+    }
+
+    public PessoaJuridica(CriarPessoaJuridica p, Endereco end) {
+        this(p.getCnpj(), p.getNome(), p.getTelefone(), p.getTelefonesecundario(), p.getEmail(), end, p.getTipo());
+    }
+
+    public void alterar(CriarPessoaJuridica aJuridica) {
+        this.setNome(aJuridica.getNome());
+        this.setTelefone(aJuridica.getTelefone());
+        this.setTelefonesecundario(aJuridica.getTelefonesecundario());
+        this.setEmail(aJuridica.getEmail());
+        this.setTipoPessoa(TipoPessoa.JURÍDICA);
+        this.setCnpj(aJuridica.getCnpj());
+        this.getEndereco().setLogradouro(aJuridica.getLogradouro());
+        this.getEndereco().setNumero(aJuridica.getNumero());
+        this.getEndereco().setBairro(aJuridica.getBairro());
+        this.getEndereco().setComplemento(aJuridica.getComplemento());
+        this.getEndereco().setCep(aJuridica.getCep());
     }
 
     public Cnpj getCnpj() {

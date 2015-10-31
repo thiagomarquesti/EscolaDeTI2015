@@ -21,4 +21,14 @@ public class FamiliaController extends ControllerBase<Familia, Long, FamiliaServ
     public List<Map<String, Object>> getMembros(@PathVariable Long aIdFamilia){
         return service.getMembros(aIdFamilia);
     }
+    
+    @RequestMapping(value = "/familiasporindigena/{aCodigoAssindi}")
+    public List<Map<String, Object>> getFamiliasPorIndigena(@PathVariable Long aCodigoAssindi){
+        return service.getFamiliasPorIndigena(aCodigoAssindi);
+    }
+    
+    @RequestMapping(value = "/relatorio", method = RequestMethod.GET)
+    public String getRelatorio(){
+        return service.gerarRelatorioSimples();
+    }
 }
