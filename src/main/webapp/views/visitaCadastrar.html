@@ -21,38 +21,47 @@
                 <span ng-show="formCad.datavisita.$error.required">Preencha data da visita. </span>
             </div>
             
-            <div class="form-group">
+            <div class="form-group" ng-init="listarJuridicas()">
                 <label for="entidade" class="col-md-2 control-label">Entidade: </label>
-                <div class="col-md-5" ng-init="listarJuridicas()">
-
-                    <select ng-model="visita.entidade.idpessoa" ng-change="pegarFone('juridica')" id="entidade" name="entidade" required="" class="form-control requerido">
-                        <option value="">Selecione uma entidade</option>
-                        <!-- FAZER BUSCA POR ENTIDADE-->
-                        <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
-                    </select>
-
+                <multiselect id="entidade" name="entidade" class="input-lg" 
+                             ng-model="visita.entidade" 
+                             ng-change="pegarFone('juridica')"
+                             multiple="false" 
+                             ms-selected ="{{juridicas.selected.length}}" 
+                             ms-header="Selecione uma entidade"
+                             options="juridica.nome for juridica in juridicas" 
+                             scroll-after-rows="4">
+                </multiselect>
+                <div class="col-md-4">
+                    <a href="#/Juridica/nova" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
                 </div>
-
             </div>
             <div ng-show="formCad.entidade.$dirty && formCad.entidade.$invalid" class="alert alert-danger col-md-12" role="alert">
                 <span ng-show="formCad.entidade.$error.required">Selecione uma entidade. </span>
             </div>
 
-            <div class="form-group">
-                <label for="pessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
-                <div class="col-md-3" ng-init="listarFisicas()">
-
-                    <select ng-model="visita.pessoaresponsavel.idpessoa" ng-change="pegarFone('fisica')" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
-                        <option value="">Selecione um responsável</option>
-                        <!-- FAZER BUSCA POR RESPONSÁVEL -->
-                        <option ng-repeat="f in fisicas" value="{{f.idpessoa}}">{{f.nome}}</option>
-                    </select>
-
-                </div>        
+            <div class="form-group" ng-init="listarFisicas()">
+                <label for="pessoaresponsavel" class="col-md-2 control-label" style="margin-top: 0.7%">Responsável: </label>
+                <multiselect id="pessoaresponsavel" name="pessoaresponsavel" class="input-lg" 
+                             ng-model="visita.pessoaresponsavel" 
+                             ng-change="pegarFone('fisica')"
+                             multiple="false" 
+                             ms-selected ="{{fisicas.selected.length}}" 
+                             ms-header="Selecione uma pessoa"
+                             options="fisica.nome for fisica in fisicas" 
+                             scroll-after-rows="4">
+                </multiselect>
+                <div class="col-md-4">
+                    <a href="#/Fisica/nova" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
             </div>
             
             <div ng-show="formCad.pessoaresponsavel.$dirty && formCad.pessoaresponsavel.$invalid" class="alert alert-danger col-md-12" role="alert">
-                <span ng-show="formCad.pessoaresponsavel.$error.required">Selecione uma entidade. </span>
+                <span ng-show="formCad.pessoaresponsavel.$error.required">Selecione uma pessoa responsável. </span>
             </div>
             
             <div class="form-group">
