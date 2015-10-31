@@ -6,11 +6,13 @@ import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.ocorrencia.Ocorrencia;
+import br.unicesumar.time05.relatorios.formatoRelatorio;
 import br.unicesumar.time05.terraindigena.TerraIndigena;
 import br.unicesumar.time05.terraindigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
@@ -83,7 +85,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         aIndigena.setOcorrencia(aOcorrencia);
         repository.save(aIndigena);
     }
-       
+
     public void excluirOcorrencia(Ocorrencia aOcorrencia, Long aId) {
         Indigena aIndigena = repository.findOne(aId);
         aIndigena.removerOcorrencia(aOcorrencia);
@@ -113,6 +115,10 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     @Override
     public List<Map<String, Object>> listarSemPaginacao() {
         return query.execute(SQLConsultaIndigena);
+    }
+
+    public String gerarRelatorio() {
+        return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio.EXCEL.PDF, new HashMap());
     }
 
 }

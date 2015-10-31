@@ -5,6 +5,7 @@ import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.estadiafamilia.Estadia;
+import br.unicesumar.time05.relatorios.Relatorio;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,9 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
     @Autowired
     protected QueryPersonalizada query;
 
+    @Autowired
+    protected Relatorio rel;
+    
     private ConstrutorDeSQL ConstrutorDeSQL;
 
     private String sqlPadrao;

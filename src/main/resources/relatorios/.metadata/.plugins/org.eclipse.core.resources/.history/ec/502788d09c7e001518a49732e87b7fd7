@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-10-29T22:27:23 -->
+<!-- 2015-10-24T15:05:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EscolaDeTi"/>
 	<queryString>
-		<![CDATA[SELECT tb.*
-  FROM (SELECT row_number() OVER() AS coluna,
-               i.codigoassindi,
-               i.nome,
-               i.genero,
-               (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM COALESCE(i.datanascimento, CURRENT_DATE))) AS idade
-          FROM indigena i
-          LEFT JOIN familia f ON (i.codigoassindi = f.idrepresentante)
-          LEFT JOIN familia_indigena fi ON (fi.codigoassindi = i.codigoassindi)
-          LEFT JOIN estadia_indigena ei ON (i.codigoassindi = ei.codigoassindi)
-          LEFT JOIN estadia e ON (ei.idestadia = e.idestadia)
-          LEFT JOIN indigena_convenio ic ON (i.codigoassindi = ic.indigena_id)
-         WHERE ((:genero IS NULL) OR (i.genero = :genero))
-           AND ((:dataini IS NULL AND :datafim IS NULL) OR (e.dataentrada BETWEEN :dataini AND :datafim) OR (e.datasaida BETWEEN :dataini AND :datafim))
-           AND ((:idfamilia IS NULL) OR (fi.idfamilia = :idfamilia) OR (f.idfamilia = :idfamilia))
-           AND ((:idetnia IS NULL) OR (i.etnia_idetnia = :idetnia))
-           AND ((:escolaridade IS NULL) OR (i.escolaridade = :escolaridade))
-           AND ((:estadocivil IS NULL) OR (i.estadocivil = :estadocivil))
-           AND ((:genero IS NULL) OR (i.genero = :genero))
-           AND ((:idterraindigena) OR (i.terraindigena_idterraindigena = :idterraindigena))
-           AND ((:idconvenio IS NULL) OR (ic.convenio_id = :idconvenio))
-          GROUP BY i.codigoassindi                        
-       ) AS tb
- WHERE ((:idadeini IS NULL AND :idadefim IS NULL) OR (tb.idade BETWEEN :idadeini AND :idadefim))]]>
+		<![CDATA[SELECT row_number() OVER() AS coluna,
+       i.codigoassindi,
+       i.nome,
+       i.genero,
+       (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM COALESCE(i.datanascimento, CURRENT_DATE))) AS idade
+  FROM indigena i]]>
 	</queryString>
 	<field name="coluna" class="java.lang.Long">
 		<fieldDescription><![CDATA[Qtde.]]></fieldDescription>
