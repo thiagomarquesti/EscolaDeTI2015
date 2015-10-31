@@ -73,11 +73,13 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             if(aEntidade.getPessoa() != null){
                 aEntidade.setNome(aEntidade.getPessoa().getNome());
                 aEntidade.setEmail(aEntidade.getPessoa().getEmail());
+                PessoaFisica f = fisicaRepository.findOne(aEntidade.getPessoa().getIdpessoa());
+                f.setTipoPessoa(TipoPessoa.USUÁRIO);
+                repository.save(aEntidade);
+                fisicaRepository.save(f);
+            }else{
+                repository.save(aEntidade);
             }
-            PessoaFisica f = fisicaRepository.findOne(aEntidade.getPessoa().getIdpessoa());
-            f.setTipoPessoa(TipoPessoa.USUÁRIO);
-            repository.save(aEntidade);
-            fisicaRepository.save(f);
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException(e);
