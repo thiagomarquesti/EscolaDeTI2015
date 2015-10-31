@@ -12,22 +12,22 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='descricao'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual==='descricao'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Evento</a>
                         </th>
                         
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datainicial'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual==='datainicial'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datainicial', busca.descricao, 'ok', true)">Data Inicio</a>
                         </th>
-                        
+
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datafinal'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datafinal', busca.dataTermino, 'ok', true)">Data Termino</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual==='datafinal'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datafinal', busca.dataTermino, 'ok', true)">Data Término</a>
                         </th>
-                        
+                                               
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='visualizarnocalendario'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual==='visualizarnocalendario'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'visualizarnocalendario', busca.calendario, 'ok', true)">Calendário</a>
                         </th>
                         
