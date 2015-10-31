@@ -196,7 +196,38 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuUsuarioNovo);
         }
 
-//        //PERFIL
+        
+        //PESSOA
+        ItemAcesso menuPessoa;
+        menuPessoa = this.getItemAcesso(itensAcesso, "Gerenciar Pessoa", "");
+        if (menuPessoa == null) {
+            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-user", menu);
+            itensAcesso.add(menuPessoa);
+        }
+        
+        ItemAcesso menuPessoaListar;
+        menuPessoaListar = this.getItemAcesso(itensAcesso, "Listar Pessoa", "#/Pessoa/listar");
+        if (menuPessoaListar == null) {
+            menuPessoaListar = new ItemAcesso("Listar Pessoa", "#/Pessoa/listar", "fa-list", menuPessoa);
+            itensAcesso.add(menuPessoaListar);
+        }
+        
+        // PESSOA FISICA
+        ItemAcesso menuFisicaNovo;
+        menuFisicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Física", "#/Fisica/novo");
+        if (menuFisicaNovo == null) {
+            menuFisicaNovo = new ItemAcesso("Cadastrar Pessoa Física", "#/Fisica/nova", "fa-plus", menuPessoa);
+            itensAcesso.add(menuFisicaNovo);
+        }
+        // PESSOA JURIDICA
+        ItemAcesso menuJuridicaNovo;
+        menuJuridicaNovo = this.getItemAcesso(itensAcesso, "Nova Pessoa Jurídica", "#/Juridica/novo");
+        if (menuJuridicaNovo == null) {
+            menuJuridicaNovo = new ItemAcesso("Cadastrar Pessoa Jurídica", "#/Juridica/nova", "fa-plus", menuPessoa);
+            itensAcesso.add(menuJuridicaNovo);
+        }
+
+        //PERFIL
         ItemAcesso menuPerfil;
         menuPerfil = this.getItemAcesso(itensAcesso, "Gerenciar Perfil", "");
         if (menuPerfil == null) {
@@ -282,6 +313,28 @@ public class InicializadorItemAcesso {
             menuEstadiaNovo = new ItemAcesso("Cadastrar Estadia", "#/Estadia/nova", "fa-plus", menuEstadia);
             itensAcesso.add(menuEstadiaNovo);
         }
+
+        
+        
+        
+        //RELATORIOS
+        ItemAcesso menuRelatorios;
+        menuRelatorios = this.getItemAcesso(itensAcesso, "Relatórios", "");
+        if (menuRelatorios == null) {
+            menuRelatorios = new ItemAcesso("Relatórios", "", "fa-list ", menu);
+            itensAcesso.add(menuRelatorios);
+        }
+
+        ItemAcesso menuRelatoriosFamilias;
+        menuRelatoriosFamilias = this.getItemAcesso(itensAcesso, "Relatório de Famílias", "#/Relatorios/familias");
+        if (menuRelatoriosFamilias == null) {
+            menuRelatoriosFamilias = new ItemAcesso("Relatório de Famílias", "#/Relatorios/familias", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosFamilias);
+        }
+        
+        //----------------------------------------------------
+        //----------------------------------------------------
+        //----------------------------------------------------
 
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);

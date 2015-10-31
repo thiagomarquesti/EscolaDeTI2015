@@ -5,12 +5,12 @@ import br.unicesumar.time05.genero.Genero;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.funcao.Funcao;
 import br.unicesumar.time05.pessoa.Pessoa;
 import br.unicesumar.time05.pessoa.TipoPessoa;
 import br.unicesumar.time05.telefone.Telefone;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -19,28 +19,38 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
-public class PessoaFisica extends Pessoa implements Serializable{
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"cpf"}, name = "uk_cpf")})
+public class PessoaFisica extends Pessoa implements Serializable {
 
     @CampoConsulta
     @Embedded
     @Column(unique = true, nullable = false)
     private CPF cpf;
-    
+
     @CampoConsulta
     @Enumerated(EnumType.STRING)
     private Genero genero;
-    
+
     @CampoConsulta
     @Temporal(TemporalType.DATE)
     private Date datanascimento;
+
+    @CampoConsulta
+    @ManyToOne(optional = true)
+    private Funcao funcao;
+
+    @Transient
+    private String imgSrc;
 
     public PessoaFisica() {
     }
@@ -49,17 +59,37 @@ public class PessoaFisica extends Pessoa implements Serializable{
         super(nome, email);
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
-        super(nome, telefones, email, endereco, tipoPessoa);
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Telefone telefoneP, Telefone telefoneS, Email email, Endereco endereco, TipoPessoa tipoPessoa, Date datanasc) {
+        super(nome, telefoneP, telefoneS, email, endereco, tipoPessoa);
         this.cpf = cpf;
         this.genero = genero;
         this.datanascimento = datanasc;
     }
 
-    public PessoaFisica(CPF cpf, Genero genero, String nome, List<Telefone> telefones, Email email) {
-        super(nome, telefones, email);
+    public PessoaFisica(CPF cpf, Genero genero, String nome, Telefone telefoneP, Telefone telefoneS, Email email) {
+        super(nome, telefoneP, telefoneS, email);
         this.cpf = cpf;
         this.genero = genero;
+    }
+    public PessoaFisica(CriarPessoaFisica p, Endereco endereco, Funcao funcao) {
+        this(p.getCpf(), p.getGenero(), p.getNome(), p.getTelefone(),p.getTelefonesecundario(), p.getEmail(), endereco, p.getTipoPessoa(), p.getDatanasc());
+        this.funcao = funcao;
+    }
+
+    public void alterar(CriarPessoaFisica aFisica) {
+        this.setNome(aFisica.getNome());
+        this.setTelefone(aFisica.getTelefone());
+        this.setTelefonesecundario(aFisica.getTelefonesecundario());
+        this.setEmail(aFisica.getEmail());
+        this.setDatanascimento(aFisica.getDatanasc());
+        this.setTipoPessoa(aFisica.getTipo());
+        this.setCpf(aFisica.getCpf());
+        this.setGenero(aFisica.getGenero());
+        this.getEndereco().setLogradouro(aFisica.getLogradouro());
+        this.getEndereco().setNumero(aFisica.getNumero());
+        this.getEndereco().setBairro(aFisica.getBairro());
+        this.getEndereco().setComplemento(aFisica.getComplemento());
+        this.getEndereco().setCep(aFisica.getCep());
     }
 
     public CPF getCpf() {
@@ -85,6 +115,22 @@ public class PessoaFisica extends Pessoa implements Serializable{
 
     public void setDatanascimento(Date datanascimento) {
         this.datanascimento = datanascimento;
+    }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 
     @Override

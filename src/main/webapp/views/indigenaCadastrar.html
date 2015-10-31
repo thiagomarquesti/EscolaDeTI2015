@@ -45,6 +45,7 @@
                 <div class="col-md-3" ng-init="getEtnias();">
                     <select ng-model="indio.etnia" id="etnia" name="etnia" required="" class="form-control requerido"
                             ng-options="etnia.idetnia as etnia.descricao for etnia in etnias">
+                        <option value="">Selecione a etnia</option>
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -98,6 +99,7 @@
                 <div class="col-md-3">
                     <select name="escolaridade" ng-model="indio.escolaridade" id="escolaridade" required="" class="form-control requerido">
                         <option value="">Selecione a escolaridade</option>
+                        <option value="NENHUM">Nenhum</option>
                         <option value="FUNDAMENTALINCOMPLETO">Fundamental incompleto</option>
                         <option value="FUNDAMENTALCOMPLETO">Fundamental completo</option>
                         <option value="MEDIOINCOMPLETO">Médio incompleto</option>
@@ -118,7 +120,7 @@
             </div>
 
             <div class="form-group" ng-init="getConvenios()">
-                <label for="nome" class="col-md-2 control-label">Convênios:</label>
+                <label for="nome" class="col-md-2 control-label" style="margin-top: +0.7%">Convênios:</label>
                 <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
                              ng-model="indio.conveniosselecionados" 
                              multiple="true" 
@@ -129,7 +131,7 @@
                 </multiselect>
 
                 <div class="col-md-4">
-                    <button type="button" class="btn-success btn btn-sm" style="margin-left: +19%; margin-top: 2%;" onclick="jQuery('#convenioModal').modal('show', {backdrop: 'static'});">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-top: +3%;" onclick="jQuery('#convenioModal').modal('show', {backdrop: 'static'});">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -141,7 +143,7 @@
                 <div class="col-md-3"><input type="file" ng-model="indio.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
 
                 <div id="arquivoFoto" name="arquivoFoto" ng-model="indio.arquivoOk" ng-show="indio.arquivoFoto">Arquivo selecionado: <strong>{{indio.arquivoFoto}}</strong></div>
-
+                <div class="col-md-5"><img src="{{indio.imgSrc}}" class="img-circle" style="width: 40px;"></div>
                 <div class="modal fade" id="fotoModal" data-backdrop="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -302,7 +304,8 @@
                         <span ng-show="formEtnia.descricao.$error.maxlength">Etnia não pode ter mais de 30 caracteres. </span>
                     </div>
                     <div class="col-md-offset-1 col-md-11">
-                        <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" data-dismiss="modal" class="btn btn-success col-md-2">Cadastrar</button>
+                        <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="novaEtnia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
                     </div>
                     <div class="row">
                     </div>
@@ -346,7 +349,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarTerra('modal')" ng-disabled="!formTerra.$valid" data-dismiss="modal" class="btn btn-success col-md-2">Cadastrar</button>
+                            <button ng-click="salvarTerra('modal')" ng-disabled="!formTerra.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novaTerra()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
 
@@ -374,7 +378,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarConvenio('modal')" ng-disabled="!formConvenio.$valid" data-dismiss="modal" class="btn btn-success col-md-2">Cadastrar</button>
+                            <button ng-click="salvarConvenio('modal')" ng-disabled="!formConvenio.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novoConvenio()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>      

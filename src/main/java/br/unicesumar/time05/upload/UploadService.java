@@ -36,7 +36,7 @@ public class UploadService {
     public Map<String, String> getUrlFoto(Long id, String path){
         Map<String, String> result = new HashMap<>();
         if(new File("src/main/webapp/fotos/"+path+"/"+id+".jpg").exists())
-            result.put("foto", "fotos/users/"+id+".jpg");
+            result.put("foto", "fotos/"+path+"/"+id+".jpg");
         else
             result.put("foto", "fotos/default.png");
         

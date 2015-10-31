@@ -12,42 +12,48 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='familia'"></i> 
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'familia', busca.descricao, 'ok', true)">Familia</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nomefamilia'"></i> 
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nomefamilia', busca.nomefamilia, 'ok', true)">Familia</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='dataentrada'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.descricao, 'ok', true)">Data de Entrada</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'dataentrada'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'dataentrada', busca.dataentrada, 'ok', true)">Data de Entrada</a>
                         </th>   
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='datasaida'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'datasaida'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'datasaida', busca.descricao, 'ok', true)">Data de Saída</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='quantidademembros'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'quantidademembros'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'quantidademembros', busca.descricao, 'ok', true)">Qtde de Acompanhantes</a>
                         </th>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='representante'"></i>
-                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'representante', busca.descricao, 'ok', true)">Representante</a>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Representante</a>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'telefone'"></i>
+                            <a ng-click="atualizarListagens(busca.numregistros, pagina, 'telefone', busca.descricao, 'ok', true)">Telefone</a>
                         </th>   
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, '',campoPrincipal,'', '', ent, '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', ent, '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{f.familia}}</td>
-                        <td>{{f.dataentrada}}</td>
-                        <td>{{f.datasaida}}</td>
+                        <td>{{f.nomefamilia}}</td>
+                        <td>{{dateToData(f.dataentrada)}}</td>
+                        <td>{{dateToData(f.datasaida)}}</td>
                         <td>{{f.quantidademembros}}</td>
-                        <td>{{f.representante}}</td>
+                        <td>{{f.nome}}</td>
+                        <td>{{f.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="editarEstadia(f)">Editar</a></li>
+                                    <li><a ng-click="editarEstadia(f.idestadia)">Editar</a></li>
+                                    <li><a ng-click="getIdEstadia(f.idestadia)" onclick="jQuery('#saidaModal').modal('show', {backdrop: 'static'});">Registrar Saída</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -60,5 +66,36 @@
             <div id="paginacao"></div>
         </div>
         <a ng-href="#/Estadia/nova" class="btn btn-success">Cadastrar nova</a>        
+    </div>
+    <div class="modal fade " id="saidaModal" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Registrar data de saída</h4>
+                </div>
+                <div class="modal-body" ng-init="saidaEstadiaNova()">
+                    <form name="formSaidaEstadia" novalidate class="form-horizontal form-groups-bordered">
+                        <div class="form-group">
+                            <label for="datasaida" class="col-md-3 control-label"> Data de Saída:</label>
+                            <div class="col-md-4"><input type="date" ng-model="saida.datasaida" id="dataentrada" name="datasaida" required="" class="form-control requerido"></div>
+                        </div>
+
+                        <div ng-show="formSaidaEstadia.datasaida.$dirty && formSaidaEstadia.datasaida.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                            <span ng-show="formSaidaEstadia.datasaida.$error.required">Preencha data de saída. </span>
+                        </div>
+                        <div>
+                            <label class="col-md-3 control-label">Observações: </label>                
+                            <textarea rows=5 class="col-md-7" style="margin-left: 1.5%; border-radius: 5px;" ng-model="saida.observacoessaida" id="observacoessaida" name="observacoessaida"></textarea>
+                        </div>
+                        <div class="modal-footer"  style="margin-top: 22%; margin-bottom: -5%;"></div>
+                        <div class="col-md-offset-1 col-md-11" >
+                            <button ng-click="salvarDataSaida()" ng-disabled="!formSaidaEstadia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novaEstadia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                        </div>
+                        <div class="row"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
