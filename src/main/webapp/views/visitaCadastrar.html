@@ -1,7 +1,7 @@
 <div ng-init="carregarVisita()" class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovaVisita">Cadastrar Visita</div>
-        <!--        <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>-->
+        <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -25,7 +25,7 @@
                 <label for="entidade" class="col-md-2 control-label">Entidade: </label>
                 <div class="col-md-5" ng-init="listarJuridicas()">
 
-                    <select ng-model="visita.entidade.idpessoa" id="entidade" name="entidade" required="" class="form-control requerido">
+                    <select ng-model="visita.entidade.idpessoa" ng-change="pegarFone('juridica')" id="entidade" name="entidade" required="" class="form-control requerido">
                         <option value="">Selecione uma entidade</option>
                         <!-- FAZER BUSCA POR ENTIDADE-->
                         <option ng-repeat="j in juridicas" value="{{j.idpessoa}}">{{j.nome}}</option>
@@ -42,7 +42,7 @@
                 <label for="pessoaresponsavel" class="col-md-2 control-label">Responsável: </label>
                 <div class="col-md-3" ng-init="listarFisicas()">
 
-                    <select ng-model="visita.pessoaresponsavel.idpessoa" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
+                    <select ng-model="visita.pessoaresponsavel.idpessoa" ng-change="pegarFone('fisica')" id="pessoaresponsavel" name="pessoaresponsavel" required="" class="form-control requerido">
                         <option value="">Selecione um responsável</option>
                         <!-- FAZER BUSCA POR RESPONSÁVEL -->
                         <option ng-repeat="f in fisicas" value="{{f.idpessoa}}">{{f.nome}}</option>
@@ -58,7 +58,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Telefones: </label>
                 <div class="col-md-2">
-
+                    {{telefoneJuridica}}<br>{{telefoneFisica}}
                 </div>
                 <label for="telefonevisita" class="col-md-2 control-label">Telefone adicional: </label>
                 <div class="col-md-2"><input type="text" ng-model="visita.telefonevisita" id="telefonevisita" name="telefonevisita" class="form-control sp_celphones" placeholder="(99) 9999-9999"></div>
@@ -100,13 +100,6 @@
             </div>
 
             <div class="form-group">
-                <label for="visitarealizada" class="col-md-2 control-label">Visita realizada:</label>
-                <div class="col-md-1">
-
-                    <input type="checkbox" id="visitarealizada" name="visitarealizada" ng-model="visita.visitarealizada" value="1" required=""> &nbsp;
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-md-2 control-label" for="observacao">Observações: </label>                
                 <textarea name="observacao" id="observacao" ng-model="visita.observacao" rows=5 class="col-md-7"></textarea>
             </div>
@@ -117,5 +110,6 @@
 
 <div>
     <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-show="!isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovaVisita" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
 </div>

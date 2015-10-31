@@ -200,7 +200,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuPessoa;
         menuPessoa = this.getItemAcesso(itensAcesso, "Gerenciar Pessoa", "");
         if (menuPessoa == null) {
-            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-user", menu);
+            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-man", menu);
             itensAcesso.add(menuPessoa);
         }
         
@@ -295,7 +295,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuEstadia;
         menuEstadia = this.getItemAcesso(itensAcesso, "Gerenciar Estadia", "");
         if (menuEstadia == null) {
-            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-sitemap", menu);
+            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-map-marker", menu);
             itensAcesso.add(menuEstadia);
         }
 
@@ -316,7 +316,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuVisita;
         menuVisita = this.getItemAcesso(itensAcesso, "Gerenciar Visita", "");
         if (menuVisita == null) {
-            menuVisita = new ItemAcesso("Gerenciar Visita", "", "fa-sitemap", menu);
+            menuVisita = new ItemAcesso("Gerenciar Visita", "", "fa-bus", menu);
             itensAcesso.add(menuVisita);
         }
 

@@ -47,9 +47,28 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.novaVisita = function () {
             novaVisita();
         };
-        $scope.carregarVisita = function () {
+        
+        $scope.carregarVisita = function() {
             if ($location.path() === "/Visita/nova") {
                 novaVisita();
+            }
+            else {
+                $timeout(function () {
+                    $http.get("/visita/obj/" + $routeParams.id)
+                        .success(function(data) {
+                            var dados = data;
+                            console.log(data);
+                            
+                            var d = new Date(data.datavisita);
+                            dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                            dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0,2), data.horavisita.substring(3,5), 00, 00);
+                            dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0,2), data.horaentrada.substring(3,5), 00, 00);
+                            dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0,2), data.horasaida.substring(3,5), 00, 00);
+                            $scope.visita = dados;
+                            $scope.isNovaVisita = false;
+                        })
+                        .error(deuErro);
+                }, 100);
             }
         };
     
@@ -61,10 +80,10 @@ $scope.editarVisita = function (visita) {
 
 $scope.deletarVisita = function (visita) {
     $http.delete("/visita/" + visita.idvisita)
-            .success(function () {
-                toastr.success("Visita " + visita.responsavel + " excluído com sucesso.");
-                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
-            }).error(deuErroDeletar);
+        .success(function () {
+            toastr.success("Visita excluída com sucesso.");
+            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+        }).error(deuErroDeletar);
 };
 
 function deuErro() {
@@ -88,6 +107,7 @@ $scope.salvarVisita = function () {
     var visitaCompleta = $scope.visita;
     var dVisita = new Date(visitaCompleta.datavisita);
     var dVisitaOK = dVisita.getFullYear() + "-" + (dVisita.getMonth() + 1) + '-' + dVisita.getDate();
+    
     var hVisita = new Date(visitaCompleta.horavisita);
     var hVisitaOK = hVisita.getHours() + ":" + hVisita.getMinutes() + ":00";
     
@@ -96,13 +116,20 @@ $scope.salvarVisita = function () {
     var hSaida = new Date(visitaCompleta.horasaida);
     var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
     
-    visitaCompleta.datavisita = dVisitaOK;
+    visitaCompleta.datavisita = dVisitaOK + "T00:00:00-03";
     visitaCompleta.horavisita = hVisitaOK;
     visitaCompleta.horaentrada = hEntradaOK;
     visitaCompleta.horasaida = hSaidaOK;
     
+    if(hSaidaOK != ""){
+        visitaCompleta.visitarealizada = true;
+    }
+    else {
+        visitaCompleta.visitarealizada = false;
+    }
+    
     if ($scope.isNovaVisita) {
-        console.log(visitaCompleta)
+        //console.log(visitaCompleta)
         $http.post("/visita", visitaCompleta)
                 .success(function () {
                     $location.path("/Visita/listar");
@@ -136,7 +163,36 @@ $scope.salvarVisita = function () {
                 })
                 .error(deuErro);
     };
-
+    
+    $scope.pegarFone = function(tipo) {
+        if($scope.visita.pessoaresponsavel.idpessoa){
+            if(tipo == 'fisica'){
+                $http.get("/pessoa/fisica/obj/" + $scope.visita.pessoaresponsavel.idpessoa)
+                .success(function (data) {
+                    $scope.telefoneFisica = data.telefone.telefone;
+                })
+                .error(deuErro);
+            }
+        }
+        else{
+            $scope.telefoneFisica = "";
+        }
+        if($scope.visita.entidade.idpessoa){
+            if(tipo == 'juridica'){
+                $http.get("/pessoa/juridica/obj/" + $scope.visita.entidade.idpessoa)
+                .success(function (data) {
+                    $scope.telefoneJuridica = data.telefone.telefone;
+                })
+                .error(deuErro);
+            }
+        }
+        else{
+            $scope.telefoneJuridica = "";
+        }
+        
+        
+    };
+    
     $scope.dateToData = function (valor) {
             var data = "";
             if (valor != null && valor != "" && valor != undefined) {
