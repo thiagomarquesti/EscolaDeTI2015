@@ -34,11 +34,11 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 descricao: "",
                 datainicial: "",
                 datafinal: "",
-                visualizarnocalendario: ""
-
-
+                horainicial: "",
+                horafinal: "",
+                visualizarnocalendario: ""                
             };
-            $scope.isNovoEvento = true;
+            $scope.isNovoEvento = true;            
         }
 
         $scope.novoEvento = function () {
@@ -78,7 +78,6 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 return "NÃO";
         }
 
-
         $scope.dateToData = function (valor) {
             var date = new Date(valor);
             date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
@@ -90,11 +89,16 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvarEvento = function () {
 
-
+            var hInicial = new Date($scope.evento.horainicial);
+            hInicial = hInicial.getHours() + ":" + hInicial.getMinutes() + ":00"; 
+            var hFinal = new Date($scope.evento.horafinal);
+            hFinal = hFinal.getHours() + ":" + hFinal.getMinutes() + ":00"; 
             var dataInicio = dataToDate($scope.evento.datainicial);
             var dataFinal = dataToDate($scope.evento.datafinal);
             var eventoCorreto = {
                 descricao: $scope.evento.descricao,
+                horainicial: hInicial,
+                horafinal: hFinal,
                 datainicial: dataInicio + "T00:00:00-03",
                 datafinal: dataFinal + "T00:00:00-03",
                 visualizarnocalendario: $scope.evento.visualizarnocalendario
@@ -118,7 +122,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
             $http.delete("/eventos/" + evento.idevento)
                     .success(function () {
                         toastr.success("Evento " + evento.descricao + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
+                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
                     }).error(deuErroDeletar);
         };
 

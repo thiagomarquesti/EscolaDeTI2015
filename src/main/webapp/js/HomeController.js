@@ -10,6 +10,8 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         function novoEvento() {
             $scope.eventos = {
                 descricao: "",
+                horainicial: "",
+                horafinal: "",
                 datainicial: "",
                 datafinal: "",
                 visualizarnocalendario: ""
@@ -55,9 +57,9 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
         function offsetcalendar() {
             var cm = parseInt($(".calendar").attr('offset'));
-            if ($(this).data('dir') == "left") {
+            if ($(this).data('dir') === "left") {
                 calendarSetMonth(cm - 1);
-            } else if ($(this).data('dir') == "right") {
+            } else if ($(this).data('dir') === "right") {
                 calendarSetMonth(cm + 1);
             }
 
@@ -70,14 +72,14 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             var temparray = [];
             for (var u = 0; u < o; u++) {
                 for (var uu = 0; uu < p.length; uu++) {
-//                    if (uu == 0) {
+                    if (uu === 0) {
                     t = uu;
                     y = p[uu];
-//                    }
-//                    else if (parseInt(p[uu][deli].replace('.', '')) < parseInt(y[deli].replace('.', ''))) {
-//                        y = p[uu];
-//                        t = uu;
-//                    }
+                    }
+                    else if (parseInt(p[uu][deli].replace(':', '')) < parseInt(y[deli].replace(':', ''))) {
+                        y = p[uu];
+                        t = uu;
+                    }
                 }
                 temparray.push(y);
                 p.splice(t, 1);
@@ -88,7 +90,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         function calendarSet() {
             $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left">&lsaquo;</div><p></p><div class="calendar-month-view-arrow" data-dir="right">&rsaquo;</div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
 
-            if ($(this).data("color") == undefined) {
+            if ($(this).data("color") === undefined) {
                 $(this).data("color", "red");
             }
 
@@ -117,7 +119,9 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
                         var strdate = date.getFullYear() + '' + mes + '' + dia;
                         tempeventarray["datainicial"] = strdate; //$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
-//                        tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');
+                        tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');                                                
+                        tempeventarray["horainicial"] = $scope.eventos[i].horainicial.substring(0, 2) + ":" + $scope.eventos[i].horainicial.substring(3, 5);
+                        tempeventarray["horafinal"] = $scope.eventos[i].horafinal.substring(0, 2) + ":" + $scope.eventos[i].horafinal.substring(3, 5);
                         tempeventarray["descricao"] = $scope.eventos[i].descricao;
                         tempdayarray.push(tempeventarray);
                     }
@@ -131,7 +135,11 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     for (var j = 0; j < tempdayarray.length; j++) {
                         var tempevent = [];
                         if (tempdayarray[i].datainicial === tempdayarray[j].datainicial) {
-                            tempevent["name"] = tempdayarray[j].descricao;
+                            tempevent["name"] = tempdayarray[j].descricao;                            
+                            tempevent["timestart"] = tempdayarray[j].horainicial;
+                            tempevent["timeend"] = tempdayarray[j].horafinal;                            
+//                            tempevent["datestart"] = tempdayarray[j].datainicial.substring(0, 2) + "/" + tempdayarray[j].datainicial.substring(3, 5) + "/" + tempdayarray[j].datainicial.substring(6, 10);
+//                            tempevent["dateend"] = tempdayarray[j].datafinal.substring(0, 2) + "/" + tempdayarray[j].datafinal.substring(3, 5) + "/" + tempdayarray[j].datafinal.substring(6, 10);
                             tempdayevent.push(tempevent);
                         }
                     }
@@ -178,9 +186,9 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             $(".specific-day-info[i=day]").html(this.day);
             $(".specific-day-info[i=month]").html(monthArray[this.month][0]);
             if (this.events !== undefined) {
-                var ev = orderBy('start', this.events);
+                var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
-                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p></div>'); //<p data-role="dur">' + ev[o]['start'] + ' - ' + ev[o]['end'] + '</p><p data-role="loc">' + ev[o]['location'] + '</p></div>'); // Monta os eventos do dia clicado.
+                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
         }
@@ -195,16 +203,17 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             var d = new Date();
             var c = new Date();
             var e = new Date();
+            var p = d;
             if (offset !== undefined) {
-                d.setMonth(d.getMonth() + offset);
-                e.setMonth(e.getMonth() + offset);
+                d = monthChange(p, offset);
+                e = monthChange(p, offset);
                 $(".calendar").attr('offset', offset);
             } else {
                 $(".calendar").attr('offset', 0);
             }
             $(".calendar .calendar-month-view p").text(monthArray[d.getMonth()][1] + ' ' + d.getFullYear());
             d.setDate(1);
-            if (dayArray[d.getDay()] == 1) {
+            if (dayArray[d.getDay()] === 1) {
                 d.setDate(d.getDate() - 7);
             } else {
                 d.setDate(d.getDate() - dayArray[d.getDay()] + 1);
@@ -256,6 +265,29 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 d.setDate(d.getDate() - i);
             }
         }
+
+        function monthChange(d, o) {
+            var dim = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            var day = d.getDate();
+            var month = o !== undefined ? d.getMonth() + o : d.getMonth();
+            var year = d.getFullYear();
+            var hours = d.getHours();
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
+            while (month > 11) {
+                month = month - 12;
+                year++;
+            }
+            while (month < 0) {
+                month = month + 12;
+                year--;
+            }
+            if (dim[month] < day) {
+                day = dim[month];
+            }
+            return new Date(year, month, day, hours, minutes, seconds);
+        }
+
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");
         }

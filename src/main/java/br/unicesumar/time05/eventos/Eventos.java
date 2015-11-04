@@ -2,6 +2,7 @@ package br.unicesumar.time05.eventos;
 
 import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,27 @@ public class Eventos {
     @CampoConsulta
     private Date datafinal;
     @CampoConsulta
+    private Time horainicial;
+    @CampoConsulta
+    private Time horafinal;
+    @CampoConsulta
     private Boolean visualizarnocalendario;
+
+    public Time getHorainicial() {
+        return horainicial;
+    }
+
+    public void setHorainicial(Time horainicial) {
+        this.horainicial = horainicial;
+    }
+
+    public Time getHorafinal() {
+        return horafinal;
+    }
+
+    public void setHorafinal(Time horafinal) {
+        this.horafinal = horafinal;
+    }
 
     public Eventos() {
     }
