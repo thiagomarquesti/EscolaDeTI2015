@@ -79,7 +79,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
                     $http.get(busca)
                             .success(function (data) {
-//                                console.log(data);
+                                console.log(data.terraIndigena);
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
@@ -88,8 +88,19 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 dados.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear();
                                 dados.nomeEtnia = data.etnia.descricao;
                                 dados.etnia = data.etnia.idetnia;
-                                dados.nomeTerra = data.terraIndigena.nometerra;
-                                dados.terraIndigena = data.terraindigena.idterraindigena;
+                                dados.terraIndigena = {
+                                    cidade: data.terraIndigena.cidade.descricao,
+                                    nometerra: data.terraIndigena.nometerra,
+                                    sigla: data.terraIndigena.cidade.estado.sigla,
+                                    descricao: data.terraIndigena.cidade.estado.descricao,
+                                    idterraindigena: data.terraIndigena.idterraindigena
+                                };
+                                console.log(dados.terraIndigena);
+//                                cidade: "DIAMANTE DO NORTE"
+//                                descricao: "PARANÁ"
+//                                idterraindigena: 17
+//                                nometerra: "RESERVA INDÍGENA TEKOHA-AÑETETÊ"
+//                                sigla: "PR"
                                 dados.conveniosselecionados = data.convenio;
                                 if (!dados.cpf) {
                                     dados.cpfInformado = "CPF não informado";
@@ -194,7 +205,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                         .error(deuErro);
             }
         };
-        
+
         $scope.calculaIdade = function (data) {
             var quantos_anos = 0;
             if (data != undefined) {
@@ -217,7 +228,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
             return quantos_anos < 0 ? 0 : quantos_anos;
         };
-        
+
         function dataToDate(valor) {
             var date = new Date(valor);
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();

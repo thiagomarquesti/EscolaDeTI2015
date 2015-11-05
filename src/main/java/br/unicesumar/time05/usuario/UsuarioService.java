@@ -173,7 +173,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
                 + "  JOIN perfildeacesso p ON (up.perfis_idperfildeacesso = p.idperfildeacesso) "
-                + " WHERE up.usuario_idpessoa = :aId";
+                + " WHERE up.usuario_idusuario = :aId";
         List<Map<String, Object>> itensPerfilDeAcesso = query.execute(sql, params);
         return itensPerfilDeAcesso;
     }

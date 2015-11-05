@@ -70,12 +70,12 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
 
     public List<Map<String, Object>> getMembros(Long aIdFamilia) {
         String sql
-                = "SELECT i.codigoassindi, "
+                = "SELECT i.codigoassindi,  "
                 + "       i.codigoSUS, "
                 + "       i.cpf, "
                 + "       i.datanascimento, "
                 + "       e.descricao, "
-                + "       i.escolaridade, "
+                + "       i.escolaridade,"
                 + "       i.estadocivil, "
                 + "       i.genero, "
                 + "       i.nome, "
