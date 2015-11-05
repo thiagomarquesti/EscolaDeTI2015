@@ -36,13 +36,14 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 datafinal: "",
                 horainicial: "",
                 horafinal: "",
-                visualizarnocalendario: ""                
+                visualizarnocalendario: "true"                
             };
             $scope.isNovoEvento = true;            
         }
 
         $scope.novoEvento = function () {
             novoEvento();
+            //$("#visualizarnocalendario").val('true');
         };
 
         $scope.carregarEvento = function () {
@@ -72,7 +73,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.taNoCalendario = function (valor) {
-            if (valor)
+            if (valor) 
                 return "SIM";
             else
                 return "NÃO";
@@ -85,6 +86,10 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
             var data = dia + "/" + (((date.getMonth() + 1) < 10) ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) + "/" + date.getFullYear();
             return (valor != null) ? data : "";
         };
+        
+        function setVisualizar(value){
+            $scope.evento.visualizarnocalendario = value;
+        }
 
 
         $scope.salvarEvento = function () {
