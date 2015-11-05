@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
+import org.aspectj.weaver.patterns.FormalBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -117,8 +118,8 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         return query.execute(SQLConsultaIndigena);
     }
 
-    public String gerarRelatorio() {
-        return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio.EXCEL.PDF, new HashMap());
+    public String gerarRelatorio(formatoRelatorio formatoRelatorio, Map<String, Object> paramtros) {
+        return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, paramtros);
     }
 
 }

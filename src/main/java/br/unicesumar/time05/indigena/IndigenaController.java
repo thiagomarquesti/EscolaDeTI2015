@@ -1,10 +1,11 @@
 package br.unicesumar.time05.indigena;
 
+import br.unicesumar.time05.relatorios.formatoRelatorio;
 import classesbase.ControllerBase;
 import java.io.File;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,9 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
         return i;
     }
 
-    @RequestMapping(value = "/relatorio", method = RequestMethod.GET)
-    public String getRelatorio() {
-        return service.gerarRelatorio();
+    @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
+    public String getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
+        return service.gerarRelatorio(formatoRelatorio, parametros);
     }
 
 }

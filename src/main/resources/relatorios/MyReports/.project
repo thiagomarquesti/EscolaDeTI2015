@@ -28,6 +28,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Indigena.jasper</name>
+			<type>1</type>
+			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jasper</location>
+		</link>
+		<link>
 			<name>Indigena.jrxml</name>
 			<type>1</type>
 			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jrxml</location>
