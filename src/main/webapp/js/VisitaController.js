@@ -109,17 +109,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
 
     $scope.salvarVisita = function () {
         
-        var visitaCompleta;
-        
-        visitaCompleta.observacao = $scope.visita.observacao;
-        visitaCompleta.quantidadedevisitantes = $scope.visita.quantidadedevisitantes;
-        visitaCompleta.seriecurso = $scope.visita.seriecurso;
-        visitaCompleta.telefonevisita = $scope.visita.telefonevisita;
-        visitaCompleta.pessoaresponsavel = $scope.visita.pessoaresponsavel;
-        visitaCompleta.entidade = $scope.visita.entidade;
-        
-        visitaCompleta.horaentrada = null;
-        visitaCompleta.horasaida = null;
+        var visitaCompleta = $scope.visita;
         
         var dVisita = new Date($scope.visita.datavisita);
         var dVisitaOK = dVisita.getFullYear() + "-" + (dVisita.getMonth() + 1) + '-' + dVisita.getDate();
@@ -131,11 +121,18 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             var hEntrada = new Date($scope.visita.horaentrada);
             var hEntradaOK = hEntrada.getHours() + ":" + hEntrada.getMinutes() + ":00";
             visitaCompleta.horaentrada = hEntradaOK;
-        }   
+        }
+        else{
+            visitaCompleta.horaentrada = null;
+        }
+        
         if($scope.visita.horasaida){
             var hSaida = new Date($scope.visita.horasaida);
             var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
             visitaCompleta.horasaida = hSaidaOK;
+        }
+        else {
+            visitaCompleta.horasaida = null;
         }
         
         visitaCompleta.datavisita = dVisitaOK + "T00:00:00-03";
