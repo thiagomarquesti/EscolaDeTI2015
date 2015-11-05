@@ -59,13 +59,16 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 $http.get("/visita/obj/" + $routeParams.id)
                 .success(function (data) {
                     var dados = data;
-                    console.log(data);
-
                     var d = new Date(data.datavisita);
                     dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                     dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
-                    dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
-                    dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                    
+                    if(dados.horaentrada) {
+                        dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
+                    }
+                    if(dados.horasaida) {
+                        dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                    }
                     $scope.visita = dados;
                     $scope.isNovaVisita = false;
                     $scope.pegarFone('fisica');
@@ -105,31 +108,48 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
     }
 
     $scope.salvarVisita = function () {
-
-        var visitaCompleta = $scope.visita;
-        var dVisita = new Date(visitaCompleta.datavisita);
+        
+        var visitaCompleta;
+        
+        visitaCompleta.observacao = $scope.visita.observacao;
+        visitaCompleta.quantidadedevisitantes = $scope.visita.quantidadedevisitantes;
+        visitaCompleta.seriecurso = $scope.visita.seriecurso;
+        visitaCompleta.telefonevisita = $scope.visita.telefonevisita;
+        visitaCompleta.pessoaresponsavel = $scope.visita.pessoaresponsavel;
+        visitaCompleta.entidade = $scope.visita.entidade;
+        
+        visitaCompleta.horaentrada = null;
+        visitaCompleta.horasaida = null;
+        
+        var dVisita = new Date($scope.visita.datavisita);
         var dVisitaOK = dVisita.getFullYear() + "-" + (dVisita.getMonth() + 1) + '-' + dVisita.getDate();
 
-        var hVisita = new Date(visitaCompleta.horavisita);
+        var hVisita = new Date($scope.visita.horavisita);
         var hVisitaOK = hVisita.getHours() + ":" + hVisita.getMinutes() + ":00";
-
-        var hEntrada = new Date(visitaCompleta.horaentrada);
-        var hEntradaOK = hEntrada.getHours() + ":" + hEntrada.getMinutes() + ":00";
-        var hSaida = new Date(visitaCompleta.horasaida);
-        var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
-
+        
+        if($scope.visita.horaentrada) {
+            var hEntrada = new Date($scope.visita.horaentrada);
+            var hEntradaOK = hEntrada.getHours() + ":" + hEntrada.getMinutes() + ":00";
+            visitaCompleta.horaentrada = hEntradaOK;
+        }   
+        if($scope.visita.horasaida){
+            var hSaida = new Date($scope.visita.horasaida);
+            var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
+            visitaCompleta.horasaida = hSaidaOK;
+        }
+        
         visitaCompleta.datavisita = dVisitaOK + "T00:00:00-03";
         visitaCompleta.horavisita = hVisitaOK;
-        visitaCompleta.horaentrada = hEntradaOK;
-        visitaCompleta.horasaida = hSaidaOK;
 
-        if (hSaidaOK != "") {
+        if (hSaidaOK) {
             visitaCompleta.visitarealizada = true;
         }
         else {
             visitaCompleta.visitarealizada = false;
         }
-
+        
+        console.log(visitaCompleta);
+        
         if ($scope.isNovaVisita) {
             //console.log(visitaCompleta)
             $http.post("/visita", visitaCompleta)
@@ -141,7 +161,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                     .error(deuErroSalvar);
         }
         else {
-            $http.put("/visita/", $scope.visita)
+            $http.put("/visita", $scope.visita)
                     .success(function () {
                         $location.path("/Visita/listar");
                         toastr.success("Visita atualizada com sucesso!");

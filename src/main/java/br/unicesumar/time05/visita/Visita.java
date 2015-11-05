@@ -23,18 +23,19 @@ public class Visita implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @CampoConsulta
     private Long idvisita;
+    @Column(nullable = false, name = "datavisita")
     @CampoConsulta
     private Date datavisita;
+    @Column(nullable = false, name = "horavisita")
     @CampoConsulta
     private Time horavisita;
+    @Column(nullable = false, name = "quantidadedevisitantes")
     @CampoConsulta
     private Integer quantidadedevisitantes;
     @CampoConsulta
     private String seriecurso;
-    @Column(nullable = false, name = "horaentrada")
     @CampoConsulta
     private Time horaentrada;
-    @Column(nullable = false, name = "horasaida")
     @CampoConsulta
     private Time horasaida;
     @CampoConsulta

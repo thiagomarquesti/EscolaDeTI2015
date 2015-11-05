@@ -1,4 +1,4 @@
-<div ng-init="carregarVisita()" class="panel panel-info">
+<div ng-init="carregarVisita();" class="panel panel-info">
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovaVisita">Cadastrar Visita</div>
         <div class="panel-title" ng-show="!isNovaVisita">Alterar visita</div>
@@ -14,7 +14,6 @@
                 <multiselect id="entidade" name="entidade" class="input-lg" 
                              ng-model="visita.entidade" 
                              ng-change="pegarFone('juridica')"
-                             multiple="false" 
                              ms-selected ="{{juridicas.selected.length}}" 
                              ms-header="* Selecione uma entidade"
                              options="juridica.nome for juridica in juridicas" 
@@ -32,7 +31,6 @@
                 <multiselect id="pessoaresponsavel" name="pessoaresponsavel" class="input-lg" 
                              ng-model="visita.pessoaresponsavel" 
                              ng-change="pegarFone('fisica')"
-                             multiple="false" 
                              ms-selected ="{{fisicas.selected.length}}" 
                              ms-header="* Selecione uma pessoa"
                              options="fisica.nome for fisica in fisicas" 
