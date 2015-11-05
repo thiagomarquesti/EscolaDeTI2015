@@ -341,12 +341,16 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         };
 
         $scope.deletarOcorrencia = function (idOcorrencia) {
-            $http.delete("/ocorrencia/" + idOcorrencia + "/" + $routeParams.id)
-                    .success(function () {
-                        toastr.success("Ocorrência deletada com sucesso.", "Apagado");
-                        $scope.getOcorrencias();
-                    })
-                    .error(deuErro);
+            
+            var result = confirm("Tem certeza que deseja apagar a ocorrência?");
+            if (result) {
+                $http.delete("/ocorrencia/" + idOcorrencia + "/" + $routeParams.id)
+                        .success(function () {
+                            toastr.success("Ocorrência deletada com sucesso.", "Apagado");
+                            $scope.getOcorrencias();
+                        })
+                        .error(deuErro);
+            }
         };
 
         $scope.salvarOcorrencia = function () {
