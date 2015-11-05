@@ -38,6 +38,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 perfis: []
             };
             $scope.isNovo = true;
+            $scope.mostrarColaboradores = $scope.isNovo;
         }
 
         function novoUsuarioAdmin() {
@@ -50,6 +51,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 status: "ATIVO"
             };
             $scope.isNovo = true;
+            $scope.mostrarColaboradores = $scope.isNovo;
         }
 
         $scope.novoAdmin = function () {
@@ -213,6 +215,10 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.rsenha = data.senha.senha;
                                 getPerfis();
                                 $scope.isNovo = false;
+                                if(data.pessoa!=null)
+                                    $scope.mostrarColaboradores = $scope.isNovo;
+                                else
+                                    $scope.mostrarColaboradores = true;
                                 $scope.urlFoto = data.imgSrc;
                             }).error(deuErro);
                 }, 100);

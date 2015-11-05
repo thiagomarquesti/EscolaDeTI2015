@@ -8,7 +8,7 @@
     <div class="panel-body">
         <form name="formCadUser" novalidate class="form-horizontal form-groups-bordered">
 
-            <div ng-show="isNovo" class="form-group" ng-init="carregaColoaborador()">
+            <div ng-show="mostrarColaboradores" class="form-group" ng-init="carregaColoaborador()">
                 <label for="perfis" style="margin-top: 0.5%;" class="col-md-2 control-label">Colaborador:</label>
                 <multiselect id="pessoa" name="pessoa" class="input-lg" required=""
                              ng-model="usuario.pessoa" 
