@@ -8,6 +8,9 @@ import br.unicesumar.time05.cidade.CidadeRepository;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
+import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.pessoafisica.FisicaRepository;
+import br.unicesumar.time05.pessoafisica.PessoaFisica;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,8 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     private CidadeRepository cidadeRepo;
     @Autowired
     private UploadService uploadService;
+    @Autowired
+    private FisicaRepository fisicaRepository;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -49,60 +54,6 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
             + " LEFT JOIN pessoa p"
             + "        ON u.pessoa_idpessoa = p.idpessoa"
             + " WHERE u.idusuario = :idusuario";
-    /*    private final String SQLConsultaUsuarios
-     = "SELECT p.idpessoa,"
-     + "       p.nome,"
-     + "       p.email,"
-     + "       p.tipo_pessoa,"
-     + "       us.login,"
-     + "       us.status,"
-     + "       pf.genero,"
-     + "       pf.cpf,"
-     + "       pf.datanascimento,"
-     + "       tl.array_telefone[1] as telefone1,"
-     + "       tl.array_telefone[2] as telefone2,"
-     + "       ende.bairro,"
-     + "       ende.cep,"
-     + "       ende.complemento,"
-     + "       ende.logradouro,"
-     + "       ende.numero,"
-     + "       c.codigoibge,"
-     + "       u.codigoestado,"
-     + "       us.funcao_idfuncao "
-     + "FROM pessoa p "
-     + "LEFT JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa "
-     + "LEFT JOIN (SELECT pt.pessoa_id, array_agg(t.telefone) array_telefone"
-     + "           FROM pessoa_telefone pt"
-     + "           LEFT JOIN telefone t ON pt.telefone_id = t.idtelefone"
-     + "           GROUP BY pt.pessoa_id) as tl ON p.idpessoa = tl.pessoa_id "
-     + "LEFT JOIN endereco ende ON p.endereco_id = ende.idendereco "
-     + "LEFT JOIN endereco_cidade ec ON ende.idendereco = ec.endereco_id "
-     + "LEFT JOIN cidade c ON ec.cidade_id = c.codigoibge "
-     + "LEFT JOIN uf u ON c.estado_codigoestado = u.codigoestado "
-     + "LEFT JOIN usuario us ON us.idpessoa = p.idpessoa";
-
-     private final String SQLConsultaUsuarioPorID
-     = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
-     + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.codigoibge, u.codigoestado,"
-     + " us.funcao_idfuncao"
-     + " FROM pessoa p"
-     + " LEFT JOIN pessoa_fisica pf "
-     + "    ON pf.idpessoa = p.idpessoa"
-     + " LEFT JOIN pessoa_telefone pt "
-     + "    ON pt.pessoa_id = p.idpessoa"
-     + " LEFT JOIN telefone t "
-     + "    ON pt.telefone_id = t.idtelefone"
-     + " LEFT JOIN endereco ende "
-     + "    ON p.endereco_id = ende.idendereco"
-     + " LEFT JOIN endereco_cidade ec "
-     + "    ON ende.idendereco = ec.endereco_id"
-     + " LEFT JOIN cidade c"
-     + "    ON ec.cidade_id = c.codigoibge"
-     + " LEFT JOIN uf u"
-     + "    ON c.estado_codigoestado = u.codigoestado"
-     + " LEFT JOIN usuario us"
-     + "    ON us.idpessoa = p.idpessoa"
-     + " WHERE p.idpessoa = :aUsuarioId";*/
 
     private final String ordenar = "p.nome";
 
@@ -113,15 +64,25 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     @Override
     public void salvar(Usuario aEntidade) {
         try {
+            aEntidade.setLogin(aEntidade.getLogin().trim());
+            if(aEntidade.getLogin().contains(" "))
+                throw new RuntimeException("Login não deve ter espaço!");
             if(repository.count()<1){
                 aEntidade.setPerfis(perfilRepo.findAll());
             }
-            if(aEntidade.getPessoa() != null)
+            if(aEntidade.getPessoa() != null){
                 aEntidade.setNome(aEntidade.getPessoa().getNome());
-            
-            repository.save(aEntidade);
+                aEntidade.setEmail(aEntidade.getPessoa().getEmail());
+                PessoaFisica f = fisicaRepository.findOne(aEntidade.getPessoa().getIdpessoa());
+                f.setTipoPessoa(TipoPessoa.USUÁRIO);
+                repository.save(aEntidade);
+                fisicaRepository.save(f);
+            }else{
+                repository.save(aEntidade);
+            }
         } catch (Exception e) {
             System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -225,7 +186,7 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
 
     public List<Map<String, Object>> getColaboradores() {
-        return query.execute("SELECT idpessoa, nome FROM pessoa WHERE tipo_pessoa = 'COLABORADOR'");
+        return query.execute("SELECT idpessoa, nome, email FROM pessoa WHERE tipo_pessoa = 'COLABORADOR'");
     }
 
 }
