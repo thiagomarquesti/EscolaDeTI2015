@@ -167,7 +167,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 telefone: {
                     telefone: $scope.indio.telefone
                 },
-                terraIndigena: $scope.indio.terraIndigena,
+                terraIndigena: $scope.indio.terraIndigena.idterraindigena,
                 escolaridade: $scope.indio.escolaridade,
                 estadoCivil: $scope.indio.estadoCivil,
                 codigoSUS: $scope.indio.codigoSUS,

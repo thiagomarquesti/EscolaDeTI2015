@@ -54,14 +54,17 @@
                     </button>
                 </div>
                 <label for="terraIndigena" class="col-md-2 control-label">Terra indígena: </label>
-                <div class="col-md-3" ng-init="getTerras();">
-                    <select ng-model="indio.terraIndigena" ng-options="terra.idterraindigena as terra.nometerra for terra in terras" id="terraIndigena" name="terraIndigena" required="" class="form-control requerido">
-                        <option value="">Selecione a terra indígena</option>
-
-                    </select>
+                <div class="col-md-3" style="margin-top: -0.8%; margin-left: -3%; max-width: 500px;" ng-init="getTerras();">
+                    <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                             ng-model="indio.terraIndigena" 
+                             ms-selected ="{{terraIndigena.selected.length}}" 
+                             ms-header="Selecione a terra indigena"
+                             options="terra.nometerra for terra in terras" 
+                             scroll-after-rows="4">
+                </multiselect>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn-success btn btn-sm" style="margin-left: -45%;" onclick="jQuery('#terraModal').modal('show', {backdrop: 'static'});">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: 65%;" onclick="jQuery('#terraModal').modal('show', {backdrop: 'static'});">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </div>
