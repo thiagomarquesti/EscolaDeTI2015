@@ -36,23 +36,6 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
     }
 
     @Override
-    public void salvar(Visita aEntidade) {
-
-        if (aEntidade.getHoraentrada() != null && aEntidade.getHorasaida() != null && aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
-            throw new RuntimeException("Hora de entrada deve ser menor que a hora de saída");
-        }
-        super.salvar(aEntidade);
-    }
-
-    @Override
-    public void alterar(Visita aEntidade) {
-        if (aEntidade.getHoraentrada() != null && aEntidade.getHorasaida() != null && aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
-            throw new RuntimeException("Hora de entrada deve ser menor que a hora de saída");
-        }
-        super.alterar(aEntidade);
-    }
-
-    @Override
     public List<Map<String, Object>> findByID(Long aVisitaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aVisitaId", aVisitaId);

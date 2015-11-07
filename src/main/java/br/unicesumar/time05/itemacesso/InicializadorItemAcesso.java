@@ -200,7 +200,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuPessoa;
         menuPessoa = this.getItemAcesso(itensAcesso, "Gerenciar Pessoa", "");
         if (menuPessoa == null) {
-            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-man", menu);
+            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-male", menu);
             itensAcesso.add(menuPessoa);
         }
         
