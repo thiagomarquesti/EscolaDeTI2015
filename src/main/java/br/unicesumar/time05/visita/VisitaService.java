@@ -4,6 +4,7 @@ import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import classesbase.ServiceBase;
+import java.sql.Time;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -28,10 +29,19 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
             + " pf.nome as nomePF, "
             + " pj.nome as nomePJ "
             + " FROM visita v "
-            + " INNER JOIN pessoa pf ON pf.idpessoa = v.idpessoaresponsavel LEFT JOIN pessoa pj ON pj.idpessoa = v.identidade" );
+            + " INNER JOIN pessoa pf ON pf.idpessoa = v.idpessoaresponsavel LEFT JOIN pessoa pj ON pj.idpessoa = v.identidade");
 
     public VisitaService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Visita.class));
+    }
+
+    @Override
+    public void salvar(Visita aEntidade) {
+        if (aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
+
+            throw new RuntimeException("Hora de entrada deve ser menor que a hora de saída");
+        }
+        super.salvar(aEntidade); 
     }
 
     @Override
