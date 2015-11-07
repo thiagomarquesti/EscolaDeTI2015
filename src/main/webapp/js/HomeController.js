@@ -4,9 +4,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         var calendarArray = [];
         var monthOffset = [6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5];
         var monthArray = [["JAN", "Janeiro"], ["FEV", "Fevereiro"], ["MAR", "Março"], ["ABR", "Abril"], ["MAI", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AGO", "Agosto"], ["SET", "Setembro"], ["OUT", "Outubro"], ["NOV", "Novembro"], ["DEZ", "Dezembro"]];
-        var letrasArray = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
+        var letrasArray = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
+        var subLetras = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
         var dayArray = ["7", "1", "2", "3", "4", "5", "6"];
-
+        
         function novoEvento() {
             $scope.eventos = {
                 descricao: "",
@@ -88,7 +89,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         }
 
         function calendarSet() {
-            $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left">&lsaquo;</div><p></p><div class="calendar-month-view-arrow" data-dir="right">&rsaquo;</div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
+            $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left"><i class="fa fa-chevron-left"></i></div><p></p><div class="calendar-month-view-arrow" data-dir="right"><i class="fa fa-chevron-right"></i></div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
 
             if ($(this).data("color") === undefined) {
                 $(this).data("color", "red");
@@ -211,7 +212,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             } else {
                 $(".calendar").attr('offset', 0);
             }
-            $(".calendar .calendar-month-view p").text(monthArray[d.getMonth()][1] + ' ' + d.getFullYear());
+            $(".calendar .calendar-month-view p").html('<span>' + d.getFullYear() + ' <i class="fa fa-calendar"></i> ' + monthArray[d.getMonth()][1] + '</span>');
             d.setDate(1);
             if (dayArray[d.getDay()] === 1) {
                 d.setDate(d.getDate() - 7);
@@ -219,8 +220,12 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 d.setDate(d.getDate() - dayArray[d.getDay()] + 1);
             }
             for (var i = 0; i < 7; i++) {
-                var dias_Semana = $('<div>' + letrasArray[i] + '</div>');
+                var dias_Semana = $('<div class="hidden-sm hidden-xs">' + letrasArray[i] + '</div>');
                 $(".letrasDay").append(dias_Semana);
+            }
+            for (var i = 0; i < 7; i++) {
+                var dias_subSemana = $('<div class="hidden-md hidden-lg">' + subLetras[i] + '</div>');
+                $(".letrasDay").append(dias_subSemana);
             }
 
             for (var i = 0; i < 42; i++) {
