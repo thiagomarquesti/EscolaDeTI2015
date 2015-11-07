@@ -2,9 +2,9 @@ package br.unicesumar.time05.eventos;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import classesbase.ServiceBase;
-import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,7 +43,10 @@ public class EventosService extends ServiceBase<Eventos, Long, EventosRepository
 
     public EventosService() {
         setConstrutorDeSQL(new ConstrutorDeSQL(Eventos.class));
-        setSqlPadrao(sql, "descricao");
+    }
+
+    public List<Map<String, Object>> carregaCalendario() {
+        return super.query.execute(sql);
     }
 
 }
