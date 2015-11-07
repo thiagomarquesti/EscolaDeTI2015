@@ -63,7 +63,8 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                                 $location.path("/Pessoa/listar");
                             }
                             else {
-                                window.location.href = "/login.html";
+                                $scope.listarJuridicas();
+                                fechaModal('cadJuridica');
                             }
                         })
                         .error(deuErro);
@@ -86,7 +87,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
         };
 
         $scope.carregar = function () {
-            if ($location.path() === "/Juridica/nova") {
+            if ($location.path() !== "/Juridica/editar") {
                 novaPessoaJuridica();
             }
             else {

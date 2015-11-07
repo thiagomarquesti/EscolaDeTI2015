@@ -137,6 +137,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             if ($scope.visita.horasaida) {
                 var hSaida = new Date($scope.visita.horasaida);
                 var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
+                if(hSaidaOK < hEntradaOK) { hSaidaOK = hEntradaOK; }
                 visitaCompleta.horasaida = hSaidaOK;
             }
             else {

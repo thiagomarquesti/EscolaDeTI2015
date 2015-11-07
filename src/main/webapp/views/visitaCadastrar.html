@@ -20,7 +20,7 @@
                              scroll-after-rows="4">
                 </multiselect>
                 <div class="col-md-4">
-                    <a href="#/Juridica/nova" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                    <a onclick="jQuery('#cadJuridica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top: 3%;">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -37,7 +37,7 @@
                              scroll-after-rows="4">
                 </multiselect>
                 <div class="col-md-4">
-                    <a href="#/Fisica/nova" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                    <a onclick="jQuery('#cadFisica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top: 3%;">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -71,11 +71,12 @@
             <div class="form-group">    
                 <label for="quantidadedevisitantes" class="col-md-2 control-label">Quantidade de Visitantes:</label>
                 <div class="col-md-2">
-                    <input type="number" ng-model="visita.quantidadedevisitantes" id="quantidadedevisitantes" name="quantidadedevisitantes" required="" class="form-control requerido" min="0">
+                    <input type="number" ng-model="visita.quantidadedevisitantes" id="quantidadedevisitantes" name="quantidadedevisitantes" required="" class="form-control requerido" min="0" max="100">
                 </div>
             </div>
-             <div ng-show="formCad.quantidadedevisitantes.$dirty && formCad.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
+            <div ng-show="formCad.quantidadedevisitantes.$dirty && formCad.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
                 <span ng-show="formCad.quantidadedevisitantes.$error.required">Preencha o número de visitantes. </span>
+                <span ng-show="formCad.quantidadedevisitantes.$error.max">Máximo de 100 visitantes. </span>
             </div>
         </form>
     </div>
@@ -93,10 +94,14 @@
                 <label for="horaentrada" class="col-md-2 control-label"> Hora da Entrada:</label>
                 <div class="col-md-2"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" class="form-control"></div>
                 <label for="horasaida" class="col-md-2 control-label"> Hora da Saída:</label>
-                <div class="col-md-2"><input type="time" ng-model="visita.horasaida" id="horasaida" name="horasaida" class="form-control"></div>
+                <div class="col-md-2"><input min="{{visita.horaentrada}}" max="23:59:59" ng-disabled="!visita.horaentrada" type="time" ng-model="visita.horasaida" id="horasaida" name="horasaida" class="form-control"></div>
 
             </div>
-
+            
+            <div ng-show="formCad.horasaida.$dirty && formCad.horasaida.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formCad.horasaida.$error.min">A hora de saída deve ser maior que a hora de entrada.</span>
+            </div>
+            
             <div class="form-group">
                 <label class="col-md-2 control-label" for="observacao">Observações: </label>                
                 <textarea name="observacao" id="observacao" ng-model="visita.observacao" rows=5 class="col-md-7"></textarea>
@@ -110,4 +115,35 @@
     <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
     <button ng-show="!isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
     <button ng-show="isNovaVisita" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+</div>
+
+
+<div class="modal fade custom-width" id="cadFisica" data-backdrop="true">
+    <div class="modal-dialog" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger closeModal" onclick="fechaModal('cadFisica');" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title">Cadastrar pessoa</h4>
+            </div>
+
+            <div class="modal-body container" ng-include="'views/pessoaFisicaCadastrar.html'" ng-controller="PessoaFisicaController">
+            </div>
+
+        </div>
+    </div>    
+</div>
+
+<div class="modal fade custom-width" id="cadJuridica" data-backdrop="true">
+    <div class="modal-dialog" style="width: 96%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger closeModal" onclick="fechaModal('cadJuridica');" aria-hidden="true"><i class="fa fa-times"></i></button>
+                <h4 class="modal-title">Cadastrar instituição</h4>
+            </div>
+
+            <div class="modal-body container" ng-include="'views/pessoaJuridicaCadastrar.html'" ng-controller="PessoaJuridicaController">
+            </div>
+
+        </div>
+    </div>    
 </div>

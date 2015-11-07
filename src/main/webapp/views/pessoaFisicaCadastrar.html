@@ -207,7 +207,7 @@
 
                             <div class="modal-footer">
                                 <div class="col-md-12" ng-controller="CameraController as vm">
-                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" onclick="fechaModal('fotoModal')">Continue</button>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@
 </div>
 
 <div class="modal fade" id="funcaoModal" data-backdrop="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 90%">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Cadastrar Função</h4>
@@ -239,8 +239,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" data-dismiss="modal" class="btn btn-success ">Cadastrar</button>
-                            <button ng-click="novaFuncao()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" onclick="fechaModal('funcaoModal')" class="btn btn-success ">Cadastrar</button>
+                            <button ng-click="novaFuncao()" onclick="fechaModal('funcaoModal')" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>

@@ -67,7 +67,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                             $location.path("/Pessoa/listar");
                         }
                         else {
-                            window.location.href = "/login.html";
+                            $scope.listarFisicas();
+                            fechaModal('cadFisica');
                         }
                     })
                     .error(deuErro);
@@ -130,7 +131,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 }, 100);
         }
         else{
-            if ($location.path() === "/Fisica/nova") {
+            if ($location.path() !== "/Fisica/editar") {
                 novaPessoaFisica();
             }
             else {
@@ -268,8 +269,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             "cor": "#FFD700"
         }
     };
-
-
 
     $scope.webcamFoto = function () {
         $(document).ready(function () {
