@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-05T22:03:02 -->
+<!-- 2015-11-05T21:59:44 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Time05"/>
 	<parameter name="generos" class="java.lang.String"/>
 	<parameter name="dataini" class="java.sql.Date"/>
 	<parameter name="datafim" class="java.sql.Date"/>
-	<parameter name="familias" class="java.lang.String"/>
-	<parameter name="etnias" class="java.lang.String"/>
+	<parameter name="familias" class="java.lang.Long"/>
+	<parameter name="etnias" class="java.lang.Long"/>
 	<parameter name="escolaridades" class="java.lang.String"/>
 	<parameter name="estadoscivis" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
-	<parameter name="terrasindigena" class="java.lang.String">
+	<parameter name="terrasindigena" class="java.lang.Long">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
-	<parameter name="convenios" class="java.lang.String"/>
+	<parameter name="convenios" class="java.lang.Long"/>
 	<parameter name="idadeini" class="java.lang.Integer"/>
 	<parameter name="idadefim" class="java.lang.Integer"/>
 	<queryString language="SQL">

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-05T22:03:02 -->
+<!-- 2015-11-05T20:33:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Time05"/>
-	<parameter name="generos" class="java.lang.String"/>
+	<parameter name="genero" class="java.lang.String"/>
 	<parameter name="dataini" class="java.sql.Date"/>
 	<parameter name="datafim" class="java.sql.Date"/>
-	<parameter name="familias" class="java.lang.String"/>
-	<parameter name="etnias" class="java.lang.String"/>
-	<parameter name="escolaridades" class="java.lang.String"/>
-	<parameter name="estadoscivis" class="java.lang.String">
+	<parameter name="idfamilia" class="java.lang.Long"/>
+	<parameter name="idetnia" class="java.lang.Long"/>
+	<parameter name="escolaridade" class="java.lang.String"/>
+	<parameter name="estadocivil" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
 	<parameter name="terrasindigena" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
-	<parameter name="convenios" class="java.lang.String"/>
+	<parameter name="idconvenio" class="java.lang.Long"/>
 	<parameter name="idadeini" class="java.lang.Integer"/>
 	<parameter name="idadefim" class="java.lang.Integer"/>
 	<queryString language="SQL">
@@ -32,14 +32,16 @@
           LEFT JOIN estadia_indigena ei ON (i.codigoassindi = ei.codigoassindi)
           LEFT JOIN estadia e ON (ei.idestadia = e.idestadia)
           LEFT JOIN indigena_convenio ic ON (i.codigoassindi = ic.indigena_id)
-         WHERE (($P{generos} IS NULL) OR (i.genero IN ($P!{generos})))
+         WHERE (($P{genero} IS NULL) OR (i.genero = $P{genero}))
            AND (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (e.dataentrada BETWEEN $P{dataini} AND $P{datafim}) OR (e.datasaida BETWEEN $P{dataini} AND $P{datafim}))
-           AND (($P{familias} IS NULL) OR (fi.idfamilia IN ($P!{familias})) OR (f.idfamilia IN ($P!{familias})))
-           AND (($P{etnias} IS NULL) OR (i.etnia_idetnia IN ($P!{etnias})))
-           AND (($P{escolaridades} IS NULL) OR (i.escolaridade IN ($P!{escolaridades})))
-           AND (($P{estadoscivis} IS NULL) OR (i.estadocivil IN ($P!{estadoscivis})))
-           AND (($P{terrasindigena} IS NULL) OR (i.terraindigena_idterraindigena IN ($P!{terrasindigena})))	
-           AND (($P{convenios} IS NULL) OR (ic.convenio_id IN ($P!{convenios})))
+           AND (($P{idfamilia} IS NULL) OR (fi.idfamilia = $P{idfamilia}) OR (f.idfamilia = $P{idfamilia}))
+           AND (($P{idetnia} IS NULL) OR (i.etnia_idetnia = $P{idetnia}))
+           AND (($P{escolaridade} IS NULL) OR (i.escolaridade = $P{escolaridade}))
+           AND (($P{estadocivil} IS NULL) OR (i.estadocivil = $P{estadocivil}))
+           AND (($P{terrasindigena} IS NULL) OR ($X{IN, i.terraindigena_idterraindigena, terrasindigena}))
+          
+           
+           AND (($P{idconvenio} IS NULL) OR (ic.convenio_id = $P{idconvenio}))
           GROUP BY i.codigoassindi                        
        ) AS tb
  WHERE (($P{idadeini} IS NULL AND $P{idadefim} IS NULL) OR (tb.idade BETWEEN $P{idadeini} AND $P{idadefim}))]]>
