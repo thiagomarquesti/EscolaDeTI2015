@@ -37,11 +37,19 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
 
     @Override
     public void salvar(Visita aEntidade) {
-        if (aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
 
+        if (aEntidade.getHoraentrada() != null && aEntidade.getHorasaida() != null && aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
             throw new RuntimeException("Hora de entrada deve ser menor que a hora de saída");
         }
-        super.salvar(aEntidade); 
+        super.salvar(aEntidade);
+    }
+
+    @Override
+    public void alterar(Visita aEntidade) {
+        if (aEntidade.getHoraentrada() != null && aEntidade.getHorasaida() != null && aEntidade.getHoraentrada().after(aEntidade.getHorasaida())) {
+            throw new RuntimeException("Hora de entrada deve ser menor que a hora de saída");
+        }
+        super.alterar(aEntidade);
     }
 
     @Override
