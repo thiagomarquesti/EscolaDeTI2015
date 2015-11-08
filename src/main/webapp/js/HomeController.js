@@ -188,7 +188,8 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         }
         var tocalendar = function () {
             $(".specific-day-info[i=day]").html(this.day + ' <span>' + monthArray[this.month][0] + '</span>');
-            $(".specific-day-info[i=month]").html(letrasArray[this.week]);
+            $(".specific-day-info[i=month]").html("<div class='hidden-sm hidden-xs'>" + letrasArray[this.week] + "</div>");
+            $(".specific-day-info[i=month]").append("<div class='hidden-md hidden-lg'>" + subLetras[this.week] + "</div>");
             if (this.events !== undefined) {
                 var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
