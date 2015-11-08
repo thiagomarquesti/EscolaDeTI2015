@@ -180,12 +180,15 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             d.day = di.getDate();
             d.month = di.getMonth();
             d.events = calendarArray[strtime];
+            d.week = di.getDay();
+            if (d.week == 0) { d.week = 6; }
+            else { d.week --; }
             d.tocalendar = tocalendar;
             d.tocalendar();
         }
         var tocalendar = function () {
-            $(".specific-day-info[i=day]").html(this.day);
-            $(".specific-day-info[i=month]").html(monthArray[this.month][0]);
+            $(".specific-day-info[i=day]").html(this.day + ' <span>' + monthArray[this.month][0] + '</span>');
+            $(".specific-day-info[i=month]").html(letrasArray[this.week]);
             if (this.events !== undefined) {
                 var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
@@ -234,8 +237,13 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 if (d.getMonth() !== e.getMonth()) {
                     cal_day.addClass('other-month');
                 }
+                
                 if (d.getTime() == c.getTime()) {
                     cal_day.addClass('this-day');
+                }
+                
+                if(d.getDay() == 6 || d.getDay() == 0){
+                    cal_day.addClass('fds');
                 }
 
                 var mes;

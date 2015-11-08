@@ -32,6 +32,7 @@
 .calendar-day:nth-child(7n) {border-right:solid 1px #c0c0c0;}
 .calendar-day.other-month {color: #c0c0c0;}
 .calendar .calendar-grid .calendar-day.this-day { font-size: 1.8em; color: #2c7ea1; }
+.calendar .calendar-grid .calendar-day.fds { background-color: rgba(0,0,0, 0.05); }
 .calendar .calendar-grid .calendar-day.have-events:hover {background-color: #303641; color: #FFFFFF}
 .calendar .calendar-grid .other-month.have-events:hover {color: white;}
 
@@ -75,10 +76,11 @@
 	display: block;
 }
 .calendar-specific .specific-day {
-	width: 30%;
+	width: 25%;
 	display: inline-block;
 	padding-bottom: 1em;
 	cursor: pointer;
+        overflow-y: auto;
 }
 .calendar-specific .specific-day:hover {
 	background-color: #303641;
@@ -86,9 +88,14 @@
 }
 
 .specific-day-info[i=day] {
-	font-size: 3em;
+	font-size: 3.0em;
 	text-align: center;
 }
+
+.specific-day-info[i=day] span {
+	font-size: 0.7em;
+}
+
 .specific-day-info[i=month] {
 	font-size: 2em;
 	line-height: 0.5em;
@@ -102,6 +109,8 @@
 	width: -webkit-calc(70% - 1em);
 	overflow-y: scroll;
 	text-align: left;
+        border-left: 5px solid #303641;
+        padding-left: 5px;
 }
 .calendar-specific .specific-day-scheme::-webkit-scrollbar {
 	width: 10px;
