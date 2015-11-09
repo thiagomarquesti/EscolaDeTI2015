@@ -20,7 +20,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
         function getEventosDoCalendario() {
             novoEvento();
-            $http.get("/eventos").success(function (data) {
+            $http.get("/eventos/carregaCalendario").success(function (data) {
                 $scope.eventos = data;
                 console.log($scope.eventos);
             }).error(erroNoEvento);
