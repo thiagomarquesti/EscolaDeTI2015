@@ -1,4 +1,4 @@
-<div class="panel panel-info">    
+<div ng-init="carregarEstadia()" class="panel panel-info">    
     <div class="panel-heading"> 
         <div class="panel-title" ng-show="isNovaEstadia">Estadia Entrada</div>
         <div class="panel-title" ng-show="!isNovaEstadia">Estadia Entrada</div>
@@ -19,8 +19,8 @@
 
             <div class="form-group">
                 <label for="familia" class="col-md-2 control-label">Familia: </label>
-                <div class="col-md-3" ng-controller="FamiliaController">
-                    <select ng-model="estadia.familia" id="familia" name="familia" required="" class="form-control requerido">
+                <div class="col-md-3" ng-init="carregarFamilias()">
+                    <select ng-model="estadia.familia" id="familia" name="familia" required="" class="form-control requerido" ng-change="carregarMembros(estadia.familia)">
                         <option value="">Selecione uma familia</option>
                         <!-- FAZER BUSCA POR FAMILIA -->
                         <option ng-repeat="f in familia" value="{{f.idfamilia}}">{{f.nomefamilia}}</option>
@@ -33,47 +33,55 @@
             </div>
 
             <div class="form-group">
-                <label for="telefone" class="col-md-2 control-label">Tel. do Representante: </label>
-                <div class="col-md-2"><input type="text" ng-model="estadia.contato" id="contato" name="contato" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
-            </div>
-
-            <div ng-show="formEstadia.contato.$dirty && formEstadia.contato.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formEstadia.contato.$error.required">Preencha o telefone do representante. </span>
-            </div>
-
-            <div class="form-group">    
-                <label for="quantidademembro" class="col-md-2 control-label">Qtde de Acompanhantes:</label>
-                <div class="col-md-2"><input type="text" ng-model="estadia.quantidademembro" id="quantidademembro" name="quantidademembro" required="" class="form-control requerido"></div>
-            </div>
-
-            <div ng-show="formEstadia.quantidademembro.$dirty && formEstadia.quantidademembro.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formEstadia.quantidademembro.$error.required">Preencha a quantidade de acompanhantes. </span>
+                <label class="col-md-2 control-label">Selecione o Representante: </label>
+                <div class="col-md-3" style="margin-left: -1.5%;">
+                    <multiselect class="input-lg" 
+                                 ng-model="estadia.representante" 
+                                 multiple="false" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione o representante"
+                                 options="representante.nome for representante in itens" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>
+                </div>
+                <div >
+                    <label for="quantidademembro" class="col-md-2 control-label">Telefone:</label>
+                    <div class="col-md-2"><input type="text" ng-model="estadia.representante.telefone" id="telefone" name="telefone" class="form-control" disabled=""></div>
+                </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label">Selecionar os Acompanhantes: </label>
-                <div class="col-md-3">
-                    <select ng-model="" id="familia" name="" required="" class="form-control requerido">
-                        <option value="">Selecione os acompanhantes</option>
-                        <!-- FAZER BUSCA POR ACOMPANHANTES -->
-                        <option ng-repeat="" value=""></option>
-                    </select>
+                <div class="col-md-3" style="margin-left: -1.5%;">
+                    <multiselect class="input-lg" 
+                                 ng-model="estadia.membros" 
+                                 multiple="true" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione os membros"
+                                 options="membro.nome for membro in itens" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>
+                </div>
+
+                <div >
+                    <label for="quantidademembro" class="col-md-2 control-label">Qtde de Acompanhantes:</label>
+                    <div class="col-md-1"><input type="text" ng-model="estadia.membros.length" id="quantidademembro" name="quantidademembro" class="form-control" disabled=""></div>
                 </div>
             </div>
 
             <div ng-show="" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="">Selecione um acompanhantes. </span>
+                <span ng-show="">Selecione um acompanhante. </span>
             </div>
 
             <div>
-                <label class="col-md-2 control-label">Observações: </label>                
-                <textarea name="" rows=5 class="col-md-7"></textarea>
+                <label class="col-md-2 control-label" style="margin-left: -1%; margin-top: 20px;">Observações: </label>                
+                <textarea rows=5 class="col-md-7" style="margin-top: 10px; margin-left: 1.5%; border-radius: 5px;" ng-model="estadia.observacoesentrada" id="observacoesentrada" name="observacoesentrada"></textarea>
             </div>
         </form> 
     </div>
 </div>
 
-<div class="panel panel-info">    
+<div class="panel panel-info" data-collapsed="1">    
     <div class="panel-heading"> 
         <div class="panel-title">Saída</div>
         <div class="panel-options">
@@ -86,13 +94,12 @@
                 <label for="datasaida" class="col-md-2 control-label"> Data de Saída:</label>
                 <div class="col-md-3"><input type="date" ng-model="estadia.datasaida" id="dataentrada" name="datasaida" required="" class="form-control requerido"></div>
             </div>
-
             <div ng-show="formSaidaEstadia.datasaida.$dirty && formSaidaEstadia.datasaida.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formSaidaEstadia.datasaida.$error.required">Preencha data de saída. </span>
             </div>
             <div>
-                <label class="col-md-2 control-label">Observações: </label>                
-                <textarea name="" rows=5 class="col-md-7"></textarea>
+                <label class="col-md-2 control-label" style="margin-left: -1%; margin-top: 20px;">Observações: </label>                
+                <textarea rows=5 class="col-md-7" style="margin-top: 10px; margin-left: 1.5%; border-radius: 5px;" ng-model="estadia.observacoessaida" id="observacoessaida" name="observacoessaida"></textarea>
             </div>
         </form>
     </div>
