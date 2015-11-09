@@ -1,25 +1,28 @@
 package br.unicesumar.time05.itemacesso;
 
+import br.unicesumar.time05.consultapersonalizada.CampoConsulta;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name = "itemacesso")
 public class ItemAcesso implements Serializable {
+    @CampoConsulta
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long iditemacesso;
+    @CampoConsulta(campoOrdenacaoPadrao = true)
     private String nome;
+    @CampoConsulta
     private String rota;
+    @CampoConsulta
+    private String icone;
+    @CampoConsulta
     @ManyToOne
     @JoinColumn(name = "superior_id")
     private ItemAcesso superior;
@@ -27,19 +30,36 @@ public class ItemAcesso implements Serializable {
     public ItemAcesso() {
     }
 
-    public ItemAcesso(String nome, String rota) {
+    public ItemAcesso(String nome, String rota, String icone) {
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
     }
-
-    public ItemAcesso(String nome, String rota, ItemAcesso superior) {
+    
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone) {
+        this.iditemacesso = iditemacesso;
         this.nome = nome;
         this.rota = rota;
+        this.icone = icone;
+    }
+    
+    public ItemAcesso(String nome, String rota, String icone, ItemAcesso superior) {
+        this.nome = nome;
+        this.rota = rota;
+        this.icone = icone;
         this.superior = superior;
     }
 
-    public Long getId() {
-        return id;
+    public ItemAcesso(Long iditemacesso, String nome, String rota, String icone, ItemAcesso superior) {
+        this.iditemacesso = iditemacesso;
+        this.nome = nome;
+        this.rota = rota;
+        this.icone = icone;
+        this.superior = superior;
+    }
+
+    public Long getIditemacesso() {
+        return iditemacesso;
     }
 
     public String getNome() {
@@ -68,8 +88,9 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.rota);
         return hash;
     }
 
@@ -82,7 +103,13 @@ public class ItemAcesso implements Serializable {
             return false;
         }
         final ItemAcesso other = (ItemAcesso) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.rota, other.rota)) {
+            return false;
+        }
+        if (!Objects.equals(this.superior, other.superior)) {
             return false;
         }
         return true;
@@ -90,7 +117,15 @@ public class ItemAcesso implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemAcesso{" + "id=" + id + ", nome=" + nome + ", rota=" + rota + ", superior=" + superior + '}';
+        return "ItemAcesso{" + "iditemacesso=" + iditemacesso + ", nome=" + nome + ", rota=" + rota + ", icone=" + icone + ", superior=" + superior + '}';
     }
-        
+
+    public void setIcone(String icone) {
+        this.icone = icone;
+    }
+
+    public String getIcone() {
+        return icone;
+    }
+
 }

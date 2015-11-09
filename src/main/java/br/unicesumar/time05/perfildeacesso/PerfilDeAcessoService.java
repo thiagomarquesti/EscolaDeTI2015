@@ -1,69 +1,65 @@
 package br.unicesumar.time05.perfildeacesso;
 
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.itemacesso.ItemAcesso;
 import br.unicesumar.time05.itemacesso.ItemAcessoRepository;
-import br.unicesumar.time05.rowMapper.MapRowMapper;
-import java.util.Collections;
+import classesbase.ServiceBase;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class PerfilDeAcessoService {
-    
+public class PerfilDeAcessoService extends ServiceBase<PerfilDeAcesso, Long, PerfilDeAcessoRepository> {
+
     @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-    
-    @Autowired
-    private PerfilDeAcessoRepository repo;
-    @Autowired
-    private ItemAcessoRepository ItemRepo;
-    
-    public List<Map<String, Object>> getPerfisDeAcesso(){
-        List<Map<String, Object>> perfisDeAcesso = jdbcTemplate.query("SELECT id, nome FROM perfildeacesso", new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(perfisDeAcesso);
-    }
-    
-    public List<Map<String, Object>> getPerfilDeAcesso(Long aId){
-        final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("aId", aId);
-        List<Map<String, Object>> perfilDeAcesso = jdbcTemplate.query("SELECT id, nome FROM perfildeacesso WHERE id = :aId", params, new MapRowMapper());
-        return perfilDeAcesso;
+    private ItemAcessoRepository itemRepo;
+
+    public PerfilDeAcessoService() {
+        setConstrutorDeSQL(new ConstrutorDeSQL(PerfilDeAcesso.class));
     }
 
-    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(Long aId){
+    public List<Map<String, Object>> getItensDeAcessoPorPerfilDeAcessoID(Long aId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aId", aId);
-        
-        String sql = 
-                  "SELECT i.id, "
+
+        String sql
+                = "SELECT i.iditemacesso, "
                 + "       i.nome, "
                 + "       i.rota, "
+                + "       i.icone, "
                 + "       i.superior_id "
                 + "  FROM perfildeacesso_itemacesso pi "
-                + "  JOIN itemacesso i ON (pi.itemacesso_id = i.id) "
-                + " WHERE pi.perfildeacesso_id = :aId";
-        
-        List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
+                + "  JOIN itemacesso i ON (pi.itemacesso_id = i.iditemacesso) "
+                + " WHERE pi.perfildeacesso_id = :aId AND i.iditemacesso<>1 AND i.superior_id <> 1";
+
+        List<Map<String, Object>> itensPerfilDeAcesso = super.query.execute(sql, params);
         return itensPerfilDeAcesso;
     }
-    
-    public void salvarPerfilDeAcesso(PerfilDeAcesso aPerfilDeAcesso){
-        repo.save(aPerfilDeAcesso);
-    }
-    
-    public void removerPerfilDeAcesso(Long aId){
-        repo.delete(aId);
-    }
-    
-    public void alterarPerfilDeAcesso(PerfilDeAcesso aPerfilDeAcesso){
-        repo.save(aPerfilDeAcesso);
+
+    void salvarPefil(PerfilBuilder perfilBuilder) {
+        PerfilDeAcesso perfil = new PerfilDeAcesso();
+        List<ItemAcesso> itens = new ArrayList<>();
+        itens.add(itemRepo.findOne(1l));
+        
+        for (ItemAcesso item : perfilBuilder.getItens()) {
+            itens.add(itemRepo.findOne(item.getIditemacesso()));
+            itens.add(itemRepo.findOne(item.getIditemacesso()).getSuperior());
+        }
+
+        if (perfilBuilder.getIdperfil()!= null) {
+            perfil = repository.findOne(perfilBuilder.getIdperfil());
+            perfil.setNome(perfilBuilder.getNome());
+            perfil.setItens(new HashSet<>(itens));
+        } else {
+            perfil.setNome(perfilBuilder.getNome());
+            perfil.addItens(new HashSet<>(itens));
+        }
+        repository.save(perfil);
     }
 }

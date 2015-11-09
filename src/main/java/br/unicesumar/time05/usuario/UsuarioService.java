@@ -1,172 +1,231 @@
 package br.unicesumar.time05.usuario;
 
+import br.unicesumar.time05.email.Email;
+import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
+import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.cidade.CidadeRepository;
+import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcesso;
 import br.unicesumar.time05.perfildeacesso.PerfilDeAcessoRepository;
-import br.unicesumar.time05.rowMapper.MapRowMapper;
+import br.unicesumar.time05.upload.UploadService;
+import classesbase.ServiceBase;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-@Transactional
-public class UsuarioService {
-    
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-    
-    @Autowired
-    private UsuarioRepository usuarioRepo;
-    
+public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository> {
+
     @Autowired
     private PerfilDeAcessoRepository perfilRepo;
+    @Autowired
+    private FuncaoRepository funcaoRepo;
+    @Autowired
+    private CidadeRepository cidadeRepo;
+    @Autowired
+    private UploadService uploadService;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
-    public void salvarUsuario(Usuario aUsuario){
+    private final String SQLConsultaUsuarios
+            = "SELECT u.idusuario, "
+            + "       u.login, "
+            + "       u.status, "
+            + "       COALESCE(p.nome, u.nome) AS nome, "
+            + "       COALESCE(p.email, u.email) AS email "
+            + " FROM usuario u"
+            + " LEFT JOIN pessoa p"
+            + "        ON u.pessoa_idpessoa = p.idpessoa";
+    
+    private final String SQLConsultaUsuarioPorID
+            = "SELECT u.idusuario, u.login, u.status, p.nome, p.email"
+            + " FROM usuario u"
+            + " LEFT JOIN pessoa p"
+            + "        ON u.pessoa_idpessoa = p.idpessoa"
+            + " WHERE u.idusuario = :idusuario";
+    /*    private final String SQLConsultaUsuarios
+     = "SELECT p.idpessoa,"
+     + "       p.nome,"
+     + "       p.email,"
+     + "       p.tipo_pessoa,"
+     + "       us.login,"
+     + "       us.status,"
+     + "       pf.genero,"
+     + "       pf.cpf,"
+     + "       pf.datanascimento,"
+     + "       tl.array_telefone[1] as telefone1,"
+     + "       tl.array_telefone[2] as telefone2,"
+     + "       ende.bairro,"
+     + "       ende.cep,"
+     + "       ende.complemento,"
+     + "       ende.logradouro,"
+     + "       ende.numero,"
+     + "       c.codigoibge,"
+     + "       u.codigoestado,"
+     + "       us.funcao_idfuncao "
+     + "FROM pessoa p "
+     + "LEFT JOIN pessoa_fisica pf ON pf.idpessoa = p.idpessoa "
+     + "LEFT JOIN (SELECT pt.pessoa_id, array_agg(t.telefone) array_telefone"
+     + "           FROM pessoa_telefone pt"
+     + "           LEFT JOIN telefone t ON pt.telefone_id = t.idtelefone"
+     + "           GROUP BY pt.pessoa_id) as tl ON p.idpessoa = tl.pessoa_id "
+     + "LEFT JOIN endereco ende ON p.endereco_id = ende.idendereco "
+     + "LEFT JOIN endereco_cidade ec ON ende.idendereco = ec.endereco_id "
+     + "LEFT JOIN cidade c ON ec.cidade_id = c.codigoibge "
+     + "LEFT JOIN uf u ON c.estado_codigoestado = u.codigoestado "
+     + "LEFT JOIN usuario us ON us.idpessoa = p.idpessoa";
+
+     private final String SQLConsultaUsuarioPorID
+     = "SELECT p.idpessoa, p.nome, p.email, p.tipo_pessoa, us.login, us.status, pf.genero, pf.cpf, pf.datanascimento, t.telefone,"
+     + " ende.bairro, ende.cep, ende.complemento, ende.logradouro, ende.numero, c.codigoibge, u.codigoestado,"
+     + " us.funcao_idfuncao"
+     + " FROM pessoa p"
+     + " LEFT JOIN pessoa_fisica pf "
+     + "    ON pf.idpessoa = p.idpessoa"
+     + " LEFT JOIN pessoa_telefone pt "
+     + "    ON pt.pessoa_id = p.idpessoa"
+     + " LEFT JOIN telefone t "
+     + "    ON pt.telefone_id = t.idtelefone"
+     + " LEFT JOIN endereco ende "
+     + "    ON p.endereco_id = ende.idendereco"
+     + " LEFT JOIN endereco_cidade ec "
+     + "    ON ende.idendereco = ec.endereco_id"
+     + " LEFT JOIN cidade c"
+     + "    ON ec.cidade_id = c.codigoibge"
+     + " LEFT JOIN uf u"
+     + "    ON c.estado_codigoestado = u.codigoestado"
+     + " LEFT JOIN usuario us"
+     + "    ON us.idpessoa = p.idpessoa"
+     + " WHERE p.idpessoa = :aUsuarioId";*/
+
+    private final String ordenar = "p.nome";
+
+    public UsuarioService() {
+        setConstrutorDeSQL(new ConstrutorDeSQL(Usuario.class));
+    }
+
+    @Override
+    public void salvar(Usuario aEntidade) {
         try {
-            usuarioRepo.save(aUsuario);
-            usuarioRepo.flush();
+            if(repository.count()<1){
+                aEntidade.setPerfis(perfilRepo.findAll());
+            }
+            if(aEntidade.getPessoa() != null)
+                aEntidade.setNome(aEntidade.getPessoa().getNome());
+            
+            repository.save(aEntidade);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
-      
-    public void removerUsuario(Long aUsuarioId){
-        try {
-            usuarioRepo.delete(aUsuarioId);
-        } catch (Exception e) {
-            throw new RuntimeException("Usuario não encontrado!");
-        }
-    }
-    
-    public List<Map<String, Object>> getUsuarios(){
-        List<Map<String, Object>> usuarios = jdbcTemplate.query("SELECT id, nome, login, email, senha, status FROM usuario"
-                , new MapSqlParameterSource(), new MapRowMapper());
-        return Collections.unmodifiableList(usuarios);
-    }
-    
-    public  List<Map<String, Object>> getUsuarioById(Long aUsuarioId){
+
+    @Override
+    public List<Map<String, Object>> findByID(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, nome, login, email, status FROM usuario "+
-                 "WHERE id = :aUsuarioId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = query.execute(this.SQLConsultaUsuarioPorID, params);
         return Collections.unmodifiableList(usuario);
     }
-    
-    public boolean verificarLogin(String aLogin){
+
+    @Override
+    public RetornoConsultaPaginada listar(ParametrosConsulta parametrosConsulta) {
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, parametrosConsulta);
+    }
+
+    @Override
+    public RetornoConsultaPaginada listar() {
+        return query.executeComPaginacao(this.SQLConsultaUsuarios, ordenar, new ParametrosConsulta());
+    }
+
+    @Override
+    public List<Map<String, Object>> listarSemPaginacao() {
+        List<Map<String, Object>> usuarios = query.execute(this.SQLConsultaUsuarios, new MapSqlParameterSource());
+        return Collections.unmodifiableList(usuarios);
+    }
+
+    public boolean verificarLogin(String aLogin) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT login FROM usuario WHERE login = :aLogin", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = query.execute("SELECT login FROM usuario WHERE login = :aLogin", params);
         //se o array usuario estiver vazio retorna true, indicando que o login está disponível
         return usuario.isEmpty();
     }
-    
-    public boolean verificarEmail(String aEmail){
-        if(aEmail != null && !aEmail.isEmpty()){
-            //verifica se o email é valido
-            String email = aEmail;
-            String emailPattern = "\\b(^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,}))$)\\b";
-            Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if(!matcher.matches()){
-                return false;
-            }
-        
-            //verifica se o email já existe no banco
-            final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT email FROM usuario WHERE email = :aEmail", params, new MapRowMapper());
-            if(!usuario.isEmpty()){
-                return false;
-            }
-            //se o usuario array de usuario for vazio e o email for valido retorna true, indicando que o
-            //endereço de email esta disponivel
-            //Caso o array tenha algum valor, significa que o email já está cadastrado então retorna false, indicando email em uso
-            //caso o email seja invalido retorna false
-            return true;
-        }
-        else
-            throw new RuntimeException("Campo email vazio!");
+
+    public boolean verificarSenha(Senha aSenha) {
+        return aSenha.senhaValida();
     }
-    
-    public boolean verificarSenha(String aSenha){
-        boolean valido = false;
-        String senha = aSenha;
-        
-        Pattern pattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.]).{6,10})");
-        Matcher matcher = pattern.matcher(senha);
-        valido = matcher.matches();
-  
-        return valido;
-    }
-    
-    public void trocarStatusUsuario(Long aUsuarioId){
+
+    public void trocarStatusUsuario(Long aUsuarioId) {
         try {
-            Usuario usuario =  usuarioRepo.getOne(aUsuarioId);
-            if(usuario.getStatus()==Status.ATIVO)
-                usuario.setStatus(Status.INATIVO);
-            else
-                usuario.setStatus(Status.ATIVO);
-            usuarioRepo.save(usuario);
+            Usuario usuario = super.repository.getOne(aUsuarioId);
+            usuario.trocaStatus();
+            super.repository.save(usuario);
         } catch (Exception e) {
             throw new RuntimeException("Usuario não encontrado!");
         }
     }
 
-    boolean verificarEmail(String aEmail, Long aUsuarioId) {
+    public boolean verificarEmail(Email aEmail) {
+        if (aEmail.verificarValido()) {
             final MapSqlParameterSource params = new MapSqlParameterSource();
-            params.addValue("aEmail", aEmail);
-            params.addValue("aId", aUsuarioId);
-            List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, email FROM usuario WHERE email = :aEmail AND id <> :aId", params, new MapRowMapper());
-            if(!usuario.isEmpty()){
+            params.addValue("aEmail", aEmail.getEmail());
+            List<Map<String, Object>> usuario = query.execute("SELECT email FROM pessoa WHERE email = :aEmail", params);
+            if (!usuario.isEmpty()) {
                 return false;
             }
             return true;
+        } else {
+            throw new RuntimeException("Campo email vazio!");
+        }
     }
 
-    boolean verificarLogin(String aLogin, Long aUsuarioId) {
+    public boolean verificarLogin(String aLogin, Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aLogin", aLogin);
         params.addValue("aId", aUsuarioId);
-        List<Map<String, Object>> usuario = jdbcTemplate.query("SELECT id, login FROM usuario WHERE login = :aLogin AND id <> :aId", params, new MapRowMapper());
+        List<Map<String, Object>> usuario = query.execute("SELECT p.idpessoa, u.login FROM usuario u, pessoa p WHERE u.login = :aLogin AND p.idpessoa <> :aId", params);
         return usuario.isEmpty();
     }
-    
-    public void addPerfil(Long aUsuarioId, Long[] aPerfilId){
-        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+
+    public void addPerfil(Long aUsuarioId, Long[] aPerfilId) {
+        Usuario usuario = super.repository.findOne(aUsuarioId);
         List<PerfilDeAcesso> perfis = new ArrayList<>();
         for (Long aPerfil : aPerfilId) {
             perfis.add(perfilRepo.findOne(aPerfil));
         }
-        usuario.setPerfil(perfis);
-        this.salvarUsuario(usuario);
+        usuario.setPerfis(perfis);
+        repository.save(usuario);
+        //this.salvarUsuario(usuario);
     }
 
-    public List<Map<String, Object>> getPerfis(Long aUsuarioId){
+    public List<Map<String, Object>> getPerfis(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aId", aUsuarioId);
-        
-        String sql = 
-                  "SELECT p.id, "
+        String sql
+                = "SELECT p.idperfildeacesso, "
                 + "       p.nome "
                 + "  FROM usuario_perfis up "
-                + "  JOIN perfildeacesso p ON (up.perfis_id = p.id) "
-                + " WHERE up.usuario_id = :aId";
-        
-        List<Map<String, Object>> itensPerfilDeAcesso = jdbcTemplate.query(sql, params, new MapRowMapper());
+                + "  JOIN perfildeacesso p ON (up.perfis_idperfildeacesso = p.idperfildeacesso) "
+                + " WHERE up.usuario_idpessoa = :aId";
+        List<Map<String, Object>> itensPerfilDeAcesso = query.execute(sql, params);
         return itensPerfilDeAcesso;
     }
 
-    public void deletePerfis(Long aUsuarioId, Long[] perfis){
-        Usuario usuario = usuarioRepo.findOne(aUsuarioId);
+    public void deletePerfis(Long aUsuarioId, Long[] perfis) {
+        Usuario usuario = super.repository.findOne(aUsuarioId);
         for (Long perfil : perfis) {
             usuario.removerPerfil(perfilRepo.findOne(perfil));
         }
     }
+
+    public List<Map<String, Object>> getColaboradores() {
+        return query.execute("SELECT idpessoa, nome FROM pessoa WHERE tipo_pessoa = 'COLABORADOR'");
+    }
+
 }
