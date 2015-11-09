@@ -250,7 +250,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     cal_day.addClass('other-month');
                 }
                 
-                if (d.getDate() == c.getDate()) {
+                if (d.getDate() == c.getDate() && d.getMonth() == c.getMonth() && d.getFullYear() == c.getFullYear()) {
                     cal_day.addClass('this-day');
                 }
                 
