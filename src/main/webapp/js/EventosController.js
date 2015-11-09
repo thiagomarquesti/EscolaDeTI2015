@@ -47,8 +47,14 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.carregarEvento = function () {
-            if ($location.path() === "/Evento/novo") {
+            if ($location.path().substring(0, 13) === "/Eventos/novo") {
                 novoEvento();
+                if($routeParams.data){
+                    var d = new Date($routeParams.data);
+                    var dataCerta = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                    $scope.evento.datainicial = dataCerta;
+                    $scope.evento.datafinal = dataCerta;
+                }
             }
             else {
                 $http.get("/evento/" + $routeParams.id)
@@ -69,7 +75,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.editarEvento = function (evento) {
-            $location.path("/Evento/editar/" + evento.idevento);
+            $location.path("/Eventos/editar/" + evento.idevento);
         };
 
         $scope.taNoCalendario = function (valor) {

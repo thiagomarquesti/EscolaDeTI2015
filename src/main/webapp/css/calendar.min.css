@@ -25,14 +25,15 @@
 .calendar.spec-day .calendar-grid {display: none;}
 
 .calendar-day {width: 14.28%; margin: 0 !important; padding:0 !important; height: 50px; position: relative; display: block;float:left; color:#0f0f0f; border:solid #c0c0c0; border-width:1px 0 0 1px; overflow:hidden}
-.calendar-day.have-events {cursor: pointer;}
+/*.calendar-day.have-events {cursor: pointer;}*/
 
 /*.calendar-day:nth-child(7n),.letrasDay div:nth-child(7n) {border-right: 0px;}*/
 /*.calendar-day:nth-child(7n+1),.letrasDay div:nth-child(7n+1) {border-left: 0;}*/
 .calendar-day:nth-child(7n) {border-right:solid 1px #c0c0c0;}
 .calendar-day.other-month {color: #c0c0c0;}
-.calendar .calendar-grid .calendar-day.this-day { font-size: 1.8em; color: #2c7ea1; }
+.calendar .calendar-grid .calendar-day.this-day .date-holder { font-size: 2.2em; color: #2c7ea1; }
 .calendar .calendar-grid .calendar-day.fds { background-color: rgba(0,0,0, 0.05); }
+.calendar .calendar-grid .calendar-day:hover {background-color: rgba(0,0,0, 0.1); cursor: pointer;}
 .calendar .calendar-grid .calendar-day.have-events:hover {background-color: #303641; color: #FFFFFF}
 .calendar .calendar-grid .other-month.have-events:hover {color: white;}
 

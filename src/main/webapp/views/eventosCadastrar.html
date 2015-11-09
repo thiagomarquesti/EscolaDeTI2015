@@ -7,7 +7,7 @@
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
     </div>
-    <div class="panel-body" ng-init="novoEvento();">
+    <div class="panel-body" ng-init="carregarEvento()">
         <form name="formEvento" novalidate class="form-horizontal">
 
             <div class="form-group">    
@@ -59,7 +59,7 @@
                 </div> 
             </div>  
             <div class="form-group">
-                <div class="col-md-offset-1 col-md-11">
+                <div class="col-md-offset-2 col-md-10">
                     <button ng-click="salvarEvento()" ng-disabled="!formEvento.$valid" class="btn btn-success col-md-2">Cadastrar</button>
 
                 </div>
