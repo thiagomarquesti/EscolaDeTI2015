@@ -55,7 +55,6 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
 
         $scope.salvar = function () {
             if ($scope.isNovaJuridica) {
-                console.log($scope.juridica);
                 $http.post("/pessoa/juridica", $scope.juridica)
                         .success(function () {
                             toastr.success("Empresa cadastrada com sucesso!");
@@ -70,9 +69,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                         .error(deuErro);
             }
             else {
-//                console.log($scope.juridica);
                 $scope.juridica.idpessoa = $routeParams.id;
-                console.log($scope.juridica);
                 $http.put("/pessoa/juridica", $scope.juridica)
                         .success(function () {
                             toastr.success("Pessoa atualizado com sucesso!");
@@ -94,7 +91,6 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                 $timeout(function () {
                     $http.get("/pessoa/juridica/obj/" + $routeParams.id)
                             .success(function (data) {
-
                                 novaPessoaJuridica();
                                 $scope.juridica.idpessoa = $routeParams.id;
                                 $scope.juridica.nome = data.nome;
@@ -113,13 +109,10 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                                 $scope.juridica.numero = data.endereco.numero;
                                 $scope.juridica.complemento = data.endereco.complemento;
                                 $scope.juridica.bairro = data.endereco.bairro;
-                                console.log(data.telefone.telefone);
                                 $scope.juridica.telefone = data.telefone;
-                                console.log($scope.juridica.telefone.telefone);
                                 $scope.juridica.telefonesecundario = data.telefonesecundario;
                                 $scope.juridica.tipoPessoa = "JURÍDICA";
                                 $scope.juridica.imgSrc = data.imgSrc;
-                                console.log($scope.juridica.imgSrc);
 
                                 $scope.isNovaJuridica = false;
                             }).error(deuErro);
@@ -127,7 +120,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
             }
         };
 
-        $scope.reset = function (form) {
+        $scope.resetJur = function (form) {
             if (form) {
                 form.$setPristine();
                 form.$setUntouched();
@@ -138,14 +131,11 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
         $scope.listarEstados = function () {
             $http.get("/uf/listar").success(function (data) {
                 $scope.estados = data.listaDeRegistros;
-//                console.log(data);
-//                console.log($scope.estados.codigoestado);
             }).error(deuErro);
         };
 
         $scope.listarCidades = function () {
             if ($scope.juridica.codigoestado !== "" && $scope.juridica.codigoestado !== undefined) {
-//                console.log($scope.juridica.codigoestado);
                 $http.get("/cidade/listarPorCodigoEstado/" + $scope.juridica.codigoestado).success(function (data) {
                     $scope.cidades = data;
                 }).error(deuErro);

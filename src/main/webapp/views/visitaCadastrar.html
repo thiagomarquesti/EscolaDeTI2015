@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
+        <form name="formVisita" novalidate class="form-horizontal form-groups-bordered">
 
             <div class="form-group" ng-init="listarJuridicas()">
                 <label for="entidade" class="col-md-2 control-label" style="margin-top: 0.7%">Entidade: </label>
@@ -20,7 +20,7 @@
                              scroll-after-rows="4">
                 </multiselect>
                 <div class="col-md-4">
-                    <a onclick="jQuery('#cadJuridica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top: 3%;">
+                    <a onclick="jQuery('#cadJuridica').modal('show', {backdrop: 'static'});" class="btn-success btn btn-sm" style="margin-top:3%;">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -50,8 +50,8 @@
                 <div class="col-md-2"><input type="time" ng-model="visita.horavisita" id="horavisita" name="horavisita" required="" class="form-control requerido"></div>
 
             </div>
-            <div ng-show="formCad.datavisita.$dirty && formCad.datavisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.datavisita.$error.required">Preencha data da visita. </span>
+            <div ng-show="formVisita.datavisita.$dirty && formVisita.datavisita.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formVisita.datavisita.$error.required">Preencha data da visita. </span>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Telefones: </label>
@@ -74,9 +74,9 @@
                     <input type="number" ng-model="visita.quantidadedevisitantes" id="quantidadedevisitantes" name="quantidadedevisitantes" required="" class="form-control requerido" min="0" max="100">
                 </div>
             </div>
-            <div ng-show="formCad.quantidadedevisitantes.$dirty && formCad.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
-                <span ng-show="formCad.quantidadedevisitantes.$error.required">Preencha o número de visitantes. </span>
-                <span ng-show="formCad.quantidadedevisitantes.$error.max">Máximo de 100 visitantes. </span>
+            <div ng-show="formVisita.quantidadedevisitantes.$dirty && formVisita.quantidadedevisitantes.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formVisita.quantidadedevisitantes.$error.required">Preencha o número de visitantes. </span>
+                <span ng-show="formVisita.quantidadedevisitantes.$error.max">Máximo de 100 visitantes. </span>
             </div>
         </form>
     </div>
@@ -108,9 +108,9 @@
 
 
 <div>
-    <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
-    <button ng-show="!isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
-    <button ng-show="isNovaVisita" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+    <button ng-show="isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formVisita.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-show="!isNovaVisita" ng-click="salvarVisita()" ng-disabled="!formVisita.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovaVisita" ng-click="reset(formVisita)" class="btn btn-info">Limpar</button>
 </div>
 
 
