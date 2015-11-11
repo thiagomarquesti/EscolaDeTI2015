@@ -135,4 +135,8 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
 
         };
+        
+        function deuErro() {
+            toastr.error("Algo deu errado. Tente novamente.");
+        }
     }]);

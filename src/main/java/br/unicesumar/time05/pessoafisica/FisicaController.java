@@ -4,6 +4,7 @@ import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import classesbase.ControllerBase;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,13 @@ public class FisicaController extends ControllerBase<CriarPessoaFisica, Long, Fi
             p.setImgSrc("/fotos/default.png");
         }
         return p;
+    }
+    
+    
+    
+    @RequestMapping(value = "/getFisicas", method = RequestMethod.GET)
+    public List<Map<String, Object>> getPessoas() {
+        return service.listarFisicas();
     }
 
     @RequestMapping(value = "/verificarEmail/{aEmail:.+}/{aUsuarioId}", method = RequestMethod.GET)

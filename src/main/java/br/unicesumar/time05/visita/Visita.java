@@ -23,25 +23,29 @@ public class Visita implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @CampoConsulta
     private Long idvisita;
+    @Column(nullable = false, name = "datavisita")
     @CampoConsulta
     private Date datavisita;
+    @Column(nullable = false, name = "horavisita")
     @CampoConsulta
     private Time horavisita;
+    @Column(nullable = false, name = "quantidadedevisitantes")
     @CampoConsulta
     private Integer quantidadedevisitantes;
     @CampoConsulta
     private String seriecurso;
-    @Column(nullable = false, name = "horaentrada")
     @CampoConsulta
     private Time horaentrada;
-    @Column(nullable = false, name = "horasaida")
     @CampoConsulta
     private Time horasaida;
     @CampoConsulta
     private String observacao;
     @CampoConsulta
     private boolean visitarealizada;
-
+    @CampoConsulta
+    private String telefonevisita;
+    
+    
     @CampoConsulta
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idpessoaresponsavel")
@@ -51,7 +55,7 @@ public class Visita implements Serializable {
     @JoinColumn(name = "identidade")
     private PessoaJuridica entidade;
 
-    public Visita(Long idvisita, Date datavisita, Time horavisita, Integer quantidadedevisitantes, String seriecurso, Time horaentrada, Time horasaida, String observacao, boolean visitarealizada, PessoaFisica pessoaresponsavel, PessoaJuridica entidade) {
+    public Visita(Long idvisita, Date datavisita, Time horavisita, Integer quantidadedevisitantes, String seriecurso, Time horaentrada, Time horasaida, String observacao, boolean visitarealizada, String telefonevisita, PessoaFisica pessoaresponsavel, PessoaJuridica entidade) {
         this.idvisita = idvisita;
         this.datavisita = datavisita;
         this.horavisita = horavisita;
@@ -61,10 +65,11 @@ public class Visita implements Serializable {
         this.horasaida = horasaida;
         this.observacao = observacao;
         this.visitarealizada = visitarealizada;
+        this.telefonevisita = telefonevisita;
         this.pessoaresponsavel = pessoaresponsavel;
         this.entidade = entidade;
     }
-
+    
     public Visita() {
 
     }
@@ -121,6 +126,14 @@ public class Visita implements Serializable {
         this.observacao = observacao;
     }
 
+    public String getTelefonevisita() {
+        return telefonevisita;
+    }
+
+    public void setTelefonevisita(String telefonevisita) {
+        this.telefonevisita = telefonevisita;
+    }
+  
     public PessoaFisica getPessoaresponsavel() {
         return pessoaresponsavel;
     }
@@ -155,8 +168,8 @@ public class Visita implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 73 * hash + Objects.hashCode(this.idvisita);
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.idvisita);
         return hash;
     }
 
@@ -177,6 +190,6 @@ public class Visita implements Serializable {
 
     @Override
     public String toString() {
-        return "Visita{" + "idvisita=" + idvisita + ", datavisita=" + datavisita + ", horavisita=" + horavisita + ", quantidadedevisitantes=" + quantidadedevisitantes + ", seriecurso=" + seriecurso + ", horaentrada=" + horaentrada + ", horasaida=" + horasaida + ", observacao=" + observacao + ", visitarealizada=" + visitarealizada + ", pessoaresponsavel=" + pessoaresponsavel + ", entidade=" + entidade + '}';
+        return "Visita{" + "idvisita=" + idvisita + ", datavisita=" + datavisita + ", horavisita=" + horavisita + ", quantidadedevisitantes=" + quantidadedevisitantes + ", seriecurso=" + seriecurso + ", horaentrada=" + horaentrada + ", horasaida=" + horasaida + ", observacao=" + observacao + ", visitarealizada=" + visitarealizada + ", telefonevisita=" + telefonevisita + ", pessoaresponsavel=" + pessoaresponsavel + ", entidade=" + entidade + '}';
     }
 }
