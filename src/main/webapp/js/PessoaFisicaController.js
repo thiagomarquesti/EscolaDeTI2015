@@ -130,7 +130,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 }, 100);
         }
         else{
-            if ($location.path() !== "/Fisica/editar") {
+            if ($location.path() == "/Fisica/nova") {
                 novaPessoaFisica();
             }
             else {
