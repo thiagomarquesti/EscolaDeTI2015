@@ -1,14 +1,11 @@
 package br.unicesumar.time05.familia;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
-import br.unicesumar.time05.relatorios.Relatorio;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
-import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
 import classesbase.ServiceBase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,9 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository> {
-
-    @Autowired
-    Relatorio relatorio;
 
     private final String sqlPadrao
             = " SELECT f.idfamilia, "
@@ -110,6 +104,6 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
     }
 
     public String gerarRelatorioSimples() {
-        return relatorio.gerarRelatorio("teste01.jrxml", formatoRelatorio.EXCEL, new HashMap());
+        return rel.gerarRelatorio("teste01.jrxml", formatoRelatorio.EXCEL, new HashMap());
     }
 }

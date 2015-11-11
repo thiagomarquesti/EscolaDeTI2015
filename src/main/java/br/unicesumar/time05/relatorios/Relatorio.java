@@ -1,11 +1,13 @@
 package br.unicesumar.time05.relatorios;
 
+import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,8 +39,8 @@ public class Relatorio {
 
         try {
             URL reportResource = getClass().getClassLoader().getResource("./relatorios/" + nomeXmlJasper);
-            JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
-            JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
+            JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());            
+            JasperPrint print = JasperFillManager.fillReport(report,  params, dataSource.getConnection());
 
             File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdusuario());
             path.mkdirs();
@@ -78,4 +80,5 @@ public class Relatorio {
         }
         return null;
     }
+
 }
