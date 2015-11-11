@@ -133,8 +133,8 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'EventosController'
     })
     //------- Rotas de Relatorios  -------- 
-    .when('/Relatorios/familia', {
-        templateUrl: 'views/relfamilias.html',
+    .when('/Relatorios/indios', {
+        templateUrl: 'views/relatorioIndios.html',
         controller: 'RelatorioController'
     })
     

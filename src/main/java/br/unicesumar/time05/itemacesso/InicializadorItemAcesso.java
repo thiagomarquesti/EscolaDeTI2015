@@ -325,11 +325,11 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuRelatorios);
         }
 
-        ItemAcesso menuRelatoriosFamilias;
-        menuRelatoriosFamilias = this.getItemAcesso(itensAcesso, "Relatório de Famílias", "#/Relatorios/familias");
-        if (menuRelatoriosFamilias == null) {
-            menuRelatoriosFamilias = new ItemAcesso("Relatório de Famílias", "#/Relatorios/familias", "fa-list", menuRelatorios);
-            itensAcesso.add(menuRelatoriosFamilias);
+        ItemAcesso menuRelatoriosIndios;
+        menuRelatoriosIndios = this.getItemAcesso(itensAcesso, "Fluxo de Indígenas", "#/Relatorios/indios");
+        if (menuRelatoriosIndios == null) {
+            menuRelatoriosIndios = new ItemAcesso("Fluxo de Indígenas", "#/Relatorios/indios", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosIndios);
         }
         
         //----------------------------------------------------
