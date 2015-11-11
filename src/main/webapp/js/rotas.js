@@ -125,6 +125,9 @@ module.config(function($routeProvider, $locationProvider) {
     .when('/Eventos/novo', {
         templateUrl: 'views/eventosCadastrar.html',
         controller: 'EventosController'
+    }).when('/Eventos/novo/:data', {
+        templateUrl: 'views/eventosCadastrar.html',
+        controller: 'EventosController'
     }).when('/Eventos/listar', {
         templateUrl: 'views/eventosListar.html',
         controller: 'EventosController'

@@ -6,4 +6,5 @@ body{
     background-image: url(../img/fundo_bambu4.jpg);
     background-size: 100%;
     background-position:  center 110px;
+    border-radius: 10px;
 }

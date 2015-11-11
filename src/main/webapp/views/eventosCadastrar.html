@@ -7,7 +7,7 @@
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" ng-init="carregarEvento()">
         <form name="formEvento" novalidate class="form-horizontal">
 
             <div class="form-group">    
@@ -52,12 +52,12 @@
             <div class="form-group">
                 <label for="visualizarnocalendario" class="col-md-2 control-label">Gravar no Calendário: </label>
                 <div class="col-md-2">
-                    <select name="visualizarnocalendario" ng-model="evento.visualizarnocalendario" id="visualizarnocalendario" class="form-control requerido" required="">                        
-                        <option value="false">Não</option>                        
-                        <option value="true">Sim</option>
-                    </select>
-                </div>
-            </div>
+                    <select name="visualizarnocalendario" ng-model="evento.visualizarnocalendario" id="visualizarnocalendario" class="form-control">                         
+                        <option value="true" selected>Sim</option>
+                        <option value="false">Não</option>                                               
+                    </select> 
+                </div> 
+            </div>  
         </form>
     </div>
 </div>

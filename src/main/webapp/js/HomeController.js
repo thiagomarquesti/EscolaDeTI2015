@@ -4,9 +4,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         var calendarArray = [];
         var monthOffset = [6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5];
         var monthArray = [["JAN", "Janeiro"], ["FEV", "Fevereiro"], ["MAR", "Março"], ["ABR", "Abril"], ["MAI", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AGO", "Agosto"], ["SET", "Setembro"], ["OUT", "Outubro"], ["NOV", "Novembro"], ["DEZ", "Dezembro"]];
-        var letrasArray = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
-        var dayArray = ["7", "1", "2", "3", "4", "5", "6"];
-
+        var letrasArray = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+        var subLetras = ["Dom","Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        var dayArray = ["1", "2", "3", "4", "5", "6","7"];
+        
         function novoEvento() {
             $scope.eventos = {
                 descricao: "",
@@ -20,7 +21,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
         function getEventosDoCalendario() {
             novoEvento();
-            $http.get("/eventos").success(function (data) {
+            $http.get("/eventos/carregaCalendario").success(function (data) {
                 $scope.eventos = data;
                 console.log($scope.eventos);
             }).error(erroNoEvento);
@@ -36,6 +37,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             getEventosDoCalendario();
             setTimeout(function () {
                 $(document).on('click', '.calendar-day.have-events', activateDay);
+                $(document).on('click', '.calendar-day.no-have-events', insereEvento);
                 $(document).on('click', '.specific-day', activatecalendar);
                 $(document).on('click', '.calendar-month-view-arrow', offsetcalendar);
 //                $(document).on('click', '.calendar-day', cadastrarevento);
@@ -88,7 +90,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         }
 
         function calendarSet() {
-            $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left">&lsaquo;</div><p></p><div class="calendar-month-view-arrow" data-dir="right">&rsaquo;</div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
+            $(".calendar").append('<div class="calendar-month-view"><div class="calendar-month-view-arrow" data-dir="left"><i class="fa fa-chevron-left"></i></div><p></p><div class="calendar-month-view-arrow" data-dir="right"><i class="fa fa-chevron-right"></i></div><div class="letrasDay"></div></div><div class="calendar-holder"><div class="calendar-grid"></div><div class="calendar-specific"><div class="specific-day"><div class="specific-day-info" i="day"></div><div class="specific-day-info" i="month"></div></div><div class="specific-day-scheme"></div></div></div>');
 
             if ($(this).data("color") === undefined) {
                 $(this).data("color", "red");
@@ -170,7 +172,15 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             }
             return (str);
         }
-
+        
+        function insereEvento() {
+            var di = new Date(parseInt($(this).attr('time')));
+            var strtime = $(this).attr('strtime');
+            var d = new Object();
+            d.data = di.getFullYear() + "-" + (di.getMonth() + 1) + "-" + di.getDate();
+            window.location.href = '#/Eventos/novo/'+ d.data;
+        }
+        
         function activateDay() {
             $(this).parents('.calendar').addClass('spec-day');
             var di = new Date(parseInt($(this).attr('time')));
@@ -178,19 +188,25 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             var d = new Object();
             d.day = di.getDate();
             d.month = di.getMonth();
+            d.data = di.getFullYear() + "-" + (d.month + 1) + "-" + d.day;
             d.events = calendarArray[strtime];
+            d.week = di.getDay();
+            if (d.week == 0) { d.week = 6; }
+            else { d.week --; }
             d.tocalendar = tocalendar;
             d.tocalendar();
         }
         var tocalendar = function () {
-            $(".specific-day-info[i=day]").html(this.day);
-            $(".specific-day-info[i=month]").html(monthArray[this.month][0]);
+            $(".specific-day-info[i=day]").html(this.day + ' <span>' + monthArray[this.month][0] + '</span>');
+            $(".specific-day-info[i=month]").html("<div class='hidden-sm hidden-xs'>" + letrasArray[this.week] + "</div>");
+            $(".specific-day-info[i=month]").append("<div class='hidden-md hidden-lg'>" + subLetras[this.week] + "</div>");
             if (this.events !== undefined) {
                 var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
                     $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
+            $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p><a class="btn btn-success" href="#/Eventos/novo/'+ this.data +'">Adicionar novo evento</a></p></div>');
         }
         function activatecalendar() {
             $(this).parents('.calendar').removeClass('spec-day');
@@ -211,7 +227,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             } else {
                 $(".calendar").attr('offset', 0);
             }
-            $(".calendar .calendar-month-view p").text(monthArray[d.getMonth()][1] + ' ' + d.getFullYear());
+            $(".calendar .calendar-month-view p").html('<span>' + d.getFullYear() + ' <i class="fa fa-calendar"></i> ' + monthArray[d.getMonth()][1] + '</span>');
             d.setDate(1);
             if (dayArray[d.getDay()] === 1) {
                 d.setDate(d.getDate() - 7);
@@ -219,8 +235,12 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 d.setDate(d.getDate() - dayArray[d.getDay()] + 1);
             }
             for (var i = 0; i < 7; i++) {
-                var dias_Semana = $('<div>' + letrasArray[i] + '</div>');
+                var dias_Semana = $('<div class="hidden-sm hidden-xs">' + letrasArray[i] + '</div>');
                 $(".letrasDay").append(dias_Semana);
+            }
+            for (var i = 0; i < 7; i++) {
+                var dias_subSemana = $('<div class="hidden-md hidden-lg">' + subLetras[i] + '</div>');
+                $(".letrasDay").append(dias_subSemana);
             }
 
             for (var i = 0; i < 42; i++) {
@@ -229,8 +249,13 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 if (d.getMonth() !== e.getMonth()) {
                     cal_day.addClass('other-month');
                 }
-                if (d.getTime() == c.getTime()) {
+                
+                if (d.getDate() == c.getDate() && d.getMonth() == c.getMonth() && d.getFullYear() == c.getFullYear()) {
                     cal_day.addClass('this-day');
+                }
+                
+                if(d.getDay() == 6 || d.getDay() == 0){
+                    cal_day.addClass('fds');
                 }
 
                 var mes;
@@ -250,6 +275,9 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 var strtime = d.getFullYear() + '' + mes + '' + dia;
                 if (calendarArray[strtime] !== undefined) {
                     cal_day.addClass('have-events');
+                }
+                else{
+                    cal_day.addClass('no-have-events');
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
                 if (calendarArray[strtime] != undefined) {
