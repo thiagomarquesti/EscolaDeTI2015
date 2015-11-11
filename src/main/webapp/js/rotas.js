@@ -140,18 +140,18 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/relatorioIndios.html',
         controller: 'RelatorioController'
     })
-//    .when('/Relatorios/estadias', {
-//        templateUrl: 'views/relatorioEstadia.html',
-//        controller: 'RelatorioController'
-//    })
+    .when('/Relatorios/estadias', {
+        templateUrl: 'views/relatorioEstadia.html',
+        controller: 'RelatorioController'
+    })
     .when('/Relatorios/colaboradores', {
         templateUrl: 'views/relatorioColaborador.html',
         controller: 'RelatorioController'
     })
-//    .when('/Relatorios/visitas', {
-//        templateUrl: 'views/relatorioVisita.html',
-//        controller: 'RelatorioController'
-//    })
+    .when('/Relatorios/visitas', {
+        templateUrl: 'views/relatorioVisita.html',
+        controller: 'RelatorioController'
+    })
     
     
     
