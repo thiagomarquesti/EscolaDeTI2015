@@ -190,7 +190,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             d.month = di.getMonth();
             d.data = di.getFullYear() + "-" + (d.month + 1) + "-" + d.day;
             d.events = calendarArray[strtime];
-            d.week = di.getDay();
+            d.week = di.getDay()+1;
             if (d.week == 0) { d.week = 6; }
             else { d.week --; }
             d.tocalendar = tocalendar;

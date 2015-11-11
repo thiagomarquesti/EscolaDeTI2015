@@ -59,7 +59,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
     $scope.salvar = function () {
         if ($scope.isNovo) {
-//            console.log($scope.fisica);
             $http.post("/pessoa/fisica", $scope.fisica)
                     .success(function () {
                         toastr.success("Usuário cadastrado com sucesso!");
@@ -67,13 +66,13 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                             $location.path("/Pessoa/listar");
                         }
                         else {
-                            window.location.href = "/login.html";
+                            $scope.listarFisicas();
+                            fechaModal('cadFisica');
                         }
                     })
                     .error(deuErro);
         }
         else {
-//                console.log($scope.fisica);
             $scope.fisica.idpessoa = $routeParams.id;
 //            console.log($scope.fisica);
             $http.put("/pessoa/fisica", $scope.fisica)
@@ -130,7 +129,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                 }, 100);
         }
         else{
-            if ($location.path() === "/Fisica/nova") {
+            if ($location.path() !== "/Fisica/editar") {
                 novaPessoaFisica();
             }
             else {
@@ -175,7 +174,6 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                         }
                         
                         $scope.fisica.imgSrc = data.imgSrc;
-//                        console.log($scope.fisica.imgSrc);
                         $scope.isNovo = false;
                     }).error(deuErro);
                 }, 100);
@@ -215,25 +213,22 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         return quantos_anos < 0 ? 0 : quantos_anos;
     };
 
-    $scope.reset = function (form) {
+    $scope.resetFis = function (form) {
         if (form) {
             form.$setPristine();
             form.$setUntouched();
         }
-        novaPessoaFisica()();
+        novaPessoaFisica();
     };
 
     $scope.listarEstados = function () {
         $http.get("/uf/listar").success(function (data) {
             $scope.estados = data.listaDeRegistros;
-//                console.log(data);
-//                console.log($scope.estados.codigoestado);
         }).error(deuErro);
     };
 
     $scope.listarCidades = function () {
         if ($scope.fisica.codigoestado !== "" && $scope.fisica.codigoestado !== undefined) {
-//                console.log($scope.fisica.codigoestado);
             $http.get("/cidade/listarPorCodigoEstado/" + $scope.fisica.codigoestado).success(function (data) {
                 $scope.cidades = data;
             }).error(deuErro);

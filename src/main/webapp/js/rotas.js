@@ -121,6 +121,19 @@ module.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/estadiaCadastrar.html',
         controller: 'EstadiaController'
     })
+    
+    //------- Rotas de Visita
+    .when('/Visita/listar', {
+        templateUrl: 'views/visitaListar.html',
+        controller: 'VisitaController'
+    }).when('/Visita/nova', {
+        templateUrl: 'views/visitaCadastrar.html',
+        controller: 'VisitaController'
+    }).when('/Visita/editar/:id', {
+        templateUrl: 'views/visitaCadastrar.html',
+        controller: 'VisitaController'
+    })
+    
     //------- Rotas do Evento -------- 
     .when('/Eventos/novo', {
         templateUrl: 'views/eventosCadastrar.html',

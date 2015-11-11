@@ -104,8 +104,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button ng-click="salvar('modal')" ng-disabled="!formPerfil.$valid" data-dismiss="modal" class="btn btn-success"> Cadastrar</button>
-                            <button ng-click="novoPerfil()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                            <button ng-click="salvar('modal')" ng-disabled="!formPerfil.$valid" onclick="fechaModal('perfilModal')" class="btn btn-success"> Cadastrar</button>
+                            <button ng-click="novoPerfil()" onclick="fechaModal('perfilModal')" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>

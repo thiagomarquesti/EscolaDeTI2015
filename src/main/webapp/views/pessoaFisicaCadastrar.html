@@ -8,16 +8,16 @@
         </div>
     </div>
     <div class="panel-body">
-        <form name="formCad" novalidate class="form-horizontal form-groups-bordered">
+        <form name="formFis" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">    
                 <label for="nome" class="col-md-2 control-label">Nome:</label>
                 <div class="col-md-10"><input type="text" ng-model="fisica.nome" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>
             </div>
 
-            <div ng-show="formCad.nome.$dirty && formCad.nome.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.nome.$error.required">Preencha seu nome completo. </span>
-                <span ng-show="formCad.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
-                <span ng-show="formCad.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres. </span>
+            <div ng-show="formFis.nome.$dirty && formFis.nome.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.nome.$error.required">Preencha seu nome completo. </span>
+                <span ng-show="formFis.nome.$error.minlength">Nome deve ter mais de 3 caracteres. </span>
+                <span ng-show="formFis.nome.$error.maxlength">Nome não pode ter mais de 50 caracteres. </span>
             </div>
 
             <div class="form-group"> 
@@ -38,16 +38,22 @@
                     <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
                 </div>
             </div>
-
+            
+            <div ng-show="formFis.cpf.$dirty && formFis.cpf.$invalid" class="alert alert-danger col-md-12" role="alert">
+                    <span ng-show="formFis.cpf.$error.required">Preencha o CPF. </span>
+                    <span ng-show="formFis.cpf.$error.cpf">CPF invalido. </span>
+                    <span ng-show="formFis.cpf.$error.uncpf">CPF já cadastrado. </span>
+                </div>
+            
             <div class="form-group">
                 <label for="email" class="col-md-2 control-label">E-mail: </label>
                 <div class="col-md-10"><input type="email" ng-model="fisica.email.email" id="email" name="email" required="" email-unique class="form-control requerido"></div>
             </div>
 
-            <div ng-show="formCad.email.$dirty && formCad.email.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.email.$error.required">Preencha seu e-mail. </span>
-                <span ng-show="formCad.email.$error.email">Coloque um e-mail válido. </span>
-                <span ng-show="formCad.email.$error.unemail">E-mail já existe no cadastro.</span>
+            <div ng-show="formFis.email.$dirty && formFis.email.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
+                <span ng-show="formFis.email.$error.required">Preencha seu e-mail. </span>
+                <span ng-show="formFis.email.$error.email">Coloque um e-mail válido. </span>
+                <span ng-show="formFis.email.$error.unemail">E-mail já existe no cadastro.</span>
             </div>
 
             <div class="form-group">
@@ -65,9 +71,7 @@
                     </button>
                 </div>
 
-                <div ng-show="formCad.funcao.$dirty && formCad.funcao.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                    <span ng-show="formCad.funcao.$error.required">Selecione uma função. </span>
-                </div>
+                
 
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3 input-group">
@@ -75,9 +79,13 @@
                     <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                 </div>
             </div>
-
-            <div ng-show="formCad.datanasc.$dirty && formCad.datanasc.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.datanasc.$error.required">Preencha data de nascimento. </span>
+            
+            <div ng-show="formFis.funcao.$dirty && formFis.funcao.$invalid" class="alert alert-danger col-md-12" role="alert">
+                    <span ng-show="formFis.funcao.$error.required">Selecione uma função. </span>
+                </div>
+            
+            <div ng-show="formFis.datanasc.$dirty && formFis.datanasc.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.datanasc.$error.required">Preencha data de nascimento. </span>
             </div>
 
             <div class="form-group">
@@ -105,10 +113,10 @@
                 </div>              
             </div>
 
-            <div ng-show="(formCad.cep.$dirty && formCad.cep.$invalid) || (formCad.uf.$dirty && formCad.uf.$invalid) || (formCad.cidade.$dirty && formCad.cidade.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.cep.$error.required">Preencha CEP. </span>
-                <span ng-show="formCad.uf.$error.required">Selecione estado. </span>
-                <span ng-show="formCad.cidade.$error.required">Selecione cidade. </span>
+            <div ng-show="(formFis.cep.$dirty && formFis.cep.$invalid) || (formFis.uf.$dirty && formFis.uf.$invalid) || (formFis.cidade.$dirty && formFis.cidade.$invalid)" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.cep.$error.required">Preencha CEP. </span>
+                <span ng-show="formFis.uf.$error.required">Selecione estado. </span>
+                <span ng-show="formFis.cidade.$error.required">Selecione cidade. </span>
             </div>
 
             <div class="form-group">
@@ -119,12 +127,12 @@
                 </div>
             </div>
 
-            <div ng-show="(formCad.logradouro.$dirty && formCad.logradouro.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.logradouro.$error.required">Preencha o endereço. </span>
+            <div ng-show="(formFis.logradouro.$dirty && formFis.logradouro.$invalid)" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.logradouro.$error.required">Preencha o endereço. </span>
             </div>
 
-            <div ng-show="(formCad.numero.$dirty && formCad.numero.$invalid)" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.numero.$error.required">Preencha o número. </span>
+            <div ng-show="(formFis.numero.$dirty && formFis.numero.$invalid)" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.numero.$error.required">Preencha o número. </span>
             </div>
 
             <div class="form-group">
@@ -134,8 +142,8 @@
                 <div class="col-md-3"><input type="text" ng-model="fisica.bairro" id="bairro" name="bairro" required="" class="form-control requerido"></div>
             </div>
 
-            <div ng-show="formCad.bairro.$dirty && formCad.bairro.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.bairro.$error.required">Preencha o bairro. </span>
+            <div ng-show="formFis.bairro.$dirty && formFis.bairro.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.bairro.$error.required">Preencha o bairro. </span>
             </div>
 
             <div class="form-group">
@@ -145,8 +153,8 @@
                 <div class="col-md-3"><input type="text" ng-model="fisica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control phone_with_ddd" placeholder="(99) 99999-9999"></div>
             </div>
 
-            <div ng-show="formCad.telefone.$dirty && formCad.telefone.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formCad.telefone.$error.required">Preencha o telefone principal. </span>
+            <div ng-show="formFis.telefone.$dirty && formFis.telefone.$invalid" class="alert alert-danger col-md-12" role="alert">
+                <span ng-show="formFis.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
             <div ng-show="tipoPessoa()" class="form-group">
                 <label for="escolaridade" class="col-md-2 control-label">Tipo de Pessoa: </label>
@@ -203,7 +211,7 @@
 
                             <div class="modal-footer">
                                 <div class="col-md-12" ng-controller="CameraController as vm">
-                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" onclick="fechaModal('fotoModal')">Continue</button>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +223,7 @@
 </div>
 
 <div class="modal fade" id="funcaoModal" data-backdrop="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 90%">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Cadastrar Função</h4>
@@ -227,7 +235,7 @@
                         <div class="col-md-11"><input type="text" ng-model="funcao.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
                     </div>
 
-                    <div ng-show="formFunc.descricao.$dirty && formFunc.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
+                    <div ng-show="formFunc.descricao.$dirty && formFunc.descricao.$invalid" class="alert alert-danger col-md-12" role="alert">
                         <span ng-show="formFunc.descricao.$error.required">Preencha o nome da função. </span>
                         <span ng-show="formFunc.descricao.$error.minlength">Função deve ter mais de 3 caracteres. </span>
                         <span ng-show="formFunc.descricao.$error.maxlength">Função não pode ter mais de 30 caracteres. </span>
@@ -235,8 +243,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" data-dismiss="modal" class="btn btn-success ">Cadastrar</button>
-                            <button ng-click="novaFuncao()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                            <button ng-click="salvarFuncao('modal')" ng-disabled="!formFunc.$valid" onclick="fechaModal('funcaoModal')" class="btn btn-success ">Cadastrar</button>
+                            <button ng-click="novaFuncao()" onclick="fechaModal('funcaoModal')" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>
@@ -246,9 +254,9 @@
 </div>
 
 <div>
-    <button ng-show="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Cadastrar</button>
-    <button ng-hide="isNovo" ng-click="salvar()" ng-disabled="!formCad.$valid" class="btn btn-success">Alterar</button>
-    <button ng-show="isNovo" ng-click="reset(formCad)" class="btn btn-info">Limpar</button>
+    <button ng-show="isNovo" ng-click="salvar(); resetFis(formFis);" ng-disabled="!formFis.$valid" class="btn btn-success">Cadastrar</button>
+    <button ng-hide="isNovo" ng-click="salvar();" ng-disabled="!formFis.$valid" class="btn btn-success">Alterar</button>
+    <button ng-show="isNovo" ng-click="resetFis(formFis)" class="btn btn-info">Limpar</button>
 </div>
 
 <script src="js/webcam.js" type="text/javascript"></script>

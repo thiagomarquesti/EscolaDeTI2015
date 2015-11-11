@@ -182,7 +182,7 @@
 
                             <div class="modal-footer">
                                 <div class="col-md-12" ng-controller="CameraController as vm">
-                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" data-dismiss="modal" >Continue</button>
+                                    <button ng-click="webcamFoto();" type="button" class="btn btn-success" onclick="fechaModal('fotoModal')" >Continue</button>
                                 </div>
                             </div>
                         </div>
@@ -292,8 +292,8 @@
                         <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control " ></textarea></div>
                     </div>
                     <div class="col-md-offset-1 col-md-11">
-                        <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
-                        <button ng-click="carregarOcorrencia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                        <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" onclick="fechaModal('ocorrenciaModal')" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="carregarOcorrencia()" onclick="fechaModal('ocorrenciaModal')" class="btn btn-info">Cancelar</button>
                     </div>
                     <div class="row">
                     </div>
@@ -319,8 +319,8 @@
                         <span ng-show="formEtnia.descricao.$error.maxlength">Etnia não pode ter mais de 30 caracteres. </span>
                     </div>
                     <div class="col-md-offset-1 col-md-11">
-                        <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
-                        <button ng-click="novaEtnia()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                        <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" onclick="fechaModal('etniaModal')" class="btn btn-success">Cadastrar</button>
+                        <button ng-click="novaEtnia()" onclick="fechaModal('etniaModal')" class="btn btn-info">Cancelar</button>
                     </div>
                     <div class="row">
                     </div>
@@ -364,8 +364,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarTerra('modal')" ng-disabled="!formTerra.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
-                            <button ng-click="novaTerra()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                            <button ng-click="salvarTerra('modal')" ng-disabled="!formTerra.$valid" onclick="fechaModal('terraModal')" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novaTerra()" onclick="fechaModal('terraModal')" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
 
@@ -393,8 +393,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">
-                            <button ng-click="salvarConvenio('modal')" ng-disabled="!formConvenio.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>
-                            <button ng-click="novoConvenio()" data-dismiss="modal" class="btn btn-info">Cancelar</button>
+                            <button ng-click="salvarConvenio('modal')" ng-disabled="!formConvenio.$valid" onclick="fechaModal('convenioModal')" class="btn btn-success">Cadastrar</button>
+                            <button ng-click="novoConvenio()" onclick="fechaModal('convenioModal')" class="btn btn-info">Cancelar</button>
                         </div>
                     </div>
                 </form>      
