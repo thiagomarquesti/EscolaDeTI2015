@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label for="funcao" class="col-md-2 control-label">Função: </label>
                 <div class="col-md-3" ng-init="getFuncoes();">
-                    <select ng-model="fisica.idfuncao" id="funcao" name="funcao" required="" class="form-control requerido">
+                    <select ng-model="fisica.idfuncao" id="funcao" name="funcao" class="form-control">
                         <option value="">Selecione uma função</option>
                         <!-- FAZER BUSCA POR FUNÇÕES -->
                         <option ng-repeat="f in funcoes" value="{{f.idfuncao}}">{{f.descricao}}</option>

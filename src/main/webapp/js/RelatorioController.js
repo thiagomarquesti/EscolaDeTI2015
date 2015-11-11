@@ -10,7 +10,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             ceil: 120,
             floor: 0
         };
-        
+
         $scope.novoRelIndigena = function () {
             $scope.relatorioindigena = {
                 datainicial: "",
@@ -27,7 +27,17 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 convenio: ""
             };
         };
-        
+
+        $scope.novoRelColaborador = function () {
+            $scope.relatoriocolaborador = {
+                idademax: "",
+                idademin: "",
+                generomasc: "",
+                generofem: "",
+                idfuncao: ""
+            };
+        };
+
         $scope.getFamilias = function () {
             $http.get("/familia")
                     .success(function (data) {
@@ -58,6 +68,14 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     .success(function (data) {
 //                        console.log(data);
                         $scope.convenios = data;
+                    })
+                    .error(deuErro);
+        };
+
+        $scope.getFuncoes = function () {
+            $http.get("/funcao")
+                    .success(function (data) {
+                        $scope.funcoes = data;
                     })
                     .error(deuErro);
         };
