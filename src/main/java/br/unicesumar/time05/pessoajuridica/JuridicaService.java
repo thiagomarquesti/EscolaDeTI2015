@@ -37,7 +37,8 @@ public class JuridicaService extends ServiceBase<CriarPessoaJuridica, Long, Juri
             + " LEFT JOIN cidade c"
             + "    ON ec.cidade_id = c.codigoibge"
             + " LEFT JOIN uf u"
-            + "    ON c.estado_codigoestado = u.codigoestado";
+            + "    ON c.estado_codigoestado = u.codigoestado"
+            + " WHERE p.tipo_pessoa = 'JURÍDICA'";
 
     @Override
     public void salvar(CriarPessoaJuridica aPessoaJuridica) {

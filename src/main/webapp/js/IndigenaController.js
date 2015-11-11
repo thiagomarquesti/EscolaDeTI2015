@@ -186,7 +186,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             };
 
             if ($scope.isNovoIndio) {
-                console.log(indioCompleto);
+                //console.log(indioCompleto);
                 $http.post("/indigena", indioCompleto)
                         .success(function () {
                             toastr.success("Indígena cadastrado com sucesso!");

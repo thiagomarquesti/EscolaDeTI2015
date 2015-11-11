@@ -201,7 +201,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuPessoa;
         menuPessoa = this.getItemAcesso(itensAcesso, "Gerenciar Pessoa", "");
         if (menuPessoa == null) {
-            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-user", menu);
+            menuPessoa = new ItemAcesso("Gerenciar Pessoa", "", "fa-male", menu);
             itensAcesso.add(menuPessoa);
         }
         
@@ -296,7 +296,7 @@ public class InicializadorItemAcesso {
         ItemAcesso menuEstadia;
         menuEstadia = this.getItemAcesso(itensAcesso, "Gerenciar Estadia", "");
         if (menuEstadia == null) {
-            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-sitemap", menu);
+            menuEstadia = new ItemAcesso("Gerenciar Estadia", "", "fa-map-marker", menu);
             itensAcesso.add(menuEstadia);
         }
 
@@ -314,8 +314,27 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuEstadiaNovo);
         }
 
-        
-        
+
+        ItemAcesso menuVisita;
+        menuVisita = this.getItemAcesso(itensAcesso, "Gerenciar Visita", "");
+        if (menuVisita == null) {
+            menuVisita = new ItemAcesso("Gerenciar Visita", "", "fa-bus", menu);
+            itensAcesso.add(menuVisita);
+        }
+
+        ItemAcesso menuVisitaListar;
+        menuVisitaListar = this.getItemAcesso(itensAcesso, "Listar Visita", "#/Visita/listar");
+        if (menuVisitaListar == null) {
+            menuVisitaListar = new ItemAcesso("Listar Visita", "#/Visita/listar", "fa-list-alt", menuVisita);
+            itensAcesso.add(menuVisitaListar);
+        }
+
+        ItemAcesso menuVisitaNova;
+        menuVisitaNova = this.getItemAcesso(itensAcesso, "Nova Visita", "#/Visita/nova");
+        if (menuVisitaNova == null) {
+            menuVisitaNova = new ItemAcesso("Cadastrar Visita", "#/Visita/nova", "fa-plus", menuVisita);
+            itensAcesso.add(menuVisitaNova);
+        }
         
         //RELATORIOS
         ItemAcesso menuRelatorios;
@@ -332,9 +351,6 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuRelatoriosFamilias);
         }
         
-        //----------------------------------------------------
-        //----------------------------------------------------
-        //----------------------------------------------------
 
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
