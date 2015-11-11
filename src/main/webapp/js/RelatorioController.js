@@ -4,28 +4,30 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             $scope = $rootScope;
         }
 
-        $scope.relatorioindigena = {
-            datainicial: "",
-            datafinal: "",
-            idademax: "",
-            idademin: "",
-            familia: "",
-            etnia: "",
-            escolaridade: "",
-            estadocivil: "",
-            generomasc: "",
-            generofem: "",
-            terraindigena: "",
-            convenio: ""
-        };
-
         $scope.idadeRange = {
             min: 10,
             max: 50,
             ceil: 120,
             floor: 0
         };
-
+        
+        $scope.novoRelIndigena = function () {
+            $scope.relatorioindigena = {
+                datainicial: "",
+                datafinal: "",
+                idademax: "",
+                idademin: "",
+                familia: "",
+                etnia: "",
+                escolaridade: "",
+                estadocivil: "",
+                generomasc: "",
+                generofem: "",
+                terraindigena: "",
+                convenio: ""
+            };
+        };
+        
         $scope.getFamilias = function () {
             $http.get("/familia")
                     .success(function (data) {
@@ -54,7 +56,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         $scope.getConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         $scope.convenios = data;
                     })
                     .error(deuErro);
@@ -62,6 +64,12 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
 
         $scope.formatoSlice = function (value) {
             return value.toString();
+        };
+
+        $scope.indigenaPdf = function () {
+            $scope.relatorioindigena.idademax = $scope.idadeRange.max;
+            $scope.relatorioindigena.idademin = $scope.idadeRange.min;
+            console.log($scope.relatorioindigena);
         };
 
         $scope.gerarRelatorio = function () {
@@ -73,5 +81,9 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     })
                     .error(deuErro);
         };
+
+        function deuErro() {
+            toastr.error("Algo deu errado, tente novamente.", "Ops!");
+        }
 
     }]);

@@ -55,7 +55,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
 
         $scope.salvar = function () {
             if ($scope.isNovaJuridica) {
-                console.log($scope.juridica);
+//                console.log($scope.juridica);
                 $http.post("/pessoa/juridica", $scope.juridica)
                         .success(function () {
                             toastr.success("Empresa cadastrada com sucesso!");
@@ -71,7 +71,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
             else {
 //                console.log($scope.juridica);
                 $scope.juridica.idpessoa = $routeParams.id;
-                console.log($scope.juridica);
+//                console.log($scope.juridica);
                 $http.put("/pessoa/juridica", $scope.juridica)
                         .success(function () {
                             toastr.success("Pessoa atualizado com sucesso!");
@@ -112,13 +112,13 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                                 $scope.juridica.numero = data.endereco.numero;
                                 $scope.juridica.complemento = data.endereco.complemento;
                                 $scope.juridica.bairro = data.endereco.bairro;
-                                console.log(data.telefone.telefone);
+//                                console.log(data.telefone.telefone);
                                 $scope.juridica.telefone = data.telefone;
-                                console.log($scope.juridica.telefone.telefone);
+//                                console.log($scope.juridica.telefone.telefone);
                                 $scope.juridica.telefonesecundario = data.telefonesecundario;
                                 $scope.juridica.tipoPessoa = "JURÍDICA";
                                 $scope.juridica.imgSrc = data.imgSrc;
-                                console.log($scope.juridica.imgSrc);
+//                                console.log($scope.juridica.imgSrc);
 
                                 $scope.isNovaJuridica = false;
                             }).error(deuErro);

@@ -44,7 +44,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         }
 
         $scope.saidaEstadiaNova = function () {
-            console.log("asdasd");
+//            console.log("asdasd");
             $scope.saida = {
                 idestadia: "",
                 datasaida: "",
@@ -67,9 +67,9 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             d = (data.datasaida) ? new Date(data.datasaida) : "";
-                            console.log(data.datasaida);
+//                            console.log(data.datasaida);
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
-                            console.log($scope.estadia.datasaida);
+//                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
                             $scope.estadia.familia = data.familia.idfamilia;
@@ -96,7 +96,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvarDataSaida = function () {
             $scope.saida.idestadia = $routeParams.id;
-            console.log($scope.saida);
+//            console.log($scope.saida);
             $http.post("/estadia/saida", $scope.saida)
                     .success(function () {
                         toastr.success("Atualizado com sucesso!");
@@ -141,8 +141,8 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 membros: $scope.estadia.membros
             };
             if ($scope.isNovaEstadia) {
-                console.log($scope.estadia);
-                console.log($scope.estadia.datasaida);
+//                console.log($scope.estadia);
+//                console.log($scope.estadia.datasaida);
                 $http.post("/estadia", estadiaCorreto)
                         .success(function () {
                             $location.path("/Estadia/listar");

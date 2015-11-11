@@ -107,8 +107,8 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
             $http.get("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string)
                     .success(function (data) {
                         $scope.perfis = data;
-                        console.log(data);
-                        console.log("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string);
+//                        console.log(data);
+//                        console.log("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string);
 
                         if (!paro) {
                             atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);

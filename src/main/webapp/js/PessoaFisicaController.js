@@ -59,7 +59,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
     $scope.salvar = function () {
         if ($scope.isNovo) {
-            console.log($scope.fisica);
+//            console.log($scope.fisica);
             $http.post("/pessoa/fisica", $scope.fisica)
                     .success(function () {
                         toastr.success("Usuário cadastrado com sucesso!");
@@ -75,7 +75,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
         else {
 //                console.log($scope.fisica);
             $scope.fisica.idpessoa = $routeParams.id;
-            console.log($scope.fisica);
+//            console.log($scope.fisica);
             $http.put("/pessoa/fisica", $scope.fisica)
                     .success(function () {
                         toastr.success("Pessoa atualizado com sucesso!");
@@ -87,7 +87,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
 
 
     $scope.editar = function (aId, genero) {
-        console.log(genero);
+//        console.log(genero);
         if (genero == undefined || genero == null)
             $location.path("/Juridica/editar/" + aId);
         else
@@ -175,7 +175,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                         }
                         
                         $scope.fisica.imgSrc = data.imgSrc;
-                        console.log($scope.fisica.imgSrc);
+//                        console.log($scope.fisica.imgSrc);
                         $scope.isNovo = false;
                     }).error(deuErro);
                 }, 100);
@@ -281,7 +281,7 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
             canvas = document.getElementById('imgCanvas');
             $scope.fisica.imgSrc = canvas.src;
         });
-        console.log($scope.fisica.imgSrc);
+//        console.log($scope.fisica.imgSrc);
     };
 
     /*   SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS    */

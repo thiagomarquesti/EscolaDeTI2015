@@ -43,14 +43,14 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
         function getMembrosFamilia(idrep) {
             $http.get("/familia/membrosPorFamilia/" + $routeParams.id)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         $scope.familia.membros = data;
 //                        return data;
                     })
                     .error(deuErro);
             $http.get("/indigena/"+idrep)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         $scope.familia.representante = data;
 //                        return data;
                     })
@@ -66,7 +66,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                     $http.get("/familia/obj/" + $routeParams.id)
                             .success(function (data) {
                                 var dados = data;
-                                console.log(data);
+//                                console.log(data);
                                 dados.telefone = data.telefone.telefone;
 //                                dados.representante = {
 //                                    codigosus: data.representante.codigosus,

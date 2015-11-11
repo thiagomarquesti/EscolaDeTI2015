@@ -59,7 +59,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             else {
                 $http.get("/etnia/" + $routeParams.id)
                         .success(function (data) {
-                            console.log(data);
+//                            console.log(data);
                             $scope.etnia = data;
                             $scope.isNovaEtnia = false;
                         })
@@ -99,8 +99,8 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             $http.get("/etnia/listar/" + reg + "/" + pag + "/" + campo + "/" + order + "/" + string)
                     .success(function (data) {
                         $scope.etnias = data;
-                        console.log(data);
-                        console.log("/etnia/listar/" + pag + "/" + campo + "/" + order + "/" + string);
+//                        console.log(data);
+//                        console.log("/etnia/listar/" + pag + "/" + campo + "/" + order + "/" + string);
 
                         if (!paro) {
                             atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
@@ -141,7 +141,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             if ($scope.isNovaEtnia) {
                 $http.post("/etnia", $scope.etnia)
                         .success(function () {
-                            console.log(flag);
+//                            console.log(flag);
                             if (flag == "cad")
                                 $location.path("/Etnia/listar");
                             else {
@@ -155,7 +155,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             else {
                 $http.put("/etnia/", $scope.etnia)
                         .success(function () {
-                            console.log(flag);
+//                            console.log(flag);
 //                            if (flag == "cad")
                             $location.path("/Etnia/listar");
                             toastr.success("Etnia atualizada com sucesso!");

@@ -80,7 +80,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
         $scope.editarFuncao = function (funcao) {
             $location.path("/Funcao/editar/" + funcao.idfuncao);
-            console.log(funcao.idfuncao);
+//            console.log(funcao.idfuncao);
         };
 
         $scope.deletarFuncao = function (funcao) {
@@ -97,7 +97,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
             $http.get("/funcao/verificarDescricao/" + $scope.funcao.descricao)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         if (data == false) {
                             toastr.error("Já existe uma função cadastrada com esse nome!");
                             $scope.funcao.descricao = "";

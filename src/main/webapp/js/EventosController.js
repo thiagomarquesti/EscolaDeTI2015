@@ -114,7 +114,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 datafinal: dataFinal + "T00:00:00-03",
                 visualizarnocalendario: $scope.evento.visualizarnocalendario
             };
-            console.log(eventoCorreto);
+//            console.log(eventoCorreto);
             if(new Date (dataInicio) <= new Date (dataFinal)){
               $http.post("/eventos", eventoCorreto)
                     .success(function () {

@@ -33,7 +33,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.todosIndigenas = function () {
             $http.get("/indigena")
                     .success(function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $scope.indigenas = data;
                     })
                     .error(deuErro);
@@ -79,7 +79,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
                     $http.get(busca)
                             .success(function (data) {
-                                console.log(data.terraIndigena);
+                                //console.log(data.terraIndigena);
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
@@ -95,7 +95,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                     descricao: data.terraIndigena.cidade.estado.descricao,
                                     idterraindigena: data.terraIndigena.idterraindigena
                                 };
-                                console.log(dados.terraIndigena);
+                                //console.log(dados.terraIndigena);
 //                                cidade: "DIAMANTE DO NORTE"
 //                                descricao: "PARANÁ"
 //                                idterraindigena: 17
@@ -123,7 +123,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 }
 
                                 $scope.indio = dados;
-                                console.log($scope.indio.imgSrc);
+                                //console.log($scope.indio.imgSrc);
                                 $scope.isNovoIndio = false;
 
                             })
@@ -186,7 +186,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             };
 
             if ($scope.isNovoIndio) {
-                console.log(indioCompleto);
+                //console.log(indioCompleto);
                 $http.post("/indigena", indioCompleto)
                         .success(function () {
                             toastr.success("Indígena cadastrado com sucesso!");
@@ -196,7 +196,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
             else {
                 indioCompleto.codigoAssindi = $routeParams.id;
-                console.log(indioCompleto);
+                //console.log(indioCompleto);
                 $http.put("/indigena", indioCompleto)
                         .success(function () {
                             toastr.success("Indígena atualizado com sucesso!");
@@ -236,12 +236,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
 
         $scope.dateToData = function (valor) {
-            console.log(valor);
+            //console.log(valor);
             var data = "";
             if (valor != null && valor != "" && valor != undefined) {
                 data = ServiceFuncoes.dateToData(valor);
             }
-            console.log(data);
+            //console.log(data);
             return data;
         };
 
@@ -277,7 +277,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 canvas = document.getElementById('imgCanvas');
                 $scope.indio.imgSrc = canvas.src;
             });
-            console.log($scope.indio.imgSrc);
+            //console.log($scope.indio.imgSrc);
         };
 
         /*  SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS  */
@@ -302,7 +302,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.getConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $scope.convenios = data;
                     })
                     .error(deuErro);
@@ -332,7 +332,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             var url = ($routeParams.id == undefined) ? "" : "/ocorrencias/" + $routeParams.id;
             $http.get("/ocorrencia" + url).success(function (data) {
                 $scope.ocorrencias = data;
-                console.log("pego");
+                //console.log("pego");
             }).error(deuErro);
         };
 
