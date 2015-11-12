@@ -134,14 +134,15 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             parametros.estadoscivis = ($scope.relatorioindigena.estadocivil) ? $scope.relatorioindigena.estadocivil : null;
             parametros.idadeini = $scope.idadeRange.min;
             parametros.idadefim = $scope.idadeRange.max;
-            parametros.convenios = $scope.relatorioindigena.convenio;
+            parametros.convenios = ($scope.relatorioindigena.convenio)?$scope.relatorioindigena.convenio:null;
             console.log(parametros);
-            $http.post("/indigena/relatorio/PDF", parametros)
+            $http.post("/indigena/relatorio/EXCEL", parametros)
                     .success(function (data) {
                         $window.open(data.url);
                     })
                     .error(deuErro);
         };
+        
         $scope.colaboradorPdf = function () {
             $scope.relatoriocolaborador.idademax = $scope.idadeRange.max;
             $scope.relatoriocolaborador.idademin = $scope.idadeRange.min;

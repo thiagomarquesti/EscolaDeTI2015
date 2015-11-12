@@ -103,7 +103,7 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
         return query.execute(sql, params);
     }
 
-    public String gerarRelatorioSimples() {
+    public Map gerarRelatorioSimples() {
         return rel.gerarRelatorio("teste01.jrxml", formatoRelatorio.EXCEL, new HashMap());
     }
 }

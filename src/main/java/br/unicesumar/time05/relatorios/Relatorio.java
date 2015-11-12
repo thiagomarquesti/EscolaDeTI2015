@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -32,12 +33,12 @@ public class Relatorio {
     @Autowired
     SessaoUsuario sessaoUsuario;
 
-    public String gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio, Map<String, Object> params) {
+    public Map<String, String> gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio, Map<String, Object> params) {
 
         try {
             URL reportResource = getClass().getClassLoader().getResource("./relatorios/" + nomeXmlJasper);
-            JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());            
-            JasperPrint print = JasperFillManager.fillReport(report,  params, dataSource.getConnection());
+            JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
+            JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
 
             File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdusuario());
             path.mkdirs();
@@ -71,7 +72,10 @@ public class Relatorio {
                 break;
             }
             System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdusuario() + " - " + sessaoUsuario.getUsuario().getNome());
-            return "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
+            String url = "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
+            Map<String, String> result = new HashMap<>();
+            result.put("url", url);
+            return result;
         } catch (JRException | SQLException | FileNotFoundException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
         }

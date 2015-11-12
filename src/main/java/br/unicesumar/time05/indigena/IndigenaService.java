@@ -118,7 +118,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         return query.execute(SQLConsultaIndigena);
     }
 
-    public String gerarRelatorio(formatoRelatorio formatoRelatorio, Map<String, Object> paramtros) {
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, Map<String, Object> paramtros) {
         return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, paramtros);
     }
 

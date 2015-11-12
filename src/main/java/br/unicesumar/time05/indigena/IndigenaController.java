@@ -28,10 +28,7 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
 
     @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
     public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
-        String url = service.gerarRelatorio(formatoRelatorio, parametros);
-        Map<String, String> result = new HashMap<>();
-        result.put("url", url);
-        return result;
+        return service.gerarRelatorio(formatoRelatorio, parametros);
     }
 
 }
