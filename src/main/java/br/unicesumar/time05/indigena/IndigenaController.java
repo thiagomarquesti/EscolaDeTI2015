@@ -3,6 +3,7 @@ package br.unicesumar.time05.indigena;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
 import classesbase.ControllerBase;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +27,11 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
     }
 
     @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
-    public String getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
-        return service.gerarRelatorio(formatoRelatorio, parametros);
+    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
+        String url = service.gerarRelatorio(formatoRelatorio, parametros);
+        Map<String, String> result = new HashMap<>();
+        result.put("url", url);
+        return result;
     }
 
 }

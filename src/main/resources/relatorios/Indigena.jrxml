@@ -31,7 +31,7 @@
           LEFT JOIN estadia_indigena ei ON (i.codigoassindi = ei.codigoassindi)
           LEFT JOIN estadia e ON (ei.idestadia = e.idestadia)
           LEFT JOIN indigena_convenio ic ON (i.codigoassindi = ic.indigena_id)
-         /*WHERE (($P{generos} IS NULL) OR (i.genero IN ($P!{generos})))
+         WHERE (($P{generos} IS NULL) OR (i.genero IN ($P!{generos})))
            AND (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (e.dataentrada BETWEEN $P{dataini} AND $P{datafim}) OR (e.datasaida BETWEEN $P{dataini} AND $P{datafim}))
            AND (($P{familias} IS NULL) OR (fi.idfamilia IN ($P!{familias})) OR (f.idfamilia IN ($P!{familias})))
            AND (($P{etnias} IS NULL) OR (i.etnia_idetnia IN ($P!{etnias})))
@@ -39,7 +39,7 @@
            AND (($P{estadoscivis} IS NULL) OR (i.estadocivil IN ($P!{estadoscivis})))
            AND (($P{terrasindigena} IS NULL) OR (i.terraindigena_idterraindigena IN ($P!{terrasindigena})))	
            AND (($P{convenios} IS NULL) OR (ic.convenio_id IN ($P!{convenios})))
-          GROUP BY i.codigoassindi                        */
+          GROUP BY i.codigoassindi                        
        ) AS tb
  WHERE (($P{idadeini} IS NULL AND $P{idadefim} IS NULL) OR (tb.idade BETWEEN $P{idadeini} AND $P{idadefim}))]]>
 	</queryString>

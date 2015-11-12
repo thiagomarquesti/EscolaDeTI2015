@@ -102,9 +102,9 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         toastr.success("Atualizado com sucesso!");
                     })
                     .error(deuErroSalvar);
-            $timeout(function (){
+            $timeout(function () {
                 $scope.atualizarListagens($scope.busca.numregistros, $scope.pagina, $scope.campoAtual, '', '', $scope.ent, '');
-            },100);
+            }, 100);
         };
 
         $scope.atualizarEstadia = function () {

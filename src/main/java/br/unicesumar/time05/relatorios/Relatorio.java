@@ -1,14 +1,11 @@
 package br.unicesumar.time05.relatorios;
 
-import br.unicesumar.time05.consultapersonalizada.QueryPersonalizada;
 import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;

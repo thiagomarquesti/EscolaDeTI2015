@@ -1,4 +1,4 @@
-module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', '$window', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, $window) {
 
         function atualizaScope() {
             $scope = $rootScope;
@@ -120,21 +120,26 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             $scope.relatorioindigena.idademax = $scope.idadeRange.max;
             $scope.relatorioindigena.idademin = $scope.idadeRange.min;
 
-            var teste = {
-//                generos: $scope.relatorioindigena.generofem + ", " + $scope.relatorioindigena.generomasc,
-//                dataini: $scope.relatorioindigena.datainicial,
-//                datafim: $scope.relatorioindigena.datafinal,
-//                familias: $scope.relatorioindigena.familia,
-//                etnias: $scope.relatorioindigena.etnia,
-//                escolaridades: $scope.relatorioindigena.escolaridade,
-//                estadoscivis: $scope.relatorioindigena.estadocivil
-//                idadeini: $scope.idadeRange.min,
-//                idadefim: $scope.idadeRange.max
-            };
-            console.log(teste);
-            $http.post("/indigena/relatorio/PDF", teste).success(function () {
-                toastr.success("deu certo");
-            })
+            var parametros = {};
+            parametros.generos = ($scope.relatorioindigena.generofem) ? $scope.relatorioindigena.generofem : "";
+            if (parametros.generos != "")
+                parametros.generos += ($scope.relatorioindigena.generomasc) ? ", " + $scope.relatorioindigena.generomasc : "";
+            else
+                parametros.generos = ($scope.relatorioindigena.generomasc) ? $scope.relatorioindigena.generomasc : null;
+            parametros.dataini = $scope.relatorioindigena.datainicial;
+            parametros.datafim = $scope.relatorioindigena.datafinal;
+            parametros.familias = ($scope.relatorioindigena.familia) ? $scope.relatorioindigena.familia : null;
+            parametros.etnias = ($scope.relatorioindigena.etnia) ? $scope.relatorioindigena.etnia : null;
+            parametros.escolaridades = ($scope.relatorioindigena.escolaridade) ? $scope.relatorioindigena.escolaridade : null;
+            parametros.estadoscivis = ($scope.relatorioindigena.estadocivil) ? $scope.relatorioindigena.estadocivil : null;
+            parametros.idadeini = $scope.idadeRange.min;
+            parametros.idadefim = $scope.idadeRange.max;
+            parametros.convenios = $scope.relatorioindigena.convenio;
+            console.log(parametros);
+            $http.post("/indigena/relatorio/PDF", parametros)
+                    .success(function (data) {
+                        $window.open(data.url);
+                    })
                     .error(deuErro);
         };
         $scope.colaboradorPdf = function () {
