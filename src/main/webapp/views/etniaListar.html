@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='descricao'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'descricao'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Etnia</a>
                         </th>
                         <th>
@@ -20,7 +20,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal,'', '', '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal, '', '', '')">
                     <tr ng-repeat='e in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{e.descricao}}</td>
                         <td>
@@ -45,8 +45,9 @@
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-        <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
 </div>
-
+<div>
+    <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
+</div>
 

@@ -133,7 +133,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
             $http.delete("/eventos/" + evento.idevento)
                     .success(function () {
                         toastr.success("Evento " + evento.descricao + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
+                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
                     }).error(deuErroDeletar);
         };
 

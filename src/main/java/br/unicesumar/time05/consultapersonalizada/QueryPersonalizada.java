@@ -117,9 +117,9 @@ public class QueryPersonalizada {
 
     private boolean campoPossuiAgregacao(String campo) {
         return campo.contains(OperadoresSQL.SUM.trim())
-                || campo.contains(OperadoresSQL.COUNT.trim())
-                || campo.contains(OperadoresSQL.AVG.trim())
-                || campo.contains(OperadoresSQL.MAX.trim())
-                || campo.contains(OperadoresSQL.MIN.trim());
+                || campo.toUpperCase().contains(OperadoresSQL.COUNT.trim())
+                || campo.toUpperCase().contains(OperadoresSQL.AVG.trim())
+                || campo.toUpperCase().contains(OperadoresSQL.MAX.trim())
+                || campo.toUpperCase().contains(OperadoresSQL.MIN.trim());
     }
 }

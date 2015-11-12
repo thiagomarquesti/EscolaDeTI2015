@@ -54,14 +54,17 @@
                     </button>
                 </div>
                 <label for="terraIndigena" class="col-md-2 control-label">Terra indígena: </label>
-                <div class="col-md-3" ng-init="getTerras();">
-                    <select ng-model="indio.terraIndigena" ng-options="terra.idterraindigena as terra.nometerra for terra in terras" id="terraIndigena" name="terraIndigena" required="" class="form-control requerido">
-                        <option value="">Selecione a terra indígena</option>
-
-                    </select>
+                <div class="col-md-3" style="margin-top: -0.8%; margin-left: -3%; max-width: 500px;" ng-init="getTerras();">
+                    <multiselect id="conveniosselecionados" name="conveniosselecionados" class="input-lg" 
+                                 ng-model="indio.terraIndigena" 
+                                 ms-selected ="{{terraIndigena.selected.length}}" 
+                                 ms-header="Selecione a terra indigena"
+                                 options="terra.nometerra for terra in terras" 
+                                 scroll-after-rows="4">
+                    </multiselect>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn-success btn btn-sm" style="margin-left: -45%;" onclick="jQuery('#terraModal').modal('show', {backdrop: 'static'});">
+                    <button type="button" class="btn-success btn btn-sm" style="margin-left: 65%;" onclick="jQuery('#terraModal').modal('show', {backdrop: 'static'});">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -233,7 +236,7 @@
                         <td>{{o.databloqueio}}</td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" ng-click="deletarOcorrencia(o.idocorrencia)" data-toggle="dropdown">
+                                <a class="btn btn-mini dropdown-toggle" ng-click="setIdOcorrencia(o.idocorrencia)" onclick="jQuery('#apagarModal').modal('show', {backdrop: 'static'});" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-remove"> </i>
                                 </a>
                             </div>
@@ -244,6 +247,18 @@
         </div>
         <div>
             <button ng-show="true" ng-click="carregarOcorrencia()" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});" ng-disabled="false" class="btn btn-success">Nova Ocrrência</button>
+        </div>
+        <div class="modal fade" id="apagarModal" data-backdrop="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><h3 class="modal-title">Atenção!</h3></div>
+                    <div class="modal-body">Tem certeza que deseja apagar a ocorrência?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-dismiss="modal" ng-click="deletarOcorrencia(idocorrencia)">Sim</button>
+                        <button class="btn btn-default" data-dismiss="modal">Não</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

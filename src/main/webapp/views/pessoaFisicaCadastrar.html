@@ -1,8 +1,8 @@
 
 <div ng-init="carregar('MASCULINO')" class="panel panel-info">
     <div class="panel-heading"> 
-        <div class="panel-title" ng-show="isNovo">Cadastrar pessoa</div>
-        <div class="panel-title" ng-show="!isNovo">Alterar pessoa</div>
+        <div class="panel-title" ng-show="isNovo">Cadastrar pessoa física</div>
+        <div class="panel-title" ng-show="!isNovo">Alterar pessoa física</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -23,7 +23,6 @@
             <div class="form-group"> 
                 <label for="cpf" class="col-md-2 control-label">CPF:</label>
                 <div class="col-md-3 col-sm-4"><input type="" ng-model="fisica.cpf.cpf" id="cpf" name="cpf" required="" maxlength="14" cpf-unique class="form-control cpf requerido"></div>
-                
 
                 <label for="genero" class="col-md-2 control-label">Gênero:</label>
                 <div class="col-md-3">
@@ -32,6 +31,11 @@
                     <i class='fa fa-male'></i>&nbsp;&nbsp;<i class='fa fa-female'></i>
                     &nbsp;<input type="radio" ng-model="fisica.genero" id="feminino" name="feminino" value="FEMININO" required=""> 
                     <label for="feminino"> Feminino</label>
+                </div>
+                <div ng-show="formCad.cpf.$dirty && formCad.cpf.$invalid" class="alert alert-danger" role="alert" style="margin-top:4%; margin-left:18%; width:220px;">
+                    <span ng-show="formCad.cpf.$error.required">Preencha o CPF. </span>
+                    <span ng-show="formCad.cpf.$error.cpf">CPF invalido. </span>
+                    <span ng-show="formCad.cpf.$error.uncpf">CPF já cadastrado. </span>
                 </div>
             </div>
             
@@ -152,7 +156,7 @@
             <div ng-show="formFis.telefone.$dirty && formFis.telefone.$invalid" class="alert alert-danger col-md-12" role="alert">
                 <span ng-show="formFis.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
-            <div class="form-group">
+            <div ng-show="tipoPessoa()" class="form-group">
                 <label for="escolaridade" class="col-md-2 control-label">Tipo de Pessoa: </label>
                 <div class="col-md-3">
                     <select name="escolaridade" ng-model="fisica.tipo" id="escolaridade" required="" class="form-control requerido">
@@ -219,7 +223,7 @@
 </div>
 
 <div class="modal fade" id="funcaoModal" data-backdrop="true">
-    <div class="modal-dialog" style="width: 90%">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Cadastrar Função</h4>

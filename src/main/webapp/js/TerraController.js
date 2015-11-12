@@ -72,11 +72,11 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                             $scope.terra = data;
                             $scope.terra.cidade = {
                                 codigoibge: data.cidade.codigoIBGE,
-                                nomecidade: data.cidade.descricao,
+                                descricao: data.cidade.descricao,
                                 codigoestado: data.cidade.estado.codigoestado,
-                                descricao: data.cidade.estado.descricao,
-                                sigla: data.cidade.estado.sigla,
-                            }
+                                estados: data.cidade.estado.descricao,
+                                sigla: data.cidade.estado.sigla
+                            };
                             $scope.isNovaTerra = false;
                         })
                         .error(deuErro);

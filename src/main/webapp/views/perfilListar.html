@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='nome'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'nome'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'nome', busca.descricao, 'ok', true)">Perfil</a>
                         </th>
                         <th>
@@ -20,7 +20,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal,'', '', '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal, '', '', '')">
                     <tr ng-repeat='p in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{p.nome}}</td>
                         <td>
@@ -45,7 +45,9 @@
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-        <a ng-href="#/Perfil/novo" class="btn btn-success">Cadastrar novo</a>
-    </div>
 
+    </div>
+</div>
+<div>
+    <a ng-href="#/Perfil/novo" class="btn btn-success">Cadastrar novo</a>
 </div>

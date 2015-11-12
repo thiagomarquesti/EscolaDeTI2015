@@ -17,6 +17,9 @@ public class UploadService {
     public void uploadWebcam(String baseedString, Long nomeArquivo, String pasta) {
         String stringCerta = baseedString.substring(baseedString.indexOf(",") + 1);
         byte[] decode = Base64.decodeBase64(stringCerta);
+        if(!(new File("src/main/webapp/fotos/"+pasta).exists())){
+            new File("src/main/webapp/fotos/"+pasta).mkdirs();
+        }
         File f = new File("src/main/webapp/fotos/"+pasta+"/"+ nomeArquivo + ".jpg");
 
         FileOutputStream out;

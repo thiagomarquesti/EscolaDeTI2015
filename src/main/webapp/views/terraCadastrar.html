@@ -34,13 +34,10 @@
                
             </div>
             
-            <div class="form-group">
-                <div class="col-md-offset-1 col-md-11">
-                    <button ng-show="isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Cadastrar</button>
-                    <button ng-show="!isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Alterar</button>
-                </div>
-            </div>
-            
         </form>
     </div>
+</div>
+<div class="form-group">
+    <button ng-show="isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovaTerra" ng-click="salvarTerra('cad')" ng-disabled="!formTerra.$valid" class="btn btn-success col-md-2">Alterar</button>
 </div>

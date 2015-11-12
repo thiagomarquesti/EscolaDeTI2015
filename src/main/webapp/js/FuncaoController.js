@@ -1,39 +1,41 @@
 module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
 
-    $scope.busca = {};
-    $scope.placeHolder = "Buscar função";
-    $scope.ent = $rootScope.ent = "funcao";
-    $scope.campoPrincipal = 'descricao';
-    $rootScope.tipoOrdem = 'asc';
+        $scope.busca = {};
+        $scope.placeHolder = "Buscar função";
+        $scope.ent = $rootScope.ent = "funcao";
+        $scope.campoPrincipal = 'descricao';
+        $rootScope.tipoOrdem = 'asc';
 
-    $scope.atualizarListagens = function(qtdePorPag, pag, campo, string, troca, paro){
-        if (campo == null || campo == "") { campo = $scope.campoPrincipal; }
-        $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
-        atualizaScope;
-    };
-    
-    function atualizaScope() {
-        $scope = $rootScope;
-    }
-    
-    $rootScope.atualizarListagens = $scope.atualizarListagens;
-    
-    $scope.registrosPadrao = function() {
-        $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
-        $rootScope.numregistros = $scope.busca.numregistros;
-    };
-    
-    $scope.fazPesquisa = function(registros, string){
-        $rootScope.string = string;
-        $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
-    };
-
-    function novaFuncao() {
-        $scope.funcao = {
-            descricao: ""
+        $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
+            if (campo == null || campo == "") {
+                campo = $scope.campoPrincipal;
+            }
+            $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
+            atualizaScope;
         };
-        $scope.isNovaFuncao = true;
-    }
+
+        function atualizaScope() {
+            $scope = $rootScope;
+        }
+
+        $rootScope.atualizarListagens = $scope.atualizarListagens;
+
+        $scope.registrosPadrao = function () {
+            $scope.busca.numregistros = ServicePaginacao.registrosPadrao($scope.busca.numregistros);
+            $rootScope.numregistros = $scope.busca.numregistros;
+        };
+
+        $scope.fazPesquisa = function (registros, string) {
+            $rootScope.string = string;
+            $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+        };
+
+        function novaFuncao() {
+            $scope.funcao = {
+                descricao: ""
+            };
+            $scope.isNovaFuncao = true;
+        }
 
         function novaFuncao() {
             $scope.funcao = {
@@ -85,9 +87,9 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
             $http.delete("/funcao/" + funcao.idfuncao)
                     .success(function (status) {
                         toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
+                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
                     })
-                    .error(deuErro);
+                    .error(deuErroDeletar);
         };
 
         $scope.salvarFuncao = function (flag) {
@@ -112,7 +114,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
                                         .success(function () {
                                             if (flag == "cad")
                                                 $location.path("/Funcao/listar");
-                                            else{
+                                            else {
                                                 novaFuncao();
                                                 $scope.getFuncoes();
                                             }
@@ -131,12 +133,11 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
                         }
                     }
                     ).error(deuErro);
-
-
-
         };
-        
         function deuErro() {
             toastr.error("Algo deu errado. Tente novamente.");
+        }
+        function deuErroDeletar() {
+            toastr.error("Funções cadastradas em pessoas não podem ser apagadas.","Tente novamente.");
         }
     }]);

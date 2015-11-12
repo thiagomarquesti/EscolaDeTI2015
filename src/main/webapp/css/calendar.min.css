@@ -57,7 +57,23 @@
 .calendar-day .event-notif {
 	height: 0.5em;
 	background-color: #2c7ea1;
-	width: 100%;
+	width: 250%;
+	margin: 1px 0px;
+        border-radius: 50px;
+}
+
+.calendar-day .event-aniver {
+	height: 0.5em;
+	background-color: #00FF7F;
+	width: 250%;
+	margin: 1px 0px;
+        border-radius: 50px;
+}
+
+.calendar-day .event-visita {
+	height: 0.5em;
+	background-color: #FFD700;
+	width: 250%;
 	margin: 1px 0px;
         border-radius: 50px;
 }

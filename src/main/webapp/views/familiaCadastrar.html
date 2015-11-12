@@ -50,12 +50,10 @@
                     </multiselect>
             </div>
             
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button ng-show="isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
-                    <button ng-show="!isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Alterar</button>
-                </div>
-            </div>
         </form>                
     </div>    
 </div>    
+<div class="form-group">
+    <button ng-show="isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Cadastrar</button>
+    <button ng-show="!isNovaFamilia" ng-click="salvarFamilia()" ng-disabled="!formFamilia.$valid" class="btn btn-success col-md-2">Alterar</button>
+</div>

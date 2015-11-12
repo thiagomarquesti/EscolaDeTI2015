@@ -1,6 +1,6 @@
 <div ng-init="carregar()" class="panel panel-info" >
     <div class="panel-heading"> 
-        <div class="panel-title">Usuário do sistema</div>
+        <div class="panel-title">Cadastrar novo usuário</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
         </div>
@@ -8,7 +8,7 @@
     <div class="panel-body">
         <form name="formCadUser" novalidate class="form-horizontal form-groups-bordered">
 
-            <div class="form-group" ng-init="carregaColoaborador()">
+            <div ng-show="mostrarColaboradores" class="form-group" ng-init="carregaColoaborador()">
                 <label for="perfis" style="margin-top: 0.5%;" class="col-md-2 control-label">Colaborador:</label>
                 <multiselect id="pessoa" name="pessoa" class="input-lg" required=""
                              ng-model="usuario.pessoa" 
@@ -16,7 +16,7 @@
                              ms-selected ="{{coloaborador.nome}}" 
                              ms-header="*  Selecione o colaborador"
                              options="coloaborador.nome for coloaborador in colaboradores" 
-                             scroll-after-rows="8">
+                             scroll-after-rows="8" required="">
                 </multiselect>
             </div>
 
@@ -24,10 +24,10 @@
                 <label for="login" class="col-md-2 control-label">Login:</label>
                 <div class="col-md-10"><input type="text" ng-model="usuario.login" id="login" name="login" class="form-control requerido" required="" ng-change="validarLogin()"></div>
             </div>
-
             <div ng-show="erroNoLogin" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <!--<span ng-show="formCad.login.$error.required">Preecher login. </span>-->
                 <span ng-show="!existeLogin">Login já cadastrado. </span>
+                <span ng-show="existeEspaco">Login não deve ter espaços. </span>
                 <span ng-show="minLogin">Login deve ter mais de 3 caracteres. </span>
                 <span ng-show="maxLogin">Login não pode ter mais de 20 caracteres. </span>
             </div>
@@ -61,7 +61,7 @@
                              ms-selected ="{{perfis.selected.length}}" 
                              ms-header="*  Selecione os Perfis"
                              options="perfil.nome for perfil in perfis" 
-                             scroll-after-rows="8">
+                             scroll-after-rows="8" required="">
                 </multiselect>
                 <div class="col-md-4">
                     <button type="button" class="btn-success btn btn-sm" style="margin-left: -8%; margin-top: 2.85%;" onclick="jQuery('#perfilModal').modal('show', {backdrop: 'static'});">

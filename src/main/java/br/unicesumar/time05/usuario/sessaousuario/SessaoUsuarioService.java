@@ -99,7 +99,7 @@ public class SessaoUsuarioService {
 
         if (sessaoUsuario != null && sessaoUsuario.getUsuario() != null) {
             String SQL  = "  SELECT ia.iditemacesso, "
-                        + "         ia.nome, "
+                        + "         TRIM(ia.nome) AS nome, "
                         + "         ia.rota, "
                         + "         ia.icone, "
                         + "         ia.superior_id "
@@ -113,7 +113,7 @@ public class SessaoUsuarioService {
                         + "         ia.rota, "
                         + "         ia.icone, "
                         + "         ia.superior_id "
-                        + " ORDER BY ia.superior_id NULLS FIRST, ia.iditemacesso  ";
+                        + " ORDER BY ia.superior_id NULLS FIRST, ia.nome ";
 
             final MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("idUsuario", sessaoUsuario.getUsuario().getIdusuario());

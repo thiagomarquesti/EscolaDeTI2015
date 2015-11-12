@@ -23,25 +23,20 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
     Relatorio relatorio;
 
     private final String sqlPadrao
-            = "SELECT f.idfamilia, "
-            + "       f.telefone, "
-            + "       f.nomefamilia, "
-            + "       f.idrepresentante, "
-            + "       ir.nome, "
-            + " (SELECT count(ff.idfamilia) as quantidade "
-            + "   FROM familia ff "
-            + "  INNER JOIN familia_indigena fi "
-            + "     ON fi.idfamilia = ff.idfamilia "
-            + "  INNER JOIN indigena i "
-            + "     ON i.codigoassindi = fi.codigoassindi "
-            + "  WHERE ff.idfamilia = f.idfamilia) "
-            + "  FROM familia f "
-            + "  LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi";
+            = " SELECT f.idfamilia, "
+            + "        f.telefone, "
+            + "        f.nomefamilia, "
+            + "        f.idrepresentante, "
+            + "        ir.nome, "
+            + "        COUNT(fi.codigoassindi) as quantidade "
+            + "   FROM familia f LEFT JOIN indigena ir ON f.idrepresentante = ir.codigoassindi "
+            + "   LEFT JOIN familia_indigena fi ON f.idfamilia = fi.idfamilia "
+            + "   GROUP BY f.idfamilia, ir.codigoassindi";
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-
     public FamiliaService() {
+
         setConstrutorDeSQL(new ConstrutorDeSQL(Familia.class));
         setSqlPadrao(sqlPadrao, "nomefamilia");
         setSqlPadraoPorID(sqlPadrao + " WHERE f.idfamilia = :idfamilia", "nomefamilia", "idfamilia");
@@ -70,12 +65,12 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
 
     public List<Map<String, Object>> getMembros(Long aIdFamilia) {
         String sql
-                = "SELECT i.codigoassindi, "
+                = "SELECT i.codigoassindi,  "
                 + "       i.codigoSUS, "
                 + "       i.cpf, "
                 + "       i.datanascimento, "
                 + "       e.descricao, "
-                + "       i.escolaridade, "
+                + "       i.escolaridade,"
                 + "       i.estadocivil, "
                 + "       i.genero, "
                 + "       i.nome, "

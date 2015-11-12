@@ -4,10 +4,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
         var calendarArray = [];
         var monthOffset = [6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5];
         var monthArray = [["JAN", "Janeiro"], ["FEV", "Fevereiro"], ["MAR", "Março"], ["ABR", "Abril"], ["MAI", "Maio"], ["JUN", "Junho"], ["JUL", "Julho"], ["AGO", "Agosto"], ["SET", "Setembro"], ["OUT", "Outubro"], ["NOV", "Novembro"], ["DEZ", "Dezembro"]];
-        var letrasArray = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
-        var subLetras = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
-        var dayArray = ["7", "1", "2", "3", "4", "5", "6"];
-        
+        var letrasArray = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+        var subLetras = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        var dayArray = ["1", "2", "3", "4", "5", "6", "7"];
+
         function novoEvento() {
             $scope.eventos = {
                 descricao: "",
@@ -23,7 +23,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             novoEvento();
             $http.get("/eventos/carregaCalendario").success(function (data) {
                 $scope.eventos = data;
-                console.log($scope.eventos);
+//                console.log($scope.eventos);
             }).error(erroNoEvento);
         }
 
@@ -75,8 +75,8 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             for (var u = 0; u < o; u++) {
                 for (var uu = 0; uu < p.length; uu++) {
                     if (uu === 0) {
-                    t = uu;
-                    y = p[uu];
+                        t = uu;
+                        y = p[uu];
                     }
                     else if (parseInt(p[uu][deli].replace(':', '')) < parseInt(y[deli].replace(':', ''))) {
                         y = p[uu];
@@ -121,7 +121,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
 
                         var strdate = date.getFullYear() + '' + mes + '' + dia;
                         tempeventarray["datainicial"] = strdate; //$scope.eventos[i].datainicial.replaceAllCaracteresEspecial('-', '');
-                        tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');                                                
+                        tempeventarray["datafinal"] = $scope.eventos[i].datafinal.replaceAllCaracteresEspecial('-', '');
                         tempeventarray["horainicial"] = $scope.eventos[i].horainicial.substring(0, 2) + ":" + $scope.eventos[i].horainicial.substring(3, 5);
                         tempeventarray["horafinal"] = $scope.eventos[i].horafinal.substring(0, 2) + ":" + $scope.eventos[i].horafinal.substring(3, 5);
                         tempeventarray["descricao"] = $scope.eventos[i].descricao;
@@ -137,9 +137,9 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     for (var j = 0; j < tempdayarray.length; j++) {
                         var tempevent = [];
                         if (tempdayarray[i].datainicial === tempdayarray[j].datainicial) {
-                            tempevent["name"] = tempdayarray[j].descricao;                            
+                            tempevent["name"] = tempdayarray[j].descricao;
                             tempevent["timestart"] = tempdayarray[j].horainicial;
-                            tempevent["timeend"] = tempdayarray[j].horafinal;                            
+                            tempevent["timeend"] = tempdayarray[j].horafinal;
 //                            tempevent["datestart"] = tempdayarray[j].datainicial.substring(0, 2) + "/" + tempdayarray[j].datainicial.substring(3, 5) + "/" + tempdayarray[j].datainicial.substring(6, 10);
 //                            tempevent["dateend"] = tempdayarray[j].datafinal.substring(0, 2) + "/" + tempdayarray[j].datafinal.substring(3, 5) + "/" + tempdayarray[j].datafinal.substring(6, 10);
                             tempdayevent.push(tempevent);
@@ -172,15 +172,15 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             }
             return (str);
         }
-        
+
         function insereEvento() {
             var di = new Date(parseInt($(this).attr('time')));
             var strtime = $(this).attr('strtime');
             var d = new Object();
             d.data = di.getFullYear() + "-" + (di.getMonth() + 1) + "-" + di.getDate();
-            window.location.href = '#/Eventos/novo/'+ d.data;
+            window.location.href = '#/Eventos/novo/' + d.data;
         }
-        
+
         function activateDay() {
             $(this).parents('.calendar').addClass('spec-day');
             var di = new Date(parseInt($(this).attr('time')));
@@ -190,9 +190,13 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             d.month = di.getMonth();
             d.data = di.getFullYear() + "-" + (d.month + 1) + "-" + d.day;
             d.events = calendarArray[strtime];
-            d.week = di.getDay();
-            if (d.week == 0) { d.week = 6; }
-            else { d.week --; }
+            d.week = di.getDay() + 1;
+            if (d.week == 0) {
+                d.week = 6;
+            }
+            else {
+                d.week--;
+            }
             d.tocalendar = tocalendar;
             d.tocalendar();
         }
@@ -206,7 +210,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
-            $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p><a class="btn btn-success" href="#/Eventos/novo/'+ this.data +'">Adicionar novo evento</a></p></div>');
+            $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p><a class="btn btn-success" href="#/Eventos/novo/' + this.data + '">Adicionar novo evento</a></p></div>');
         }
         function activatecalendar() {
             $(this).parents('.calendar').removeClass('spec-day');
@@ -249,12 +253,12 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 if (d.getMonth() !== e.getMonth()) {
                     cal_day.addClass('other-month');
                 }
-                
+
                 if (d.getDate() == c.getDate() && d.getMonth() == c.getMonth() && d.getFullYear() == c.getFullYear()) {
                     cal_day.addClass('this-day');
                 }
-                
-                if(d.getDay() == 6 || d.getDay() == 0){
+
+                if (d.getDay() == 6 || d.getDay() == 0) {
                     cal_day.addClass('fds');
                 }
 
@@ -276,13 +280,20 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 if (calendarArray[strtime] !== undefined) {
                     cal_day.addClass('have-events');
                 }
-                else{
+                else {
                     cal_day.addClass('no-have-events');
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
                 if (calendarArray[strtime] != undefined) {
                     for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
-                        cal_day_eventholder.append('<div class="event-notif"></div>') // Mostra a quantidade de eventos no dia.
+                        if (calendarArray[strtime][u].name.substring(0, 11) == "Aniversário")
+                            cal_day_eventholder.append('<div class="event-aniver"></div>') // Mostra a quantidade de eventos no dia.
+                        else {
+                            if (calendarArray[strtime][u].name.substring(0, 6) == "Visita")
+                                cal_day_eventholder.append('<div class="event-visita"></div>') // Mostra a quantidade de eventos no dia.
+                            else
+                                cal_day_eventholder.append('<div class="event-notif"></div>') // Mostra a quantidade de eventos no dia.
+                        }
                     }
                 }
                 cal_day.attr('strtime', strtime);
