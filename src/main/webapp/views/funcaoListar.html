@@ -1,6 +1,6 @@
 
 <div class="panel panel-info">
-<div class="panel-heading"> 
+    <div class="panel-heading"> 
         <div class="panel-title">Funções cadastradas</div>
         <div class="panel-options">
             <a href="" data-rel="collapse"><i class="entypo-down-open-big"></i></a>
@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual=='descricao'"></i>
+                            <i class="fa fa-sort-amount-{{tipoOrdem}}" ng-show="campoAtual == 'descricao'"></i>
                             <a ng-click="atualizarListagens(busca.numregistros, pagina, 'descricao', busca.descricao, 'ok', true)">Função</a>
                         </th>
                         <th>
@@ -21,7 +21,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, 1,campoPrincipal,'', '', '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, 1, campoPrincipal, '', '', '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
                         <td>{{f.descricao}}</td>
                         <td>
@@ -30,7 +30,7 @@
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    
+
                                     <li><a ng-click="deletarFuncao(f)">Excluir</a></li>
                                 </ul>
                             </div>
@@ -38,12 +38,14 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>
         </div>
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-        <a ng-href="#/Funcao/nova" class="btn btn-success">Cadastrar nova</a>
     </div>
+</div>
+<div>
+    <a ng-href="#/Funcao/nova" class="btn btn-success">Cadastrar nova</a>
 </div>

@@ -84,7 +84,7 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
         };
 
         $scope.carregar = function () {
-            if ($location.path() == "/Juridica/nova") {
+            if ($location.path() == "/Juridica/nova" || $location.path() == "/Visita/nova") {
                 novaPessoaJuridica();
             }
             else {
