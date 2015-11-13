@@ -61,10 +61,22 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.fichaVisita = function(codigovisita) {
             jQuery('#modalVisita').modal('show', {backdrop: 'static'});
             $scope.carregarVisita(codigovisita);
-            console.log(codigovisita);
         };
         
         var diasSemana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-Feira", "Sábado");
+        
+        function timeToHora(valor){
+            var x = new Date(valor.getTime() + (valor.getTimezoneOffset() * 60000));
+            var hora = x.getHours();
+            var min = x.getMinutes();
+            if(hora < 10){
+                hora = "0" + hora;
+            }
+            if(min < 10){
+                min = "0" + min;
+            }
+            return hora + ":" + min;
+        }
         
         $scope.carregarVisita = function(id) {
             if ($location.path() === "/Visita/nova") {
@@ -81,22 +93,35 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                     }
                     $http.get(busca)
                         .success(function (data) {
+                            console.log(data);
                             $scope.datavisita = $scope.dateToData(data.datavisita);
                             var dados = data;
                             var d = new Date(data.datavisita);
                             dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
-                            
+                            $scope.horaVisita = timeToHora(dados.horavisita);
                             $scope.diaSemana = diasSemana[dados.datavisita.getDay()];
                             
                             if (dados.horaentrada) {
                                 dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
+                                $scope.horaEntrada = timeToHora(dados.horaentrada);
+                            }
+                            else {
+                                $scope.horaEntrada = "Não informada";
                             }
                             if (dados.horasaida) {
                                 dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                                $scope.horaSaida = timeToHora(dados.horasaida);
+                            }
+                            else {
+                                $scope.horaSaida = "Não informada";
                             }
                             if(!dados.entidade){
                                 dados.entidade.nome = 'Não informado';
+                            }
+                            
+                            if(!dados.telefonevisita){
+                                dados.telefonevisita = 'Não informado';
                             }
                             
                             $scope.visita = dados;
