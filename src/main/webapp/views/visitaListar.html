@@ -37,7 +37,7 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', 'ok', ent, '')">
                     <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{v.nomepj}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.nomepj}}</td>
                         <td>{{dateToData(v.datavisita)}}</td>
                         <td>Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
                         <td>{{v.quantidadedevisitantes}} pessoas</td>
@@ -66,3 +66,5 @@
 <div>
     <a ng-href="#/Visita/nova" class="btn btn-success">Cadastrar nova</a>        
 </div>
+
+<div class="modal fade custom-width" id="modalVisita" data-backdrop="true" ng-include="'views/fichaVisita.html'"></div>

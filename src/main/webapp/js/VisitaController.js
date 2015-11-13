@@ -17,14 +17,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $scope = $rootScope;
         }
 
-        $scope.reset = function (form) {
-            if (form) {
-                form.$setPristine();
-                form.$setUntouched();
-            }
-            novaVisita();
-        };
-
         $rootScope.atualizarListagens = $scope.atualizarListagens;
 
         $scope.registrosPadrao = function () {
@@ -36,7 +28,15 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
         };
-
+        
+        $scope.reset = function (form) {
+            if (form) {
+                form.$setPristine();
+                form.$setUntouched();
+            }
+            novaVisita();
+        };
+        
         function novaVisita() {
             $scope.visita = {
                 datavisita: "",
@@ -57,32 +57,54 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.novaVisita = function () {
             novaVisita();
         };
-
-        $scope.carregarVisita = function () {
+        
+        $scope.fichaVisita = function(codigovisita) {
+            jQuery('#modalVisita').modal('show', {backdrop: 'static'});
+            $scope.carregarVisita(codigovisita);
+            console.log(codigovisita);
+        };
+        
+        var diasSemana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-Feira", "Sábado");
+        
+        $scope.carregarVisita = function(id) {
             if ($location.path() === "/Visita/nova") {
                 novaVisita();
             }
             else {
                 $timeout(function () {
-                    $http.get("/visita/obj/" + $routeParams.id)
-                            .success(function (data) {
-                                var dados = data;
-                                var d = new Date(data.datavisita);
-                                dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                                dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
-
-                                if (dados.horaentrada) {
-                                    dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
-                                }
-                                if (dados.horasaida) {
-                                    dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
-                                }
-                                $scope.visita = dados;
-                                $scope.isNovaVisita = false;
-                                $scope.pegarFone('fisica');
-                                $scope.pegarFone('juridica');
-                            })
-                            .error(deuErro);
+                    var busca;
+                    if(id) {
+                        busca = "/visita/obj/" + id;
+                    }
+                    else {
+                        busca = "/visita/obj/" + $routeParams.id;
+                    }
+                    $http.get(busca)
+                        .success(function (data) {
+                            $scope.datavisita = $scope.dateToData(data.datavisita);
+                            var dados = data;
+                            var d = new Date(data.datavisita);
+                            dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                            dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
+                            
+                            $scope.diaSemana = diasSemana[dados.datavisita.getDay()];
+                            
+                            if (dados.horaentrada) {
+                                dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
+                            }
+                            if (dados.horasaida) {
+                                dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                            }
+                            if(!dados.entidade){
+                                dados.entidade.nome = 'Não informado';
+                            }
+                            
+                            $scope.visita = dados;
+                            $scope.isNovaVisita = false;
+                            $scope.pegarFone('fisica');
+                            $scope.pegarFone('juridica');
+                        })
+                        .error(deuErro);
                 }, 100);
             }
         };
