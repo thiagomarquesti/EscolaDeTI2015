@@ -125,6 +125,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                         tempeventarray["horainicial"] = $scope.eventos[i].horainicial.substring(0, 2) + ":" + $scope.eventos[i].horainicial.substring(3, 5);
                         tempeventarray["horafinal"] = $scope.eventos[i].horafinal.substring(0, 2) + ":" + $scope.eventos[i].horafinal.substring(3, 5);
                         tempeventarray["descricao"] = $scope.eventos[i].descricao;
+                        tempeventarray["tipoevento"] = $scope.eventos[i].tipoevento;
                         tempdayarray.push(tempeventarray);
                     }
                 }
@@ -140,6 +141,7 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                             tempevent["name"] = tempdayarray[j].descricao;
                             tempevent["timestart"] = tempdayarray[j].horainicial;
                             tempevent["timeend"] = tempdayarray[j].horafinal;
+                            tempevent["tipo"] = tempdayarray[j].tipoevento;
 //                            tempevent["datestart"] = tempdayarray[j].datainicial.substring(0, 2) + "/" + tempdayarray[j].datainicial.substring(3, 5) + "/" + tempdayarray[j].datainicial.substring(6, 10);
 //                            tempevent["dateend"] = tempdayarray[j].datafinal.substring(0, 2) + "/" + tempdayarray[j].datafinal.substring(3, 5) + "/" + tempdayarray[j].datafinal.substring(6, 10);
                             tempdayevent.push(tempevent);
@@ -286,14 +288,8 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
                 if (calendarArray[strtime] != undefined) {
                     for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
-                        if (calendarArray[strtime][u].name.substring(0, 11) == "Aniversário")
-                            cal_day_eventholder.append('<div class="event-aniver"></div>') // Mostra a quantidade de eventos no dia.
-                        else {
-                            if (calendarArray[strtime][u].name.substring(0, 6) == "Visita")
-                                cal_day_eventholder.append('<div class="event-visita"></div>') // Mostra a quantidade de eventos no dia.
-                            else
-                                cal_day_eventholder.append('<div class="event-notif"></div>') // Mostra a quantidade de eventos no dia.
-                        }
+                        console.log(calendarArray[strtime]);
+                        cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>') // Mostra a quantidade de eventos no dia.
                     }
                 }
                 cal_day.attr('strtime', strtime);
