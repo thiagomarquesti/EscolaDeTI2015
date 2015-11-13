@@ -87,6 +87,11 @@ public class UsuarioService extends ServiceBase<Usuario, Long, UsuarioRepository
     }
 
     @Override
+    public void alterar(Usuario aEntidade) {
+        this.salvar(aEntidade);
+    }
+
+    @Override
     public List<Map<String, Object>> findByID(Long aUsuarioId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aUsuarioId", aUsuarioId);

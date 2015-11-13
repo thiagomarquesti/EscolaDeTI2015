@@ -8597,6 +8597,7 @@ button.close {
   filter: alpha(opacity=50);
 }
 .modal-header {
+  background-color: #21a9e1;
   padding: 15px;
   border-bottom: 1px solid #e5e5e5;
   min-height: 16.42857143px;
@@ -8605,6 +8606,7 @@ button.close {
   margin-top: -2px;
 }
 .modal-title {
+  color:#fff;
   margin: 0;
   line-height: 1.42857143;
 }
