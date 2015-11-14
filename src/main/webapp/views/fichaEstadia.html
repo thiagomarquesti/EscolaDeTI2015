@@ -5,37 +5,58 @@
             <h4 class="modal-title">Informações da Familia: {{estadia.familia}}</h4>
         </div>
         <div class="modal-body container">          
-<!--            <div class="col-md-6 col-xs-12">
+            <div class="col-md-3 col-xs-4">
+                <fieldset>
+                    <legend>Data de Entrada:</legend> 
+                    <p>{{estadia.dataentrada}} ({{diaSemana}})</p>
+                </fieldset>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
                 <fieldset>
                     <legend>Representante:</legend>
                     <p>{{estadia.representante.nome}}</p>
                 </fieldset>
             </div>
+
             <div class="col-md-3 col-xs-4">
                 <fieldset>
                     <legend>Telefone:</legend> 
                     <p>{{estadia.representante.telefone}}</p>
                 </fieldset>
             </div>
+
+            <div class="col-md-3 col-xs-12">
+                <fieldset>
+                    <legend>Acompanhantes:</legend>
+                    <table class="table table-striped datatable">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="mem in estadia.membros">
+                                <td> {{mem.nome}}</td>                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+
             <div class="col-md-3 col-xs-4">
                 <fieldset >
                     <legend>Qtde. de Acompanhantes</legend>
                     <p>{{estadia.membros.length}}</p>
                 </fieldset>
-            </div>
-            <div class="col-md-5 col-xs-6">
-                <fieldset>
-                    <legend>Acompanhantes:</legend>
-                    <p>{{fisica.email.email}}</p>
-                </fieldset>
-            </div>
+            </div>                        
 
             <div class="col-md-4 col-xs-6">
                 <fieldset>
                     <legend>Observação:</legend>
                     <p>{{estadia.observacoesentrada}}</p>
                 </fieldset>
-            </div>-->
+            </div>
 
         </div>
     </div>

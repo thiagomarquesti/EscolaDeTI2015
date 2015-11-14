@@ -4,6 +4,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         $scope.ent = $rootScope.ent = "estadia";
         $scope.campoPrincipal = 'nomefamilia';
         $scope.isNovaEstadia = true;
+        var diasSemana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-Feira", "Sábado");
 
         $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
             if (campo == null || campo == "") {
@@ -14,9 +15,8 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.chamarModalEstadia = function(idestadia) {
-            jQuery('#modalEstadia').modal('show', {backdrop: 'static'});
-            
-            carregarEstadiaModal(idestadia); 
+            jQuery('#modalEstadia').modal('show', {backdrop: 'static'});            
+            $scope.carregarEstadiaModal(idestadia);  
         };
 
         function atualizaScope() {
@@ -84,6 +84,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
 
                             $scope.isNovaEstadia = false;
+                            console.log("Editar:");
                             console.log($scope.estadia);
                         })
                         .error(deuErro);
@@ -96,21 +97,24 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 $http.get("/estadia/obj/" + idEstadia)
                         .success(function (data) {
                             novaEstadia();
-                            $scope.estadia.idestadia = $routeParams.id;
+                            $scope.estadia.idestadia = idEstadia;
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                            d = (data.datasaida) ? new Date(data.datasaida) : "";
-                            console.log(data.datasaida);
+                            $scope.diaSemana = diasSemana[$scope.estadia.dataentrada.getDay()];
+                            d = (data.datasaida) ? new Date(data.datasaida) : "";                            
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
-                            console.log($scope.estadia.datasaida);
-                            $scope.estadia.observacoesentrada = data.observacoesentrada;
+                            if(data.observacoesentrada.length > 0){
+                                $scope.estadia.observacoesentrada = data.observacoesentrada;
+                            }else{
+                                $scope.estadia.observacoesentrada = "Não informado";  
+                            }
+                            
                             $scope.estadia.observacoessaida = data.observacoessaida;
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
-                            getSelects($routeParams.id);
+                            getSelects(idEstadia);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
-
-                            $scope.isNovaEstadia = false;
+                            console.log("es");
                             console.log($scope.estadia);
                         })
                         .error(deuErro);
