@@ -1,4 +1,4 @@
-module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', 'ServiceFuncoes', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
         $scope.busca = {};
         $scope.placeHolder = "Buscar estadia";
         $scope.ent = $rootScope.ent = "estadia";
@@ -14,9 +14,9 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             atualizaScope;
         };
 
-        $scope.chamarModalEstadia = function(idestadia) {
-            jQuery('#modalEstadia').modal('show', {backdrop: 'static'});            
-            $scope.carregarEstadiaModal(idestadia);  
+        $scope.chamarModalEstadia = function (idestadia) {
+            jQuery('#modalEstadia').modal('show', {backdrop: 'static'});
+            $scope.carregarEstadiaModal(idestadia);
         };
 
         function atualizaScope() {
@@ -98,17 +98,19 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         .success(function (data) {
                             novaEstadia();
                             $scope.estadia.idestadia = idEstadia;
+                            $scope.dataentradaModal = $scope.dateToSoData(data.dataentrada);
+                            
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             $scope.diaSemana = diasSemana[$scope.estadia.dataentrada.getDay()];
-                            d = (data.datasaida) ? new Date(data.datasaida) : "";                            
+                            d = (data.datasaida) ? new Date(data.datasaida) : "";
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
-                            if(data.observacoesentrada.length > 0){
+                            if (data.observacoesentrada.length > 0) {
                                 $scope.estadia.observacoesentrada = data.observacoesentrada;
-                            }else{
-                                $scope.estadia.observacoesentrada = "Não informado";  
+                            } else {
+                                $scope.estadia.observacoesentrada = "Não informado";
                             }
-                            
+
                             $scope.estadia.observacoessaida = data.observacoessaida;
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
@@ -224,6 +226,15 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
             return data;
         }
+
+        $scope.dateToSoData = function (valor) {
+            var data = "";
+            if (valor != null && valor != "" && valor != undefined) {
+                data = ServiceFuncoes.dateToData(valor);
+            }
+            return data;
+        };
+
 
         $scope.getIdEstadia = function (idestadia) {
             $routeParams.id = idestadia;

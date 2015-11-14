@@ -8,7 +8,7 @@
             <div class="col-md-3 col-xs-4">
                 <fieldset>
                     <legend>Data de Entrada:</legend> 
-                    <p>{{estadia.dataentrada}} ({{diaSemana}})</p>
+                    <p>{{dataentradaModal}} ({{diaSemana}})</p>
                 </fieldset>
             </div>
 
@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="mem in estadia.membros">
-                                <td> {{mem.nome}}</td>                                
+                                <td>{{mem.nome}}</td>                                
                             </tr>
                         </tbody>
                     </table>
