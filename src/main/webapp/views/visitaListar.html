@@ -47,7 +47,8 @@
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-right">
+                                <ul class="dropdown-menu dropdown-menu-right" style="margin-left: -500%;">
+                                    <li><a ng-click="abrirModal(v.idvisita)">Registrar Entrada/Saída</a></li>
                                     <li><a ng-click="editarVisita(v)">Editar</a></li>
                                     <li><a ng-click="deletarVisita(v)">Excluir</a></li>
                                 </ul>
@@ -65,4 +66,36 @@
 </div>
 <div>
     <a ng-href="#/Visita/nova" class="btn btn-success">Cadastrar nova</a>        
+</div>
+
+<div class="modal fade" id="saidaModal" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Registrar Entrada/Saída</h4>
+            </div>
+            <div class="modal-body" ng-controller="VisitaController">
+                <form name="formVisita" novalidate class="form-horizontal form-groups-bordered">
+                    <div class="form-group">
+                        <label for="horaentrada" class="col-md-2 control-label"> Hora da Entrada:</label>
+                        <div class="col-md-3"><input type="time" ng-model="visita.horaentrada" id="horaentrada" name="horaentrada" class="form-control"></div>
+                        <label for="horasaida" class="col-md-2 control-label"> Hora da Saída:</label>
+                        <div class="col-md-3"><input ng-disabled="!visita.horaentrada" type="time" ng-model="visita.horasaida" id="horasaida" name="horasaida" class="form-control"></div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" style="margin-left: -1%; margin-top: 20px;" for="observacao">Observações: </label>                
+                        <textarea name="observacao" style="margin-top: 10px; margin-left: 3.5%; border-radius: 5px;" id="observacao" ng-model="visita.observacao" rows=5 class="col-md-8"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-11">
+                            <button ng-click="registarSaida()" onclick="fechaModal('saidaModal')" class="btn btn-success ">Salvar</button>
+                            <button ng-click="reset(formVisita)" onclick="fechaModal('saidaModal')" class="btn btn-info">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
