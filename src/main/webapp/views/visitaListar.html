@@ -37,7 +37,10 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', 'ok', ent, '')">
                     <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
-                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.nomepj}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">
+                            <span class="badge badge-{{statusVisita(v.datavisita, v.visitarealizada)}}">&nbsp;</span> &nbsp;
+                            {{v.nomepj}}
+                        </td>
                         <td>{{dateToData(v.datavisita)}}</td>
                         <td>Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
                         <td>{{v.quantidadedevisitantes}} pessoas</td>

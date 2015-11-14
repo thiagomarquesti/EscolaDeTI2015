@@ -7,64 +7,61 @@
 
         <div class="modal-body container">
 
-            <div class="col-md-3 col-xs-6">
+            <div class="col-md-12 btn btn-{{cor}}">Visita {{status}}</div>
+            
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <fieldset>
                     <legend>Data</legend>
                     <p>{{datavisita}} ({{diaSemana}})</p>
                 </fieldset>
             </div>
-            <div class="col-md-2 col-xs-6">
+            <div class="col-md-2 col-sm-6 col-xs-12">
                 <fieldset>
-                    <legend>Horário programado</legend>
+                    <legend>Horário previsto</legend>
                     <p>{{horaVisita}}</p>
                 </fieldset>
             </div>
-            <div class="col-md-3 col-xs-6">
+            <div class="col-md-3 col-sm-12 col-xs-12">
                 <fieldset>
                     <legend>Horário de entrada e saída</legend>
                     <p>{{horaEntrada}} | {{horaSaida}}</p>
                 </fieldset>
             </div>
-            <div class="col-md-2 col-xs-6">
+            <div class="col-md-2 col-sm-6 col-xs-12">
                 <fieldset>
                     <legend>Nº de visitantes</legend>
                     <p>{{visita.quantidadedevisitantes}} visitantes</p>
                 </fieldset>
             </div>
-            <div class="col-md-2 col-xs-6">
+            <div class="col-md-2 col-sm-6 col-xs-12">
                 <fieldset>
                     <legend>Tel. Adicional</legend>
                     <p>{{visita.telefonevisita}}</p>
                 </fieldset>
             </div>
-            <div class="col-md-4 col-xs-8">
+            <div class="col-md-4 col-xs-12">
                 <fieldset>
                     <legend>Entidade</legend>
-                    <p>{{visita.entidade.nome}}</p>
+                    <p>{{dadosEntidade}}</p>
+                    <p>{{visita.seriecurso}}</p>
+                    <p>{{dadosEntidadeTelefone}}</p>
                 </fieldset>
             </div>
-            
-            <div class="col-md-2 col-xs-4">
-                <fieldset>
-                    <legend>Telefone entidade</legend>
-                    <p>{{visita.entidade.telefone.telefone}}</p>
-                </fieldset>
-            </div>
-            
-            <div class="col-md-4 col-xs-8">
+                        
+            <div class="col-md-3 col-xs-12">
                 <fieldset>
                     <legend>Pessoa responsável</legend>
-                    <p>{{visita.pessoaresponsavel.nome}}</p>
-                </fieldset>
-            </div>
-            <div class="col-md-2 col-xs-4">
-                <fieldset>
-                    <legend>Tel. responsável</legend>
+                    <p>{{visita.pessoaresponsavel.nome}} </p>
+                    <p>{{visita.pessoaresponsavel.email.email}}</p>
                     <p>{{visita.pessoaresponsavel.telefone.telefone}}</p>
                 </fieldset>
             </div>
-            
-            
+            <div class="col-md-5 col-xs-12">
+                <fieldset>
+                    <legend>Observações</legend>
+                    <p>{{visita.observacao}} </p>
+                </fieldset>
+            </div>
             
         </div>
     </div>

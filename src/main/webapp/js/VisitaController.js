@@ -11,6 +11,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             }
             $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
             atualizaScope;
+            console.log($scope.dadosRecebidos);
         };
 
         function atualizaScope() {
@@ -27,6 +28,26 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.fazPesquisa = function (registros, string) {
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
+        };
+        
+        $scope.statusVisita = function(data, visitarealizada){
+            var hoje = new Date();
+            var coisa;
+            if(hoje < new Date(data)){
+                coisa = "warning";
+                if(visitarealizada){
+                    coisa = "success";
+                }
+            }
+            else {
+                if(visitarealizada){
+                    coisa = "success";
+                }
+                else {
+                    coisa = "danger";
+                }
+            }
+            return coisa;
         };
         
         $scope.reset = function (form) {
@@ -117,11 +138,49 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                                 $scope.horaSaida = "Não informada";
                             }
                             if(!dados.entidade){
-                                dados.entidade.nome = 'Não informado';
+                                $scope.dadosEntidade = 'Não informado';
+                            }
+                            else{
+                                $scope.dadosEntidade = dados.entidade.nome + ' (' + dados.entidade.endereco.cidade.descricao + ' - ' + dados.entidade.endereco.cidade.estado.sigla + ')';                            
+                            }
+                            
+                            if(dados.entidade.telefone.telefone){
+                                $scope.dadosEntidadeTelefone = dados.entidade.telefone.telefone;
+                                if( dados.entidade.telefonesecundario.telefone){
+                                    $scope.dadosEntidadeTelefone +=  ' / ' + dados.entidade.telefonesecundario.telefone;
+                                }
+                            }
+                            
+                            if(!dados.seriecurso){
+                                dados.seriecurso = 'Série / curso não informado';
+                            }
+                            
+                            if(!dados.observacao){
+                                dados.observacao = 'Não informado';
                             }
                             
                             if(!dados.telefonevisita){
                                 dados.telefonevisita = 'Não informado';
+                            }
+                            
+                            var hoje = new Date();
+                            if(hoje < new Date(data.datavisita)){
+                                $scope.cor = "warning";
+                                $scope.status = "a ser realizada";
+                                if(dados.visitarealizada){
+                                    $scope.cor = "success";
+                                    $scope.status = "já realizada";
+                                }
+                            }
+                            else {
+                                if(dados.visitarealizada){
+                                    $scope.cor = "success";
+                                    $scope.status = "já realizada";
+                                }
+                                else {
+                                    $scope.cor = "danger";
+                                    $scope.status = "não foi realizada";
+                                }
                             }
                             
                             $scope.visita = dados;
