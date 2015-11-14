@@ -11,7 +11,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             }
             $scope.dadosRecebidos = ServicePaginacao.atualizarListagens(qtdePorPag, pag, campo, string, $rootScope.ent, troca, paro);
             atualizaScope;
-            console.log($scope.dadosRecebidos);
         };
 
         function atualizaScope() {
@@ -114,7 +113,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                     }
                     $http.get(busca)
                         .success(function (data) {
-                            console.log(data);
                             $scope.datavisita = $scope.dateToData(data.datavisita);
                             var dados = data;
                             var d = new Date(data.datavisita);
@@ -152,15 +150,24 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                             }
                             
                             if(!dados.seriecurso){
-                                dados.seriecurso = 'Série / curso não informado';
+                                $scope.seriecurso = 'Série / curso não informado';
+                            }
+                            else {
+                                $scope.seriecurso = dados.seriecurso;
                             }
                             
                             if(!dados.observacao){
-                                dados.observacao = 'Não informado';
+                                $scope.observacao = 'Não informado';
+                            }
+                            else {
+                                $scope.observacao = dados.observacao;
                             }
                             
                             if(!dados.telefonevisita){
-                                dados.telefonevisita = 'Não informado';
+                                $scope.telefonevisita = 'Não informado';
+                            }
+                            else {
+                                $scope.telefonevisita = dados.telefonevisita;
                             }
                             
                             var hoje = new Date();
