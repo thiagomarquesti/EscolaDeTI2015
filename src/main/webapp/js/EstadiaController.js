@@ -13,6 +13,12 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             atualizaScope;
         };
 
+        $scope.chamarModalEstadia = function(idestadia) {
+            jQuery('#modalEstadia').modal('show', {backdrop: 'static'});
+            
+            carregarEstadiaModal(idestadia); 
+        };
+
         function atualizaScope() {
             $scope = $rootScope;
         }
@@ -78,9 +84,37 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
 
                             $scope.isNovaEstadia = false;
+                            console.log($scope.estadia);
                         })
                         .error(deuErro);
             }
+        };
+
+        $scope.carregarEstadiaModal = function (idEstadia) {
+            console.log(idEstadia);
+            $timeout(function () {
+                $http.get("/estadia/obj/" + idEstadia)
+                        .success(function (data) {
+                            novaEstadia();
+                            $scope.estadia.idestadia = $routeParams.id;
+                            var d = new Date(data.dataentrada);
+                            $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                            d = (data.datasaida) ? new Date(data.datasaida) : "";
+                            console.log(data.datasaida);
+                            $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
+                            console.log($scope.estadia.datasaida);
+                            $scope.estadia.observacoesentrada = data.observacoesentrada;
+                            $scope.estadia.observacoessaida = data.observacoessaida;
+                            $scope.estadia.familia = data.familia.idfamilia;
+                            $scope.carregarMembros($scope.estadia.familia);
+                            getSelects($routeParams.id);
+                            $scope.estadia.representante.telefone = data.representante.telefone.telefone;
+
+                            $scope.isNovaEstadia = false;
+                            console.log($scope.estadia);
+                        })
+                        .error(deuErro);
+            }, 100);
         };
 
         function getSelects(id) {
@@ -102,9 +136,9 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         toastr.success("Atualizado com sucesso!");
                     })
                     .error(deuErroSalvar);
-            $timeout(function (){
+            $timeout(function () {
                 $scope.atualizarListagens($scope.busca.numregistros, $scope.pagina, $scope.campoAtual, '', '', $scope.ent, '');
-            },100);
+            }, 100);
         };
 
         $scope.atualizarEstadia = function () {
