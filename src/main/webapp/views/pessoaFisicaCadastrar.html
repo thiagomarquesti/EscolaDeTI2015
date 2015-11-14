@@ -170,9 +170,7 @@
             </div>
             <div class="form-group">
                 <label for="tfoto" class="col-md-2 control-label">Foto: </label>
-                <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
-                <label for="foto" class="col-md-1 control-label">OU: </label>
-                <div class="col-md-3"><input type="file" ng-model="fisica.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+                <div class="col-md-3"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <div class="col-md-5"><img src="{{fisica.imgSrc}}" class="img-circle" style="width: 40px;"></div>
                 <div class="modal fade" id="fotoModal" data-backdrop="static">
                     <div class="modal-dialog">
