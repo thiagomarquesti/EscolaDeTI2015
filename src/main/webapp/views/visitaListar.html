@@ -41,10 +41,10 @@
                             <span class="badge badge-{{statusVisita(v.datavisita, v.visitarealizada)}}">&nbsp;</span> &nbsp;
                             {{v.nomepj}}
                         </td>
-                        <td>{{dateToData(v.datavisita)}}</td>
-                        <td>Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
-                        <td>{{v.quantidadedevisitantes}} pessoas</td>
-                        <td>{{v.nomepf}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{dateToData(v.datavisita)}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.quantidadedevisitantes}} pessoas</td>
+                        <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{v.nomepf}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
