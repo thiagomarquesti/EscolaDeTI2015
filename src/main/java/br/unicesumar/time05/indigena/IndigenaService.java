@@ -7,6 +7,7 @@ import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
+import br.unicesumar.time05.relatorios.relIndigenaBase;
 import br.unicesumar.time05.terraindigena.TerraIndigena;
 import br.unicesumar.time05.terraindigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
+import org.apache.commons.collections.map.MultiValueMap;
 import org.aspectj.weaver.patterns.FormalBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -118,7 +120,9 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         return query.execute(SQLConsultaIndigena);
     }
 
-    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, Map<String, Object> paramtros) {
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, relIndigenaBase parametros) {
+        Map<String, Object> paramtros = MultiValueMap.decorate(new HashMap<>());
+        
         return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, paramtros);
     }
 

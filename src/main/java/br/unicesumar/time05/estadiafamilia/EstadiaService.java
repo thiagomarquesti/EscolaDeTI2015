@@ -2,7 +2,9 @@ package br.unicesumar.time05.estadiafamilia;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
+import br.unicesumar.time05.relatorios.relEstadiaBase;
 import classesbase.ServiceBase;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -122,7 +124,9 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
         this.alterar(estadia);
     }
 
-    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, Map<String, Object> paramtros) {
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, relEstadiaBase parametros) {
+        Map<String, Object> paramtros = new HashMap<>();
+        
         return rel.gerarRelatorio("Estadia.jrxml", formatoRelatorio, paramtros);
     }
 }

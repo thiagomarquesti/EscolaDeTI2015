@@ -1,6 +1,7 @@
 package br.unicesumar.time05.estadiafamilia;
 
 import br.unicesumar.time05.relatorios.formatoRelatorio;
+import br.unicesumar.time05.relatorios.relEstadiaBase;
 import classesbase.ControllerBase;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class EstadiaController extends ControllerBase<Estadia, Long, EstadiaServ
     }
 
     @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
-    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
+    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody relEstadiaBase parametros) {
         return service.gerarRelatorio(formatoRelatorio, parametros);
     }
 }

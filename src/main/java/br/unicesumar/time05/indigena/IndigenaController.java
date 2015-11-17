@@ -1,6 +1,7 @@
 package br.unicesumar.time05.indigena;
 
 import br.unicesumar.time05.relatorios.formatoRelatorio;
+import br.unicesumar.time05.relatorios.relIndigenaBase;
 import classesbase.ControllerBase;
 import java.io.File;
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class IndigenaController extends ControllerBase<CriarIndigena, Long, Indi
     }
 
     @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
-    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody Map<String, Object> parametros) {
+    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody relIndigenaBase parametros) {
         return service.gerarRelatorio(formatoRelatorio, parametros);
     }
 

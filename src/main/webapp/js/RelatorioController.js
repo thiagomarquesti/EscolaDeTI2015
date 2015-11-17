@@ -55,12 +55,12 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
         $scope.novoRelEstadia = function () {
             $scope.relatorioestadia = {
-                datainicial: null,
-                datafinal: null,
-                familia: null,
-                etnia: null,
-                terraindigena: null,
-                representante: null
+                dataini: null,
+                datafim: null,
+                familias: null,
+                etnias: null,
+                terrasindigena: null,
+                representantes: null
             };
         };
         $scope.novoRelVisita = function () {
@@ -149,82 +149,59 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 convenios: null
             };
 
-            parametro.dataini = $scope.relatorioindigena.dataini;//?dataToDate($scope.relatorioindigena.dataini):null;
-            parametro.datafim = ($scope.relatorioindigena.datafim) ? dataToDate($scope.relatorioindigena.datafim) : null;
-            parametro.generos = ($scope.generofem) ? "FEMININO" : "";
-            if (parametro.generos != "")
-                parametro.generos += ($scope.generomasc) ? ", " + "MASCULINO" : "";
-            else
-                parametro.generos = ($scope.generomasc) ? "MASCULINO" : null;
+            parametro.dataini = ($scope.relatorioindigena.dataini) ? $scope.relatorioindigena.dataini : null;
+            parametro.datafim = ($scope.relatorioindigena.datafim) ? $scope.relatorioindigena.datafim : null;
+
+            if ($scope.generofem || $scope.generomasc) {
+                parametro.generos = [];
+                parametro.generos[0] = $scope.generomasc;
+                parametro.generos[1] = $scope.generofem;
+            }
 
             if ($scope.relatorioindigena.convenios != null && $scope.relatorioindigena.convenios != "") {
-                parametro.convenios = "";
+                parametro.convenios = [];
                 for (x = 0; x < $scope.relatorioindigena.convenios.length; x++) {
-                    if (x == $scope.relatorioindigena.convenios.length - 1) {
-                        parametro.convenios += $scope.relatorioindigena.convenios[x].descricao;
-                    } else {
-                        parametro.convenios += $scope.relatorioindigena.convenios[x].descricao + ",";
-                    }
+                    parametro.convenios[x] = $scope.relatorioindigena.convenios[x].idconvenio;
                 }
             } else
                 $scope.relatorioindigena.convenios = null;
 
             if ($scope.relatorioindigena.familias != null && $scope.relatorioindigena.familias != "") {
-                parametro.familias = "";
+                parametro.familias = [];
                 for (x = 0; x < $scope.relatorioindigena.familias.length; x++) {
-                    if (x == $scope.relatorioindigena.familias.length - 1) {
-                        parametro.familias += $scope.relatorioindigena.familias[x].idfamilia;
-                    } else {
-                        parametro.familias += $scope.relatorioindigena.familias[x].idfamilia + ",";
-                    }
+                    parametro.familias[x] = $scope.relatorioindigena.familias[x].idfamilia;
                 }
             } else
                 $scope.relatorioindigena.familias = null;
 
             if ($scope.relatorioindigena.etnias != null && $scope.relatorioindigena.etnias != "") {
-                parametro.etnias = "";
+                parametro.etnias = [];
                 for (x = 0; x < $scope.relatorioindigena.etnias.length; x++) {
-                    if (x == $scope.relatorioindigena.etnias.length - 1) {
-                        parametro.etnias += $scope.relatorioindigena.etnias[x].idetnia;
-                    } else {
-                        parametro.etnias += $scope.relatorioindigena.etnias[x].idetnia + ",";
-                    }
+                    parametro.etnias[x] = $scope.relatorioindigena.etnias[x].idetnia;
                 }
             } else
                 $scope.relatorioindigena.etnias = null;
 
             if ($scope.relatorioindigena.escolaridades != null && $scope.relatorioindigena.escolaridades != "") {
-                parametro.escolaridades = "";
+                parametro.escolaridades = [];
                 for (x = 0; x < $scope.relatorioindigena.escolaridades.length; x++) {
-                    if (x == $scope.relatorioindigena.escolaridades.length - 1) {
-                        parametro.escolaridades += $scope.relatorioindigena.escolaridades[x].valor;
-                    } else {
-                        parametro.escolaridades += $scope.relatorioindigena.escolaridades[x].valor + ",";
-                    }
+                    parametro.escolaridades[x] = $scope.relatorioindigena.escolaridades[x].valor;
                 }
             } else
                 $scope.relatorioindigena.escolaridades = null;
 
             if ($scope.relatorioindigena.estadoscivis != null && $scope.relatorioindigena.estadoscivis != "") {
-                parametro.estadoscivis = "";
+                parametro.estadoscivis = [];
                 for (x = 0; x < $scope.relatorioindigena.estadoscivis.length; x++) {
-                    if (x == $scope.relatorioindigena.estadoscivis.length - 1) {
-                        parametro.estadoscivis += $scope.relatorioindigena.estadoscivis[x].valor;
-                    } else {
-                        parametro.estadoscivis += $scope.relatorioindigena.estadoscivis[x].valor + ",";
-                    }
+                    parametro.estadoscivis[x] = $scope.relatorioindigena.estadoscivis[x].valor;
                 }
             } else
                 $scope.relatorioindigena.estadoscivis = null;
 
             if ($scope.relatorioindigena.terrasindigena != null && $scope.relatorioindigena.terrasindigena != "") {
-                parametro.terrasindigena = "";
+                parametro.terrasindigena = [];
                 for (x = 0; x < $scope.relatorioindigena.terrasindigena.length; x++) {
-                    if (x == $scope.relatorioindigena.terrasindigena.length - 1) {
-                        parametro.terrasindigena += $scope.relatorioindigena.terrasindigena[x].idterraindigena;
-                    } else {
-                        parametro.terrasindigena += $scope.relatorioindigena.terrasindigena[x].idterraindigena + ",";
-                    }
+                    parametro.terrasindigena[x] = $scope.relatorioindigena.terrasindigena[x].idterraindigena;
                 }
             } else
                 $scope.relatorioindigena.terrasindigena = null;
@@ -234,7 +211,9 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        console.log(err);
+                    });
         };
 
         $scope.colaboradorRel = function () {
@@ -243,8 +222,51 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             console.log($scope.relatoriocolaborador);
         };
         $scope.estadiaRel = function (tipo) {
-            console.log($scope.relatorioestadia);
-            $http.post("/estadia/relatorio/" + tipo, $scope.relatorioestadia)
+            var parametro = {
+                dataini: null,
+                datafim: null,
+                familias: null,
+                etnias: null,
+                terrasindigena: null,
+                representantes: null
+            };
+            parametro.dataini = ($scope.relatorioestadia.dataini) ? $scope.relatorioestadia.dataini : null;
+            parametro.datafim = ($scope.relatorioestadia.datafim) ? $scope.relatorioestadia.datafim : null;
+            
+            if ($scope.relatorioestadia.familias != null && $scope.relatorioestadia.familias != "") {
+                parametro.familias = [];
+                for (x = 0; x < $scope.relatorioestadia.familias.length; x++) {
+                    parametro.familias[x] = $scope.relatorioestadia.familias[x].idfamilia;
+                }
+            } else
+                $scope.relatorioestadia.familias = null;
+
+            if ($scope.relatorioestadia.etnias != null && $scope.relatorioestadia.etnias != "") {
+                parametro.etnias = [];
+                for (x = 0; x < $scope.relatorioestadia.etnias.length; x++) {
+                    parametro.etnias[x] = $scope.relatorioestadia.etnias[x].idetnia;
+                }
+            } else
+                $scope.relatorioestadia.etnias = null;
+
+            if ($scope.relatorioestadia.terrasindigena != null && $scope.relatorioestadia.terrasindigena != "") {
+                parametro.terrasindigena = [];
+                for (x = 0; x < $scope.relatorioestadia.terrasindigena.length; x++) {
+                    parametro.terrasindigena[x] = $scope.relatorioestadia.terrasindigena[x].idterraindigena;
+                }
+            } else
+                $scope.relatorioestadia.terrasindigena = null;
+
+            if ($scope.relatorioestadia.representantes != null && $scope.relatorioestadia.representantes != "") {
+                parametro.representantes = [];
+                for (x = 0; x < $scope.relatorioestadia.representantes.length; x++) {
+                    parametro.representantes[x] = $scope.relatorioestadia.representantes[x].idrepresentante;
+                }
+            } else
+                $scope.relatorioestadia.representantes = null;
+            
+            console.log(parametro);
+            $http.post("/estadia/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
                     })
