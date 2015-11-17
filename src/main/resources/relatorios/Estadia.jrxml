@@ -19,7 +19,7 @@
               es.datasaida,
               COUNT(ei.codigoassindi) as membrospresentes
   FROM estadia es
-    JOIN indigena i ON es.representante_codigoassindi = i.codigoassindi
+    JOIN indigena i ON es.idrepresentante = i.codigoassindi
     JOIN familia f ON es.idfamilia = f.idfamilia
     JOIN estadia_indigena ei ON es.idestadia = ei.idestadia
   
