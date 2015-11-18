@@ -1,5 +1,6 @@
 package br.unicesumar.time05.usuario.sessaousuario;
 
+import br.unicesumar.time05.email.EnviaEmail;
 import br.unicesumar.time05.itemacesso.ItemAcessoUsuarioInMemory;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +59,10 @@ public class SessaoUsuarioController {
 //    "titulo";"teste com parametro"
 //    "conteudo";"teste com parametro"
 //}
-    @RequestMapping(value = "/enviaemail",  method = RequestMethod.GET)
-    //@RequestMapping(value = "/enviaemail",  method = RequestMethod.POST)
-    //public void enviaemail(@RequestBody EnviaEmail aEnviaEmail){
-    public void enviaemail(){
+//    @RequestMapping(value = "/enviaemail",  method = RequestMethod.GET)
+    @RequestMapping(value = "/enviaemail",  method = RequestMethod.POST)
+    public void enviaemail(@RequestBody EnviaEmail aEnviaEmail){
+//    public void enviaemail(){
         final String username = "contatoassindi@gmail.com";
         final String password = "assindi123";
 
@@ -83,10 +84,9 @@ public class SessaoUsuarioController {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress("from-email@gmail.com"));
                 message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse("andreyhideki@gmail.com"));
-                message.setSubject("TESTE Titulo");
-                message.setText("ASSINDI,"
-                        + "\n\n TESTEEEEEEEE!");
+                        InternetAddress.parse(aEnviaEmail.getEndereco()));
+                message.setSubject(aEnviaEmail.getTitulo());
+                message.setText(aEnviaEmail.getConteudo());
 
                 Transport.send(message);
 
