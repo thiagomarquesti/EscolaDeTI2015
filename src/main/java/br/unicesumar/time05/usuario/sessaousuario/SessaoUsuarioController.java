@@ -53,16 +53,12 @@ public class SessaoUsuarioController {
     }
     
 //    aEnviaEmail{
-//    "username";""
-//    "password";""
-//    "endereco";"andreyhideki@gmail.com"
-//    "titulo";"teste com parametro"
-//    "conteudo";"teste com parametro"
+//    "endereco":"andreyhideki@gmail.com"
+//    "titulo":"teste com parametro"
+//    "conteudo":"teste com parametro"
 //}
-//    @RequestMapping(value = "/enviaemail",  method = RequestMethod.GET)
     @RequestMapping(value = "/enviaemail",  method = RequestMethod.POST)
     public void enviaemail(@RequestBody EnviaEmail aEnviaEmail){
-//    public void enviaemail(){
         final String username = "contatoassindi@gmail.com";
         final String password = "assindi123";
 
@@ -80,20 +76,16 @@ public class SessaoUsuarioController {
           });
 
         try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("from-email@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(aEnviaEmail.getEndereco()));
+            message.setSubject(aEnviaEmail.getTitulo());
+            message.setText(aEnviaEmail.getConteudo());
 
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("from-email@gmail.com"));
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(aEnviaEmail.getEndereco()));
-                message.setSubject(aEnviaEmail.getTitulo());
-                message.setText(aEnviaEmail.getConteudo());
-
-                Transport.send(message);
-
-                //System.out.println("Done");
-
+            Transport.send(message);
         } catch (MessagingException e) {
-                throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 }
