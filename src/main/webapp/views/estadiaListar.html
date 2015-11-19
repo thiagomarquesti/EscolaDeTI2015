@@ -40,12 +40,15 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', ent, '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td>{{f.nomefamilia}}</td>
-                        <td>{{dateToData(f.dataentrada)}}</td>
-                        <td>{{dateToData(f.datasaida)}}</td>
-                        <td>{{f.quantidademembros}}</td>
-                        <td>{{f.nome}}</td>
-                        <td>{{f.telefone}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">
+                            <span class="badge badge-{{statusEstadia(f.datasaida)}}">&nbsp;</span> &nbsp;
+                            {{f.nomefamilia}}
+                        </td>                        
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{dateToData(f.dataentrada)}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{dateToData(f.datasaida)}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.quantidademembros}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.nome}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
@@ -54,12 +57,13 @@
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarEstadia(f.idestadia)">Editar</a></li>
                                     <li><a ng-click="getIdEstadia(f.idestadia)" onclick="jQuery('#saidaModal').modal('show', {backdrop: 'static'});">Registrar Saída</a></li>
-                                </ul>
+                                </ul> 
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table> 
+            <div class="modal fade custom-width" id="modalEstadia" data-backdrop="true" ng-include="'views/fichaEstadia.html'"></div>            
             <div class="panel-footer">Registros encontrados: {{dadosRecebidos.itens.totalDeRegistros}}</div>            
         </div>
         <div id="blocoPaginacao">
