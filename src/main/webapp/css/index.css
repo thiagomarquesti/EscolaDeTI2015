@@ -3,7 +3,8 @@ body{
 }
 
 #topo {
-    background-image: url(../img/fundo_bambu4.jpg);
+    background-color: transparent;
+    background-image: url(../img/fundo_bambu.png);
     background-size: 100%;
     background-position:  center 110px;
     border-radius: 10px;
