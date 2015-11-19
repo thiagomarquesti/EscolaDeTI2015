@@ -17,7 +17,7 @@ body {
 .bg_video{
 	position: fixed; 
 	right: 0; 
-	top: 150px;
+	top: 0px;
 	min-width: 100%; 
 	min-height: 100%;
 	width: auto; 
@@ -29,4 +29,8 @@ body {
 
 .login-header {
     background-color: transparent !important;
+}
+
+.login-page .login-form .form-group .input-group {
+    padding-right: 6px;
 }

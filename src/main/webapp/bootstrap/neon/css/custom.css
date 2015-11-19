@@ -34,6 +34,10 @@ label {
     color: #597A9E;
 }
 
+label.novoAdmin {
+    color: #FFF;
+}
+
 .panel-danger {
   border-color: #fff;
 }
