@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="18" version="2.0">
+<workbench progressCount="12" version="2.0">
 <workbenchAdvisor/>
-<window height="728" maximized="true" width="1024" x="78" y="0">
+<window height="728" maximized="true" width="1024" x="282" y="-22">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -87,8 +87,8 @@
 <alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
 <hide_menu_item_id id="org.eclipse.ui.run"/>
 <hide_menu_item_id id="org.eclipse.search.menu"/>
-<hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.ui.workbench.navigate"/>
+<hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="com.jaspersoft.studio.Repository"/>
@@ -97,8 +97,13 @@
 <view id="org.eclipse.gef.ui.palette_view"/>
 <view id="org.eclipse.ui.views.PropertySheet"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
-<view id="com.jaspersoft.studio.editor.preview.reportstate"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@5bda8ac" orientation="256" selectedTabId="com.jaspersoft.studio.editor.preview.reportstate" style="0">
+<fastViews>
+<view id="com.jaspersoft.studio.editor.preview.reportstate" ratio="0.2247557"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@947e4de">
@@ -119,7 +124,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="250" ratioRight="750" relationship="2" relative="org.eclipse.ui.internal.ViewStack@947e4de"/>
+<info part="org.eclipse.ui.editorss" ratio="0.16236162" ratioLeft="220" ratioRight="1135" relationship="2" relative="org.eclipse.ui.internal.ViewStack@947e4de"/>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@39554612" ratio="0.7359347" ratioLeft="811" ratioRight="291" relationship="2" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.gef.ui.palette_view" appearance="2" expanded="2">
 <page content="org.eclipse.gef.ui.palette_view" label="Palette"/>
@@ -139,11 +144,9 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@5bda8ac" ratio="0.4893617" ratioLeft="299" ratioRight="312" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="com.jaspersoft.studio.editor.preview.reportstate" appearance="2" expanded="2">
-<page content="com.jaspersoft.studio.editor.preview.reportstate" label="Report State"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<folder appearance="2" expanded="0">
+<page content="com.jaspersoft.studio.editor.preview.reportstate" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@4f02af94" ratio="0.5" ratioLeft="303" ratioRight="303" relationship="4" relative="org.eclipse.ui.internal.ViewStack@947e4de">
@@ -176,6 +179,14 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@947e4de"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@4f02af94"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@39554612"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@d6b6526"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -183,6 +194,7 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@5bda8ac"/>
 </trimArea>
 </trimLayout>
 </window>

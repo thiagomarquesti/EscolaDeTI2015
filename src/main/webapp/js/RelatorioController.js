@@ -154,10 +154,19 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
 
             if ($scope.generofem || $scope.generomasc) {
                 parametro.generos = [];
-                parametro.generos[0] = $scope.generomasc;
-                parametro.generos[1] = $scope.generofem;
-            }
+                if ($scope.generofem) {
+                    parametro.generos[0] = "FEMININO";
+                }
 
+                if ($scope.generomasc) {
+
+                    if (parametro.generos == null) {
+                        parametro.generos[0] = "MASCULINO";
+                    } else {
+                        parametro.generos[1] = "MASCULINO";
+                    }
+                }
+            }
             if ($scope.relatorioindigena.convenios != null && $scope.relatorioindigena.convenios != "") {
                 parametro.convenios = [];
                 for (x = 0; x < $scope.relatorioindigena.convenios.length; x++) {
@@ -232,7 +241,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             };
             parametro.dataini = ($scope.relatorioestadia.dataini) ? $scope.relatorioestadia.dataini : null;
             parametro.datafim = ($scope.relatorioestadia.datafim) ? $scope.relatorioestadia.datafim : null;
-            
+
             if ($scope.relatorioestadia.familias != null && $scope.relatorioestadia.familias != "") {
                 parametro.familias = [];
                 for (x = 0; x < $scope.relatorioestadia.familias.length; x++) {
@@ -264,7 +273,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 }
             } else
                 $scope.relatorioestadia.representantes = null;
-            
+
             console.log(parametro);
             $http.post("/estadia/relatorio/" + tipo, parametro)
                     .success(function (data) {

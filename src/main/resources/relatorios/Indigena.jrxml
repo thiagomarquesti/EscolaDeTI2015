@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-12T21:06:03 -->
+<!-- 2015-11-19T21:49:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<parameter name="generos" class="java.lang.String">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Time05"/>
+	<parameter name="generos" class="java.util.Collection" nestedType="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<parameter name="dataini" class="java.sql.Date">
@@ -12,22 +14,24 @@
 	<parameter name="datafim" class="java.sql.Date">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
-	<parameter name="familias" class="java.lang.Long">
+	<parameter name="familias" class="java.util.Collection" nestedType="java.lang.Long">
+		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
-	<parameter name="etnias" class="java.lang.Long">
+	<parameter name="etnias" class="java.util.Collection" nestedType="java.lang.Long">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="escolaridades" class="java.util.Collection" nestedType="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
-	<parameter name="escolaridades" class="java.lang.String">
+	<parameter name="estadoscivis" class="java.util.Collection" nestedType="java.lang.String">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
-	<parameter name="estadoscivis" class="java.lang.String">
+	<parameter name="terrasindigena" class="java.util.Collection" nestedType="java.lang.Long">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
-	<parameter name="terrasindigena" class="java.lang.Long">
-		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
-	</parameter>
-	<parameter name="convenios" class="java.lang.Long">
+	<parameter name="convenios" class="java.util.Collection" nestedType="java.lang.Long">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
@@ -37,6 +41,14 @@
 	<parameter name="idadefim" class="java.lang.Integer">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataini_sql" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{dataini})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datafim_sql" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{datafim})]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT tb.*
@@ -51,33 +63,23 @@
           LEFT JOIN estadia_indigena ei ON (i.codigoassindi = ei.codigoassindi)
           LEFT JOIN estadia e ON (ei.idestadia = e.idestadia)
           LEFT JOIN indigena_convenio ic ON (i.codigoassindi = ic.indigena_id)
-         WHERE (($P{generos} IS NULL) OR (i.genero IN ($P!{generos})))
-           AND (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (e.dataentrada BETWEEN $P{dataini} AND $P{datafim}) OR (e.datasaida BETWEEN $P{dataini} AND $P{datafim}))
-           AND (($P{familias} IS NULL) OR ((fi.idfamilia IN ($P!{familias}))) OR (f.idfamilia IN ($P!{familias})))
-           AND (($P{etnias} IS NULL) OR (i.etnia_idetnia IN ($P!{etnias})))
-           AND (($P{escolaridades} IS NULL) OR (i.escolaridade IN ($P!{escolaridades})))
-           AND (($P{estadoscivis} IS NULL) OR (i.estadocivil IN ($P!{estadoscivis})))
-           AND (($P{terrasindigena} IS NULL) OR (i.terraindigena_idterraindigena IN ($P!{terrasindigena})))
-           AND (($P{convenios} IS NULL) OR (ic.convenio_id IN ($P{convenios})))
+         WHERE ($X{IN, i.genero, generos})                     
+           AND (($X{IN, fi.idfamilia, familias}) OR ($X{IN, f.idfamilia, familias})) 
+           AND ($X{IN, i.etnia_idetnia, etnias})
+           AND ($X{IN, i.escolaridade, escolaridades}) 
+           AND ($X{IN, i.estadocivil, estadoscivis})
+           AND ($X{IN, i.terraindigena_idterraindigena, terrasindigena})
+           AND ($X{IN, ic.convenio_id, convenios})
+           AND (($P{dataini_sql} IS NULL AND $P{dataini_sql} IS NULL) OR (e.dataentrada BETWEEN $P!{dataini_sql} AND $P!{datafim_sql}) OR (e.datasaida BETWEEN $P!{dataini_sql}  AND $P!{datafim_sql} ))
           GROUP BY i.codigoassindi                        
        ) AS tb
  WHERE (($P{idadeini} IS NULL AND $P{idadefim} IS NULL) OR (tb.idade BETWEEN $P{idadeini} AND $P{idadefim}))]]>
 	</queryString>
-	<field name="coluna" class="java.lang.Long">
-		<fieldDescription><![CDATA[Qtde.]]></fieldDescription>
-	</field>
-	<field name="codigoassindi" class="java.lang.Long">
-		<fieldDescription><![CDATA[Cód. Assindi]]></fieldDescription>
-	</field>
-	<field name="nome" class="java.lang.String">
-		<fieldDescription><![CDATA[Nome]]></fieldDescription>
-	</field>
-	<field name="genero" class="java.lang.String">
-		<fieldDescription><![CDATA[Genero]]></fieldDescription>
-	</field>
-	<field name="idade" class="java.lang.Integer">
-		<fieldDescription><![CDATA[Idade]]></fieldDescription>
-	</field>
+	<field name="coluna" class="java.lang.Long"/>
+	<field name="codigoassindi" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="genero" class="java.lang.String"/>
+	<field name="idade" class="java.lang.Double"/>
 	<group name="Group2">
 		<groupFooter>
 			<band/>

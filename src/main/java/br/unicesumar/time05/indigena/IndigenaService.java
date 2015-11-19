@@ -12,6 +12,7 @@ import br.unicesumar.time05.terraindigena.TerraIndigena;
 import br.unicesumar.time05.terraindigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -121,9 +122,10 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     }
 
     public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, relIndigenaBase parametros) {
-        Map<String, Object> paramtros = MultiValueMap.decorate(new HashMap<>());
-        
-        return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, paramtros);
+
+        ObjectMapper objMapper = new ObjectMapper();
+        Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
+        return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, MapParametros);
     }
 
 }

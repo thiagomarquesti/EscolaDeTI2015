@@ -2,7 +2,7 @@ package br.unicesumar.time05.relatorios;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 public class relIndigenaBase implements Serializable{
 
@@ -10,24 +10,24 @@ public class relIndigenaBase implements Serializable{
     private Date datafim;
     private int idadefim;
     private int idadeini;
-    private List<Long> familias;
-    private List<Long> etnias;
-    private List<String> escolaridades;
-    private List<String> estadoscivis;
-    private List<Boolean> generos;
-    private List<Long> terrasindigena;
-    private List<Long> convenios;
+    private Set<Long> etnias;
+    private Set<Long> familias;
+    private Set<String> escolaridades;
+    private Set<String> estadoscivis;
+    private Set<String> generos;
+    private Set<Long> terrasindigena;
+    private Set<Long> convenios;
 
     public relIndigenaBase() {
     }
 
-    public relIndigenaBase(Date dataini, Date datafim, int idadefim, int idadeini, List<Long> familias, List<Long> etnias, List<String> escolaridades, List<String> estadoscivis, List<Boolean> generos, List<Long> terrasindigena, List<Long> convenios) {
+    public relIndigenaBase(Date dataini, Date datafim, int idadefim, int idadeini, Set<Long> etnias, Set<Long> familias, Set<String> escolaridades, Set<String> estadoscivis, Set<String> generos, Set<Long> terrasindigena, Set<Long> convenios) {
         this.dataini = dataini;
         this.datafim = datafim;
         this.idadefim = idadefim;
         this.idadeini = idadeini;
-        this.familias = familias;
         this.etnias = etnias;
+        this.familias = familias;
         this.escolaridades = escolaridades;
         this.estadoscivis = estadoscivis;
         this.generos = generos;
@@ -67,60 +67,62 @@ public class relIndigenaBase implements Serializable{
         this.idadeini = idadeini;
     }
 
-    public List<Long> getFamilias() {
-        return familias;
-    }
-
-    public void setFamilias(List<Long> familias) {
-        this.familias = familias;
-    }
-
-    public List<Long> getEtnias() {
+    public Set<Long> getEtnias() {
         return etnias;
     }
 
-    public void setEtnias(List<Long> etnias) {
+    public void setEtnias(Set<Long> etnias) {
         this.etnias = etnias;
     }
 
-    public List<String> getEscolaridades() {
+    public Set<Long> getFamilias() {
+        return familias;
+    }
+
+    public void setFamilias(Set<Long> familias) {
+        this.familias = familias;
+    }
+
+    public Set<String> getEscolaridades() {
         return escolaridades;
     }
 
-    public void setEscolaridades(List<String> escolaridades) {
+    public void setEscolaridades(Set<String> escolaridades) {
         this.escolaridades = escolaridades;
     }
 
-    public List<String> getEstadoscivis() {
+    public Set<String> getEstadoscivis() {
         return estadoscivis;
     }
 
-    public void setEstadoscivis(List<String> estadoscivis) {
+    public void setEstadoscivis(Set<String> estadoscivis) {
         this.estadoscivis = estadoscivis;
     }
 
-    public List<Boolean> getGeneros() {
+    public Set<String> getGeneros() {
         return generos;
     }
 
-    public void setGeneros(List<Boolean> generos) {
+    public void setGeneros(Set<String> generos) {
         this.generos = generos;
     }
 
-    public List<Long> getTerrasindigena() {
+    public Set<Long> getTerrasindigena() {
         return terrasindigena;
     }
 
-    public void setTerrasindigena(List<Long> terrasindigena) {
+    public void setTerrasindigena(Set<Long> terrasindigena) {
         this.terrasindigena = terrasindigena;
     }
 
-    public List<Long> getConvenios() {
+    public Set<Long> getConvenios() {
         return convenios;
     }
 
-    public void setConvenios(List<Long> convenios) {
+    public void setConvenios(Set<Long> convenios) {
         this.convenios = convenios;
     }
+
     
+       
 }
