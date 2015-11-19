@@ -40,12 +40,15 @@
                 </thead>
                 <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', ent, '')">
                     <tr ng-repeat='f in dadosRecebidos.itens.listaDeRegistros' >
-                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.nomefamilia}}</td>
-                        <td>{{dateToData(f.dataentrada)}}</td>
-                        <td>{{dateToData(f.datasaida)}}</td>
-                        <td>{{f.quantidademembros}}</td>
-                        <td>{{f.nome}}</td>
-                        <td>{{f.telefone}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">
+                            <span class="badge badge-{{statusEstadia(f.datasaida)}}">&nbsp;</span> &nbsp;
+                            {{f.nomefamilia}}
+                        </td>                        
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{dateToData(f.dataentrada)}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{dateToData(f.datasaida)}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.quantidademembros}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.nome}}</td>
+                        <td class="pointer" data="{{f.idestadia}}" ng-click="chamarModalEstadia(f.idestadia);">{{f.telefone}}</td>
                         <td>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">

@@ -91,27 +91,56 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
+        $scope.getNomeFamilia = function (familia) {
+            $http.get("/familia/obj/" + familia.idfamilia).success(function (data) {
+                $scope.nomeFamilia = data.nomefamilia;
+            }).error(deuErro);
+        };
+
         $scope.carregarEstadiaModal = function (idEstadia) {
             console.log(idEstadia);
             $timeout(function () {
                 $http.get("/estadia/obj/" + idEstadia)
                         .success(function (data) {
                             novaEstadia();
+//                            $timeout(function () {
+                            $scope.getNomeFamilia(data.familia);
+//                            }, 500); 
+                            console.log(data);
                             $scope.estadia.idestadia = idEstadia;
                             $scope.dataentradaModal = $scope.dateToSoData(data.dataentrada);
-                            
+
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             $scope.diaSemana = diasSemana[$scope.estadia.dataentrada.getDay()];
                             d = (data.datasaida) ? new Date(data.datasaida) : "";
-                            $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
+
+                            var ds = new Date(data.datasaida);
+                            $scope.estadia.datasaida = new Date(ds.getTime() + (ds.getTimezoneOffset() * 60000));
+                            if (data.datasaida !== null) {
+                                $scope.dataSaidaModal = $scope.dateToSoData(data.datasaida);
+                                $scope.diaSemanaSaida = "(" + diasSemana[$scope.estadia.datasaida.getDay()] + ")";
+                                $scope.cor = "success";
+                                $scope.status = " concluída";
+                            } else {
+                                $scope.dataSaidaModal = "Não informado";
+                                $scope.diaSemanaSaida = "";
+                                $scope.cor = "warning";
+                                $scope.status = " em andamento";
+                            }
+
                             if (data.observacoesentrada.length > 0) {
                                 $scope.estadia.observacoesentrada = data.observacoesentrada;
                             } else {
                                 $scope.estadia.observacoesentrada = "Não informado";
                             }
 
-                            $scope.estadia.observacoessaida = data.observacoessaida;
+                            if (data.observacoessaida.length > 0) {
+                                $scope.estadia.observacoessaida = data.observacoessaida;
+                            } else {
+                                $scope.estadia.observacoessaida = "Não informado";
+                            }
+                            
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects(idEstadia);
@@ -213,12 +242,22 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         $scope.familia = data;
                     }).error(deuErro);
         };
+        
+        $scope.statusEstadia = function (datasaida){
+            if(datasaida === null){
+                return "warning";
+            }else{
+                return "success";                
+            };
+        };        
 
         $scope.carregarMembros = function (id) {
-            $http.get("/familia/membrosPorFamilia/" + id)
-                    .success(function (data) {
-                        $scope.itens = data;
-                    }).error(deuErro);
+            if (id !== undefined){
+                $http.get("/familia/membrosPorFamilia/" + id)
+                        .success(function (data) {
+                            $scope.itens = data;
+                        }).error(deuErro);
+            }
         };
 
         function dataToDate(valor) {

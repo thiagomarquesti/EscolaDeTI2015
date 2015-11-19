@@ -12,7 +12,7 @@
                 <label for="dataentrada" class="col-md-2 control-label"> Data de Entrada:</label>
                 <div class="col-md-3"><input type="date" ng-model="estadia.dataentrada" id="dataentrada" name="dataentrada" required="" class="form-control requerido"></div>
             </div>
-
+ 
             <div ng-show="formEstadia.dataentrada.$dirty && formEstadia.dataentrada.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formEstadia.dataentrada.$error.required">Preencha data de entrada. </span>
             </div>
