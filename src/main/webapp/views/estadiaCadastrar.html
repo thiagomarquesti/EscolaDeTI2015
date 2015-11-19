@@ -12,7 +12,7 @@
                 <label for="dataentrada" class="col-md-2 control-label"> Data de Entrada:</label>
                 <div class="col-md-3"><input type="date" ng-model="estadia.dataentrada" id="dataentrada" name="dataentrada" required="" class="form-control requerido"></div>
             </div>
- 
+
             <div ng-show="formEstadia.dataentrada.$dirty && formEstadia.dataentrada.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
                 <span ng-show="formEstadia.dataentrada.$error.required">Preencha data de entrada. </span>
             </div>
@@ -92,10 +92,7 @@
         <form name="formSaidaEstadia" novalidate class="form-horizontal form-groups-bordered">
             <div class="form-group">
                 <label for="datasaida" class="col-md-2 control-label"> Data de Saída:</label>
-                <div class="col-md-3"><input type="date" ng-model="estadia.datasaida" id="dataentrada" name="datasaida" required="" class="form-control requerido"></div>
-            </div>
-            <div ng-show="formSaidaEstadia.datasaida.$dirty && formSaidaEstadia.datasaida.$invalid" class="alert alert-danger col-md-offset-2 col-md-10" role="alert">
-                <span ng-show="formSaidaEstadia.datasaida.$error.required">Preencha data de saída. </span>
+                <div class="col-md-3"><input type="date" ng-model="estadia.datasaida" id="dataentrada" name="datasaida" required="" class="form-control"></div>
             </div>
             <div>
                 <label class="col-md-2 control-label" style="margin-left: -1%; margin-top: 20px;">Observações: </label>                
