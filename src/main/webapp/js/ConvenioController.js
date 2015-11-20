@@ -82,7 +82,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
         }
 
         function deuErroSalvar() {
-            toastr.error("Atenção, erro ao tentar salvar o convênio, verifique!");
+            toastr.error("Atenção, convênio já cadastrado!");
         }
 
         function deuErroDeletar() {
