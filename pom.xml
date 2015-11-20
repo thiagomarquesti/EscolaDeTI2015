@@ -112,7 +112,12 @@
         </dependency>
 
         <!-- JasperReport dependency ends -->
-        
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.3</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
 
