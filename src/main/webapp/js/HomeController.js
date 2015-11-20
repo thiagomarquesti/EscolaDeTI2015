@@ -286,10 +286,18 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     cal_day.addClass('no-have-events');
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
+                
+                var arrayBadges = [];
+                arrayBadges["event-notif"] =  "info";
+                arrayBadges["event-aniver"] = "success";
+                arrayBadges["event-visita"] = "warning";
+                
                 if (calendarArray[strtime] != undefined) {
                     for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
-                        console.log(calendarArray[strtime]);
-                        cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>') // Mostra a quantidade de eventos no dia.
+                        //console.log(calendarArray[strtime]);
+                        //cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>');
+                        var cor = calendarArray[strtime][u].tipo;
+                        cal_day_eventholder.append('<span class="badge badge-' + arrayBadges[cor] + '"> </span>');
                     }
                 }
                 cal_day.attr('strtime', strtime);
