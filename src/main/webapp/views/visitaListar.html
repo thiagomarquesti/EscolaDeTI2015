@@ -35,7 +35,7 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', 'ok', ent, '')">
+                <tbody ng-init="atualizarListagens(busca.numregistros, '', campoPrincipal, '', '', '')">
                     <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
                         <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">
                             <span class="badge badge-{{statusVisita(v.datavisita, v.visitarealizada)}}">&nbsp;</span> &nbsp;
@@ -64,6 +64,15 @@
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
+        
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <span class="badge badge-success">&nbsp;</span> &nbsp Visita realizada &nbsp&nbsp&nbsp
+                <span class="badge badge-warning">&nbsp;</span> &nbsp Visita a ser realizada &nbsp&nbsp&nbsp
+                <span class="badge badge-danger">&nbsp;</span> &nbsp Visita não realizada &nbsp&nbsp&nbsp
+            </div>
+        </div>
+        
     </div>
 </div>
 <div>

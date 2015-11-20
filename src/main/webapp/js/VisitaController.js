@@ -1,9 +1,10 @@
 module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', 'ServiceFuncoes', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
+        
         $scope.busca = {};
         $scope.placeHolder = "Buscar visita";
         $scope.ent = $rootScope.ent = "visita";
         $scope.campoPrincipal = 'datavisita';
-        $scope.isNovaEstadia = true;
+        $rootScope.tipoOrdem = 'desc';
 
         $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
             if (campo == null || campo == "") {
