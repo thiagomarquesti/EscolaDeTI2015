@@ -4,6 +4,7 @@ import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
 import br.unicesumar.time05.relatorios.relEstadiaBase;
 import classesbase.ServiceBase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,10 +124,10 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
         estadia.setObservacoessaida(saida.getObservacoessaida());
         this.alterar(estadia);
     }
-
-    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, relEstadiaBase parametros) {
-        Map<String, Object> paramtros = new HashMap<>();
-        
-        return rel.gerarRelatorio("Estadia.jrxml", formatoRelatorio, paramtros);
+    
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, ParametrosRelatorioEstadia parametros) {
+        ObjectMapper objMapper = new ObjectMapper();
+        Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
+        return rel.gerarRelatorio("Estadia.jrxml", formatoRelatorio, MapParametros);
     }
 }

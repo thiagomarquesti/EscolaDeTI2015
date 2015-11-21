@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-21T11:01:36 -->
+<!-- 2015-11-21T13:52:30 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="generos" class="java.util.Collection" nestedType="java.lang.String">
@@ -123,22 +123,25 @@
 				<reportElement x="0" y="0" width="40" height="15" uuid="e3e4ae25-a95b-4eae-84b3-f709218ace17">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<textElement textAlignment="Right"/>
 				<text><![CDATA[QTDE.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="0" width="80" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
+				<reportElement x="50" y="0" width="70" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
+				<textElement textAlignment="Right"/>
 				<text><![CDATA[CÓD. ASSINDI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="0" width="310" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
+				<reportElement x="130" y="0" width="300" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
 				<text><![CDATA[NOME]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="430" y="0" width="50" height="15" uuid="88b09e3f-5716-481e-a765-a98d159ba6b4"/>
+				<textElement textAlignment="Right"/>
 				<text><![CDATA[IDADE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="0" width="74" height="15" uuid="92bd5746-7502-408a-9398-72e71186d028"/>
+				<reportElement x="490" y="0" width="64" height="15" uuid="92bd5746-7502-408a-9398-72e71186d028"/>
 				<text><![CDATA[SEXO]]></text>
 			</staticText>
 		</band>
@@ -153,22 +156,25 @@
 				<reportElement x="0" y="0" width="40" height="15" printWhenGroupChanges="Group4" uuid="15b4c063-9ef5-44b9-8fc7-d4be45d4837e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{coluna}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="0" width="80" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
+				<reportElement x="50" y="0" width="70" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{codigoassindi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="0" width="310" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
+				<reportElement x="130" y="0" width="300" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="430" y="0" width="50" height="15" uuid="aa524ae5-c812-4cf0-b46b-19c668f8f8b2"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{idade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="0" width="74" height="15" uuid="ae40b06b-b05e-412b-883a-a7cdc7981916"/>
+				<reportElement x="490" y="0" width="64" height="15" uuid="ae40b06b-b05e-412b-883a-a7cdc7981916"/>
 				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
 			</textField>
 		</band>

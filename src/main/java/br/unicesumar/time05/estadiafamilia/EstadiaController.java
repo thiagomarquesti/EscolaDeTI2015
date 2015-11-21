@@ -31,7 +31,7 @@ public class EstadiaController extends ControllerBase<Estadia, Long, EstadiaServ
     }
 
     @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
-    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody relEstadiaBase parametros) {
+    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody ParametrosRelatorioEstadia parametros) {
         return service.gerarRelatorio(formatoRelatorio, parametros);
-    }
+    }        
 }

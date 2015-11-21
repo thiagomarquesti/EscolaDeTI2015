@@ -149,8 +149,8 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 convenios: null
             };
 
-            parametro.dataini = ($scope.relatorioindigena.dataini) ? $scope.relatorioindigena.dataini : null;
-            parametro.datafim = ($scope.relatorioindigena.datafim) ? $scope.relatorioindigena.datafim : null;
+            parametro.dataini = ($scope.relatorioindigena.dataini) ? dateToString($scope.relatorioindigena.dataini) : null;
+            parametro.datafim = ($scope.relatorioindigena.datafim) ? dataToString($scope.relatorioindigena.datafim) : null;
 
             if ($scope.generofem || $scope.generomasc) {
                 parametro.generos = [];
@@ -297,9 +297,9 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             toastr.error("Algo deu errado, tente novamente.", "Ops!");
         }
 
-        function dataToDate(valor) {
+        function dataToString(valor) {
             var date = new Date(valor);
-            var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+            var data = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
             return data;
         }
     }]);

@@ -39,7 +39,9 @@ public class Relatorio {
             URL reportResource = getClass().getClassLoader().getResource("./relatorios/" + nomeXmlJasper);
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
             JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
-
+            
+            print.setProperty(nomeXmlJasper, nomeXmlJasper);
+            
             File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdusuario());
             path.mkdirs();
             for (File arquivo : path.listFiles()) {

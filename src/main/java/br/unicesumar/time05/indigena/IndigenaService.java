@@ -7,7 +7,6 @@ import br.unicesumar.time05.etnia.Etnia;
 import br.unicesumar.time05.etnia.EtniaService;
 import br.unicesumar.time05.ocorrencia.Ocorrencia;
 import br.unicesumar.time05.relatorios.formatoRelatorio;
-import br.unicesumar.time05.relatorios.relIndigenaBase;
 import br.unicesumar.time05.terraindigena.TerraIndigena;
 import br.unicesumar.time05.terraindigena.TerraIndigenaService;
 import br.unicesumar.time05.upload.UploadService;
@@ -118,8 +117,7 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
         return query.execute(SQLConsultaIndigena);
     }
 
-    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, relIndigenaBase parametros) {
-
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, ParametrosRelatorioIndigena parametros) {
         ObjectMapper objMapper = new ObjectMapper();
         Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
         return rel.gerarRelatorio("Indigena.jrxml", formatoRelatorio, MapParametros);

@@ -28,6 +28,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Estadia.jrxml</name>
+			<type>1</type>
+			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Estadia.jrxml</location>
+		</link>
+		<link>
 			<name>Indigena.jasper</name>
 			<type>1</type>
 			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jasper</location>
@@ -36,6 +41,11 @@
 			<name>Indigena.jrxml</name>
 			<type>1</type>
 			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jrxml</location>
+		</link>
+		<link>
+			<name>familias.jrxml</name>
+			<type>1</type>
+			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/familias.jrxml</location>
 		</link>
 	</linkedResources>
 </projectDescription>
