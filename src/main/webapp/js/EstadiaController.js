@@ -72,7 +72,14 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 //                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
-                            $scope.estadia.familia = data.familia.idfamilia;
+                            $scope.estadia.familia = {
+                                "nomefamilia": data.familia.nomefamilia,
+                                "quantidade": data.familia.quantidade,
+                                "telefone": data.familia.telefone,
+                                "idrepresentante": data.familia.representante,
+                                "nome": data.familia.nome,
+                                "idfamilia": data.familia.idfamilia
+                            };
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects($routeParams.id);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
@@ -136,7 +143,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 datasaida: $scope.estadia.datasaida,
                 observacoesentrada: $scope.estadia.observacoesentrada,
                 observacoessaida: $scope.estadia.observacoessaida,
-                familia: {idfamilia: $scope.estadia.familia},
+                familia: $scope.estadia.familia,
                 representante: $scope.estadia.representante,
                 membros: $scope.estadia.membros
             };
@@ -174,11 +181,15 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                     }).error(deuErro);
         };
 
-        $scope.carregarMembros = function (id) {
-            $http.get("/familia/membrosPorFamilia/" + id)
-                    .success(function (data) {
-                        $scope.itens = data;
-                    }).error(deuErro);
+        $scope.carregarMembros = function (familia) {
+            console.log(familia.idfamilia);
+            var id = familia.idfamilia;
+            if (familia.idfamilia) {
+                $http.get("/familia/membrosPorFamilia/" + id)
+                        .success(function (data) {
+                            $scope.itens = data;
+                        }).error(deuErro);
+            }
         };
 
         function dataToDate(valor) {
