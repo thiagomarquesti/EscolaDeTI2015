@@ -89,10 +89,12 @@ public class Estadia implements Serializable {
     }
 
     public void setDatasaida(Date datasaida) {
-        if (this.dataentrada != null && this.dataentrada.before(datasaida)) {
-            this.datasaida = datasaida;
-        } else {
-            throw new RuntimeException("Data de saida não pode ser anterior à date de entrada.");
+        if (datasaida != null) {
+            if (this.dataentrada.before(datasaida)) {
+                this.datasaida = datasaida;
+            } else {
+                throw new RuntimeException("Data de saida não pode ser anterior à date de entrada.");
+            }
         }
     }
 
