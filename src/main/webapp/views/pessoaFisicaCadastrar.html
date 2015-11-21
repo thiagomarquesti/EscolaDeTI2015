@@ -76,7 +76,6 @@
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3 input-group">
                     <input type="date" ng-model="fisica.datanasc" id="datanasc" name="datanasc" required="" class="form-control requerido">
-                    <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                 </div>
             </div>
             
@@ -148,9 +147,9 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="fisica.telefone.telefone" id="telefone" name="telefone" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="fisica.telefone.telefone" id="telefone" name="telefone" required="" class="form-control sp_celphones requerido" placeholder="(99) 99999-9999"></div>
                 <label for="telefone" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="fisica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control phone_with_ddd" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="fisica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control sp_celphones" placeholder="(99) 99999-9999"></div>
             </div>
 
             <div ng-show="formFis.telefone.$dirty && formFis.telefone.$invalid" class="alert alert-danger col-md-12" role="alert">

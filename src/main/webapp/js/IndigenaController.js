@@ -95,12 +95,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                     descricao: data.terraIndigena.cidade.estado.descricao,
                                     idterraindigena: data.terraIndigena.idterraindigena
                                 };
-                                console.log(dados.terraIndigena);
-//                                cidade: "DIAMANTE DO NORTE"
-//                                descricao: "PARANÁ"
-//                                idterraindigena: 17
-//                                nometerra: "RESERVA INDÍGENA TEKOHA-AÑETETÊ"
-//                                sigla: "PR"
                                 dados.conveniosselecionados = data.convenio;
                                 if (!dados.cpf) {
                                     dados.cpfInformado = "CPF não informado";
@@ -123,7 +117,6 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 }
 
                                 $scope.indio = dados;
-                                console.log($scope.indio.imgSrc);
                                 $scope.isNovoIndio = false;
 
                             })
