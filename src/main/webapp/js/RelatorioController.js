@@ -224,7 +224,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     });
         };
 
-        $scope.colaboradorRel = function () {
+        $scope.colaboradorRel = function (tipo) {
             
             var parametro = {
                 generos: null,

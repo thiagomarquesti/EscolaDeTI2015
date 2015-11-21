@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-21T16:01:44 -->
+<!-- 2015-11-21T16:47:44 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Estadia" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="generos" class="java.util.Collection" nestedType="java.lang.String">
@@ -88,16 +88,16 @@
 				<text><![CDATA[QTDE.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="0" width="250" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
+				<reportElement x="70" y="0" width="240" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
 				<text><![CDATA[NOME]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="320" y="0" width="90" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
+				<reportElement x="310" y="0" width="90" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[FUNÇÃO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="420" y="0" width="61" height="15" uuid="88b09e3f-5716-481e-a765-a98d159ba6b4"/>
+				<reportElement x="400" y="0" width="80" height="15" uuid="88b09e3f-5716-481e-a765-a98d159ba6b4"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[TELEFONE]]></text>
 			</staticText>
@@ -122,17 +122,17 @@
 				<textFieldExpression><![CDATA[$F{qtde}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="0" width="250" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
+				<reportElement x="70" y="0" width="240" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
 				<textElement verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="0" width="90" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
+				<reportElement x="310" y="0" width="90" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{funcao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="0" width="61" height="15" uuid="aa524ae5-c812-4cf0-b46b-19c668f8f8b2"/>
+				<reportElement x="400" y="0" width="80" height="15" uuid="aa524ae5-c812-4cf0-b46b-19c668f8f8b2"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
 			</textField>
