@@ -8,10 +8,13 @@ import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
 import br.unicesumar.time05.endereco.Endereco;
+import br.unicesumar.time05.estadiafamilia.ParametrosRelatorioEstadia;
 import br.unicesumar.time05.funcao.FuncaoRepository;
 import br.unicesumar.time05.pessoa.TipoPessoa;
+import br.unicesumar.time05.relatorios.formatoRelatorio;
 import br.unicesumar.time05.upload.UploadService;
 import classesbase.ServiceBase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -222,6 +225,12 @@ public class FisicaService extends ServiceBase<CriarPessoaFisica, Long, FisicaRe
         } else {
             throw new RuntimeException("Campo email vazio!");
         }
+    }   
+    
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, ParametrosRelatorioColaborador parametros) {
+        ObjectMapper objMapper = new ObjectMapper();
+        Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
+        return rel.gerarRelatorio("Colaborador.jrxml", formatoRelatorio, MapParametros);
     }
 
 }

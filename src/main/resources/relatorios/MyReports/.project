@@ -28,6 +28,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Colaborador.jrxml</name>
+			<type>1</type>
+			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Colaborador.jrxml</location>
+		</link>
+		<link>
 			<name>Estadia.jrxml</name>
 			<type>1</type>
 			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Estadia.jrxml</location>
@@ -41,6 +46,11 @@
 			<name>Indigena.jrxml</name>
 			<type>1</type>
 			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jrxml</location>
+		</link>
+		<link>
+			<name>Visita.jrxml</name>
+			<type>1</type>
+			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Visita.jrxml</location>
 		</link>
 		<link>
 			<name>familias.jrxml</name>

@@ -46,11 +46,9 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
         $scope.novoRelColaborador = function () {
             $scope.relatoriocolaborador = {
-                idademax: "",
-                idademin: "",
                 generomasc: "",
                 generofem: "",
-                idfuncao: ""
+                funcoes: ""
             };
         };
         $scope.novoRelEstadia = function () {
@@ -133,7 +131,8 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
         $scope.formatoSlice = function (value) {
             return value.toString();
-        };
+        };        
+        
         $scope.indigenaRel = function (tipo) {
             var parametro = {
                 dataini: null,
@@ -226,9 +225,42 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
 
         $scope.colaboradorRel = function () {
-            $scope.relatoriocolaborador.idademax = $scope.idadeRange.max;
-            $scope.relatoriocolaborador.idademin = $scope.idadeRange.min;
-            console.log($scope.relatoriocolaborador);
+            
+            var parametro = {
+                generos: null,
+                funcoes: null                
+            };
+            
+            if ($scope.generofem || $scope.generomasc) {
+                parametro.generos = [];
+                if ($scope.generofem) {
+                    parametro.generos[0] = "FEMININO";
+                }
+
+                if ($scope.generomasc) {
+
+                    if (parametro.generos == null) {
+                        parametro.generos[0] = "MASCULINO";
+                    } else {
+                        parametro.generos[1] = "MASCULINO";
+                    }
+                }
+            }
+            
+            if ($scope.relatoriocolaborador.funcoes != null && $scope.relatoriocolaborador.funcoes != "") {
+                parametro.funcoes = [];
+                for (x = 0; x < $scope.relatoriocolaborador.funcoes.length; x++) {
+                    parametro.funcoes[x] = $scope.relatoriocolaborador.funcoes[x].idfuncao;
+                }
+            } else
+                $scope.relatoriocolaborador.funcoes = null;
+            
+            console.log(parametro);
+            $http.post("/pessoa/fisica/relatorio/" + tipo, parametro)
+                    .success(function (data) {
+                        $window.open(data.url);
+                    })
+                    .error(deuErro);
         };
         $scope.estadiaRel = function (tipo) {
             var parametro = {
