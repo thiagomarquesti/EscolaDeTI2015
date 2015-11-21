@@ -333,17 +333,19 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             $routeParams.id = indigena.codigoassindi;
         };
         
-        $scope.setIdOcorrencia = function (id) {
-            $scope.idOcorrenciaDelete = id;
+        $scope.confirmaExclusao = function (entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+            $scope.dadosExclusao.opcional = $routeParams.id;
+            console.log($scope.dadosExclusao);
         };
         
-        $scope.deletarOcorrencia = function () {
-            $http.delete("/ocorrencia/" + $scope.idOcorrenciaDelete + "/" + $routeParams.id)
-                    .success(function () {
-                        toastr.success("Ocorrência deletada com sucesso.", "Apagado");
-                        $scope.getOcorrencias();
-                    })
-                    .error(deuErro);
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id, $scope.dadosExclusao.opcional);
         };
 
         $scope.salvarOcorrencia = function () {
