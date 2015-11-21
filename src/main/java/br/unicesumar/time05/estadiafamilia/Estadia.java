@@ -38,7 +38,7 @@ public class Estadia implements Serializable {
             inverseJoinColumns = {
                 @JoinColumn(name = "codigoassindi", referencedColumnName = "codigoassindi")})
     private Set<Indigena> membros;
-    
+
     @JoinColumn(name = "idrepresentante")
     @ManyToOne(fetch = FetchType.EAGER)
     private Indigena representante;
@@ -89,7 +89,11 @@ public class Estadia implements Serializable {
     }
 
     public void setDatasaida(Date datasaida) {
-        this.datasaida = datasaida;
+        if (this.dataentrada != null && this.dataentrada.before(datasaida)) {
+            this.datasaida = datasaida;
+        } else {
+            throw new RuntimeException("Data de saida não pode ser anterior à date de entrada.");
+        }
     }
 
     public void setObservacoesentrada(String observacoesentrada) {
@@ -122,7 +126,6 @@ public class Estadia implements Serializable {
     public void setRepresentante(Indigena representante) {
         this.representante = representante;
     }
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -143,7 +146,5 @@ public class Estadia implements Serializable {
     public String toString() {
         return "Estadia{" + "idestadia=" + idestadia + ", dataentrada=" + dataentrada + ", datasaida=" + datasaida + ", observacoesentrada=" + observacoesentrada + ", observacoessaida=" + observacoessaida + ", familia=" + familia + ", membros=" + membros + ", representante=" + representante + '}';
     }
-
-    
 
 }

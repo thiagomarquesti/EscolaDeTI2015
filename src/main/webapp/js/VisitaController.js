@@ -86,7 +86,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         var diasSemana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-Feira", "Sábado");
         
         function timeToHora(valor){
-            var x = new Date(valor.getTime() + (valor.getTimezoneOffset() * 60000));
+            var x = new Date(valor.getTime());
             var hora = x.getHours();
             var min = x.getMinutes();
             if(hora < 10){
@@ -267,7 +267,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             }
 
             console.log(visitaCompleta);
-
             if ($scope.isNovaVisita) {
                 //console.log(visitaCompleta)
                 $http.post("/visita", visitaCompleta)
