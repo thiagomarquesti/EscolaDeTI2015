@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-21T15:56:57 -->
+<!-- 2015-11-22T18:14:12 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indigena" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="generos" class="java.util.Collection" nestedType="java.lang.String">
@@ -100,13 +100,17 @@
 				<frame>
 					<reportElement mode="Opaque" x="-1" y="0" width="595" height="79" backcolor="#FFFFFF" uuid="f10ef440-9bc5-48c8-8f77-2e559421e55d"/>
 					<staticText>
-						<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="230" y="18" width="150" height="43" forecolor="#000000" uuid="8e42b85b-20a5-40b2-88f8-abcb953e56d9"/>
+						<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="197" y="9" width="379" height="60" forecolor="#000000" uuid="8e42b85b-20a5-40b2-88f8-abcb953e56d9"/>
 						<box padding="0"/>
-						<textElement>
+						<textElement textAlignment="Right">
 							<font size="34" isBold="true"/>
 						</textElement>
-						<text><![CDATA[Indigena]]></text>
+						<text><![CDATA[Indigenas]]></text>
 					</staticText>
+					<image scaleImage="FillFrame">
+						<reportElement x="21" y="9" width="165" height="59" uuid="0f188582-d6d0-4e98-a23c-df13e3b73ff5"/>
+						<imageExpression><![CDATA["C:/escolaDeTI/escoladeti2015time05/src/main/webapp/img/assindi-logo.png"]]></imageExpression>
+					</image>
 				</frame>
 			</frame>
 		</band>
