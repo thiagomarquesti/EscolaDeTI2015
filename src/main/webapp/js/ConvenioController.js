@@ -110,7 +110,9 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
                             }
                             toastr.success("Convênio inserido com sucesso!");
                         })
-                        .error(deuErroSalvar);
+                        .error(function (err){
+                            toastr.error(err.message);
+                        });
             }
             else {
                 $http.put("/convenio/", $scope.convenio)

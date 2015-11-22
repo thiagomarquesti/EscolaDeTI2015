@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/convenio")
-public class ConvenioController extends ControllerBase<Convenio, Long, ConvenioService>{
+public class ConvenioController extends ControllerBase<Convenio, Long, ConvenioService> {
 
 }

@@ -135,7 +135,10 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                                 }
                                 toastr.success("Terra indígena inserida com sucesso!");
                             })
-                            .error(deuErro);
+                            .error(function (err){
+                                console.log(err);
+                                toastr.error(err.message);
+                            });
                 }
                 else {
                     terraCompleta.idterraindigena = $scope.terra.idterraindigena;

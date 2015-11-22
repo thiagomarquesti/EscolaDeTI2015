@@ -22,7 +22,7 @@
                 <label for="lider" class="col-md-2 control-label">Representante / líder:</label>
                     <multiselect id="representante" name="representante" class="input-lg" 
                              ng-model="familia.representante" 
-                             ms-header="Selecione o representante dessa família"
+                             ms-header="*  Selecione o representante dessa família"
                              options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indigenas' 
                              scroll-after-rows="8"
                              >
@@ -42,7 +42,7 @@
                 <label for="membros" class="col-md-2 control-label">Membros da família:</label>
                     <multiselect id="membros" name="membros" class="input-lg" 
                              ng-model="familia.membros" 
-                             ms-header="Selecione os membros dessa família"
+                             ms-header="*  Selecione os membros dessa família"
                              multiple="true" 
                              options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indigenas' 
                              scroll-after-rows="8"
