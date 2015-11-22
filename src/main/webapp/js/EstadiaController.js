@@ -228,13 +228,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
-        $scope.deletarEstadia = function (estadia) {
-            $http.delete("/estadia/" + estadia.idestadia)
-                    .success(function () {
-                        toastr.success("Estadia " + estadia.idestadia + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
-                    }).error(deuErroDeletar);
-        };
+//        $scope.deletarEstadia = function (estadia) {
+//            $http.delete("/estadia/" + estadia.idestadia)
+//                    .success(function () {
+//                        toastr.success("Estadia " + estadia.idestadia + " excluído com sucesso.");
+//                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
+//                    }).error(deuErroDeletar);
+//        };
 
         $scope.carregarFamilias = function () {
             $http.get("/familia")

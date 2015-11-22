@@ -45,7 +45,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarFamilia(f)">Editar</a></li>
-                                    <li><a ng-click="deletarFamilia(f)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('familia', 'família', f.nomefamilia, f.idfamilia)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -65,3 +65,5 @@
 <div>
     <a ng-href="#/Familia/nova" class="btn btn-success">Cadastrar nova</a>
 </div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

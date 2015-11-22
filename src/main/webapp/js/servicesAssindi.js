@@ -94,7 +94,7 @@ module.service('ServiceFuncoes', ['$http', '$rootScope', function ($http, $rootS
                 }
                 $http.delete(caminho)
                     .success(function(){
-                        toastr.success(nomeEntidade + " " + nomeRegistro + " excluído(a) com sucesso.", "Registro excluído!");
+                        toastr.success(primeiraMaiuscula(nomeEntidade) + " " + nomeRegistro + " excluído(a) com sucesso.", "Registro excluído!");
                     })
                     .error(function(){
                         toastr.error("Não foi possível excluir o(a) " + nomeEntidade + " " + nomeRegistro +".", "Erro ao excluir!");

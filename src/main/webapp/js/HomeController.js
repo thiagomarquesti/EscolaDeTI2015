@@ -209,10 +209,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             if (this.events !== undefined) {
                 var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
-                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
+                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event border-'+ ev[o]['tipo'] +'"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
-            $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p><a class="btn btn-success" href="#/Eventos/novo/' + this.data + '">Adicionar novo evento</a></p></div>');
+            $(".specific-day-scheme").append('<br><p><a class="btn btn-success" href="#/Eventos/novo/' + this.data + '">Adicionar novo evento</a></p>');
         }
         function activatecalendar() {
             $(this).parents('.calendar').removeClass('spec-day');
@@ -287,17 +287,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
                 
-                var arrayBadges = [];
-                arrayBadges["event-notif"] =  "info";
-                arrayBadges["event-aniver"] = "success";
-                arrayBadges["event-visita"] = "warning";
-                
                 if (calendarArray[strtime] != undefined) {
                     for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
                         //console.log(calendarArray[strtime]);
-                        //cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>');
-                        var cor = calendarArray[strtime][u].tipo;
-                        cal_day_eventholder.append('<span class="badge badge-' + arrayBadges[cor] + '"> </span>');
+                        cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>');
                     }
                 }
                 cal_day.attr('strtime', strtime);

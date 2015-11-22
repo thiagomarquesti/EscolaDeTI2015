@@ -52,7 +52,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarVisita(v)">Editar</a></li>
-                                    <li><a ng-click="deletarVisita(v)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('visita', 'visita', dateToData(v.datavisita) + ' de ' + v.nomepj, v.idvisita)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -80,3 +80,5 @@
 </div>
 
 <div class="modal fade custom-width" id="modalVisita" data-backdrop="true" ng-include="'views/fichaVisita.html'"></div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

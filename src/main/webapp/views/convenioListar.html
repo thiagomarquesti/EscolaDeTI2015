@@ -30,7 +30,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarConvenio(c)">Editar</a></li>
-                                    <li><a ng-click="deletarConvenio(c)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('convenio', 'convênio', c.descricao, c.idconvenio)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -47,3 +47,5 @@
 <div>
     <a ng-href="#/Convenio/novo" class="btn btn-success">Cadastrar novo</a>
 </div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

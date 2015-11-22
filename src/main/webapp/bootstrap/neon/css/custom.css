@@ -62,6 +62,10 @@ label.novoAdmin {
     background-repeat: no-repeat;
 }
 
+textarea.requerido, textarea.requerido.ng-valid {
+    background-position: left 2px  top 9px  ;
+}
+
 .requerido.ng-valid {
     background-image: url(../../../img/requeridoOk.png);
     background-position: left 2px  center  ;
