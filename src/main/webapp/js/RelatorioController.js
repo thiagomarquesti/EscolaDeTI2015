@@ -134,7 +134,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
 
         $scope.indigenaRel = function (tipo) {
-            var para = {
+            var parametro = {
                 dataini: null,
                 datafim: null,
                 idadefim: $scope.idadeRange.max,
