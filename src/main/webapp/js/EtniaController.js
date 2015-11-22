@@ -145,6 +145,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $scope.salvarEtnia = function (flag) {
             if (flag == "modal")
                 $scope.isNovaEtnia = true;
+                            console.log($scope.etnia);
             if ($scope.isNovaEtnia) {
                 $http.post("/etnia", $scope.etnia)
                         .success(function () {
@@ -157,7 +158,9 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
                             }
                             toastr.success("Etnia inserida com sucesso!");
                         })
-                        .error(deuErro);
+                        .error(function(err){
+                            toastr.error(err.message);
+                        });
             }
             else {
                 $http.put("/etnia/", $scope.etnia)
@@ -167,7 +170,9 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
                             $location.path("/Etnia/listar");
                             toastr.success("Etnia atualizada com sucesso!");
                         })
-                        .error(deuErro);
+                        .error(function(err){
+                            toastr.error(err.message);
+                        });
             }
 
         };

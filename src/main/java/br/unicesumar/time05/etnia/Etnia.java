@@ -18,7 +18,7 @@ public class Etnia implements Serializable{
     private Long idetnia;
 
     @CampoConsulta(campoOrdenacaoPadrao = true)
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String descricao;
 
     public Etnia() {
