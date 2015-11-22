@@ -205,12 +205,20 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $location.path("/Visita/editar/" + visita.idvisita);
         };
 
-        $scope.deletarVisita = function (visita) {
-            $http.delete("/visita/" + visita.idvisita)
-                    .success(function () {
-                        toastr.success("Visita excluída com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
-                    }).error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         function deuErro() {
@@ -266,8 +274,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             else {
                 visitaCompleta.visitarealizada = false;
             }
-
-            console.log(visitaCompleta);
 
             if ($scope.isNovaVisita) {
                 //console.log(visitaCompleta)

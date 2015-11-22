@@ -77,7 +77,7 @@ module.service('ServicePaginacao', ['$http', '$rootScope', function ($http, $roo
 
     }]);
 
-module.service('ServiceFuncoes', [function () {
+module.service('ServiceFuncoes', ['$http', '$rootScope', function ($http, $rootScope) {
         return {
             dateToData: function (d) {
                 var ano = d.substring(0, 4);
@@ -85,7 +85,21 @@ module.service('ServiceFuncoes', [function () {
                 var dia = d.substring(8, 10);
                 var data = dia + "/" + mes + "/" + ano;
                 return data;
-            }
+            },
+            
+            excluiRegistro: function(entidade, nomeEntidade, nomeRegistro ,id, opcional){
+                var caminho = "/" + entidade + "/" + id;
+                if(opcional){
+                    caminho += "/" + opcional;
+                }
+                $http.delete(caminho)
+                    .success(function(){
+                        toastr.success(primeiraMaiuscula(nomeEntidade) + " " + nomeRegistro + " excluído(a) com sucesso.", "Registro excluído!");
+                    })
+                    .error(function(){
+                        toastr.error("Não foi possível excluir o(a) " + nomeEntidade + " " + nomeRegistro +".", "Erro ao excluir!");
+                    });
+            }            
 
         };
 

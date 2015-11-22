@@ -49,7 +49,7 @@
                                     <i class="fa fa-ellipsis-h"> </i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a ng-click="deletarEvento(c)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('eventos', 'evento', c.descricao, c.idevento)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -66,3 +66,5 @@
 <div>
     <a ng-href="#/Eventos/novo" class="btn btn-success">Cadastrar novo</a>
 </div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

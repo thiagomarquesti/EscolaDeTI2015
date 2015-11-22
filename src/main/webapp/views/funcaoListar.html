@@ -31,7 +31,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
 
-                                    <li><a ng-click="deletarFuncao(f)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('funcao', 'função', f.descricao, f.idfuncao)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -49,3 +49,5 @@
 <div>
     <a ng-href="#/Funcao/nova" class="btn btn-success">Cadastrar nova</a>
 </div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

@@ -33,7 +33,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.todosIndigenas = function () {
             $http.get("/indigena")
                     .success(function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $scope.indigenas = data;
                     })
                     .error(deuErro);
@@ -79,7 +79,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
                     $http.get(busca)
                             .success(function (data) {
-                                console.log(data.terraIndigena);
+                                //console.log(data.terraIndigena);
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
@@ -189,7 +189,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             }
             else {
                 indioCompleto.codigoAssindi = $routeParams.id;
-                console.log(indioCompleto);
+                //console.log(indioCompleto);
                 $http.put("/indigena", indioCompleto)
                         .success(function () {
                             toastr.success("Indígena atualizado com sucesso!");
@@ -229,12 +229,10 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
 
         $scope.dateToData = function (valor) {
-            console.log(valor);
             var data = "";
             if (valor != null && valor != "" && valor != undefined) {
                 data = ServiceFuncoes.dateToData(valor);
             }
-            console.log(data);
             return data;
         };
 
@@ -323,9 +321,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
         $scope.getOcorrencias = function () {
             var url = ($routeParams.id == undefined) ? "" : "/ocorrencias/" + $routeParams.id;
-            $http.get("/ocorrencia" + url).success(function (data) {
+            $http.get("/ocorrencia" + url).success(function(data) {
                 $scope.ocorrencias = data;
-                console.log("pego");
             }).error(deuErro);
         };
 
@@ -333,17 +330,21 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             $routeParams.id = indigena.codigoassindi;
         };
         
-        $scope.setIdOcorrencia = function (id) {
-            $scope.idOcorrenciaDelete = id;
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+            $scope.dadosExclusao.opcional = $routeParams.id;
         };
         
-        $scope.deletarOcorrencia = function () {
-            $http.delete("/ocorrencia/" + $scope.idOcorrenciaDelete + "/" + $routeParams.id)
-                    .success(function () {
-                        toastr.success("Ocorrência deletada com sucesso.", "Apagado");
-                        $scope.getOcorrencias();
-                    })
-                    .error(deuErro);
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id, $scope.dadosExclusao.opcional);
+            $timeout(function() { 
+                $scope.getOcorrencias();
+            },100);
         };
 
         $scope.salvarOcorrencia = function () {

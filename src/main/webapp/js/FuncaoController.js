@@ -1,4 +1,4 @@
-module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar função";
@@ -83,13 +83,20 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
             console.log(funcao.idfuncao);
         };
 
-        $scope.deletarFuncao = function (funcao) {
-            $http.delete("/funcao/" + funcao.idfuncao)
-                    .success(function (status) {
-                        toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
-                    })
-                    .error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         $scope.salvarFuncao = function (flag) {
