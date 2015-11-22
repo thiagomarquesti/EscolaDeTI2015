@@ -21,7 +21,7 @@ public class TerraIndigenaController extends ControllerBase<TerraIndigena, Long,
         } catch (Exception e) {
             String mensagem;
             if (e.getMessage().contains("constraint [nometerra]")) {
-                mensagem = "Já existe um regitro com este nome.";
+                mensagem = "Já existe um registro com este nome.";
             }else{
                 mensagem = "Algo deu errado. Tente novamente.";
             }
