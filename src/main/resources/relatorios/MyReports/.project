@@ -15,52 +15,9 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.babel.editor.rbeBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>net.sf.jasperreports.nature</nature>
-		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>Colaborador.jrxml</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Colaborador.jrxml</location>
-		</link>
-		<link>
-			<name>Estadia.jrxml</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Estadia.jrxml</location>
-		</link>
-		<link>
-			<name>Indigena.jasper</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jasper</location>
-		</link>
-		<link>
-			<name>Indigena.jrxml</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Indigena.jrxml</location>
-		</link>
-		<link>
-			<name>Visita.jrxml</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/Visita.jrxml</location>
-		</link>
-		<link>
-			<name>familias.jasper</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/familias.jasper</location>
-		</link>
-		<link>
-			<name>familias.jrxml</name>
-			<type>1</type>
-			<location>C:/escolaDeTI/escoladeti2015time05/src/main/resources/relatorios/familias.jrxml</location>
-		</link>
-	</linkedResources>
 </projectDescription>

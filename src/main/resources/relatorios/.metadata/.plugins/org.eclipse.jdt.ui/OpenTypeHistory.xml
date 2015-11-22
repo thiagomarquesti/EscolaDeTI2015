@@ -1,14 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.sql(Array.class[Array" modifiers="1537" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.util(ArrayList.class[ArrayList" modifiers="33" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;com.sun.xml.internal.bind.v2.schemagen.xmlschema(List.class[List" modifiers="1537" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.util(List.class[List" modifiers="1537" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.util(Set.class[Set" modifiers="1537" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.awt(TexturePaintContext$Int.class[Int" modifiers="8" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.lang(Integer.class[Integer" modifiers="49" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.util(Collection.class[Collection" modifiers="1537" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.lang(Long.class[Long" modifiers="49" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.lang(String.class[String" modifiers="49" timestamp="1428725696000"/>
-<typeInfo handle="=MyReports/C:\/Program Files\/TIBCO\/Jaspersoft Studio-6.1.1.final\/features\/jre.win32.win32.x86_64.feature_1.7.0.u80\/jre\/lib\/rt.jar&lt;java.util(Date.class[Date" modifiers="33" timestamp="1428725696000"/>
-</typeInfoHistroy>
+<typeInfoHistroy/>
