@@ -20,10 +20,18 @@ body {
 }
 
 .login-page .login-header {
-  padding: 40px 0px 100px 0px;
+    padding-top:10%;
+/*  padding: 40px 0px 100px 0px;
   background-image: url(../../../img/fundo_bambu.png);
   background-repeat: no-repeat;
-  background-position: bottom center;
+  background-position: bottom center;*/
+}
+
+.alert.alertInicial {
+    position: absolute;
+    top:5%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .panel-body {
