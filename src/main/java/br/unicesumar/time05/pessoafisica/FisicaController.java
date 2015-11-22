@@ -2,6 +2,7 @@ package br.unicesumar.time05.pessoafisica;
 
 import br.unicesumar.time05.cpf.CPF;
 import br.unicesumar.time05.email.Email;
+import br.unicesumar.time05.relatorios.formatoRelatorio;
 import classesbase.ControllerBase;
 import java.io.File;
 import java.util.List;
@@ -58,4 +59,9 @@ public class FisicaController extends ControllerBase<CriarPessoaFisica, Long, Fi
             return service.verificarCpf(aCpf);
         }
     }
+    
+    @RequestMapping(value = "/relatorio/{formatoRelatorio}", method = RequestMethod.POST)
+    public Map<String, String> getRelatorio(@PathVariable formatoRelatorio formatoRelatorio, @RequestBody ParametrosRelatorioColaborador parametros) {
+        return service.gerarRelatorio(formatoRelatorio, parametros);
+    }       
 }

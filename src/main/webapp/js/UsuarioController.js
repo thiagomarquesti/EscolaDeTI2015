@@ -78,7 +78,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvar = function () {
             if ($scope.isNovo) {
-                console.log($scope.usuario);
+//                console.log($scope.usuario);
                 $http.post("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário cadastrado com sucesso!");
@@ -92,9 +92,9 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                         .error(deuErro);
             }
             else {
-                console.log($scope.usuario);
+//                console.log($scope.usuario);
                 $scope.usuario.idusuario = $routeParams.id;
-                console.log($scope.usuario);
+//                console.log($scope.usuario);
                 $http.put("/usuario", $scope.usuario)
                         .success(function () {
                             toastr.success("Usuário atualizado com sucesso!");
@@ -210,7 +210,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 $timeout(function () {
                     $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
-                                console.log(data);
+//                                console.log(data);
                                 $scope.usuario = data;
                                 $scope.usuario.rsenha = data.senha.senha;
                                 getPerfis();
@@ -252,7 +252,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.listarCidades = function () {
             if ($scope.usuario.codigoestado !== "" && $scope.usuario.codigoestado !== undefined) {
-                console.log($scope.usuario.codigoestado);
+//                console.log($scope.usuario.codigoestado);
                 $http.get("/cidade/listarPorCodigoEstado/" + $scope.usuario.codigoestado).success(function (data) {
                     $scope.cidades = data;
                 }).error(deuErro);
@@ -270,7 +270,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         $scope.logout = function () {
             $http.get("/login/usuariologado")
                     .success(function (data) {
-                        console.log(data.login);
+//                        console.log(data.login);
                         var dadosLogin = {"login": data.login, "senha": data.senha};
                         $http.post("/login/efetuarlogout", dadosLogin)
                                 .success(function () {
@@ -286,7 +286,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             $http.get("/usuario/colaboradores")
                     .success(function (data) {
                         $scope.colaboradores = data;
-                        console.log(data);
+//                        console.log(data);
                     })
                     .error(deuErro);
         };
@@ -321,7 +321,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                 canvas = document.getElementById('imgCanvas');
                 $scope.usuario.imgSrc = canvas.src;
             });
-            console.log($scope.usuario.imgSrc);
+//            console.log($scope.usuario.imgSrc);
         };
 
         $scope.trocarDados = function (idpessoa, idusuario) {
@@ -332,7 +332,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.valido = function () {
-            console.log($scope.usuario);
+//            console.log($scope.usuario);
 
             if ($scope.usuario.pessoa == "")
                 $scope.formCad.$valid = false;

@@ -95,6 +95,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                     descricao: data.terraIndigena.cidade.estado.descricao,
                                     idterraindigena: data.terraIndigena.idterraindigena
                                 };
+
                                 dados.conveniosselecionados = data.convenio;
                                 if (!dados.cpf) {
                                     dados.cpfInformado = "CPF não informado";
@@ -117,6 +118,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 }
 
                                 $scope.indio = dados;
+
                                 $scope.isNovoIndio = false;
 
                             })
@@ -237,6 +239,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
 
         $scope.dateToData = function (valor) {
+
             var data = "";
             if (valor != null && valor != "" && valor != undefined) {
                 data = ServiceFuncoes.dateToData(valor);
@@ -276,7 +279,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 canvas = document.getElementById('imgCanvas');
                 $scope.indio.imgSrc = canvas.src;
             });
-            console.log($scope.indio.imgSrc);
+            //console.log($scope.indio.imgSrc);
         };
 
         /*  SCRIPTS PARA CARREGAR OPTIONS DOS SELECTS  */
@@ -301,7 +304,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.getConvenios = function () {
             $http.get("/convenio")
                     .success(function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $scope.convenios = data;
                     })
                     .error(deuErro);

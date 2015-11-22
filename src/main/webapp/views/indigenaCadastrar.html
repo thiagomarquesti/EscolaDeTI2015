@@ -302,10 +302,6 @@
                         <label for="nome" class="col-md-1 control-label">Nome:</label>
                         <div class="col-md-11"><input type="text" ng-model="etnia.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
                     </div>
-                    <div ng-show="formEtnia.descricao.$dirty && formEtnia.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
-                        <span ng-show="formEtnia.descricao.$error.minlength">Etnia deve ter mais de 3 caracteres. </span>
-                        <span ng-show="formEtnia.descricao.$error.maxlength">Etnia não pode ter mais de 30 caracteres. </span>
-                    </div>
                     <div class="col-md-offset-1 col-md-11">
                         <button ng-click="salvarEtnia('modal')" ng-disabled="!formEtnia.$valid" onclick="fechaModal('etniaModal')" class="btn btn-success">Cadastrar</button>
                         <button ng-click="novaEtnia()" onclick="fechaModal('etniaModal')" class="btn btn-info">Cancelar</button>
@@ -329,12 +325,6 @@
                     <div class="form-group">    
                         <label for="nome" class="col-md-1 col-sm-2 control-label">Nome:</label>
                         <div class="col-sm-11"><input type="text" ng-model="terra.nometerra" id="nomeTerra" name="nomeTerra" required="" class="form-control" ng-minlength=3 ng-maxlength=50></div>
-                    </div>
-
-                    <div ng-show="formTerra.nomeTerra.$dirty && formTerra.nomeTerra.$invalid" class="alert alert-danger col-md-offset-1 col-md-11" role="alert">
-                        <span ng-show="formTerra.nomeTerra.$error.required">Preencha o nome da terra. </span>
-                        <span ng-show="formTerra.nomeTerra.$error.minlength">Terra indígena deve ter mais de 3 caracteres. </span>
-                        <span ng-show="formTerra.nomeTerra.$error.maxlength">Terra indígena não pode ter mais de 50 caracteres. </span>
                     </div>
 
                     <div class="form-group" ng-init="todasCidades()">    
@@ -373,11 +363,6 @@
                     <div class="form-group">    
                         <label for="nome" class="col-md-1 control-label">Nome:</label>
                         <div class="col-md-11"><input type="text" ng-model="convenio.descricao" id="descricao" name="descricao" required="" class="form-control" ng-minlength=3 ng-maxlength=30></div>
-                    </div>
-                    <div ng-show="formConvenio.descricao.$dirty && formConvenio.descricao.$invalid" class="alert alert-danger" role="alert" class="col-md-offset-1 col-md-11">
-                        <span ng-show="formConvenio.descricao.$error.required">Preencha o nome do convênio. </span>
-                        <span ng-show="formConvenio.descricao.$error.minlength">Convênio deve ter mais de 3 caracteres. </span>
-                        <span ng-show="formConvenio.descricao.$error.maxlength">Convênio não pode ter mais de 30 caracteres. </span>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-11">

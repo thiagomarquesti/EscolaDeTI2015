@@ -90,22 +90,22 @@ valida.directive('cpfUnique', ['$http', function ($http) {
                             else {
                                 var dados = scope.fisica.cpf.cpf + "/-1";
                             }
-                            console.log(dados);
+//                            console.log(dados);
                             $http.get('/pessoa/fisica/verificarCpf/' + dados)
                                     .success(function (data) {
-                                        console.log(data.retorno);
+//                                        console.log(data.retorno);
                                         if (data.retorno == "existe") {
-                                            console.log("ex");
+//                                            console.log("ex");
                                             ctrl.$setValidity('uncpf', false);
                                             ctrl.$setValidity('cpf', true);
                                         }
                                         if (data.retorno == "invalido") {
-                                            console.log("inv");
+//                                            console.log("inv");
                                             ctrl.$setValidity('cpf', false);
                                             ctrl.$setValidity('uncpf', true);
                                         }
                                         if (data.retorno == "valido") {
-                                            console.log("va");
+//                                            console.log("va");
                                             ctrl.$setValidity('cpf', true);
                                             ctrl.$setValidity('uncpf', true);
                                         }
@@ -131,22 +131,22 @@ valida.directive('cnpjUnique', ['$http', function ($http) {
                             else {
                                 var dados = cnpj + "/-1";
                             }
-                            console.log(dados);
+//                            console.log(dados);
                             $http.get('/pessoa/juridica/verificarCnpj/' + dados)
                                     .success(function (data) {
-                                        console.log(data.retorno);
+//                                        console.log(data.retorno);
                                         if (data.retorno == "existe") {
-                                            console.log("ex");
+//                                            console.log("ex");
                                             ctrl.$setValidity('uncnpj', false);
                                             ctrl.$setValidity('cnpj', true);
                                         }
                                         if (data.retorno == "invalido") {
-                                            console.log("inv");
+//                                            console.log("inv");
                                             ctrl.$setValidity('cnpj', false);
                                             ctrl.$setValidity('uncnpj', true);
                                         }
                                         if (data.retorno == "valido") {
-                                            console.log("va");
+//                                            console.log("va");
                                             ctrl.$setValidity('cnpj', true);
                                             ctrl.$setValidity('uncnpj', true);
                                         }

@@ -58,7 +58,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         }
 
         $scope.saidaEstadiaNova = function () {
-            console.log("asdasd");
+//            console.log("asdasd");
             $scope.saida = {
                 idestadia: "",
                 datasaida: "",
@@ -81,12 +81,19 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             d = (data.datasaida) ? new Date(data.datasaida) : "";
-                            console.log(data.datasaida);
+//                            console.log(data.datasaida);
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
-                            console.log($scope.estadia.datasaida);
+//                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
-                            $scope.estadia.familia = data.familia.idfamilia;
+                            $scope.estadia.familia = {
+                                "nomefamilia": data.familia.nomefamilia,
+                                "quantidade": data.familia.quantidade,
+                                "telefone": data.familia.telefone,
+                                "idrepresentante": data.familia.representante,
+                                "nome": data.familia.nome,
+                                "idfamilia": data.familia.idfamilia
+                            };
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects($routeParams.id);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
@@ -173,7 +180,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvarDataSaida = function () {
             $scope.saida.idestadia = $routeParams.id;
-            console.log($scope.saida);
+//            console.log($scope.saida);
             $http.post("/estadia/saida", $scope.saida)
                     .success(function () {
                         toastr.success("Atualizado com sucesso!");
@@ -213,13 +220,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 datasaida: $scope.estadia.datasaida,
                 observacoesentrada: $scope.estadia.observacoesentrada,
                 observacoessaida: $scope.estadia.observacoessaida,
-                familia: {idfamilia: $scope.estadia.familia},
+                familia: $scope.estadia.familia,
                 representante: $scope.estadia.representante,
                 membros: $scope.estadia.membros
             };
             if ($scope.isNovaEstadia) {
-                console.log($scope.estadia);
-                console.log($scope.estadia.datasaida);
+//                console.log($scope.estadia);
+//                console.log($scope.estadia.datasaida);
                 $http.post("/estadia", estadiaCorreto)
                         .success(function () {
                             $location.path("/Estadia/listar");
@@ -259,6 +266,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             }
             ;
         };
+
 
         $scope.carregarMembros = function (id) {
             if (id !== undefined) {

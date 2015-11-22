@@ -19,12 +19,14 @@
 
             <div class="form-group">
                 <label for="familia" class="col-md-2 control-label">Familia: </label>
-                <div class="col-md-3" ng-init="carregarFamilias()">
-                    <select ng-model="estadia.familia" id="familia" name="familia" required="" class="form-control requerido" ng-change="carregarMembros(estadia.familia)">
-                        <option value="">Selecione uma familia</option>
-                        <!-- FAZER BUSCA POR FAMILIA -->
-                        <option ng-repeat="f in familia" value="{{f.idfamilia}}">{{f.nomefamilia}}</option>
-                    </select>
+                <div class="col-md-3" style="margin-left: -1.5%; margin-top: -0.8%;" ng-init="carregarFamilias()">
+                    <multiselect class="input-lg"  ng-change="carregarMembros(estadia.familia.idfamilia)"
+                                 ng-model="estadia.familia" 
+                                 ms-selected ="{{itens.selected.length}}" 
+                                 ms-header="Selecione uma familia"
+                                 options="f.nomefamilia for f in familia" 
+                                 scroll-after-rows="8" required="">
+                    </multiselect>
                 </div>
             </div>
 
@@ -37,7 +39,6 @@
                 <div class="col-md-3" style="margin-left: -1.5%;">
                     <multiselect class="input-lg" 
                                  ng-model="estadia.representante" 
-                                 multiple="false" 
                                  ms-selected ="{{itens.selected.length}}" 
                                  ms-header="* Selecione o representante"
                                  options="representante.nome for representante in itens" 

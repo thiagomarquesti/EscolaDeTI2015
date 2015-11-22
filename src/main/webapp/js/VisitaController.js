@@ -348,6 +348,19 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
 
         };
 
+        $scope.abrirModal = function (id) {
+            $routeParams.id = id;
+            jQuery('#saidaModal').modal('show', {backdrop: 'static'});
+            $scope.carregarVisita();
+        };
+
+        $scope.registarSaida = function () {
+            $scope.salvarVisita();
+            $timeout(function () {
+                $scope.atualizarListagens(10, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            }, 100);
+        };
+
         $scope.dateToData = function (valor) {
             var data = "";
             if (valor != null && valor != "" && valor != undefined) {

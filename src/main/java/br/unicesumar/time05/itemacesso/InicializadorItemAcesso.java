@@ -346,14 +346,31 @@ public class InicializadorItemAcesso {
             itensAcesso.add(menuRelatorios);
         }
 
-        ItemAcesso menuRelatoriosFamilias;
-        menuRelatoriosFamilias = this.getItemAcesso(itensAcesso, "Relatório de Famílias", "#/Relatorios/familias");
-        if (menuRelatoriosFamilias == null) {
-            menuRelatoriosFamilias = new ItemAcesso("Relatório de Famílias", "#/Relatorios/familias", "fa-list", menuRelatorios);
-            itensAcesso.add(menuRelatoriosFamilias);
+        ItemAcesso menuRelatoriosIndios;
+        menuRelatoriosIndios = this.getItemAcesso(itensAcesso, " Fluxo de Indígenas", "#/Relatorios/indios");
+        if (menuRelatoriosIndios == null) {
+            menuRelatoriosIndios = new ItemAcesso(" Fluxo de Indígenas", "#/Relatorios/indios", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosIndios);
+        }
+        ItemAcesso menuRelatoriosEstadias;
+        menuRelatoriosEstadias = this.getItemAcesso(itensAcesso, " Fluxo de Estadias", "#/Relatorios/estadias");
+        if (menuRelatoriosEstadias == null) {
+            menuRelatoriosEstadias = new ItemAcesso(" Fluxo de Estadias", "#/Relatorios/estadias", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosEstadias);
+        }
+        ItemAcesso menuRelatoriosColaboradores;
+        menuRelatoriosColaboradores = this.getItemAcesso(itensAcesso, "Colaboradores", "#/Relatorios/colaboradores");
+        if (menuRelatoriosColaboradores == null) {
+            menuRelatoriosColaboradores = new ItemAcesso("Colaboradores", "#/Relatorios/colaboradores", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosColaboradores);
+        }
+        ItemAcesso menuRelatoriosVisitas;
+        menuRelatoriosVisitas = this.getItemAcesso(itensAcesso, "Visitas", "#/Relatorios/visitas");
+        if (menuRelatoriosVisitas == null) {
+            menuRelatoriosVisitas = new ItemAcesso("Visitas", "#/Relatorios/visitas", "fa-list", menuRelatorios);
+            itensAcesso.add(menuRelatoriosVisitas);
         }
         
-
         for (ItemAcesso ia : itensAcesso) {
             repo.save(ia);
         }
