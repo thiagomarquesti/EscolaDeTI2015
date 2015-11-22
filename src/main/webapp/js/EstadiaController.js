@@ -34,7 +34,15 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
         };
-
+        
+        $scope.print = function (divNome) {
+            var printContents = document.getElementById(divNome).innerHTML;
+            document.body.innerHTML = printContents;
+            $location.path("/Estadia/listar");
+            location.reload(true);
+            window.print();
+        };
+        
         function novaEstadia() {
             $scope.estadia = {
                 idestadia: "",
@@ -140,7 +148,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             } else {
                                 $scope.estadia.observacoessaida = "Não informado";
                             }
-                            
+
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects(idEstadia);
@@ -242,17 +250,18 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         $scope.familia = data;
                     }).error(deuErro);
         };
-        
-        $scope.statusEstadia = function (datasaida){
-            if(datasaida === null){
+
+        $scope.statusEstadia = function (datasaida) {
+            if (datasaida === null) {
                 return "warning";
-            }else{
-                return "success";                
-            };
-        };        
+            } else {
+                return "success";
+            }
+            ;
+        };
 
         $scope.carregarMembros = function (id) {
-            if (id !== undefined){
+            if (id !== undefined) {
                 $http.get("/familia/membrosPorFamilia/" + id)
                         .success(function (data) {
                             $scope.itens = data;

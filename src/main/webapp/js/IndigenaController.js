@@ -162,6 +162,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         }
         ;
 
+        $scope.print = function (divNome) {
+            var printContents = document.getElementById(divNome).innerHTML;
+            document.body.innerHTML = printContents;
+            $location.path("/Indigena/listar");
+            location.reload(true);
+            window.print();
+        };
+
         $scope.salvarIndio = function () {
 //        var cpfSemPonto = tiraCaracter($scope.indio.cpf, ".");
 //        var cpfSemPonto = tiraCaracter(cpfSemPonto, "-");
@@ -339,11 +347,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.getIdIndigena = function (indigena) {
             $routeParams.id = indigena.codigoassindi;
         };
-        
+
         $scope.setIdOcorrencia = function (id) {
             $scope.idOcorrenciaDelete = id;
         };
-        
+
         $scope.deletarOcorrencia = function () {
             $http.delete("/ocorrencia/" + $scope.idOcorrenciaDelete + "/" + $routeParams.id)
                     .success(function () {
