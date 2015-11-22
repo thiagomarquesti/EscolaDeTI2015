@@ -30,7 +30,7 @@ module.controller("LoginController", ["$scope", "$http", function ($scope, $http
         $http.get("/login/usuariologado")
                 .success(function (data) {
                     if (data.idpessoa) {
-                        console.log(data.idpessoa);
+//                        console.log(data.idpessoa);
                         window.location.href = "/";
                     }
                 })

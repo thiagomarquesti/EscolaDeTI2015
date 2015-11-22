@@ -1,4 +1,4 @@
-module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
     
     $scope.busca = {};
     $scope.placeHolder = "Buscar etnia";
@@ -28,13 +28,20 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
     
-    $scope.deletarEtnia = function(etnia) {
-        $http.delete("/etnia/" + etnia.idetnia)
-            .success(function (status) {
-                toastr.success("Etnia "+ etnia.descricao +" deletada com sucesso.");
-                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
-            })
-            .error(deuErro);
+    $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+        jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+        $scope.dadosExclusao = {};
+        $scope.dadosExclusao.entidade = entidade;
+        $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+        $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+        $scope.dadosExclusao.id = id;
+    };
+
+    $scope.excluiRegistro = function () {
+        ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+        $timeout(function() { 
+            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+        },100);
     };
     
     function deuErro() {
@@ -59,7 +66,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             else {
                 $http.get("/etnia/" + $routeParams.id)
                         .success(function (data) {
-                            console.log(data);
+//                            console.log(data);
                             $scope.etnia = data;
                             $scope.isNovaEtnia = false;
                         })
@@ -99,8 +106,8 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
             $http.get("/etnia/listar/" + reg + "/" + pag + "/" + campo + "/" + order + "/" + string)
                     .success(function (data) {
                         $scope.etnias = data;
-                        console.log(data);
-                        console.log("/etnia/listar/" + pag + "/" + campo + "/" + order + "/" + string);
+//                        console.log(data);
+//                        console.log("/etnia/listar/" + pag + "/" + campo + "/" + order + "/" + string);
 
                         if (!paro) {
                             atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
@@ -138,10 +145,11 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $scope.salvarEtnia = function (flag) {
             if (flag == "modal")
                 $scope.isNovaEtnia = true;
+                            console.log($scope.etnia);
             if ($scope.isNovaEtnia) {
                 $http.post("/etnia", $scope.etnia)
                         .success(function () {
-                            console.log(flag);
+//                            console.log(flag);
                             if (flag == "cad")
                                 $location.path("/Etnia/listar");
                             else {
@@ -150,17 +158,21 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
                             }
                             toastr.success("Etnia inserida com sucesso!");
                         })
-                        .error(deuErro);
+                        .error(function(err){
+                            toastr.error(err.message);
+                        });
             }
             else {
                 $http.put("/etnia/", $scope.etnia)
                         .success(function () {
-                            console.log(flag);
+//                            console.log(flag);
 //                            if (flag == "cad")
                             $location.path("/Etnia/listar");
                             toastr.success("Etnia atualizada com sucesso!");
                         })
-                        .error(deuErro);
+                        .error(function(err){
+                            toastr.error(err.message);
+                        });
             }
 
         };

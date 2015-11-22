@@ -1,4 +1,4 @@
-module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar função";
@@ -80,16 +80,23 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
         $scope.editarFuncao = function (funcao) {
             $location.path("/Funcao/editar/" + funcao.idfuncao);
-            console.log(funcao.idfuncao);
+//            console.log(funcao.idfuncao);
         };
 
-        $scope.deletarFuncao = function (funcao) {
-            $http.delete("/funcao/" + funcao.idfuncao)
-                    .success(function (status) {
-                        toastr.success("Funcao " + funcao.descricao + " deletada com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
-                    })
-                    .error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         $scope.salvarFuncao = function (flag) {
@@ -97,7 +104,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
 
             $http.get("/funcao/verificarDescricao/" + $scope.funcao.descricao)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         if (data == false) {
                             toastr.error("Já existe uma função cadastrada com esse nome!");
                             $scope.funcao.descricao = "";

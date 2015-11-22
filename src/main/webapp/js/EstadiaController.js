@@ -34,7 +34,15 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
         };
-
+        
+        $scope.print = function (divNome) {
+            var printContents = document.getElementById(divNome).innerHTML;
+            document.body.innerHTML = printContents;
+            $location.path("/Estadia/listar");
+            location.reload(true);
+            window.print();
+        };
+        
         function novaEstadia() {
             $scope.estadia = {
                 idestadia: "",
@@ -50,7 +58,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         }
 
         $scope.saidaEstadiaNova = function () {
-            console.log("asdasd");
+//            console.log("asdasd");
             $scope.saida = {
                 idestadia: "",
                 datasaida: "",
@@ -73,12 +81,19 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                             d = (data.datasaida) ? new Date(data.datasaida) : "";
-                            console.log(data.datasaida);
+//                            console.log(data.datasaida);
                             $scope.estadia.datasaida = (data.datasaida) ? new Date(d.getTime() + (d.getTimezoneOffset() * 60000)) : "";
-                            console.log($scope.estadia.datasaida);
+//                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
-                            $scope.estadia.familia = data.familia.idfamilia;
+                            $scope.estadia.familia = {
+                                "nomefamilia": data.familia.nomefamilia,
+                                "quantidade": data.familia.quantidade,
+                                "telefone": data.familia.telefone,
+                                "idrepresentante": data.familia.representante,
+                                "nome": data.familia.nome,
+                                "idfamilia": data.familia.idfamilia
+                            };
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects($routeParams.id);
                             $scope.estadia.representante.telefone = data.representante.telefone.telefone;
@@ -140,7 +155,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             } else {
                                 $scope.estadia.observacoessaida = "Não informado";
                             }
-                            
+
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects(idEstadia);
@@ -165,7 +180,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 
         $scope.salvarDataSaida = function () {
             $scope.saida.idestadia = $routeParams.id;
-            console.log($scope.saida);
+//            console.log($scope.saida);
             $http.post("/estadia/saida", $scope.saida)
                     .success(function () {
                         toastr.success("Atualizado com sucesso!");
@@ -205,13 +220,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 datasaida: $scope.estadia.datasaida,
                 observacoesentrada: $scope.estadia.observacoesentrada,
                 observacoessaida: $scope.estadia.observacoessaida,
-                familia: {idfamilia: $scope.estadia.familia},
+                familia: $scope.estadia.familia,
                 representante: $scope.estadia.representante,
                 membros: $scope.estadia.membros
             };
             if ($scope.isNovaEstadia) {
-                console.log($scope.estadia);
-                console.log($scope.estadia.datasaida);
+//                console.log($scope.estadia);
+//                console.log($scope.estadia.datasaida);
                 $http.post("/estadia", estadiaCorreto)
                         .success(function () {
                             $location.path("/Estadia/listar");
@@ -228,13 +243,13 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
-        $scope.deletarEstadia = function (estadia) {
-            $http.delete("/estadia/" + estadia.idestadia)
-                    .success(function () {
-                        toastr.success("Estadia " + estadia.idestadia + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
-                    }).error(deuErroDeletar);
-        };
+//        $scope.deletarEstadia = function (estadia) {
+//            $http.delete("/estadia/" + estadia.idestadia)
+//                    .success(function () {
+//                        toastr.success("Estadia " + estadia.idestadia + " excluído com sucesso.");
+//                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
+//                    }).error(deuErroDeletar);
+//        };
 
         $scope.carregarFamilias = function () {
             $http.get("/familia")
@@ -242,17 +257,19 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                         $scope.familia = data;
                     }).error(deuErro);
         };
-        
-        $scope.statusEstadia = function (datasaida){
-            if(datasaida === null){
+
+        $scope.statusEstadia = function (datasaida) {
+            if (datasaida === null) {
                 return "warning";
-            }else{
-                return "success";                
-            };
-        };        
+            } else {
+                return "success";
+            }
+            ;
+        };
+
 
         $scope.carregarMembros = function (id) {
-            if (id !== undefined){
+            if (id !== undefined) {
                 $http.get("/familia/membrosPorFamilia/" + id)
                         .success(function (data) {
                             $scope.itens = data;

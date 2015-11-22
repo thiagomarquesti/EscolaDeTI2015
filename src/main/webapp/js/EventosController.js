@@ -1,4 +1,4 @@
-module.controller("EventosController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("EventosController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar Eventos";
@@ -114,7 +114,7 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
                 datafinal: dataFinal + "T00:00:00-03",
                 visualizarnocalendario: $scope.evento.visualizarnocalendario
             };
-            console.log(eventoCorreto);
+
             if(new Date (dataInicio) <= new Date (dataFinal)){
               $http.post("/eventos", eventoCorreto)
                     .success(function () {
@@ -129,14 +129,22 @@ module.controller("EventosController", ["$scope", "$http", "$routeParams", "$loc
 
         };
 
-        $scope.deletarEvento = function (evento) {
-            $http.delete("/eventos/" + evento.idevento)
-                    .success(function () {
-                        toastr.success("Evento " + evento.descricao + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
-                    }).error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
         };
-
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
+        };
+        
         function dataToDate(valor) {
             var date = new Date(valor);
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();

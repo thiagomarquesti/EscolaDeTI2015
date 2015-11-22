@@ -22,7 +22,13 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
             service.salvar(aEntidade);
         } catch (Exception e) {
             System.out.println(e);
-            throw new RuntimeException("Erro ao salvar entidade, verifique os dados fornecidos!");
+            String mensagem;
+            if(e.getMessage().contains("constraint")){
+                mensagem = "Já existe um registro igual no sistema.";
+            }else{
+                mensagem = "Algo deu errado. Tente novamente.";
+            }
+            throw new RuntimeException(mensagem);
         }
     }
 
@@ -55,13 +61,13 @@ public class ControllerBase<Entidade extends Object, ID extends Serializable, Se
     public RetornoConsultaPaginada getEntidadesPaginadaSimples() {
         return service.listar();
     }
-    
+
     @RequestMapping(value = "/listar/{aRegistrosPorPagina}/{aPagina}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesPaginada(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina) {
         ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina);
         return service.listar(parametros);
     }
-    
+
     @RequestMapping(value = "/listar/{aRegistrosPorPagina}/{aPagina}/{aOrdenarPor}/{aSentidoOrdenacao}", method = RequestMethod.GET)
     public RetornoConsultaPaginada getEntidadesOrdenadas(@PathVariable int aRegistrosPorPagina, @PathVariable int aPagina, @PathVariable String aOrdenarPor, @PathVariable String aSentidoOrdenacao) {
         ParametrosConsulta parametros = new ParametrosConsulta(aRegistrosPorPagina, aPagina, aOrdenarPor, aSentidoOrdenacao);

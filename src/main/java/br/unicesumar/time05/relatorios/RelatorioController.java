@@ -15,6 +15,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +40,7 @@ public class RelatorioController {
         // compilacao do JRXML
         URL reportResource = getClass().getClassLoader().getResource("./relatorios/teste01.jrxml");
         JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());  
+        
       
         JasperPrint print = JasperFillManager.fillReport(report, new HashMap<String, Object>(), dataSource.getConnection());  
         

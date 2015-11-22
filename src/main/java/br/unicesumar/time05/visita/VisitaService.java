@@ -3,7 +3,9 @@ package br.unicesumar.time05.visita;
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
 import br.unicesumar.time05.consultapersonalizada.ParametrosConsulta;
 import br.unicesumar.time05.consultapersonalizada.RetornoConsultaPaginada;
+import br.unicesumar.time05.relatorios.formatoRelatorio;
 import classesbase.ServiceBase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Time;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
@@ -58,5 +60,11 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
     public List<Map<String, Object>> listarSemPaginacao() {
         List<Map<String, Object>> visitas = query.execute(this.SQLConsultaVisita, new MapSqlParameterSource());
         return Collections.unmodifiableList(visitas);
+    }
+
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, ParametrosRelatorioVisita parametros) {
+        ObjectMapper objMapper = new ObjectMapper();
+        Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
+        return rel.gerarRelatorio("Visita.jrxml", formatoRelatorio, MapParametros);
     }
 }

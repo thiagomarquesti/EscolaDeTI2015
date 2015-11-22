@@ -78,6 +78,18 @@
         border-radius: 50px;
 }
 
+.border-event-notif {
+    border-left: 5px solid #2c7ea1;
+}
+
+.border-event-visita {
+    border-left: 5px solid #FFD700;
+}
+
+.border-event-aniver {
+    border-left: 5px solid #00FF7F;
+}
+
 .calendar-specific {
 	width: 100%;
 	height: 100%;
@@ -140,14 +152,14 @@
 }
 
 .specific-day-scheme .specific-day-scheme-event {
-	padding: 0.5em;
-	margin: 0;
+	padding-left: 0.5em;
+	margin-bottom: 0.5em;
 }
 .specific-day-scheme .specific-day-scheme-event:first-child {
-	margin: 0;
+	//margin: 0;
 }
 .specific-day-scheme .specific-day-scheme-event:last-child {
-	margin-bottom: 0;
+	//margin-bottom: 30em;
 }
 
 .calendar .specific-day-scheme-event h1 {

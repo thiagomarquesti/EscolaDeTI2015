@@ -33,7 +33,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarTerra(t)">Editar</a></li>
-                                    <li><a ng-click="deletarTerra(t)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('terraIndigena', 'terra indígena', t.nometerra, t.idterraindigena)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -51,3 +51,5 @@
 <div>
     <a ng-href="#/TerraIndigena/nova" class="btn btn-success">Cadastrar nova</a>
 </div>
+
+<div ng-include="'views/confirmaExclusao.html'"></div>

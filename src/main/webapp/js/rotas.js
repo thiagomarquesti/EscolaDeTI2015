@@ -149,8 +149,20 @@ module.config(function($routeProvider, $locationProvider) {
         controller: 'EventosController'
     })
     //------- Rotas de Relatorios  -------- 
-    .when('/Relatorios/familia', {
-        templateUrl: 'views/relfamilias.html',
+    .when('/Relatorios/indios', {
+        templateUrl: 'views/relatorioIndios.html',
+        controller: 'RelatorioController'
+    })
+    .when('/Relatorios/estadias', {
+        templateUrl: 'views/relatorioEstadia.html',
+        controller: 'RelatorioController'
+    })
+    .when('/Relatorios/colaboradores', {
+        templateUrl: 'views/relatorioColaborador.html',
+        controller: 'RelatorioController'
+    })
+    .when('/Relatorios/visitas', {
+        templateUrl: 'views/relatorioVisita.html',
         controller: 'RelatorioController'
     })
     

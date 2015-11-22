@@ -28,7 +28,7 @@ public class FamiliaController extends ControllerBase<Familia, Long, FamiliaServ
     }
     
     @RequestMapping(value = "/relatorio", method = RequestMethod.GET)
-    public String getRelatorio(){
+    public Map getRelatorio(){
         return service.gerarRelatorioSimples();
     }
 }

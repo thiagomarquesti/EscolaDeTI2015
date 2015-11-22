@@ -5,6 +5,7 @@ import br.unicesumar.time05.cidade.Cidade;
 import br.unicesumar.time05.uf.UF;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class TerraIndigena implements Serializable {
     @CampoConsulta
     private Long idterraindigena;
     @CampoConsulta(campoOrdenacaoPadrao = true)
+    @Column(unique = true, nullable = false)
     private String nometerra;
     @ManyToOne
     private Cidade cidade;

@@ -1,4 +1,4 @@
-module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
         $scope.busca = {};
         $scope.placeHolder = "Buscar família";
@@ -43,14 +43,14 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
         function getMembrosFamilia(idrep) {
             $http.get("/familia/membrosPorFamilia/" + $routeParams.id)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         $scope.familia.membros = data;
 //                        return data;
                     })
                     .error(deuErro);
             $http.get("/indigena/"+idrep)
                     .success(function (data) {
-                        console.log(data);
+//                        console.log(data);
                         $scope.familia.representante = data;
 //                        return data;
                     })
@@ -66,7 +66,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                     $http.get("/familia/obj/" + $routeParams.id)
                             .success(function (data) {
                                 var dados = data;
-                                console.log(data);
+//                                console.log(data);
                                 dados.telefone = data.telefone.telefone;
 //                                dados.representante = {
 //                                    codigosus: data.representante.codigosus,
@@ -125,13 +125,20 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
             $location.path("/Familia/editar/" + familia.idfamilia);
         };
 
-        $scope.deletarFamilia = function (familia) {
-            $http.delete("/familia/" + familia.idfamilia)
-                    .success(function () {
-                        toastr.success("Família " + familia.nomefamilia + " deletada com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', false);
-                    })
-                    .error(erroExcluiFamilia);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         function deuErro() {

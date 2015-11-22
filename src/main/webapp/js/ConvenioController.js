@@ -1,4 +1,4 @@
-module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
     $scope.busca = {};
     $scope.placeHolder = "Buscar convênio";
@@ -45,7 +45,7 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
             else {
                 $http.get("/convenio/" + $routeParams.id)
                         .success(function (data) {
-                            console.log(data);
+//                            console.log(data);
                             $scope.convenio = data;
                             $scope.isNovoConvenio = false;
                         })
@@ -65,12 +65,20 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
             $location.path("/Convenio/editar/" + convenio.idconvenio);
         };
 
-        $scope.deletarConvenio = function (convenio) {
-            $http.delete("/convenio/" + convenio.idconvenio)
-                    .success(function () {
-                        toastr.success("Convênio " + convenio.descricao + " excluído com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal, '', '', $rootScope.ent, false);
-                    }).error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         function deuErro() {
@@ -102,7 +110,9 @@ module.controller("ConvenioController", ["$scope", "$http", "$routeParams", "$lo
                             }
                             toastr.success("Convênio inserido com sucesso!");
                         })
-                        .error(deuErroSalvar);
+                        .error(function (err){
+                            toastr.error(err.message);
+                        });
             }
             else {
                 $http.put("/convenio/", $scope.convenio)

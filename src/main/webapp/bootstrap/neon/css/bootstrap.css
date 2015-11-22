@@ -6246,6 +6246,19 @@ div.label {
   background-color: #cc2424;
   color: #ffffff;
 }
+
+.badge.badge-event-aniver {
+    background-color:#00FF7F;
+}
+
+.badge.badge-event-notif {
+    background-color:#2c7ea1;
+}
+
+.badge.badge-event-visita {
+    background-color: #FFD700;
+}
+
 .badge.badge-roundless {
   -webkit-border-radius: 1px;
   -webkit-background-clip: padding-box;
@@ -7116,7 +7129,7 @@ lesshat-selector {
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 18px;
 }
 .panel-title > a {
   color: inherit;

@@ -1,9 +1,11 @@
 package br.unicesumar.time05.relatorios;
 
 import br.unicesumar.time05.usuario.sessaousuario.SessaoUsuario;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -33,13 +36,19 @@ public class Relatorio {
     @Autowired
     SessaoUsuario sessaoUsuario;
 
-    public String gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio, Map<String, Object> params) {
+    public Map<String, String> gerarRelatorio(String nomeXmlJasper, formatoRelatorio formatoRelatorio, Map<String, Object> params) {
 
         try {
-            URL reportResource = getClass().getClassLoader().getResource("./relatorios/" + nomeXmlJasper);
+            File logo = new File("src/main/webapp/img/assindi-logo.png");
+            BufferedImage image = ImageIO.read(logo);
+            params.put("logo", image);
+            
+            URL reportResource = getClass().getClassLoader().getResource("./relatorios/MyReports/" + nomeXmlJasper);
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
             JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
-
+            
+            print.setProperty(nomeXmlJasper, nomeXmlJasper);
+            
             File path = new File("src/main/webapp/rels/" + sessaoUsuario.getUsuario().getIdusuario());
             path.mkdirs();
             for (File arquivo : path.listFiles()) {
@@ -72,10 +81,14 @@ public class Relatorio {
                 break;
             }
             System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdusuario() + " - " + sessaoUsuario.getUsuario().getNome());
-            return "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
-        } catch (JRException | SQLException | FileNotFoundException ex) {
+            String url = "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
+            Map<String, String> result = new HashMap<>();
+            result.put("url", url);
+            return result;
+        } catch (JRException | SQLException | IOException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+
 }

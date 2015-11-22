@@ -1,7 +1,11 @@
 package br.unicesumar.time05.estadiafamilia;
 
 import br.unicesumar.time05.consultapersonalizada.ConstrutorDeSQL;
+import br.unicesumar.time05.relatorios.formatoRelatorio;
+import br.unicesumar.time05.relatorios.relEstadiaBase;
 import classesbase.ServiceBase;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -64,7 +68,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
                 + "       i.nome, "
                 + "       i.telefone, "
                 + "       ti.nometerra, "
-                +"        es.idrepresentante "
+                + "        es.idrepresentante "
                 + " FROM estadia es "
                 + " JOIN indigena i ON es.idrepresentante = i.codigoassindi "
                 + " LEFT JOIN etnia e ON i.etnia_idetnia = e.idetnia "
@@ -119,5 +123,11 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
         estadia.setDatasaida(saida.getDatasaida());
         estadia.setObservacoessaida(saida.getObservacoessaida());
         this.alterar(estadia);
+    }
+    
+    public Map<String, String> gerarRelatorio(formatoRelatorio formatoRelatorio, ParametrosRelatorioEstadia parametros) {
+        ObjectMapper objMapper = new ObjectMapper();
+        Map<String, Object> MapParametros = objMapper.convertValue(parametros, Map.class);
+        return rel.gerarRelatorio("Estadia.jrxml", formatoRelatorio, MapParametros);
     }
 }

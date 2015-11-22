@@ -30,7 +30,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a ng-click="editarEtnia(e)">Editar</a></li>
-                                    <li><a ng-click="deletarEtnia(e)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('etnia', 'etnia', e.descricao, e.idetnia)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -51,3 +51,4 @@
     <a ng-href="#/Etnia/nova" class="btn btn-success">Cadastrar nova</a>
 </div>
 
+<div ng-include="'views/confirmaExclusao.html'"></div>
