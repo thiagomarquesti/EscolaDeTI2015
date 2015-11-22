@@ -141,11 +141,8 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Foto: </label>
-                <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
-                <label for="foto" class="col-md-1 control-label">OU: </label>
-                <div class="col-md-3"><input type="file" ng-model="indio.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
-
-                <div id="arquivoFoto" name="arquivoFoto" ng-model="indio.arquivoOk" ng-show="indio.arquivoFoto">Arquivo selecionado: <strong>{{indio.arquivoFoto}}</strong></div>
+                <div class="col-md-3"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
+                <!--<div id="arquivoFoto" name="arquivoFoto" ng-model="indio.arquivoOk" ng-show="indio.arquivoFoto">Arquivo selecionado: <strong>{{indio.arquivoFoto}}</strong></div>-->
                 <div class="col-md-5"><img src="{{indio.imgSrc}}" class="img-circle" style="width: 40px;"></div>
                 <div class="modal fade" id="fotoModal" data-backdrop="true">
                     <div class="modal-dialog">
@@ -236,7 +233,7 @@
                         <td>{{o.databloqueio}}</td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" ng-click="setIdOcorrencia(o.idocorrencia)" onclick="jQuery('#apagarModal').modal('show', {backdrop: 'static'});" data-toggle="dropdown">
+                                <a class="btn btn-mini dropdown-toggle" ng-click="confirmaExclusao('ocorrencia', 'ocorrência', o.descricao, o.idocorrencia)" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-remove"> </i>
                                 </a>
                             </div>
@@ -246,20 +243,11 @@
             </table>
         </div>
         <div>
-            <button ng-show="true" ng-click="carregarOcorrencia()" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});" ng-disabled="false" class="btn btn-success">Nova Ocrrência</button>
+            <button ng-show="true" ng-click="carregarOcorrencia()" onclick="jQuery('#ocorrenciaModal').modal('show', {backdrop: 'static'});" ng-disabled="false" class="btn btn-success">Nova Ocorrência</button>
         </div>
-        <div class="modal fade" id="apagarModal" data-backdrop="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header"><h3 class="modal-title">Atenção!</h3></div>
-                    <div class="modal-body">Tem certeza que deseja apagar a ocorrência?</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-dismiss="modal" ng-click="deletarOcorrencia(idocorrencia)">Sim</button>
-                        <button class="btn btn-default" data-dismiss="modal">Não</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        <div ng-include="'views/confirmaExclusao.html'"></div>
+        
     </div>
 </div>
 <div class="modal fade" id="ocorrenciaModal" data-backdrop="true">
@@ -271,7 +259,7 @@
             <div class="modal-body" >
                 <form name="formOcorrencia" novalidate ng-init="carregarOcorrencia()" class="form-horizontal">
                     <div class="form-group">
-                        <label for="dataOcorrencia" class="col-md-4 control-label">Data da Ocorrência: *</label>
+                        <label for="dataOcorrencia" class="col-md-4 control-label">Data da Ocorrência: </label>
                         <div class="col-md-3">
                             <div class="input-group">
                                 <input type="date" ng-model="ocorrencia.dataOcorrencia" id="dataOcorrencia" name="dataOcorrencia" class="form-control requerido" required="">
@@ -287,9 +275,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="descricao" class="col-md-4 control-label">Motivo: *</label>
+                        <label for="descricao" class="col-md-4 control-label">Motivo: </label>
                         <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
-                        <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control " ></textarea></div>
+                        <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control requerido" ></textarea></div>
                     </div>
                     <div class="col-md-offset-1 col-md-11">
                         <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" onclick="fechaModal('ocorrenciaModal')" class="btn btn-success">Cadastrar</button>

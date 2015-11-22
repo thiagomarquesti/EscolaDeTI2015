@@ -209,10 +209,10 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
             if (this.events !== undefined) {
                 var ev = orderBy('timestart', this.events);
                 for (var o = 0; o < ev.length; o++) {
-                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
+                    $(".specific-day-scheme").append('<div class="specific-day-scheme-event border-'+ ev[o]['tipo'] +'"><p>' + ev[o]['name'] + '</p><p data-role="dur">' + ev[o]['timestart'] + ' - ' + ev[o]['timeend'] + '</p></div>'); //<p data-role="loc">' + ev[o]['datestart'] + ev[o]['dateend'] + '</p></div>'); // Monta os eventos do dia clicado.
                 }
             }
-            $(".specific-day-scheme").append('<div class="specific-day-scheme-event"><p><a class="btn btn-success" href="#/Eventos/novo/' + this.data + '">Adicionar novo evento</a></p></div>');
+            $(".specific-day-scheme").append('<br><p><a class="btn btn-success" href="#/Eventos/novo/' + this.data + '">Adicionar novo evento</a></p>');
         }
         function activatecalendar() {
             $(this).parents('.calendar').removeClass('spec-day');
@@ -286,10 +286,11 @@ module.controller("HomeController", ["$scope", "$http", "$routeParams", "$locati
                     cal_day.addClass('no-have-events');
                 }
                 var cal_day_eventholder = $('<div class="event-notif-holder"></div>');
+                
                 if (calendarArray[strtime] != undefined) {
                     for (var u = 0; u < 5 && u < calendarArray[strtime].length; u++) {
-                        console.log(calendarArray[strtime]);
-                        cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>') // Mostra a quantidade de eventos no dia.
+                        //console.log(calendarArray[strtime]);
+                        cal_day_eventholder.append('<div class="' + calendarArray[strtime][u].tipo + '"></div>');
                     }
                 }
                 cal_day.attr('strtime', strtime);

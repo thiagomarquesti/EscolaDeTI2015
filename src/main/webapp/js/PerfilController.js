@@ -1,4 +1,4 @@
-module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
         
     $scope.busca = {};
     $scope.placeHolder = "Buscar perfil";
@@ -28,13 +28,20 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
         $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
         
-    $scope.excluir = function (perfil) {
-        $http.delete("/perfildeacesso/" + perfil.idperfildeacesso).success(function () {
-            toastr.success("O Perfil " + perfil.nome + " foi deletado com sucesso", "Perfil Excluído");
-            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
-        }).error(function () {
-            toastr.error("Não foi possível excluir o perfil", "Houve um erro");
-        });
+    $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+        jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+        $scope.dadosExclusao = {};
+        $scope.dadosExclusao.entidade = entidade;
+        $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+        $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+        $scope.dadosExclusao.id = id;
+    };
+
+    $scope.excluiRegistro = function () {
+        ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+        $timeout(function() { 
+            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+        },100);
     };    
         
     function novoPerfil() {
@@ -87,60 +94,6 @@ module.controller("PerfilController", ["$scope", "$http", "$routeParams", "$loca
                         .error(deuErro);
             }
         };
-
-
-
-        $scope.atualizarPerfis = function (pag, campo, order, string, paro) {
-            if (pag == null || pag == "") {
-                pag = 1;
-            }
-            if (campo == null || campo == "") {
-                campo = "nome";
-            }
-            if (order != "asc" && order != "desc") {
-                order = "asc";
-            }
-            if (string == null) {
-                string = "";
-            }
-
-            $http.get("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string)
-                    .success(function (data) {
-                        $scope.perfis = data;
-//                        console.log(data);
-//                        console.log("/perfildeacesso/listar/" + pag + "/" + campo + "/" + order + "/" + string);
-
-                        if (!paro) {
-                            atualizaPaginacao(data.quantidadeDePaginas, pag, campo, order, string, false);
-                        }
-
-                    })
-                    .error(deuErro);
-        };
-
-        $scope.trocaOrdem = function (string) {
-            if ($scope.tipoOrdem == true) {
-                $scope.tipoOrdem = false;
-                var ordem = "asc";
-            }
-            else {
-                $scope.tipoOrdem = true;
-                var ordem = "desc";
-            }
-            $scope.atualizarPerfis("", "", ordem, string, true);
-        };
-
-        function atualizaPaginacao(qtde, pag, campo, order, string, paro) {
-            $('#paginacao').bootpag({
-                total: qtde,
-                page: pag,
-                maxVisible: 5
-            }).on('page', function (event, num) {
-                paro = true;
-                $scope.atualizarPerfis(num, campo, order, string, paro);
-
-            });
-        }
 
         $scope.itensAcesso = function () {
             $http.get("/itemacesso")

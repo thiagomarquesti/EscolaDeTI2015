@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-21T15:56:57 -->
+<!-- 2015-11-22T17:35:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Estadia" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="generos" class="java.util.Collection" nestedType="java.lang.String">
@@ -25,8 +25,10 @@
     JOIN familia f ON es.idfamilia = f.idfamilia
     JOIN estadia_indigena ei ON es.idestadia = ei.idestadia
   
- WHERE (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (es.dataentrada BETWEEN CAST($P{dataini} AS DATE) AND CAST($P{datafim} AS DATE)))
-      AND (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (es.datasaida BETWEEN CAST($P{dataini} AS DATE) AND CAST($P{datafim} AS DATE)))
+ WHERE (
+ 	 ($P{dataini} IS NULL AND $P{datafim} IS NULL) OR 
+ 	 (es.dataentrada BETWEEN CAST($P{dataini} AS DATE) AND CAST($P{datafim} AS DATE)) OR  
+ 	 (es.datasaida BETWEEN CAST($P{dataini} AS DATE) AND CAST($P{datafim} AS DATE)) )
       AND ($X{IN, es.idfamilia, familias})
       AND ($X{IN, i.etnia_idetnia, etnias})
       AND ($X{IN, i.codigoassindi, representantes})

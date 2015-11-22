@@ -76,7 +76,6 @@
                 <label for="datanasc" class="col-md-2 control-label">Data de nascimento: </label>
                 <div class="col-md-3 input-group">
                     <input type="date" ng-model="fisica.datanasc" id="datanasc" name="datanasc" required="" class="form-control requerido">
-                    <!--                        <div class="input-group-addon"> <a href="#"><i class="entypo-calendar"></i></a> </div>-->
                 </div>
             </div>
             
@@ -148,9 +147,9 @@
 
             <div class="form-group">
                 <label for="telefone" class="col-md-2 control-label">Telefone principal: </label>
-                <div class="col-md-3"><input type="text" ng-model="fisica.telefone.telefone" id="telefone" name="telefone" required="" class="form-control phone_with_ddd requerido" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="fisica.telefone.telefone" id="telefone" name="telefone" required="" class="form-control sp_celphones requerido" placeholder="(99) 99999-9999"></div>
                 <label for="telefone" class="col-md-2 control-label">Telefone secundário: </label>
-                <div class="col-md-3"><input type="text" ng-model="fisica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control phone_with_ddd" placeholder="(99) 99999-9999"></div>
+                <div class="col-md-3"><input type="text" ng-model="fisica.telefonesecundario.telefone" id="telefoneSecundario" name="telefoneSecundario" class="form-control sp_celphones" placeholder="(99) 99999-9999"></div>
             </div>
 
             <div ng-show="formFis.telefone.$dirty && formFis.telefone.$invalid" class="alert alert-danger col-md-12" role="alert">
@@ -170,9 +169,7 @@
             </div>
             <div class="form-group">
                 <label for="tfoto" class="col-md-2 control-label">Foto: </label>
-                <div class="col-md-1"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
-                <label for="foto" class="col-md-1 control-label">OU: </label>
-                <div class="col-md-3"><input type="file" ng-model="fisica.foto" id="foto" name="foto" class="form-control btn btn-info"></div>
+                <div class="col-md-3"><a href="javascript:;" onclick="jQuery('#fotoModal').modal('show', {backdrop: 'static'});" class="btn btn-info"><i class="fa fa-camera"></i> Tirar foto</a></div>
                 <div class="col-md-5"><img src="{{fisica.imgSrc}}" class="img-circle" style="width: 40px;"></div>
                 <div class="modal fade" id="fotoModal" data-backdrop="static">
                     <div class="modal-dialog">

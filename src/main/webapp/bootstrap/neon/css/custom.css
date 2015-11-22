@@ -20,10 +20,18 @@ body {
 }
 
 .login-page .login-header {
-  padding: 40px 0px 100px 0px;
-  background-image: url(../../../img/fundo_bambu4.jpg);
+    padding-top:10%;
+/*  padding: 40px 0px 100px 0px;
+  background-image: url(../../../img/fundo_bambu.png);
   background-repeat: no-repeat;
-  background-position: bottom center;
+  background-position: bottom center;*/
+}
+
+.alert.alertInicial {
+    position: absolute;
+    top:5%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .panel-body {
@@ -32,6 +40,10 @@ body {
 
 label {
     color: #597A9E;
+}
+
+label.novoAdmin {
+    color: #FFF;
 }
 
 .panel-danger {
@@ -56,6 +68,10 @@ label {
     background-image: url(../../../img/requerido.png);
     background-position: left 2px  center  ;
     background-repeat: no-repeat;
+}
+
+textarea.requerido, textarea.requerido.ng-valid {
+    background-position: left 2px  top 9px  ;
 }
 
 .requerido.ng-valid {

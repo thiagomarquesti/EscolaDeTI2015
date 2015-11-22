@@ -1,4 +1,4 @@
-module.controller("TerraController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope) {
+module.controller("TerraController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', "ServiceFuncoes", function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
 
     $scope.busca = {};
     $scope.placeHolder = "Buscar terra indígena";
@@ -27,14 +27,21 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
         $rootScope.string = string;
         $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
     };
-        
-    $scope.deletarTerra = function (terra) {
-        $http.delete("/terraIndigena/" + terra.idterraindigena)
-                .success(function () {
-                    toastr.success("Terra indígena "+ terra.nometerra +" deletada com sucesso.");
-                    $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoPrincipal,'', '', false);
-                })
-                .error(deuErro);
+    
+    $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+        jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+        $scope.dadosExclusao = {};
+        $scope.dadosExclusao.entidade = entidade;
+        $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+        $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+        $scope.dadosExclusao.id = id;
+    };
+
+    $scope.excluiRegistro = function () {
+        ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+        $timeout(function() { 
+            $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+        },100);
     };
         
     function deuErro() {

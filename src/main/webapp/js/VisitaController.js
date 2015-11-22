@@ -1,9 +1,10 @@
 module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', 'ServiceFuncoes', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
+        
         $scope.busca = {};
         $scope.placeHolder = "Buscar visita";
         $scope.ent = $rootScope.ent = "visita";
         $scope.campoPrincipal = 'datavisita';
-        $scope.isNovaEstadia = true;
+        $rootScope.tipoOrdem = 'desc';
 
         $scope.atualizarListagens = function (qtdePorPag, pag, campo, string, troca, paro) {
             if (campo == null || campo == "") {
@@ -17,14 +18,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $scope = $rootScope;
         }
 
-        $scope.reset = function (form) {
-            if (form) {
-                form.$setPristine();
-                form.$setUntouched();
-            }
-            novaVisita();
-        };
-
         $rootScope.atualizarListagens = $scope.atualizarListagens;
 
         $scope.registrosPadrao = function () {
@@ -36,7 +29,35 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
         };
-
+        
+        $scope.statusVisita = function(data, visitarealizada){
+            var hoje = new Date();
+            var coisa;
+            if(hoje < new Date(data)){
+                coisa = "warning";
+                if(visitarealizada){
+                    coisa = "success";
+                }
+            }
+            else {
+                if(visitarealizada){
+                    coisa = "success";
+                }
+                else {
+                    coisa = "danger";
+                }
+            }
+            return coisa;
+        };
+        
+        $scope.reset = function (form) {
+            if (form) {
+                form.$setPristine();
+                form.$setUntouched();
+            }
+            novaVisita();
+        };
+        
         function novaVisita() {
             $scope.visita = {
                 datavisita: "",
@@ -57,32 +78,125 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         $scope.novaVisita = function () {
             novaVisita();
         };
-
-        $scope.carregarVisita = function () {
+        
+        $scope.fichaVisita = function(codigovisita) {
+            jQuery('#modalVisita').modal('show', {backdrop: 'static'});
+            $scope.carregarVisita(codigovisita);
+        };
+        
+        var diasSemana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-Feira", "Sábado");
+        
+        function timeToHora(valor){
+            var x = new Date(valor.getTime() + (valor.getTimezoneOffset() * 60000));
+            var hora = x.getHours();
+            var min = x.getMinutes();
+            if(hora < 10){
+                hora = "0" + hora;
+            }
+            if(min < 10){
+                min = "0" + min;
+            }
+            return hora + ":" + min;
+        }
+        
+        $scope.carregarVisita = function(id) {
             if ($location.path() === "/Visita/nova") {
                 novaVisita();
             }
             else {
                 $timeout(function () {
-                    $http.get("/visita/obj/" + $routeParams.id)
-                            .success(function (data) {
-                                var dados = data;
-                                var d = new Date(data.datavisita);
-                                dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
-                                dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
-
-                                if (dados.horaentrada) {
-                                    dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
+                    var busca;
+                    if(id) {
+                        busca = "/visita/obj/" + id;
+                    }
+                    else {
+                        busca = "/visita/obj/" + $routeParams.id;
+                    }
+                    $http.get(busca)
+                        .success(function (data) {
+                            $scope.datavisita = $scope.dateToData(data.datavisita);
+                            var dados = data;
+                            var d = new Date(data.datavisita);
+                            dados.datavisita = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
+                            dados.horavisita = new Date(1970, 01, 01, data.horavisita.substring(0, 2), data.horavisita.substring(3, 5), 00, 00);
+                            $scope.horaVisita = timeToHora(dados.horavisita);
+                            $scope.diaSemana = diasSemana[dados.datavisita.getDay()];
+                            
+                            if (dados.horaentrada) {
+                                dados.horaentrada = new Date(1970, 01, 01, data.horaentrada.substring(0, 2), data.horaentrada.substring(3, 5), 00, 00);
+                                $scope.horaEntrada = timeToHora(dados.horaentrada);
+                            }
+                            else {
+                                $scope.horaEntrada = "Não informada";
+                            }
+                            if (dados.horasaida) {
+                                dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                                $scope.horaSaida = timeToHora(dados.horasaida);
+                            }
+                            else {
+                                $scope.horaSaida = "Não informada";
+                            }
+                            if(!dados.entidade){
+                                $scope.dadosEntidade = 'Não informado';
+                            }
+                            else{
+                                $scope.dadosEntidade = dados.entidade.nome + ' (' + dados.entidade.endereco.cidade.descricao + ' - ' + dados.entidade.endereco.cidade.estado.sigla + ')';                            
+                            }
+                            
+                            if(dados.entidade.telefone.telefone){
+                                $scope.dadosEntidadeTelefone = dados.entidade.telefone.telefone;
+                                if( dados.entidade.telefonesecundario.telefone){
+                                    $scope.dadosEntidadeTelefone +=  ' / ' + dados.entidade.telefonesecundario.telefone;
                                 }
-                                if (dados.horasaida) {
-                                    dados.horasaida = new Date(1970, 01, 01, data.horasaida.substring(0, 2), data.horasaida.substring(3, 5), 00, 00);
+                            }
+                            
+                            if(!dados.seriecurso){
+                                $scope.seriecurso = 'Série / curso não informado';
+                            }
+                            else {
+                                $scope.seriecurso = dados.seriecurso;
+                            }
+                            
+                            if(!dados.observacao){
+                                $scope.observacao = 'Não informado';
+                            }
+                            else {
+                                $scope.observacao = dados.observacao;
+                            }
+                            
+                            if(!dados.telefonevisita){
+                                $scope.telefonevisita = 'Não informado';
+                            }
+                            else {
+                                $scope.telefonevisita = dados.telefonevisita;
+                            }
+                            
+                            var hoje = new Date();
+                            if(hoje < new Date(data.datavisita)){
+                                $scope.cor = "warning";
+                                $scope.status = "a ser realizada";
+                                if(dados.visitarealizada){
+                                    $scope.cor = "success";
+                                    $scope.status = "já realizada";
                                 }
-                                $scope.visita = dados;
-                                $scope.isNovaVisita = false;
-                                $scope.pegarFone('fisica');
-                                $scope.pegarFone('juridica');
-                            })
-                            .error(deuErro);
+                            }
+                            else {
+                                if(dados.visitarealizada){
+                                    $scope.cor = "success";
+                                    $scope.status = "já realizada";
+                                }
+                                else {
+                                    $scope.cor = "danger";
+                                    $scope.status = "não foi realizada";
+                                }
+                            }
+                            
+                            $scope.visita = dados;
+                            $scope.isNovaVisita = false;
+                            $scope.pegarFone('fisica');
+                            $scope.pegarFone('juridica');
+                        })
+                        .error(deuErro);
                 }, 100);
             }
         };
@@ -91,12 +205,20 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $location.path("/Visita/editar/" + visita.idvisita);
         };
 
-        $scope.deletarVisita = function (visita) {
-            $http.delete("/visita/" + visita.idvisita)
-                    .success(function () {
-                        toastr.success("Visita excluída com sucesso.");
-                        $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
-                    }).error(deuErroDeletar);
+        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+            jQuery('#apagarModal').modal('show', {backdrop: 'static'});
+            $scope.dadosExclusao = {};
+            $scope.dadosExclusao.entidade = entidade;
+            $scope.dadosExclusao.nomeEntidade = nomeEntidade;
+            $scope.dadosExclusao.nomeRegistro = nomeRegistro;
+            $scope.dadosExclusao.id = id;
+        };
+        
+        $scope.excluiRegistro = function () {
+            ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
+            $timeout(function() { 
+                $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
+            },100);
         };
 
         function deuErro() {
@@ -152,8 +274,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             else {
                 visitaCompleta.visitarealizada = false;
             }
-
-            console.log(visitaCompleta);
 
             if ($scope.isNovaVisita) {
                 //console.log(visitaCompleta)

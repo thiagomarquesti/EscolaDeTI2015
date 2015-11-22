@@ -28,6 +28,7 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
             + " v.seriecurso, "
             + " v.idpessoaresponsavel, "
             + " v.identidade, "
+            + " v.visitarealizada,"
             + " pf.nome as nomePF, "
             + " pj.nome as nomePJ "
             + " FROM visita v "

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-22T15:30:43 -->
+<!-- 2015-11-22T17:31:41 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Visita" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b8abd9f-b89c-4aa6-b0bc-988e16b62493">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -22,8 +22,8 @@
 	<queryString language="SQL">
 		<![CDATA[SELECT en.nome AS nomeentidade,
               pr.nome AS nomereponsavel,
-              v.datavisita,
-              v.horavisita,
+              COALESCE(to_char(v.datavisita, 'DD/MM/YYYY'), '') AS datavisita,
+              COALESCE(to_char(v.horavisita, 'HH24:MI'), '') AS horavisita,
               COALESCE(to_char(v.horaentrada, 'HH24:MI'), '') AS horaentrada,
               COALESCE(to_char(v.horasaida, 'HH24:MI'), '') AS horasaida,
               v.quantidadedevisitantes,
@@ -90,7 +90,7 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Estadia]]></text>
+					<text><![CDATA[Visita]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -105,44 +105,44 @@
 				<reportElement x="0" y="15" width="799" height="1" forecolor="#666666" uuid="a3536ae0-8a8b-4132-b024-93a51400fc6e"/>
 			</line>
 			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="190" height="15" uuid="e3e4ae25-a95b-4eae-84b3-f709218ace17">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="180" height="15" uuid="e3e4ae25-a95b-4eae-84b3-f709218ace17">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<text><![CDATA[ENTIDADE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="0" width="181" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
+				<reportElement x="180" y="0" width="181" height="15" uuid="e440bb02-f370-4eae-b040-514284ace39f"/>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[RESPONSÁVEL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="371" y="0" width="69" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
+				<reportElement x="361" y="0" width="69" height="15" uuid="d7323cc6-70e5-4308-8e05-7617ef9bd2fb"/>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[DT. VISITA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="440" y="0" width="90" height="15" uuid="88b09e3f-5716-481e-a765-a98d159ba6b4"/>
-				<textElement verticalAlignment="Top"/>
+				<reportElement x="430" y="0" width="85" height="15" uuid="88b09e3f-5716-481e-a765-a98d159ba6b4"/>
+				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<text><![CDATA[HORA PREVISTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="535" y="0" width="55" height="15" uuid="92bd5746-7502-408a-9398-72e71186d028"/>
-				<textElement verticalAlignment="Top"/>
+				<reportElement x="520" y="0" width="55" height="15" uuid="92bd5746-7502-408a-9398-72e71186d028"/>
+				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<text><![CDATA[ENTRADA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="590" y="0" width="44" height="15" uuid="1a3e49f3-2176-413e-a022-7c25a6c78932"/>
-				<textElement verticalAlignment="Top"/>
+				<reportElement x="580" y="0" width="44" height="15" uuid="1a3e49f3-2176-413e-a022-7c25a6c78932"/>
+				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<text><![CDATA[SAÍDA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="640" y="0" width="64" height="15" uuid="83eb626b-d0bc-42e0-9844-39af292dc457"/>
-				<textElement verticalAlignment="Top"/>
+				<reportElement x="630" y="0" width="64" height="15" uuid="83eb626b-d0bc-42e0-9844-39af292dc457"/>
+				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<text><![CDATA[VISITANTES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="710" y="0" width="90" height="15" uuid="e5f15199-d6af-4a86-82cc-a013da0f59a1"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<reportElement x="700" y="0" width="100" height="15" uuid="e5f15199-d6af-4a86-82cc-a013da0f59a1"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[SÉRIE/CURSO]]></text>
 			</staticText>
 		</band>
@@ -154,45 +154,45 @@
 				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="799" height="1" uuid="284fab50-5f4f-421b-96f6-947b1a832df6"/>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="190" height="15" printWhenGroupChanges="Group4" uuid="15b4c063-9ef5-44b9-8fc7-d4be45d4837e">
+				<reportElement x="0" y="0" width="180" height="15" printWhenGroupChanges="Group4" uuid="15b4c063-9ef5-44b9-8fc7-d4be45d4837e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{nomeentidade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="0" width="181" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
+				<reportElement x="180" y="0" width="181" height="15" uuid="4466470c-6a1c-4875-b1c2-70376d3af27a"/>
 				<textElement verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{nomereponsavel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="371" y="0" width="69" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
+				<reportElement x="361" y="0" width="69" height="15" uuid="a2ab082e-61e6-450e-85ed-319e08e601f0"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{datavisita}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="440" y="0" width="90" height="15" uuid="aa524ae5-c812-4cf0-b46b-19c668f8f8b2"/>
+				<reportElement x="430" y="0" width="85" height="15" uuid="aa524ae5-c812-4cf0-b46b-19c668f8f8b2"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{horavisita}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="535" y="0" width="55" height="15" uuid="ae40b06b-b05e-412b-883a-a7cdc7981916"/>
+				<reportElement x="520" y="0" width="55" height="15" uuid="ae40b06b-b05e-412b-883a-a7cdc7981916"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{horaentrada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="590" y="0" width="44" height="15" uuid="273fcfe6-9482-49e3-8aeb-fd0d020b1472"/>
+				<reportElement x="580" y="0" width="44" height="15" uuid="273fcfe6-9482-49e3-8aeb-fd0d020b1472"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{horasaida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="640" y="0" width="64" height="15" uuid="75c3cedb-2106-4a5e-a49b-cbd1e4f61bab"/>
+				<reportElement x="630" y="0" width="64" height="15" uuid="75c3cedb-2106-4a5e-a49b-cbd1e4f61bab"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{quantidadedevisitantes}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="710" y="0" width="90" height="15" uuid="9019c216-668e-4a46-9e02-0702e3b61caa"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<reportElement x="700" y="0" width="100" height="15" uuid="9019c216-668e-4a46-9e02-0702e3b61caa"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{seriecurso}]]></textFieldExpression>
 			</textField>
 		</band>

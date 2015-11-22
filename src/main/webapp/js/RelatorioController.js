@@ -149,7 +149,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             };
 
             parametro.dataini = ($scope.relatorioindigena.dataini) ? dateToString($scope.relatorioindigena.dataini) : null;
-            parametro.datafim = ($scope.relatorioindigena.datafim) ? dataToString($scope.relatorioindigena.datafim) : null;
+            parametro.datafim = ($scope.relatorioindigena.datafim) ? dateToString($scope.relatorioindigena.datafim) : null;
 
             if ($scope.generofem || $scope.generomasc) {
                 parametro.generos = [];
@@ -231,14 +231,13 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 funcoes: null
             };
 
-            if ($scope.generofem || $scope.generomasc) {
+            if ($scope.relatoriocolaborador.generofem || $scope.relatoriocolaborador.generomasc) {
                 parametro.generos = [];
-                if ($scope.generofem) {
+                if ($scope.relatoriocolaborador.generofem) {
                     parametro.generos[0] = "FEMININO";
                 }
 
-                if ($scope.generomasc) {
-
+                if ($scope.relatoriocolaborador.generomasc) {
                     if (parametro.generos == null) {
                         parametro.generos[0] = "MASCULINO";
                     } else {
@@ -301,7 +300,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             if ($scope.relatorioestadia.representantes != null && $scope.relatorioestadia.representantes != "") {
                 parametro.representantes = [];
                 for (x = 0; x < $scope.relatorioestadia.representantes.length; x++) {
-                    parametro.representantes[x] = $scope.relatorioestadia.representantes[x].idrepresentante;
+                    parametro.representantes[x] = $scope.relatorioestadia.representantes[x].codigoassindi;
                 }
             } else
                 $scope.relatorioestadia.representantes = null;
@@ -364,11 +363,19 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     })
                     .error(deuErro);
         };
+        
+        $scope.carregarIndios = function () {
+                $http.get("/indigena")
+                        .success(function (data) {
+                            $scope.indios = data;
+                        }).error(deuErro);
+        };
+        
         function deuErro() {
             toastr.error("Algo deu errado, tente novamente.", "Ops!");
         }
 
-        function dataToString(valor) {
+        function dateToString(valor) {
             var date = new Date(valor);
             var data = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
             return data;
