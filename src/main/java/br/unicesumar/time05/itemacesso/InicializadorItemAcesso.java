@@ -53,6 +53,7 @@ public class InicializadorItemAcesso {
         carregarTerraIndigena();
         carregarEtnias();
         carregarFuncao();
+        carregarOutros();
 
         List<ItemAcesso> itensAcesso = new ArrayList<>();
 
@@ -392,6 +393,11 @@ public class InicializadorItemAcesso {
     public void carregarFuncao() {
         final String FILE_NAME_FUNCAO = "src/main/java/SCRIPTS/funcao.txt";
         carregarScript(new File(FILE_NAME_FUNCAO));
+    }
+    
+    public void carregarOutros() {
+        final String FILE_NAME_OUTROS = "src/main/java/SCRIPTS/outrosInserts.txt";
+        carregarScript(new File(FILE_NAME_OUTROS));
     }
 
     public void carregarScript(File arquivo) {
