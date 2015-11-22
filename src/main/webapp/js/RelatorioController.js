@@ -65,9 +65,9 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             $scope.relatoriovisita = {
                 datainicial: "",
                 datafinal: "",
-                entidade: "",
-                responsavel: "",
-                realizada: ""
+                entidades: "",
+                responsaveis: "",
+                visitarealizada: ""
             };
         };
         $scope.getFamilias = function () {
@@ -131,10 +131,10 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
         $scope.formatoSlice = function (value) {
             return value.toString();
-        };        
-        
+        };
+
         $scope.indigenaRel = function (tipo) {
-            var parametro = {
+            var para = {
                 dataini: null,
                 datafim: null,
                 idadefim: $scope.idadeRange.max,
@@ -225,12 +225,12 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
         };
 
         $scope.colaboradorRel = function (tipo) {
-            
+
             var parametro = {
                 generos: null,
-                funcoes: null                
+                funcoes: null
             };
-            
+
             if ($scope.generofem || $scope.generomasc) {
                 parametro.generos = [];
                 if ($scope.generofem) {
@@ -246,7 +246,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     }
                 }
             }
-            
+
             if ($scope.relatoriocolaborador.funcoes != null && $scope.relatoriocolaborador.funcoes != "") {
                 parametro.funcoes = [];
                 for (x = 0; x < $scope.relatoriocolaborador.funcoes.length; x++) {
@@ -254,7 +254,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 }
             } else
                 $scope.relatoriocolaborador.funcoes = null;
-            
+
             console.log(parametro);
             $http.post("/pessoa/fisica/relatorio/" + tipo, parametro)
                     .success(function (data) {
@@ -313,8 +313,47 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     })
                     .error(deuErro);
         };
-        $scope.visitaPdf = function () {
-            console.log($scope.relatoriovisita);
+        $scope.visitaRel = function (tipo) {
+
+            parametro = {
+                dataini: null,
+                datafim: null,
+                entidades: null,
+                responsaveis: null,
+                visitarealizada: null
+            };
+
+            parametro.dataini = ($scope.relatoriovisita.datainicial) ? $scope.relatoriovisita.datainicial : null;
+            parametro.datafim = ($scope.relatoriovisita.datafinal) ? $scope.relatoriovisita.datafinal : null;
+
+            if ($scope.relatoriovisita.entidades != null && $scope.relatoriovisita.entidades != "") {
+                parametro.entidades = [];
+                for (x = 0; x < $scope.relatoriovisita.entidades.length; x++) {
+                    parametro.entidades[x] = $scope.relatoriovisita.entidades[x].idpessoa;
+                }
+            } else
+                $scope.relatoriovisita.entidades = null;
+
+            if ($scope.relatoriovisita.responsaveis != null && $scope.relatoriovisita.responsaveis != "") {
+                parametro.responsaveis = [];
+                for (x = 0; x < $scope.relatoriovisita.responsaveis.length; x++) {
+                    parametro.responsaveis[x] = $scope.relatoriovisita.responsaveis[x].idpessoa;
+                }
+            } else
+                $scope.relatoriovisita.responsaveis = null;
+
+            if ($scope.relatoriovisita.visitarealizada == "") {
+                parametro.visitarealizada = null;
+            } else {
+                parametro.visitarealizada = $scope.relatoriovisita.visitarealizada;
+            }
+
+            console.log(parametro);
+            $http.post("/visita/relatorio/" + tipo, parametro)
+                    .success(function (data) {
+                        $window.open(data.url);
+                    })
+                    .error(deuErro);
         };
         $scope.gerarRelatorio = function () {
 
