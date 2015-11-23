@@ -108,7 +108,7 @@ module.controller("TerraController", ["$scope", "$http", "$routeParams", "$locat
                 toastr.error("A cidade não foi preenchida corretamente.", "Atenção");
             }
             else {
-//                console.log($scope.terra.cidade);
+                console.log($scope.terra);
                 var terraCompleta = {
                     nometerra: $scope.terra.nometerra,
                     cidade: {

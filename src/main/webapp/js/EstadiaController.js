@@ -34,7 +34,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             $rootScope.string = string;
             $scope.atualizarListagens(registros, 1, $scope.campoAtual, string, $rootScope.ent, 0, false);
         };
-        
+
         $scope.print = function (divNome) {
             var printContents = document.getElementById(divNome).innerHTML;
             document.body.innerHTML = printContents;
@@ -42,7 +42,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
             location.reload(true);
             window.print();
         };
-        
+
         function novaEstadia() {
             $scope.estadia = {
                 idestadia: "",
@@ -77,6 +77,8 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                 $http.get("/estadia/obj/" + $routeParams.id)
                         .success(function (data) {
                             novaEstadia();
+                            $scope.carregarMembros(data.familia.idfamilia);
+                            getSelects($routeParams.id);
                             $scope.estadia.idestadia = $routeParams.id;
                             var d = new Date(data.dataentrada);
                             $scope.estadia.dataentrada = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
@@ -86,21 +88,21 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 //                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
+                            console.log(data.familia);
                             $scope.estadia.familia = {
                                 "nomefamilia": data.familia.nomefamilia,
-                                "quantidade": data.familia.quantidade,
-                                "telefone": data.familia.telefone,
-                                "idrepresentante": data.familia.representante,
-                                "nome": data.familia.nome,
+                                "quantidade": data.familia.membros.length,
+                                "telefone": (data.familia.telefone)?data.familia.telefone.telefone:"",
+                                "idrepresentante": data.familia.representante.codigoassindi,
+                                "nome": data.familia.representante.nome,
                                 "idfamilia": data.familia.idfamilia
                             };
-                            $scope.carregarMembros($scope.estadia.familia);
-                            getSelects($routeParams.id);
-                            $scope.estadia.representante.telefone = data.representante.telefone.telefone;
+                            console.log($scope.estadia.familia);
+                            $scope.estadia.representante.telefone = (data.representante.telefone) ? data.representante.telefone.telefone : "";
 
                             $scope.isNovaEstadia = false;
-                            console.log("Editar:");
-                            console.log($scope.estadia);
+//                            console.log("Editar:");
+//                            console.log($scope.estadia);
                         })
                         .error(deuErro);
             }
@@ -159,7 +161,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.estadia.familia = data.familia.idfamilia;
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects(idEstadia);
-                            $scope.estadia.representante.telefone = data.representante.telefone.telefone;
+                            $scope.estadia.representante.telefone = (data.representante.telefone)?data.representante.telefone.telefone:"";
                             console.log("es");
                             console.log($scope.estadia);
                         })

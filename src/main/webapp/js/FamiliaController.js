@@ -67,20 +67,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                             .success(function (data) {
                                 var dados = data;
 //                                console.log(data);
-                                dados.telefone = data.telefone.telefone;
-//                                dados.representante = {
-//                                    codigosus: data.representante.codigosus,
-//                                    genero: data.representante.genero,
-//                                    estadocivil: data.representante.estadocivil,
-//                                    nometerra: data.representante.terraIndigena.nometerra,
-//                                    codigoassindi: data.representante.codigoassindi,
-//                                    escolaridade: data.representante.escolaridade,
-//                                    telefone: data.representante.telefone,
-//                                    datanascimento: data.representante.datanascimento,
-//                                    nome: data.representante.nome,
-//                                    cpf: data.representante.cpf,
-//                                    descricao: data.representante.etnia.descricao
-//                                };
+                                dados.telefone = (data.telefone)?data.telefone.telefone:"";
                                 dados.representante.nometerra = data.representante.terraIndigena.nometerra;
 
                                 $scope.familia = dados;

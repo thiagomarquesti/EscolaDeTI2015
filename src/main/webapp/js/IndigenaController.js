@@ -83,7 +83,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
-                                dados.telefone = data.telefone.telefone;
+                                dados.telefone = (data.telefone)?data.telefone.telefone:"";
                                 dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                                 dados.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear();
                                 dados.nomeEtnia = data.etnia.descricao;

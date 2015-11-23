@@ -124,8 +124,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                                 $scope.juridica.numero = data.endereco.numero;
                                 $scope.juridica.complemento = data.endereco.complemento;
                                 $scope.juridica.bairro = data.endereco.bairro;
-                                $scope.juridica.telefone = data.telefone;
-                                $scope.juridica.telefonesecundario = data.telefonesecundario;
+                                $scope.juridica.telefone = (data.telefone)?data.telefone:"";
+                                $scope.juridica.telefonesecundario = (data.telefonesecundario)?data.telefonesecundario:"";
                                 $scope.juridica.telefones = $scope.juridica.telefone.telefone;
                                 if (data.telefonesecundario.telefone) {
                                     $scope.juridica.telefones += " / " + data.telefonesecundario.telefone;
@@ -175,8 +175,8 @@ module.controller("PessoaFisicaController", ["$scope", "$http", "$routeParams", 
                                     $scope.fisica.numero = data.endereco.numero;
                                     $scope.fisica.complemento = data.endereco.complemento;
                                     $scope.fisica.bairro = data.endereco.bairro;
-                                    $scope.fisica.telefone = data.telefone;
-                                    $scope.fisica.telefonesecundario = data.telefonesecundario;
+                                    $scope.fisica.telefone = (data.telefone)?data.telefone:"";
+                                    $scope.fisica.telefonesecundario = (data.telefonesecundario)?data.telefonesecundario:"";
                                     $scope.fisica.telefones = $scope.fisica.telefone.telefone;
                                     if (data.telefonesecundario.telefone) {
                                         $scope.fisica.telefones += " / " + data.telefonesecundario.telefone;

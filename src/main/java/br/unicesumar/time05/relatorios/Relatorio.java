@@ -43,7 +43,7 @@ public class Relatorio {
             BufferedImage image = ImageIO.read(logo);
             params.put("logo", image);
             
-            URL reportResource = getClass().getClassLoader().getResource("./relatorios/MyReports/" + nomeXmlJasper);
+            URL reportResource = getClass().getClassLoader().getResource("src/main/resources/relatorios/MyReports/" + nomeXmlJasper);
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
             JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
             

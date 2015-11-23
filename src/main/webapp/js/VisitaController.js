@@ -1,5 +1,5 @@
 module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$location", "$timeout", "ServicePaginacao", '$rootScope', 'ServiceFuncoes', function ($scope, $http, $routeParams, $location, $timeout, ServicePaginacao, $rootScope, ServiceFuncoes) {
-        
+
         $scope.busca = {};
         $scope.placeHolder = "Buscar visita";
         $scope.ent = $rootScope.ent = "visita";
@@ -150,14 +150,16 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                                 else {
                                     $scope.dadosEntidade = dados.entidade.nome + ' (' + dados.entidade.endereco.cidade.descricao + ' - ' + dados.entidade.endereco.cidade.estado.sigla + ')';
                                 }
-
-                                if (dados.entidade.telefone.telefone) {
-                                    $scope.dadosEntidadeTelefone = dados.entidade.telefone.telefone;
-                                    if (dados.entidade.telefonesecundario.telefone) {
-                                        $scope.dadosEntidadeTelefone += ' / ' + dados.entidade.telefonesecundario.telefone;
+                                
+                                if (dados.entidade) {
+                                    if (dados.entidade.telefone.telefone) {
+                                        $scope.dadosEntidadeTelefone = dados.entidade.telefone.telefone;
+                                        if (dados.entidade.telefonesecundario.telefone) {
+                                            $scope.dadosEntidadeTelefone += ' / ' + dados.entidade.telefonesecundario.telefone;
+                                        }
                                     }
                                 }
-
+                                
                                 if (!dados.seriecurso) {
                                     $scope.seriecurso = 'Série / curso não informado';
                                 }
@@ -213,7 +215,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $location.path("/Visita/editar/" + visita.idvisita);
         };
 
-        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+        $scope.confirmaExclusao = function (entidade, nomeEntidade, nomeRegistro, id) {
             jQuery('#apagarModal').modal('show', {backdrop: 'static'});
             $scope.dadosExclusao = {};
             $scope.dadosExclusao.entidade = entidade;
@@ -221,12 +223,12 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             $scope.dadosExclusao.nomeRegistro = nomeRegistro;
             $scope.dadosExclusao.id = id;
         };
-        
+
         $scope.excluiRegistro = function () {
             ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
-            $timeout(function() { 
+            $timeout(function () {
                 $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
-            },100);
+            }, 100);
         };
 
         function deuErro() {
@@ -246,17 +248,17 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.salvarVisita = function () {
-
+            console.log($scope.visita);
             var visitaCompleta = $scope.visita;
 
-            var dVisita = new Date($scope.visita.datavisita);
+            var dVisita = $scope.visita.datavisita;
             var dVisitaOK = dVisita.getFullYear() + "-" + (dVisita.getMonth() + 1) + '-' + dVisita.getDate();
 
-            var hVisita = new Date($scope.visita.horavisita);
+            var hVisita = $scope.visita.horavisita;
             var hVisitaOK = hVisita.getHours() + ":" + hVisita.getMinutes() + ":00";
 
             if ($scope.visita.horaentrada) {
-                var hEntrada = new Date($scope.visita.horaentrada);
+                var hEntrada = $scope.visita.horaentrada;
                 var hEntradaOK = hEntrada.getHours() + ":" + hEntrada.getMinutes() + ":00";
                 visitaCompleta.horaentrada = hEntradaOK;
             }
@@ -265,7 +267,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             }
 
             if ($scope.visita.horasaida) {
-                var hSaida = new Date($scope.visita.horasaida);
+                var hSaida = $scope.visita.horasaida;
                 var hSaidaOK = hSaida.getHours() + ":" + hSaida.getMinutes() + ":00";
                 visitaCompleta.horasaida = hSaidaOK;
             }
@@ -285,6 +287,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
 
             if ($scope.isNovaVisita) {
                 //console.log(visitaCompleta)
+                console.log($scope.visita);
                 $http.post("/visita", visitaCompleta)
                         .success(function () {
                             $location.path("/Visita/listar");
@@ -324,7 +327,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 if (tipo == 'fisica') {
                     $http.get("/pessoa/fisica/obj/" + $scope.visita.pessoaresponsavel.idpessoa)
                             .success(function (data) {
-                                $scope.telefoneFisica = data.telefone.telefone;
+                                $scope.telefoneFisica = (data.telefone) ? data.telefone.telefone : "";
                             })
                             .error(deuErro);
                 }
@@ -336,7 +339,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
                 if (tipo == 'juridica') {
                     $http.get("/pessoa/juridica/obj/" + $scope.visita.entidade.idpessoa)
                             .success(function (data) {
-                                $scope.telefoneJuridica = data.telefone.telefone;
+                                $scope.telefoneJuridica = (data.telefone) ? data.telefone.telefone : "";
                             })
                             .error(deuErro);
                 }

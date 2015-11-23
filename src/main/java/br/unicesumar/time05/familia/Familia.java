@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 public class Familia implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idfamilia;
     @CampoConsulta
     private String nomefamilia;
