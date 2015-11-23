@@ -49,6 +49,7 @@ module.controller("FuncaoController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.carregarFuncao = function () {
+            $scope.itensAcesso.itens;
             if ($location.path() === "/Funcao/nova") {
                 novaFuncao();
             }
