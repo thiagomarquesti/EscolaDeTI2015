@@ -43,7 +43,7 @@ public class Relatorio {
             BufferedImage image = ImageIO.read(logo);
             params.put("logo", image);
             
-            URL reportResource = getClass().getClassLoader().getResource("src/main/resources/relatorios/MyReports/" + nomeXmlJasper);
+            URL reportResource = getClass().getClassLoader().getResource("./relatorios/MyReports/" + nomeXmlJasper);
             JasperReport report = JasperCompileManager.compileReport(reportResource.getFile());
             JasperPrint print = JasperFillManager.fillReport(report, params, dataSource.getConnection());
             
@@ -76,6 +76,10 @@ public class Relatorio {
                 case PDF: {
                     File filePdf = new File(path + "/" + UUID.randomUUID().toString() + ".pdf");
                     JasperExportManager.exportReportToPdfFile(print, filePdf.getAbsolutePath());
+                    System.out.println(filePdf.length());
+                    if(filePdf.length()<1000){
+                        throw new RuntimeException("Não há resultados para esses filtros!");
+                    }
                     resultado = filePdf.getName();
                 }
                 break;

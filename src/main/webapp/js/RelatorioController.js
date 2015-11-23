@@ -220,7 +220,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                         $window.open(data.url);
                     })
                     .error(function (err) {
-                        console.log(err);
+                        toastr.warning(err.message);
                     });
         };
 
@@ -259,8 +259,11 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.estadiaRel = function (tipo) {
             var parametro = {
                 dataini: null,
@@ -310,8 +313,11 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.visitaRel = function (tipo) {
 
             parametro = {
@@ -352,8 +358,11 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.gerarRelatorio = function () {
 
             $http.post("/rel", OcorrenciaCompleta)
