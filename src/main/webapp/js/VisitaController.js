@@ -248,7 +248,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
         }
 
         $scope.salvarVisita = function () {
-            console.log($scope.visita);
+//            console.log($scope.visita);
             var visitaCompleta = $scope.visita;
 
             var dVisita = $scope.visita.datavisita;
@@ -287,7 +287,7 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
 
             if ($scope.isNovaVisita) {
                 //console.log(visitaCompleta)
-                console.log($scope.visita);
+//                console.log($scope.visita);
                 $http.post("/visita", visitaCompleta)
                         .success(function () {
                             $location.path("/Visita/listar");

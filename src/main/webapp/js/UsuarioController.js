@@ -213,7 +213,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
             else {
                 $timeout(function () {
-                    console.log($scope.visibilidadeP);
+//                    console.log($scope.visibilidadeP);
                     $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
 //                                console.log(data);

@@ -88,7 +88,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 //                            console.log($scope.estadia.datasaida);
                             $scope.estadia.observacoesentrada = data.observacoesentrada;
                             $scope.estadia.observacoessaida = data.observacoessaida;
-                            console.log(data.familia);
+//                            console.log(data.familia);
                             $scope.estadia.familia = {
                                 "nomefamilia": data.familia.nomefamilia,
                                 "quantidade": data.familia.membros.length,
@@ -97,7 +97,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                                 "nome": data.familia.representante.nome,
                                 "idfamilia": data.familia.idfamilia
                             };
-                            console.log($scope.estadia.familia);
+//                            console.log($scope.estadia.familia);
                             $scope.estadia.representante.telefone = (data.representante.telefone) ? data.representante.telefone.telefone : "";
 
                             $scope.isNovaEstadia = false;
@@ -115,7 +115,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.carregarEstadiaModal = function (idEstadia) {
-            console.log(idEstadia);
+//            console.log(idEstadia);
             $timeout(function () {
                 $http.get("/estadia/obj/" + idEstadia)
                         .success(function (data) {
@@ -123,7 +123,7 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
 //                            $timeout(function () {
                             $scope.getNomeFamilia(data.familia);
 //                            }, 500); 
-                            console.log(data);
+//                            console.log(data);
                             $scope.estadia.idestadia = idEstadia;
                             $scope.dataentradaModal = $scope.dateToSoData(data.dataentrada);
 
@@ -162,8 +162,8 @@ module.controller("EstadiaController", ["$scope", "$http", "$routeParams", "$loc
                             $scope.carregarMembros($scope.estadia.familia);
                             getSelects(idEstadia);
                             $scope.estadia.representante.telefone = (data.representante.telefone)?data.representante.telefone.telefone:"";
-                            console.log("es");
-                            console.log($scope.estadia);
+//                            console.log("es");
+//                            console.log($scope.estadia);
                         })
                         .error(deuErro);
             }, 100);

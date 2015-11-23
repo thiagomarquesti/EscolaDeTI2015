@@ -214,7 +214,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatorioindigena.terrasindigena = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/indigena/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
@@ -254,7 +254,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatoriocolaborador.funcoes = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/pessoa/fisica/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
@@ -308,7 +308,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatorioestadia.representantes = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/estadia/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
@@ -353,7 +353,7 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 parametro.visitarealizada = $scope.relatoriovisita.visitarealizada;
             }
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/visita/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
