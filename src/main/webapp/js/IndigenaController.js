@@ -372,8 +372,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 $http.post("/ocorrencia", OcorrenciaCompleta)
                         .success(function () {
                             toastr.success("Ocorrência salva com sucesso.", "Salvo");
-                            $scope.atualizarListagens($scope.busca.numregistros, $scope.pagina, $scope.campoAtual, '', '', $scope.ent, '');
-                            $scope.getOcorrencias();
+                            if($location.path() === "/Indigena/listar"){
+                                $scope.atualizarListagens($scope.busca.numregistros, $scope.pagina, $scope.campoAtual, '', '', $scope.ent, '');
+                            } else {
+                                $scope.getOcorrencias();
+                            }
                         })
                         .error(deuErro);
             } else {

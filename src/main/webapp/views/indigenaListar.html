@@ -67,13 +67,16 @@
         <div id="blocoPaginacao">
             <div id="paginacao"></div>
         </div>
-    </div>
-    <div class="panel panel-white">
-        <div class="panel-body">
-            <span class="badge badge-success">&nbsp;</span> &nbsp Indigena liberado &nbsp&nbsp&nbsp
-            <span class="badge badge-danger">&nbsp;</span> &nbsp Indigena bloqueado &nbsp&nbsp&nbsp
+        
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <span class="badge badge-success">&nbsp;</span> &nbsp Indigena liberado &nbsp&nbsp&nbsp
+                <span class="badge badge-danger">&nbsp;</span> &nbsp Indigena bloqueado &nbsp&nbsp&nbsp
+            </div>
         </div>
+        
     </div>
+    
     <div class="modal fade " id="ocorrenciaModal" data-backdrop="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -99,9 +102,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="descricao" class="col-md-4 control-label">Motivo: *</label>
+                            <label for="descricao" class="col-md-4 control-label">Motivo: </label>
                             <!--<div class="col-md-4"><input type="text" ng-model="" id="nome" name="nome" required="" class="form-control requerido" ng-minlength=3 ng-maxlength=50></div>-->
-                            <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control " ></textarea></div>
+                            <div class="col-md-6"><textarea rows="4" required="" ng-model="ocorrencia.descricao" placeholder="Descrição da Ocorrência" maxlength="160" class="form-control requerido" ></textarea></div>
                         </div>
                         <div class="col-md-offset-1 col-md-11">
                             <button ng-click="salvarOcorrencia()" ng-disabled="!formOcorrencia.$valid" data-dismiss="modal" class="btn btn-success">Cadastrar</button>

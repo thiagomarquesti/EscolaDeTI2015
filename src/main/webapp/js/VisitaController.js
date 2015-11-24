@@ -243,10 +243,6 @@ module.controller("VisitaController", ["$scope", "$http", "$routeParams", "$loca
             toastr.error("Atenção, erro ao tentar salvar a visita, verifique!");
         }
 
-        function deuErroDeletar() {
-            toastr.error("Atenção, erro ao tentar deletar a visita, verifique!");
-        }
-
         $scope.salvarVisita = function () {
 //            console.log($scope.visita);
             var visitaCompleta = $scope.visita;
