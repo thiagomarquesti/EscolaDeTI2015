@@ -203,11 +203,17 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
         };
 
         $scope.carregar = function () {
+            if($location.path()==="/Usuario/meudados/"+$routeParams.id){
+                $scope.visibilidadeP = false;
+            }else{
+                $scope.visibilidadeP = true;
+            }
             if ($location.path() === "/Usuario/novo") {
                 novoUsuario();
             }
             else {
                 $timeout(function () {
+//                    console.log($scope.visibilidadeP);
                     $http.get("/usuario/obj/" + $routeParams.id)
                             .success(function (data) {
 //                                console.log(data);
@@ -215,7 +221,7 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
                                 $scope.usuario.rsenha = data.senha.senha;
                                 getPerfis();
                                 $scope.isNovo = false;
-                                if(data.pessoa!=null)
+                                if (data.pessoa != null)
                                     $scope.mostrarColaboradores = $scope.isNovo;
                                 else
                                     $scope.mostrarColaboradores = true;
@@ -225,15 +231,15 @@ module.controller("UsuarioController", ["$scope", "$http", "$routeParams", "$loc
             }
         };
 
-        function getPerfis(){
-            $http.get("/usuario/perfil/"+$routeParams.id)
-                .success(function (data) {
-                    $scope.usuario.perfis = data;
+        function getPerfis() {
+            $http.get("/usuario/perfil/" + $routeParams.id)
+                    .success(function (data) {
+                        $scope.usuario.perfis = data;
 //                console.log(data);
 //                console.log($scope.estados.codigoestado);
-            }).error(deuErro);
+                    }).error(deuErro);
         }
-        
+
         $scope.reset = function (form) {
             if (form) {
                 form.$setPristine();
