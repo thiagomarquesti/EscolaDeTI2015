@@ -29,6 +29,7 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
     public FamiliaService() {
 
         setConstrutorDeSQL(new ConstrutorDeSQL(Familia.class));
@@ -55,6 +56,20 @@ public class FamiliaService extends ServiceBase<Familia, Long, FamiliaRepository
         } catch (Exception e) {
             throw new RuntimeException("Nenhum resultado encontrado!");
         }
+    }
+
+    public List<Map<String, Object>> getIndios() {
+        String sql
+                = "SELECT i.codigoassindi,  i.codigoSUS, "
+                + " i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
+                + " i.genero, i.nome, i.telefone, ti.nometerra "
+                + " FROM indigena i "
+                + " LEFT JOIN etnia e "
+                + "  ON i.etnia_idetnia = e.idetnia "
+                + " LEFT JOIN terraindigena ti "
+                + "  ON i.terraindigena_idterraindigena = ti.idterraindigena ";
+
+        return query.execute(sql);
     }
 
     public List<Map<String, Object>> getMembros(Long aIdFamilia) {

@@ -48,15 +48,25 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
 //                        return data;
                     })
                     .error(deuErro);
-            $http.get("/indigena/"+idrep)
+            $http.get("/indigena/" + idrep)
                     .success(function (data) {
 //                        console.log(data);
                         $scope.familia.representante = data;
 //                        return data;
                     })
                     .error(deuErro);
-            
+
         }
+
+        $scope.todosIndios = function () {
+            $http.get("/familia/indios")
+                    .success(function (data) {
+                        //console.log(data);
+                        $scope.indios = data;
+                    })
+                    .error(deuErro);
+        };
+
         $scope.carregarFamilia = function () {
             if ($location.path() === "/Familia/nova") {
                 novaFamilia();
@@ -67,7 +77,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
                             .success(function (data) {
                                 var dados = data;
 //                                console.log(data);
-                                dados.telefone = (data.telefone)?data.telefone.telefone:"";
+                                dados.telefone = (data.telefone) ? data.telefone.telefone : "";
                                 dados.representante.nometerra = data.representante.terraIndigena.nometerra;
 
                                 $scope.familia = dados;
@@ -112,7 +122,7 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
             $location.path("/Familia/editar/" + familia.idfamilia);
         };
 
-        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+        $scope.confirmaExclusao = function (entidade, nomeEntidade, nomeRegistro, id) {
             jQuery('#apagarModal').modal('show', {backdrop: 'static'});
             $scope.dadosExclusao = {};
             $scope.dadosExclusao.entidade = entidade;
@@ -120,12 +130,12 @@ module.controller("FamiliaController", ["$scope", "$http", "$routeParams", "$loc
             $scope.dadosExclusao.nomeRegistro = nomeRegistro;
             $scope.dadosExclusao.id = id;
         };
-        
+
         $scope.excluiRegistro = function () {
             ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id);
-            $timeout(function() { 
+            $timeout(function () {
                 $scope.atualizarListagens($scope.busca.numregistros, $rootScope.pagina, $scope.campoAtual, '', '', $rootScope.ent, false);
-            },100);
+            }, 100);
         };
 
         function deuErro() {
