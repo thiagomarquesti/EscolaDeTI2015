@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 public class Visita implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @CampoConsulta
     private Long idvisita;
     @Column(nullable = false, name = "datavisita")

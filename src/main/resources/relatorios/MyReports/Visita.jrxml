@@ -21,7 +21,7 @@
 	</parameter>
 	<parameter name="logo" class="Object" isForPrompting="false"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT en.nome AS nomeentidade,
+		<![CDATA[SELECT COALESCE(en.nome, '') AS nomeentidade,
               pr.nome AS nomereponsavel,
               COALESCE(to_char(v.datavisita, 'DD/MM/YYYY'), '') AS datavisita,
               COALESCE(to_char(v.horavisita, 'HH24:MI'), '') AS horavisita,
@@ -32,7 +32,7 @@
        
    FROM visita v
      JOIN pessoa pr ON v.idpessoaresponsavel = pr.idpessoa
-     JOIN pessoa en ON en.idpessoa = v.identidade
+     LEFT JOIN pessoa en ON en.idpessoa = v.identidade
  WHERE (($P{dataini} IS NULL AND $P{datafim} IS NULL) OR (v.datavisita BETWEEN CAST($P{dataini} AS DATE) AND CAST($P{datafim} AS DATE)))
       AND ($X{IN, v.identidade, entidades})
       AND ($X{IN, v.idpessoaresponsavel, responsaveis})

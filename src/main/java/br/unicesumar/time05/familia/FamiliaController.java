@@ -27,6 +27,11 @@ public class FamiliaController extends ControllerBase<Familia, Long, FamiliaServ
         return service.getFamiliasPorIndigena(aCodigoAssindi);
     }
     
+    @RequestMapping(value = "/indios")
+    public List<Map<String, Object>> getIndios(){
+        return service.getIndios();
+    }
+    
     @RequestMapping(value = "/relatorio", method = RequestMethod.GET)
     public Map getRelatorio(){
         return service.gerarRelatorioSimples();

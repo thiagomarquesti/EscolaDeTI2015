@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
 public class Estadia implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idestadia;
     private Date dataentrada;
     private Date datasaida;

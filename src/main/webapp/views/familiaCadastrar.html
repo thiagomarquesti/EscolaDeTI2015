@@ -38,13 +38,13 @@
                 <span ng-show="formInd.telefone.$error.required">Preencha o telefone principal. </span>
             </div>
             
-            <div class="form-group" ng-controller="IndigenaController" ng-init="todosIndigenas()">    
+            <div class="form-group" ng-controller="IndigenaController" ng-init="todosIndios()">    
                 <label for="membros" class="col-md-2 control-label">Membros da família:</label>
                     <multiselect id="membros" name="membros" class="input-lg" 
                              ng-model="familia.membros" 
                              ms-header="*  Selecione os membros dessa família"
                              multiple="true" 
-                             options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indigenas' 
+                             options='i.codigoAssindi as (i.nome + " - " + i.nometerra) for i in indios' 
                              scroll-after-rows="8"
                              >
                     </multiselect>

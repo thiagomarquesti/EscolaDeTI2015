@@ -76,11 +76,15 @@ public class Relatorio {
                 case PDF: {
                     File filePdf = new File(path + "/" + UUID.randomUUID().toString() + ".pdf");
                     JasperExportManager.exportReportToPdfFile(print, filePdf.getAbsolutePath());
+//                    System.out.println(filePdf.length());
+                    if(filePdf.length()<1000){
+                        throw new RuntimeException("Não há resultados para esses filtros!");
+                    }
                     resultado = filePdf.getName();
                 }
                 break;
             }
-            System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdusuario() + " - " + sessaoUsuario.getUsuario().getNome());
+//            System.out.println("Impresso Relatório: " + resultado + " pelo usuário :" + sessaoUsuario.getUsuario().getIdusuario() + " - " + sessaoUsuario.getUsuario().getNome());
             String url = "/rels/" + sessaoUsuario.getUsuario().getIdusuario() + "/" + resultado;
             Map<String, String> result = new HashMap<>();
             result.put("url", url);

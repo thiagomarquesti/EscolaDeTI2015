@@ -83,7 +83,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                                 var dados = data;
                                 var d = new Date(data.dataNascimento);
                                 dados.cpf = data.cpf.cpf;
-                                dados.telefone = data.telefone.telefone;
+                                dados.telefone = (data.telefone) ? data.telefone.telefone : "";
                                 dados.dataNascimento = new Date(d.getTime() + (d.getTimezoneOffset() * 60000));
                                 dados.dataArrumada = dados.dataNascimento.getDate() + "/" + (dados.dataNascimento.getMonth() + 1) + '/' + dados.dataNascimento.getFullYear();
                                 dados.nomeEtnia = data.etnia.descricao;
@@ -149,13 +149,14 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             "SUPERIORCOMPLETO": "Superior completo"
         };
 
+        $scope.corStatus = {null: "success", "BLOQUEADO": "danger", "": "info"};
+
         function getFoto(id) {
             $http.get("/foto/indio/" + id)
                     .success(function (data) {
                         $scope.urlFoto = data.foto;
                     }).error(deuErro);
         }
-        ;
 
         $scope.print = function (divNome) {
             var printContents = document.getElementById(divNome).innerHTML;
@@ -332,7 +333,7 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
 
         $scope.getOcorrencias = function () {
             var url = ($routeParams.id == undefined) ? "" : "/ocorrencias/" + $routeParams.id;
-            $http.get("/ocorrencia" + url).success(function(data) {
+            $http.get("/ocorrencia" + url).success(function (data) {
                 $scope.ocorrencias = data;
             }).error(deuErro);
         };
@@ -340,8 +341,8 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
         $scope.getIdIndigena = function (indigena) {
             $routeParams.id = indigena.codigoassindi;
         };
-        
-        $scope.confirmaExclusao = function(entidade, nomeEntidade, nomeRegistro, id) {
+
+        $scope.confirmaExclusao = function (entidade, nomeEntidade, nomeRegistro, id) {
             jQuery('#apagarModal').modal('show', {backdrop: 'static'});
             $scope.dadosExclusao = {};
             $scope.dadosExclusao.entidade = entidade;
@@ -350,12 +351,12 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
             $scope.dadosExclusao.id = id;
             $scope.dadosExclusao.opcional = $routeParams.id;
         };
-        
+
         $scope.excluiRegistro = function () {
             ServiceFuncoes.excluiRegistro($scope.dadosExclusao.entidade, $scope.dadosExclusao.nomeEntidade, $scope.dadosExclusao.nomeRegistro, $scope.dadosExclusao.id, $scope.dadosExclusao.opcional);
-            $timeout(function() { 
+            $timeout(function () {
                 $scope.getOcorrencias();
-            },100);
+            }, 100);
         };
 
         $scope.salvarOcorrencia = function () {
@@ -371,7 +372,11 @@ module.controller("IndigenaController", ["$scope", "$http", "$routeParams", "$lo
                 $http.post("/ocorrencia", OcorrenciaCompleta)
                         .success(function () {
                             toastr.success("Ocorrência salva com sucesso.", "Salvo");
-                            $scope.getOcorrencias();
+                            if($location.path() === "/Indigena/listar"){
+                                $scope.atualizarListagens($scope.busca.numregistros, $scope.pagina, $scope.campoAtual, '', '', $scope.ent, '');
+                            } else {
+                                $scope.getOcorrencias();
+                            }
                         })
                         .error(deuErro);
             } else {

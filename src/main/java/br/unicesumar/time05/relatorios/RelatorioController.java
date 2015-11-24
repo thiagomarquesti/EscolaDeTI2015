@@ -46,7 +46,7 @@ public class RelatorioController {
         
         File pastaUsuario = new File(System.getProperty("user.dir"));
         File pdf = new File(pastaUsuario, String.format("relatorioPessoas_%s.pdf", System.nanoTime()));
-        System.out.println("Imprimindo arquivo " + pdf);
+//        System.out.println("Imprimindo arquivo " + pdf);
         
         JasperExportManager.exportReportToPdfFile(print, pdf.getAbsolutePath());
         
@@ -56,7 +56,7 @@ public class RelatorioController {
         outputStream.flush();
         outputStream.close();
         
-        System.out.println("Relatório gerado.");
+//        System.out.println("Relatório gerado.");
 
 // ******************************************************************
         //Javascript no retorno para o front PDF
@@ -90,7 +90,7 @@ public class RelatorioController {
 
     @RequestMapping(value = "/rel2/{where}", method = RequestMethod.GET)
     public void verifcarDescricao2(HttpServletResponse response,@PathVariable String where) throws JRException, SQLException, IOException {
-        System.out.println("parametro " + where);
+//        System.out.println("parametro " + where);
         
         // compilacao do JRXML
         URL reportResource = getClass().getClassLoader().getResource("./relatorios/teste01.jrxml");
@@ -101,7 +101,7 @@ public class RelatorioController {
         
         File pastaUsuario = new File(System.getProperty("user.dir"));
         File pdf = new File(pastaUsuario, String.format("relatorioPessoas_%s.pdf", System.nanoTime()));
-        System.out.println("Imprimindo arquivo " + pdf);
+//        System.out.println("Imprimindo arquivo " + pdf);
         JasperExportManager.exportReportToPdfFile(print, pdf.getAbsolutePath());
         
         response.setHeader("Content-Type", "application/pdf");
@@ -110,7 +110,7 @@ public class RelatorioController {
         outputStream.flush();
         outputStream.close();
         
-        System.out.println("Relatório gerado.");
+//        System.out.println("Relatório gerado.");
     }
     
     @RequestMapping(value = "/rel3", method = RequestMethod.POST)

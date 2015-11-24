@@ -36,25 +36,44 @@ public class IndigenaService extends ServiceBase<CriarIndigena, Long, IndigenaRe
     private UploadService uploadService;
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
-    private final String SQLConsultaIndigena = "SELECT i.codigoassindi,  i.codigoSUS, "
-            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
-            + "i.genero, i.nome, i.telefone, ti.nometerra "
-            + "FROM indigena i "
-            + "LEFT JOIN etnia e "
-            + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN terraindigena ti "
-            + "ON i.terraindigena_idterraindigena = ti.idterraindigena ";
+    private final String SQLConsultaIndigena = " SELECT I.CODIGOASSINDI, "
+            + " I.CODIGOSUS, "
+            + " I.CPF, "
+            + " I.DATANASCIMENTO, "
+            + " E.DESCRICAO, "
+            + " I.ESCOLARIDADE, "
+            + " I.ESTADOCIVIL, "
+            + " I.GENERO, "
+            + " I.NOME, "
+            + " I.TELEFONE, "
+            + " TI.NOMETERRA, "
+            + " (SELECT CASE "
+            + "          WHEN IND.CODIGOASSINDI IS NOT NULL THEN 'BLOQUEADO' "
+            + "          ELSE 'SEM BLOQUEIO' "
+            + "         END AS STATUS "
+            + "    FROM INDIGENA IND "
+            + "    INNER JOIN INDIGENA_OCORRENCIAS IO "
+            + "      ON IO.CODIGOASSINDI = I.CODIGOASSINDI "
+            + "    INNER JOIN OCORRENCIA O "
+            + "      ON O.IDOCORRENCIA = IO.IDOCORRENCIA "
+            + "   WHERE O.DATABLOQUEIO > CURRENT_DATE "
+            + "     AND IND.CODIGOASSINDI = I.CODIGOASSINDI) AS BLOQUEIO "
+            + " FROM INDIGENA I "
+            + " LEFT JOIN ETNIA E "
+            + "   ON I.ETNIA_IDETNIA = E.IDETNIA "
+            + " LEFT JOIN TERRAINDIGENA TI "
+            + "   ON I.TERRAINDIGENA_IDTERRAINDIGENA = TI.IDTERRAINDIGENA";
 
     //Select modigicado dia 08/08 Bruno Fiorentini/Thiago Marialva
     private final String SQLCOnsultaIndigenaPorId = "SELECT i.codigoassindi,  i.codigoSUS, "
-            + "i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
-            + "i.genero, i.nome, i.telefone, ti.nometerra "
-            + "FROM indigena i "
-            + "LEFT JOIN etnia e "
-            + " ON i.etnia_idetnia = e.idetnia "
-            + "LEFT JOIN terraindigena ti "
-            + " ON i.terraindigena_idterraindigena = ti.idterraindigena "
-            + "WHERE i.codigoassindi = :idIndigena";
+            + " i.cpf, i.datanascimento, e.descricao, i.escolaridade,i.estadocivil, "
+            + " i.genero, i.nome, i.telefone, ti.nometerra "
+            + " FROM indigena i "
+            + " LEFT JOIN etnia e "
+            + "  ON i.etnia_idetnia = e.idetnia "
+            + " LEFT JOIN terraindigena ti "
+            + "  ON i.terraindigena_idterraindigena = ti.idterraindigena "
+            + " WHERE i.codigoassindi = :idIndigena";
 
     @Override
     public void salvar(CriarIndigena aIndigena) {

@@ -214,13 +214,13 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatorioindigena.terrasindigena = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/indigena/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
                     })
                     .error(function (err) {
-                        console.log(err);
+                        toastr.warning(err.message);
                     });
         };
 
@@ -254,13 +254,16 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatoriocolaborador.funcoes = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/pessoa/fisica/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.estadiaRel = function (tipo) {
             var parametro = {
                 dataini: null,
@@ -305,13 +308,16 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
             } else
                 $scope.relatorioestadia.representantes = null;
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/estadia/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.visitaRel = function (tipo) {
 
             parametro = {
@@ -347,13 +353,16 @@ module.controller("RelatorioController", ["$scope", "$http", "$routeParams", "$l
                 parametro.visitarealizada = $scope.relatoriovisita.visitarealizada;
             }
 
-            console.log(parametro);
+//            console.log(parametro);
             $http.post("/visita/relatorio/" + tipo, parametro)
                     .success(function (data) {
                         $window.open(data.url);
                     })
-                    .error(deuErro);
+                    .error(function (err) {
+                        toastr.warning(err.message);
+                    });
         };
+        
         $scope.gerarRelatorio = function () {
 
             $http.post("/rel", OcorrenciaCompleta)

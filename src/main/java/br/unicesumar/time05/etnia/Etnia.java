@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class Etnia implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @CampoConsulta
     private Long idetnia;
 

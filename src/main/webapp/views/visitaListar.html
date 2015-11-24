@@ -39,7 +39,7 @@
                     <tr ng-repeat='v in dadosRecebidos.itens.listaDeRegistros' >
                         <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">
                             <span class="badge badge-{{statusVisita(v.datavisita, v.visitarealizada)}}">&nbsp;</span> &nbsp;
-                            {{v.nomepj}}
+                            {{v.nomepf}}
                         </td>
                         <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">{{dateToData(v.datavisita)}}</td>
                         <td class="pointer" ng-click="fichaVisita(v.idvisita)" data="{{v.idvisita}}">Entrada: {{v.horaentrada}}<br>Saída: {{v.horasaida}}</td>
@@ -53,7 +53,7 @@
                                 <ul class="dropdown-menu dropdown-menu-right" style="margin-left: -500%;">
                                     <li><a ng-click="abrirModal(v.idvisita)">Registrar Entrada/Saída</a></li>
                                     <li><a ng-click="editarVisita(v)">Editar</a></li>
-                                    <li><a ng-click="confirmaExclusao('visita', 'visita', dateToData(v.datavisita) + ' de ' + v.nomepj, v.idvisita)">Excluir</a></li>
+                                    <li><a ng-click="confirmaExclusao('visita', 'visita', dateToData(v.datavisita) + ' de ' + v.nomepf, v.idvisita)">Excluir</a></li>
                                 </ul>
                             </div>
                         </td>
