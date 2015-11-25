@@ -39,6 +39,14 @@ public class VisitaService extends ServiceBase<Visita, Long, VisitaRepository> {
     }
 
     @Override
+    public void salvar(Visita aEntidade) {
+        if(aEntidade.getEntidade() != null && aEntidade.getEntidade().getCnpj()==null){
+            aEntidade.setEntidade(null);
+        }
+        super.salvar(aEntidade); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
     public List<Map<String, Object>> findByID(Long aVisitaId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("aVisitaId", aVisitaId);

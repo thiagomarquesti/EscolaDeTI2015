@@ -87,7 +87,7 @@ public class ServiceBase<Entidade extends Object, ID extends Serializable, Repos
                 }
             }
         }
-        System.out.println(aParametrosConsulta.getPalavraChave());
+//        System.out.println(aParametrosConsulta.getPalavraChave());
         if (this.temSqlPadraoSetado()) {
             return query.executeComPaginacao(sqlPadrao, campoOrdenacaoPadrao, aParametrosConsulta);
         } else {

@@ -145,7 +145,7 @@ module.controller("EtniaController", ["$scope", "$http", "$routeParams", "$locat
         $scope.salvarEtnia = function (flag) {
             if (flag == "modal")
                 $scope.isNovaEtnia = true;
-                            console.log($scope.etnia);
+//                            console.log($scope.etnia);
             if ($scope.isNovaEtnia) {
                 $http.post("/etnia", $scope.etnia)
                         .success(function () {

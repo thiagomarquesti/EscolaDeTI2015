@@ -14,19 +14,4 @@ public class TerraIndigenaController extends ControllerBase<TerraIndigena, Long,
         return (TerraIndigena) service.getObjeto(aId);
     }
 
-    @Override
-    public void salvar(TerraIndigena aEntidade) {
-        try {
-            service.salvar(aEntidade);
-        } catch (Exception e) {
-            String mensagem;
-            if (e.getMessage().contains("constraint [nometerra]")) {
-                mensagem = "Já existe um registro com este nome.";
-            }else{
-                mensagem = "Algo deu errado. Tente novamente.";
-            }
-            throw new RuntimeException(mensagem);
-        }
-    }
-
 }

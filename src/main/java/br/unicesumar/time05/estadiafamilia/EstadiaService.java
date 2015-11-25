@@ -57,7 +57,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
 
     public Map<String, Object> getRepresentante(Long aIdEstadia) {
         String sqlRepresentante
-                = "SELECT i.codigoassindi, "
+                = "SELECT i.codigoassindi,  "
                 + "       i.codigoSUS, "
                 + "       i.cpf, "
                 + "       i.datanascimento, "
@@ -67,8 +67,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
                 + "       i.genero, "
                 + "       i.nome, "
                 + "       i.telefone, "
-                + "       ti.nometerra, "
-                + "        es.idrepresentante "
+                + "       ti.nometerra "
                 + " FROM estadia es "
                 + " JOIN indigena i ON es.idrepresentante = i.codigoassindi "
                 + " LEFT JOIN etnia e ON i.etnia_idetnia = e.idetnia "
@@ -89,7 +88,7 @@ public class EstadiaService extends ServiceBase<Estadia, Long, EstadiaRepository
 
     public List<Map<String, Object>> getMembros(Long aIdEstadia) {
         String sqlRepresentante
-                = "SELECT i.codigoassindi, "
+                = "SELECT i.codigoassindi,  "
                 + "       i.codigoSUS, "
                 + "       i.cpf, "
                 + "       i.datanascimento, "

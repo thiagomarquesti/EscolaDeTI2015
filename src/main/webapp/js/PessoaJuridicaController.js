@@ -109,8 +109,8 @@ module.controller("PessoaJuridicaController", ["$scope", "$http", "$routeParams"
                                 $scope.juridica.numero = data.endereco.numero;
                                 $scope.juridica.complemento = data.endereco.complemento;
                                 $scope.juridica.bairro = data.endereco.bairro;
-                                $scope.juridica.telefone = data.telefone;
-                                $scope.juridica.telefonesecundario = data.telefonesecundario;
+                                $scope.juridica.telefone = (data.telefone)?data.telefone:"";
+                                $scope.juridica.telefonesecundario = (data.telefonesecundario)?data.telefonesecundario:"";
                                 $scope.juridica.tipoPessoa = "JURÍDICA";
                                 $scope.juridica.imgSrc = data.imgSrc;
 

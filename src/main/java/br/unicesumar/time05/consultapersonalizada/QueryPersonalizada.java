@@ -80,7 +80,7 @@ public class QueryPersonalizada {
             aSQL += OperadoresSQL.LIMIT + aParametrosConsulta.getRegistrosPorPagina() + OperadoresSQL.OFFSET + ((aParametrosConsulta.getPagina() * aParametrosConsulta.getRegistrosPorPagina()) - aParametrosConsulta.getRegistrosPorPagina());
         }
 
-        System.out.println(aSQL);
+//        System.out.println(aSQL);
         retornoConsulta.setListaDeRegistros(Collections.unmodifiableList(jdbcTemplate.query(aSQL, params, rowMapper)));
         return retornoConsulta;
     }
